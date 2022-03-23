@@ -6,29 +6,32 @@
         android:layout_height="match_parent"
         tools:context=".activities.LoginActivity">
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/editTextTextPassword"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:hint="password"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/etUserName"
             tools:layout_editor_absoluteY="192dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="username" />
+
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/etPassword"
+            app:layout_constraintStart_toStartOf="@+id/etUserName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="password"
+            app:layout_constraintTop_toBottomOf="@+id/etUserName"
+            android:layout_marginTop="4dp" />
 
     <Button
             android:text="login"
@@ -46,7 +49,7 @@
             android:text="google login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button2"
+            android:id="@+id/btn_login"
             app:layout_constraintStart_toStartOf="@+id/button3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +74,7 @@
             android:id="@+id/button3"
             android:layout_marginBottom="8dp"
             android:onClick="register"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login"
             app:layout_constraintTop_toBottomOf="@+id/button"
             app:layout_constraintVertical_bias="0.285"
             tools:layout_editor_absoluteX="68dp" />
@@ -81,8 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkBox"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/etPassword"
+            app:layout_constraintStart_toStartOf="@+id/etPassword" />
 
     <TextView
             android:text="FORGOT YOUR PASSWORD?"
