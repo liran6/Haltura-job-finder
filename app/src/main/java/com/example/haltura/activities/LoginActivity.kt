@@ -2,13 +2,13 @@ package com.example.haltura.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.service.autofill.UserData
 import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.haltura.Helpers.UserData
 import com.example.haltura.R
 import com.example.haltura.Sql.UserOpenHelper
 
