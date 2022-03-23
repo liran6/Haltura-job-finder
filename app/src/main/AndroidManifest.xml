@@ -10,6 +10,12 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Haltura">
         <activity
+                android:name=".activities.ResetPasswordActivity"
+                android:exported="false" />
+        <activity
+                android:name=".activities.AddWorkActivity"
+                android:exported="false" />
+        <activity
                 android:name=".activities.ForgotYourPasswordActivity"
                 android:exported="false" />
         <activity
