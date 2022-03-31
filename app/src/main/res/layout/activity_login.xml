@@ -12,12 +12,12 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/et_UserName"
+            android:id="@+id/et_Email"
             tools:layout_editor_absoluteY="192dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            android:hint="username" />
+            android:hint="e-mail" />
 
 
     <EditText
@@ -26,21 +26,21 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/et_Password"
-            app:layout_constraintStart_toStartOf="@+id/et_UserName"
+            app:layout_constraintStart_toStartOf="@+id/et_Email"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="password"
-            app:layout_constraintTop_toBottomOf="@+id/et_UserName"
+            app:layout_constraintTop_toBottomOf="@+id/et_Email"
             android:layout_marginTop="4dp" />
 
 
     <Button
-            android:text="login"
+            android:text="Sign In"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_Login"
+            android:id="@+id/btn_SignIn"
             tools:layout_editor_absoluteY="341dp"
-            android:onClick="login"
+            android:onClick="signIn"
             tools:ignore="OnClick"
             tools:layout_editor_absoluteX="101dp" />
 
@@ -52,7 +52,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="10dp"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Register"
+            app:layout_constraintTop_toBottomOf="@+id/btn_SignUp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -69,11 +69,11 @@
             tools:srcCompat="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee" />
 
     <Button
-            android:text="register"
+            android:text="Sign Up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_Register"
-            android:onClick="register"
+            android:id="@+id/btn_SignUp"
+            android:onClick="signUp"
             tools:layout_editor_absoluteY="341dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="84dp" />

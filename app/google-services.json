@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "919904320191",
-    "project_id": "haltura-1648036964375",
-    "storage_bucket": "haltura-1648036964375.appspot.com"
+    "project_number": "99854865052",
+    "project_id": "haltura-app",
+    "storage_bucket": "haltura-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:919904320191:android:63a51dc1037376d4bf640a",
+        "mobilesdk_app_id": "1:99854865052:android:26e1132f8c142dbb0fd359",
         "android_client_info": {
           "package_name": "com.example.haltura"
         }
       },
       "oauth_client": [
         {
-          "client_id": "919904320191-assmqc13518ls321b4jdqio5arsrol1u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.haltura",
-            "certificate_hash": "3ba878690d9e6b7cc03e2c4e483c410a344b5eb2"
-          }
-        },
-        {
-          "client_id": "919904320191-0ec8amkuv6th3gbad204gnso5lplvhf9.apps.googleusercontent.com",
+          "client_id": "99854865052-m3a2v48g6f284ehuub0sf51djdo3vk44.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCaRoKF_qccf5pArH_P4Zl2Lmjdr0c733E"
+          "current_key": "AIzaSyBePB1hilHDjH2pTRX5oAUlvh8PbjEJ9ew"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "919904320191-0ec8amkuv6th3gbad204gnso5lplvhf9.apps.googleusercontent.com",
+              "client_id": "99854865052-m3a2v48g6f284ehuub0sf51djdo3vk44.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
