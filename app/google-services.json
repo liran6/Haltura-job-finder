@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "919904320191",
+    "project_id": "haltura-1648036964375",
+    "storage_bucket": "haltura-1648036964375.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919904320191:android:c9b5c9134de85699bf640a",
+        "android_client_info": {
+          "package_name": "com.example.haltura.activities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919904320191-cd075f52dojq175fg9s44rjtrb1kn1e1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.haltura.activities",
+            "certificate_hash": "3ba878690d9e6b7cc03e2c4e483c410a344b5eb2"
+          }
+        },
+        {
+          "client_id": "919904320191-0ec8amkuv6th3gbad204gnso5lplvhf9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaRoKF_qccf5pArH_P4Zl2Lmjdr0c733E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919904320191-0ec8amkuv6th3gbad204gnso5lplvhf9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 package com.example.haltura.Sql
 
 import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabase.CursorFactory
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.example.haltura.Sql.Items.Address
 import com.example.haltura.Sql.Items.User
+import io.realm.Realm
 
 
 class UserOpenHelper : SQLiteOpenHelper {
@@ -74,8 +76,7 @@ class UserOpenHelper : SQLiteOpenHelper {
                     val id: Long = cursor.getLong(cursor.getColumnIndex(COLUMN_ID))
                     val userFirstName: String = cursor.getString(
                         cursor.getColumnIndex(
-                            COLUMN_FIRSTNAME
-                        )
+                            COLUMN_FIRSTNAME)
                     )
                     val userLastName: String = cursor.getString(
                         cursor.getColumnIndex(
