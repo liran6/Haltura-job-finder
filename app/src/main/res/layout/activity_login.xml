@@ -39,11 +39,11 @@
             android:text="Sign In"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_SignIn"
             tools:layout_editor_absoluteY="341dp"
             android:onClick="signIn"
             tools:ignore="OnClick"
-            tools:layout_editor_absoluteX="101dp" />
+            tools:layout_editor_absoluteX="101dp"
+            android:id="@+id/btn_SignIn" />
 
     <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_Google_Login"

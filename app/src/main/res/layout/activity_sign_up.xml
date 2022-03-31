@@ -186,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="25dp"
+                    android:onClick="SignUp"
                     android:text="Sign up" />
         </LinearLayout>
 

@@ -1,26 +1,68 @@
 package com.example.haltura.Sql
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteDatabase.CursorFactory
+
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import android.widget.Toast
 import com.example.haltura.Sql.Items.Address
 import com.example.haltura.Sql.Items.User
+import com.example.haltura.activities.LoginActivity
+import com.example.haltura.activities.MainActivity
+import com.example.haltura.databinding.ActivityCalendarBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import io.realm.Realm
 
 class UserOpenHelper
 {
-    private lateinit var context: Context
-    private lateinit var name: String
-    private lateinit var factory: CursorFactory
-    private var version: Int =0
-    constructor(){}
-    constructor(context: Context?, name: String?, factory: CursorFactory?, version: Int) {
+    private var auth =  FirebaseAuth.getInstance()
+    private var reference = FirebaseDatabase.getInstance().getReference().child("Users")
+    private lateinit var activity: Activity
 
+    constructor(activity: Activity)
+    {
+        this.activity = activity
     }
+
+    fun createUser(user: User)
+    {
+        //todo: log this to server
+        var fireBaseUser = auth.getCurrentUser()
+        if (fireBaseUser != null)
+        {
+            reference.child(fireBaseUser.getUid()).setValue(user).addOnCompleteListener(
+                OnCompleteListener {
+                        task -> if (task.isSuccessful)
+                        {
+                            Toast.makeText(activity,
+                                "User registered successfully",
+                                Toast.LENGTH_SHORT).show()
+                            activity.finish()
+                            activity.startActivity(Intent(activity, MainActivity::class.java))
+                        }
+                    else
+                    {
+                        Toast.makeText(activity,
+                            "User could not be created",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+            )
+        }
+    }
+
+
 
 }
 //class UserOpenHelper : SQLiteOpenHelper {

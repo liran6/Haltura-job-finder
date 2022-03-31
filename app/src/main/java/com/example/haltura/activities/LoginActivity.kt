@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = Firebase.auth
-        helper = UserOpenHelper()//this)
+        helper = UserOpenHelper(this)
         etEmail = findViewById<View>(R.id.et_Email) as EditText
         etPassword = findViewById<View>(R.id.et_Password) as EditText
         login = findViewById<View>(R.id.btn_SignIn) as Button
@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
     fun signUp(view: View){
+        //todo: do this with user open helper - It is not the responsibility of the class
         auth.createUserWithEmailAndPassword(etEmail.text.toString(),etPassword.text.toString())
     }
     fun signInWithCustomToken(){

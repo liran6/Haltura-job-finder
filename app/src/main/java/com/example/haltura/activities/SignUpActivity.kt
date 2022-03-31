@@ -13,6 +13,7 @@ import com.example.haltura.Helpers.Validation
 import com.example.haltura.Helpers.Validation.Companion.signUpValid
 import com.example.haltura.Sql.Items.Address
 import com.example.haltura.Sql.Items.User
+import com.example.haltura.Sql.UserOpenHelper
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -49,6 +50,8 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
     private lateinit var btnSignUp: Button
+    var helper = UserOpenHelper(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -81,10 +84,8 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         fun SignUp(view: View) {
-            if (signUpValid(
-                    etFirstName, etLastName, etUserName, spinnerCity, city, etStreetName,
-                    etStreetNumber, etFloor, etApartment, etPhone, etPassword, etConfirmPassword
-                )
+            if (signUpValid(etFirstName, etLastName, etUserName, spinnerCity, city, etStreetName,
+                    etStreetNumber, etFloor, etApartment, etPhone, etPassword, etConfirmPassword)
             ) {
                 //todo: check username and email existence - need to talk about that
                 if (Validation.userNameExists(etUserName, this)) {
@@ -104,20 +105,21 @@ class SignUpActivity : AppCompatActivity() {
                     )
                     user.setUserPhone(etPhone!!.text.toString())
                     user.setIsAdmin(false)
-                    helper.open()
-                    if (helper.createUser(user).getId() !== -1) {
-                        Toast.makeText(
-                            this,
-                            "user register complete",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                    }
-                    helper.close()
+                    helper.createUser(user)
+                    //helper.open()
+//                    if (helper.createUser(user).getId() !== -1) {
+//                        Toast.makeText(
+//                            this,
+//                            "user register complete",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                        startActivity(Intent(this, LoginActivity::class.java))
+//                        finish()
+//                    }
+                    //helper.close()
                 } else {
                     Toast.makeText(
-                        this@SignUpActivity,
+                        this,
                         "user name already taken!",
                         Toast.LENGTH_SHORT
                     ).show()
