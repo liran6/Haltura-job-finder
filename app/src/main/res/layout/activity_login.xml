@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/etUserName"
+            android:id="@+id/et_UserName"
             tools:layout_editor_absoluteY="192dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -25,42 +25,43 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/etPassword"
-            app:layout_constraintStart_toStartOf="@+id/etUserName"
+            android:id="@+id/et_Password"
+            app:layout_constraintStart_toStartOf="@+id/et_UserName"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="password"
-            app:layout_constraintTop_toBottomOf="@+id/etUserName"
+            app:layout_constraintTop_toBottomOf="@+id/et_UserName"
             android:layout_marginTop="4dp" />
+
 
     <Button
             android:text="login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
+            android:id="@+id/btn_Login"
             tools:layout_editor_absoluteY="341dp"
             android:onClick="login"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.538"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="OnClick" />
+            tools:ignore="OnClick"
+            tools:layout_editor_absoluteX="101dp" />
 
-    <Button
-            android:text="google login"
+    <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_Google_Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_login"
-            app:layout_constraintStart_toStartOf="@+id/button3"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"
-            android:layout_marginTop="44dp" />
+            android:text="Text"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Register"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
             app:srcCompat="@drawable/ic_launcher_foreground"
-            android:id="@+id/imageView"
+            android:id="@+id/iv_logo"
             tools:layout_editor_absoluteY="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -71,27 +72,25 @@
             android:text="register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button3"
-            android:layout_marginBottom="8dp"
+            android:id="@+id/btn_Register"
             android:onClick="register"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/button"
-            app:layout_constraintVertical_bias="0.285"
-            tools:layout_editor_absoluteX="68dp" />
+            tools:layout_editor_absoluteY="341dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="84dp" />
 
     <CheckBox
             android:text="remember me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword"
-            app:layout_constraintStart_toStartOf="@+id/etPassword" />
+            android:id="@+id/cb_RememberMe"
+            app:layout_constraintTop_toBottomOf="@+id/et_Password"
+            app:layout_constraintStart_toStartOf="@+id/et_Password" />
 
     <TextView
             android:text="FORGOT YOUR PASSWORD?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:id="@+id/tv_ForgotYourPassword"
             android:onClick="forgotPassword"
             tools:layout_editor_absoluteY="503dp"
             tools:layout_editor_absoluteX="117dp" />
