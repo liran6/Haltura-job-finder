@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:919904320191:android:c9b5c9134de85699bf640a",
+        "mobilesdk_app_id": "1:919904320191:android:63a51dc1037376d4bf640a",
         "android_client_info": {
-          "package_name": "com.example.haltura.activities"
+          "package_name": "com.example.haltura"
         }
       },
       "oauth_client": [
         {
-          "client_id": "919904320191-cd075f52dojq175fg9s44rjtrb1kn1e1.apps.googleusercontent.com",
+          "client_id": "919904320191-assmqc13518ls321b4jdqio5arsrol1u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.haltura.activities",
+            "package_name": "com.example.haltura",
             "certificate_hash": "3ba878690d9e6b7cc03e2c4e483c410a344b5eb2"
           }
         },
