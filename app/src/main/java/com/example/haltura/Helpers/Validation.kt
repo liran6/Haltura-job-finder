@@ -1,6 +1,7 @@
 package com.example.haltura.Helpers
 
 import android.content.Context
+import android.util.Patterns
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
@@ -17,29 +18,30 @@ class Validation {
         private val SPINNER_EXISTS_ERROR = "choose city"
 
 
-        private fun userNameValid(edName: EditText, limit: Int): Boolean {
-            val text = edName.text.toString()
+        private fun userNameValid(etName: EditText, limit: Int): Boolean {
+            val text = etName.text.toString()
             if (text.length < limit) {
-                edName.error = String.format(NAME_ERROR, "" + limit)
+                etName.error = String.format(NAME_ERROR, "" + limit)
                 return false
             }
             return true
         }
 
-        private fun userPhoneValid(edPhone: EditText): Boolean {
-            val text = edPhone.text.toString()
+        private fun userPhoneValid(etPhone: EditText): Boolean {
+            val text = etPhone.text.toString()
+            //Patterns.PHONE
             val regex = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}".toRegex()
             if (text == "" || !text.matches(regex)) {
-                edPhone.error = PHONE_ERROR
+                etPhone.error = PHONE_ERROR
                 return false
             }
             return true
         }
 
-        private fun userPasswordValid(edPassword: EditText): Boolean {
-            val text = edPassword.text.toString()
+        private fun userPasswordValid(etPassword: EditText): Boolean {
+            val text = etPassword.text.toString()
             if (text == "" || text.length < 5) {
-                edPassword.error = PASSWORD_ERROR
+                etPassword.error = PASSWORD_ERROR
                 return false
             }
             return true
@@ -61,11 +63,20 @@ class Validation {
             return true
         }
 
-        private fun confirmPasswordValid(edPassword: EditText, edConfPassword: EditText): Boolean {
-            val textPass = edPassword.text.toString()
-            val textConfPass = edConfPassword.text.toString()
+        private fun confirmPasswordValid(etPassword: EditText, etConfPassword: EditText): Boolean {
+            val textPass = etPassword.text.toString()
+            val textConfPass = etConfPassword.text.toString()
             if (textPass != textConfPass) {
-                edConfPassword.error = CONF_PASSWORD_ERROR
+                etConfPassword.error = CONF_PASSWORD_ERROR
+                return false
+            }
+            return true
+        }
+
+        private fun emailValid(etEmail: EditText): Boolean {
+            val text = etEmail.text.toString()
+            if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                etEmail.error = PASSWORD_ERROR
                 return false
             }
             return true
@@ -88,50 +99,50 @@ class Validation {
     //    }
 
 
-        fun resetPasswordValid(edPassword: EditText, edConfPassword: EditText): Boolean {
-            userPasswordValid(edPassword)
-            confirmPasswordValid(edPassword, edConfPassword)
-            return userPasswordValid(edPassword) && confirmPasswordValid(edPassword, edConfPassword)
+        fun resetPasswordValid(etPassword: EditText, etConfPassword: EditText): Boolean {
+            userPasswordValid(etPassword)
+            confirmPasswordValid(etPassword, etConfPassword)
+            return userPasswordValid(etPassword) && confirmPasswordValid(etPassword, etConfPassword)
         }
 
         fun signUpValid(
-            edName: EditText,
-            edLastName: EditText,
-            edUserName: EditText,
+            etName: EditText,
+            etLastName: EditText,
+            etUserName: EditText,
             spinner: Spinner,
             city: String?,
-            edStreet: EditText,
-            edStreetNumber: EditText,
-            edFloor: EditText,
-            edApartment: EditText,
-            edPhone: EditText,
-            edPassword: EditText,
-            edConfPassword: EditText,
+            etStreet: EditText,
+            etStreetNumber: EditText,
+            etFloor: EditText,
+            etApartment: EditText,
+            etPhone: EditText,
+            etPassword: EditText,
+            etConfPassword: EditText,
             etEmail: EditText
         ): Boolean {
             //NOTE: edName equ to private name
-            userNameValid(edName, 2)
-            userNameValid(edLastName, 2)
-            userNameValid(edUserName, 5)
+            userNameValid(etName, 2)
+            userNameValid(etLastName, 2)
+            userNameValid(etUserName, 5)
             spinnerCheck(spinner)
-            isEmpty(edStreet)
-            isEmpty(edStreetNumber)
-            isEmpty(edFloor)
-            isEmpty(edApartment)
-            userPhoneValid(edPhone)
-            userPasswordValid(edPassword)
-            confirmPasswordValid(edPassword, edConfPassword)
-            return userNameValid(edName, 2) &&
-                    userNameValid(edLastName, 2) &&
-                    userNameValid(edUserName, 5) &&
+            isEmpty(etStreet)
+            isEmpty(etStreetNumber)
+            isEmpty(etFloor)
+            isEmpty(etApartment)
+            userPhoneValid(etPhone)
+            userPasswordValid(etPassword)
+            confirmPasswordValid(etPassword, etConfPassword)
+            return userNameValid(etName, 2) &&
+                    userNameValid(etLastName, 2) &&
+                    userNameValid(etUserName, 5) &&
                     spinnerCheck(spinner) &&
-                    isEmpty(edStreet) &&
-                    isEmpty(edStreetNumber) &&
-                    isEmpty(edFloor) &&
-                    isEmpty(edApartment) &&
-                    userPhoneValid(edPhone) &&
-                    userPasswordValid(edPassword) &&
-                    confirmPasswordValid(edPassword, edConfPassword)
+                    isEmpty(etStreet) &&
+                    isEmpty(etStreetNumber) &&
+                    isEmpty(etFloor) &&
+                    isEmpty(etApartment) &&
+                    userPhoneValid(etPhone) &&
+                    userPasswordValid(etPassword) &&
+                    confirmPasswordValid(etPassword, etConfPassword)
         }
 
         fun updateValid(

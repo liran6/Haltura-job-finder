@@ -54,8 +54,8 @@ class UserOpenHelper
                                 Toast.makeText(activity,
                                     "User registered successfully",
                                     Toast.LENGTH_SHORT).show()
-                                activity.finish()
                                 activity.startActivity(Intent(activity, MainActivity::class.java))
+                                activity.finish()
                             }
                             else
                             {
@@ -68,6 +68,8 @@ class UserOpenHelper
                 }
             }
         )
+
+
 //        var fireBaseUser = auth.getCurrentUser()
 //        if (fireBaseUser != null)
 //        {

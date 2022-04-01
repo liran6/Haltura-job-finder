@@ -34,15 +34,10 @@ class LoginActivity : AppCompatActivity() {
         helper = UserOpenHelper(this)
         etEmail = findViewById<View>(R.id.et_Email) as EditText
         etPassword = findViewById<View>(R.id.et_Password) as EditText
-        login = findViewById<View>(R.id.btn_SignIn) as Button
-
         oneTapClient = Identity.getSignInClient(this)
+
         val currentUser:FirebaseUser? = auth.currentUser
         updateUI(currentUser)
-
-        login.setOnClickListener {
-            loginUserValidation()
-        }
 
         signInRequest = BeginSignInRequest.builder()
             .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
@@ -101,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     fun signIn(view: View){
-
+        loginUserValidation()
     }
     fun signUp(view: View){
         startActivity(Intent(this, SignUpActivity::class.java))
