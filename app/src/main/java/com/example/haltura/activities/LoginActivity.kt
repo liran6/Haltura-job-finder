@@ -42,8 +42,9 @@ class LoginActivity : AppCompatActivity() {
 
     }
     fun signUp(view: View){
-        //todo: do this with user open helper - It is not the responsibility of the class
-        auth.createUserWithEmailAndPassword(etEmail.text.toString(),etPassword.text.toString())
+        startActivity(Intent(this, SignUpActivity::class.java))
+//        //todo: do this with user open helper - It is not the responsibility of the class
+//        auth.createUserWithEmailAndPassword(etEmail.text.toString(),etPassword.text.toString())
     }
     private fun reload() {
 

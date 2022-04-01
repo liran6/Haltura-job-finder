@@ -125,14 +125,13 @@ class SignUpActivity : AppCompatActivity() {
 //                        startActivity(Intent(this, LoginActivity::class.java))
 //                        finish()
 //                    }
-                    //helper.close()
-                } else {
-                    Toast.makeText(
-                        this,
-                        "user name already taken!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                //helper.close()
+            } else {
+                Toast.makeText(
+                    this,
+                    "user name already taken!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
