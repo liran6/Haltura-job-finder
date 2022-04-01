@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
+import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
@@ -14,6 +15,10 @@ import com.example.haltura.Helpers.Validation.Companion.signUpValid
 import com.example.haltura.Sql.Items.Address
 import com.example.haltura.Sql.Items.User
 import com.example.haltura.Sql.UserOpenHelper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -50,12 +55,14 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
     private lateinit var btnSignUp: Button
+    //private lateinit var auth: FirebaseAuth
     var helper = UserOpenHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         //helper = UserOpenHelper(this)
+      //  auth = Firebase.auth
         cities = resources.getStringArray(R.array.cities)
         etUserName = findViewById<View>(R.id.et_UserName) as EditText
         etFirstName = findViewById<View>(R.id.et_FirstName) as EditText
@@ -82,7 +89,6 @@ class SignUpActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-
         fun SignUp(view: View) {
             if (signUpValid(etFirstName, etLastName, etUserName, spinnerCity, city, etStreetName,
                     etStreetNumber, etFloor, etApartment, etPhone, etPassword, etConfirmPassword)
@@ -94,6 +100,7 @@ class SignUpActivity : AppCompatActivity() {
                     user.setUserFirstName(etFirstName!!.text.toString())
                     user.setUserLastName(etLastName!!.text.toString())
                     user.setPassword(etPassword!!.text.toString())
+                    user.setEmail(etEmail!!.text.toString())
                     user.setAddress(
                         Address(
                             city,
@@ -106,6 +113,8 @@ class SignUpActivity : AppCompatActivity() {
                     user.setUserPhone(etPhone!!.text.toString())
                     user.setIsAdmin(false)
                     helper.createUser(user)
+//                    createAccount(etEmail.text.toString(),etPassword.text.toString())
+
                     //helper.open()
 //                    if (helper.createUser(user).getId() !== -1) {
 //                        Toast.makeText(
@@ -127,4 +136,76 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
+
+
+//
+//    public override fun onStart() {
+//        super.onStart()
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        val currentUser = auth.currentUser
+//        if(currentUser != null){
+//            reload();
+//        }
+//    }
+//    private fun createAccount(email: String, password: String) {
+//        // [START create_user_with_email]
+//        auth.createUserWithEmailAndPassword(email, password)
+//            .addOnCompleteListener(this) { task ->
+//                if (task.isSuccessful) {
+//                    // Sign in success, update UI with the signed-in user's information
+//                    Log.d(TAG, "createUserWithEmail:success")
+//                    val user = auth.currentUser
+//                    updateUI(user)
+//                } else {
+//                    // If sign in fails, display a message to the user.
+//                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+//                    Toast.makeText(baseContext, "Authentication failed.",
+//                        Toast.LENGTH_SHORT).show()
+//                    updateUI(null)
+//                }
+//            }
+//        // [END create_user_with_email]
+//    }
+//
+//    private fun signIn(email: String, password: String) {
+//        // [START sign_in_with_email]
+//        auth.signInWithEmailAndPassword(email, password)
+//            .addOnCompleteListener(this) { task ->
+//                if (task.isSuccessful) {
+//                    // Sign in success, update UI with the signed-in user's information
+//                    Log.d(TAG, "signInWithEmail:success")
+//                    val user = auth.currentUser
+//                    updateUI(user)
+//                } else {
+//                    // If sign in fails, display a message to the user.
+//                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+//                    Toast.makeText(baseContext, "Authentication failed.",
+//                        Toast.LENGTH_SHORT).show()
+//                    updateUI(null)
+//                }
+//            }
+//        // [END sign_in_with_email]
+//    }
+//
+//    private fun sendEmailVerification() {
+//        // [START send_email_verification]
+//        val user = auth.currentUser!!
+//        user.sendEmailVerification()
+//            .addOnCompleteListener(this) { task ->
+//                // Email Verification sent
+//            }
+//        // [END send_email_verification]
+//    }
+//
+//    private fun updateUI(user: FirebaseUser?) {
+//
+//    }
+//
+//    private fun reload() {
+//
+//    }
+//
+//    companion object {
+//        private const val TAG = "EmailPassword"
+//    }
 }

@@ -6,6 +6,7 @@ class User {
     private lateinit var userLastName: String
     private lateinit var password: String
     private lateinit var userName: String
+    private lateinit var email: String
     private lateinit var userPhone: String
     private lateinit var address: Address
     private var isAdmin: Boolean = false
@@ -17,6 +18,7 @@ class User {
         userLastName: String,
         password: String,
         userName: String,
+        email: String,
         userPhone: String,
         address: Address,
         isAdmin: Boolean
@@ -26,6 +28,7 @@ class User {
         this.userLastName = userLastName
         this.password = password
         this.userName = userName
+        this.email = email
         this.userPhone = userPhone
         this.address = address
         this.isAdmin = isAdmin
@@ -36,6 +39,7 @@ class User {
         userLastName: String,
         password: String,
         userName: String,
+        email: String,
         userPhone: String,
         address: Address,
         isAdmin: Boolean
@@ -44,6 +48,7 @@ class User {
         this.userLastName = userLastName
         this.password = password
         this.userName = userName
+        this.email = email
         this.userPhone = userPhone
         this.address = address
         this.isAdmin = isAdmin
@@ -55,6 +60,7 @@ class User {
         userLastName: String,
         password: String,
         userName: String,
+        email: String,
         userPhone: String,
         address: Address
     ) {
@@ -63,6 +69,7 @@ class User {
         this.userLastName = userLastName
         this.password = password
         this.userName = userName
+        this.email = email
         this.userPhone = userPhone
         this.address = address
         isAdmin = false
@@ -73,6 +80,7 @@ class User {
         userLastName: String,
         password: String,
         userName: String,
+        email: String,
         userPhone: String,
         address: Address
     ) {
@@ -80,6 +88,7 @@ class User {
         this.userLastName = userLastName
         this.password = password
         this.userName = userName
+        this.email = email
         this.userPhone = userPhone
         this.address = address
         isAdmin = false
@@ -140,7 +149,13 @@ class User {
     fun getUserName(): String? {
         return userName
     }
+    fun setEmail(userName: String?) {
+        this.email = email!!
+    }
 
+    fun getEmail(): String? {
+        return email
+    }
     fun getUserPhone(): String? {
         return userPhone
     }

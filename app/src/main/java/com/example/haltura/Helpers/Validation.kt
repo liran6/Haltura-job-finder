@@ -106,7 +106,8 @@ class Validation {
             edApartment: EditText,
             edPhone: EditText,
             edPassword: EditText,
-            edConfPassword: EditText
+            edConfPassword: EditText,
+            etEmail: EditText
         ): Boolean {
             //NOTE: edName equ to private name
             userNameValid(edName, 2)

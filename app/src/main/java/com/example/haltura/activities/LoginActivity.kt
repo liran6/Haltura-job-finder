@@ -1,12 +1,15 @@
 package com.example.haltura.activities
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.haltura.R
 import com.example.haltura.Sql.UserOpenHelper
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -31,7 +34,9 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         //todo: Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        //updateUI(currentUser)
+        if(currentUser != null){
+            updateUI(currentUser);
+        }
     }
     fun signIn(view: View){
 
@@ -39,6 +44,19 @@ class LoginActivity : AppCompatActivity() {
     fun signUp(view: View){
         //todo: do this with user open helper - It is not the responsibility of the class
         auth.createUserWithEmailAndPassword(etEmail.text.toString(),etPassword.text.toString())
+    }
+    private fun reload() {
+
+    }
+    private fun updateUI(currentUser: FirebaseUser?) {
+        if(currentUser != null){
+            Toast.makeText(baseContext, "Login Successful!", Toast.LENGTH_SHORT).show()
+            startActivity(
+                Intent(this,
+                MainActivity::class.java)
+            )
+            finish()
+        }
     }
     fun signInWithCustomToken(){
 //        customToken?.let {
