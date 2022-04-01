@@ -28,6 +28,7 @@ class UserOpenHelper
 {
     private var auth =  FirebaseAuth.getInstance()
     private var reference = FirebaseDatabase.getInstance().getReference().child("Users")
+    //private lateinit var reference : DatabaseReference
     private lateinit var activity: Activity
 
     constructor(activity: Activity)
@@ -38,33 +39,88 @@ class UserOpenHelper
     fun createUser(user: User)
     {
         //todo: log this to server
-        var fireBaseUser = auth.getCurrentUser()
-        if (fireBaseUser != null)
-        {
-            reference.child(fireBaseUser.getUid()).setValue(user).addOnCompleteListener(
-                OnCompleteListener {
-                        task -> if (task.isSuccessful)
-                        {
-                            Toast.makeText(activity,
-                                "User registered successfully",
-                                Toast.LENGTH_SHORT).show()
-                            activity.finish()
-                            activity.startActivity(Intent(activity, MainActivity::class.java))
+        //var reference = FirebaseDatabase.getInstance().getReference().child("Users")
+        auth.createUserWithEmailAndPassword(user.getEmail()!!, user.getPassword()!!)
+            .addOnCompleteListener(OnCompleteListener {task ->
+                var fireBaseUser = auth.getCurrentUser()
+                if (fireBaseUser != null)
+                {
+                    var reference= this.reference
+                    var activity = this.activity
+                    reference.child(fireBaseUser.getUid()).setValue(user).addOnCompleteListener(
+                        OnCompleteListener {
+                            task -> if (task.isSuccessful)
+                            {
+                                Toast.makeText(activity,
+                                    "User registered successfully",
+                                    Toast.LENGTH_SHORT).show()
+                                activity.finish()
+                                activity.startActivity(Intent(activity, MainActivity::class.java))
+                            }
+                            else
+                            {
+                                Toast.makeText(activity,
+                                    "User could not be created",
+                                    Toast.LENGTH_SHORT).show()
+                            }
                         }
-                    else
-                    {
-                        Toast.makeText(activity,
-                            "User could not be created",
-                            Toast.LENGTH_SHORT).show()
-                    }
+                    )
                 }
-            )
-        }
+            }
+        )
+//        var fireBaseUser = auth.getCurrentUser()
+//        if (fireBaseUser != null)
+//        {
+//            reference.child(fireBaseUser.getUid()).setValue(user).addOnCompleteListener(
+//                OnCompleteListener {
+//                        task -> if (task.isSuccessful)
+//                        {
+//                            Toast.makeText(activity,
+//                                "User registered successfully",
+//                                Toast.LENGTH_SHORT).show()
+//                            activity.finish()
+//                            activity.startActivity(Intent(activity, MainActivity::class.java))
+//                        }
+//                    else
+//                    {
+//                        Toast.makeText(activity,
+//                            "User could not be created",
+//                            Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            )
+//        }
     }
 
 
 
 }
+//
+//private fun <TResult> Task<TResult>.addOnCompleteListener()
+//{
+//    var fireBaseUser = auth.getCurrentUser()
+//    if (fireBaseUser != null)
+//    {
+//        reference.child(fireBaseUser.getUid()).setValue(user).addOnCompleteListener(
+//            OnCompleteListener {
+//                    task -> if (task.isSuccessful)
+//            {
+//                Toast.makeText(activity,
+//                    "User registered successfully",
+//                    Toast.LENGTH_SHORT).show()
+//                activity.finish()
+//                activity.startActivity(Intent(activity, MainActivity::class.java))
+//            }
+//            else
+//            {
+//                Toast.makeText(activity,
+//                    "User could not be created",
+//                    Toast.LENGTH_SHORT).show()
+//            }
+//            }
+//        )
+//    }
+//}
 //class UserOpenHelper : SQLiteOpenHelper {
 //    constructor(context: Context?, name: String?, factory: CursorFactory?, version: Int) : super(
 //        context,

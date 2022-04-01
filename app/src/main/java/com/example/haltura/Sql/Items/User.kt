@@ -149,7 +149,8 @@ class User {
     fun getUserName(): String? {
         return userName
     }
-    fun setEmail(userName: String?) {
+
+    fun setEmail(email: String?) {
         this.email = email!!
     }
 
@@ -174,15 +175,7 @@ class User {
     }
 
     override fun toString(): String {
-        return "User{" +
-                "id=" + id +
-                ", userFirstName='" + userFirstName + '\'' +
-                ", userLastName='" + userLastName + '\'' +
-                ", password='" + password + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPhone='" + userPhone + '\'' +
-                ", address=" + address +
-                ", isAdmin='" + isAdmin + '\'' +
-                '}'
+        return "User(id=$id, userFirstName='$userFirstName', userLastName='$userLastName', password='$password', userName='$userName', email='$email', userPhone='$userPhone', address=$address, isAdmin=$isAdmin)"
     }
+
 }

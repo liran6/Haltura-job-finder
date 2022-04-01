@@ -25,13 +25,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        auth = FirebaseAuth.getInstance()
-
-        logoutBtn.setOnClickListener {
-            auth.signOut()
-            Toast.makeText(baseContext,"Logged Out", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this,LoginActivity::class.java))
-            finish()
-        }
+//        auth = FirebaseAuth.getInstance()
+//
+//        logoutBtn.setOnClickListener {
+//            auth.signOut()
+//            Toast.makeText(baseContext,"Logged Out", Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(this,LoginActivity::class.java))
+//            finish()
+//        }
     }
 }

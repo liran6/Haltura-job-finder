@@ -55,14 +55,12 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
     private lateinit var btnSignUp: Button
-    //private lateinit var auth: FirebaseAuth
+
     var helper = UserOpenHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        //helper = UserOpenHelper(this)
-      //  auth = Firebase.auth
         cities = resources.getStringArray(R.array.cities)
         etUserName = findViewById<View>(R.id.et_UserName) as EditText
         etFirstName = findViewById<View>(R.id.et_FirstName) as EditText
@@ -89,43 +87,35 @@ class SignUpActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-        fun SignUp(view: View) {
-            if (signUpValid(etFirstName, etLastName, etUserName, spinnerCity, city, etStreetName,
-                    etStreetNumber, etFloor, etApartment, etPhone, etPassword, etConfirmPassword)
-            ) {
-                //todo: check username and email existence - need to talk about that
-                if (Validation.userNameExists(etUserName, this)) {
-                    val user = User()
-                    user.setUserName(etUserName.text.toString())
-                    user.setUserFirstName(etFirstName!!.text.toString())
-                    user.setUserLastName(etLastName!!.text.toString())
-                    user.setPassword(etPassword!!.text.toString())
-                    user.setEmail(etEmail!!.text.toString())
-                    user.setAddress(
-                        Address(
-                            city,
-                            etStreetName!!.text.toString(),
-                            etStreetNumber!!.text.toString(),
-                            etFloor!!.text.toString(),
-                            etApartment!!.text.toString()
-                        )
-                    )
-                    user.setUserPhone(etPhone!!.text.toString())
-                    user.setIsAdmin(false)
-                    helper.createUser(user)
-//                    createAccount(etEmail.text.toString(),etPassword.text.toString())
+    }
 
-                    //helper.open()
-//                    if (helper.createUser(user).getId() !== -1) {
-//                        Toast.makeText(
-//                            this,
-//                            "user register complete",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                        startActivity(Intent(this, LoginActivity::class.java))
-//                        finish()
-//                    }
-                //helper.close()
+    fun signUp(view: View) {
+        if (signUpValid(
+                etFirstName, etLastName, etUserName, spinnerCity, city, etStreetName,
+                etStreetNumber, etFloor, etApartment, etPhone, etPassword, etConfirmPassword,
+                etEmail
+            )
+        ) {
+            //todo: check username and email existence - need to talk about that
+            if (true){//Validation.userNameExists(etUserName, this)) {
+                val user = User()
+                user.setUserName(etUserName.text.toString())
+                user.setUserFirstName(etFirstName!!.text.toString())
+                user.setUserLastName(etLastName!!.text.toString())
+                user.setPassword(etPassword!!.text.toString())
+                user.setEmail(etEmail!!.text.toString())
+                user.setAddress(
+                    Address(
+                        city,
+                        etStreetName!!.text.toString(),
+                        etStreetNumber!!.text.toString(),
+                        etFloor!!.text.toString(),
+                        etApartment!!.text.toString()
+                    )
+                )
+                user.setUserPhone(etPhone!!.text.toString())
+                user.setIsAdmin(false)
+                helper.createUser(user)
             } else {
                 Toast.makeText(
                     this,
@@ -135,8 +125,7 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
-
-
+}
 //
 //    public override fun onStart() {
 //        super.onStart()
@@ -207,4 +196,4 @@ class SignUpActivity : AppCompatActivity() {
 //    companion object {
 //        private const val TAG = "EmailPassword"
 //    }
-}
+//}

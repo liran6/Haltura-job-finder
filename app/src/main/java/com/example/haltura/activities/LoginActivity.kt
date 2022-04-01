@@ -30,14 +30,14 @@ class LoginActivity : AppCompatActivity() {
         etPassword = findViewById<View>(R.id.et_Password) as EditText
         login = findViewById<View>(R.id.btn_SignIn) as Button
     }
-    public override fun onStart() {
-        super.onStart()
-        //todo: Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-            updateUI(currentUser);
-        }
-    }
+//    public override fun onStart() {
+//        super.onStart()
+//        //todo: Check if user is signed in (non-null) and update UI accordingly.
+//        val currentUser = auth.currentUser
+//        if(currentUser != null){
+//            updateUI(currentUser);
+//        }
+//    }
     fun signIn(view: View){
 
     }
