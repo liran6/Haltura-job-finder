@@ -4,8 +4,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.LoginActivity"
-        >
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".activities.LoginActivity">
 
 
     <EditText
@@ -14,11 +15,13 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/et_Email"
-            tools:layout_editor_absoluteY="192dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/email_hint" />
+            android:hint="@string/email_hint"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="192dp"
+            android:minHeight="48dp" />
 
 
     <EditText
@@ -32,18 +35,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="password"
             app:layout_constraintTop_toBottomOf="@+id/et_Email"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="4dp"
+            android:minHeight="48dp" />
 
 
     <Button
             android:text="Sign In"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteY="341dp"
             android:onClick="signIn"
             tools:ignore="OnClick"
-            tools:layout_editor_absoluteX="101dp"
-            android:id="@+id/btn_SignIn" />
+            android:id="@+id/btn_SignIn"
+            app:layout_constraintStart_toStartOf="@+id/cb_RememberMe"
+            android:layout_marginTop="7dp"
+            app:layout_constraintTop_toBottomOf="@+id/cb_RememberMe" />
 
     <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_Google_Login"
@@ -51,7 +56,7 @@
             android:layout_height="wrap_content"
             android:text="Text"
             android:layout_alignParentTop="true"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:drawableLeft="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@+id/btn_SignUp"
@@ -62,14 +67,17 @@
 
     <ImageView
             android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_height="0dp"
             app:srcCompat="@drawable/ic_launcher_foreground"
             android:id="@+id/iv_logo"
-            tools:layout_editor_absoluteY="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:srcCompat="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee" />
+            tools:srcCompat="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="26dp"
+            app:layout_constraintBottom_toTopOf="@+id/et_Email" />
 
     <Button
             android:text="Sign Up"
@@ -77,9 +85,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_SignUp"
             android:onClick="signUp"
-            tools:layout_editor_absoluteY="341dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="84dp" />
+            android:layout_marginEnd="84dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintTop_toBottomOf="@+id/cb_RememberMe" />
 
     <CheckBox
             android:text="remember me"
@@ -95,8 +104,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_ForgotYourPassword"
             android:onClick="forgotPassword"
-            tools:layout_editor_absoluteY="503dp"
-            tools:layout_editor_absoluteX="117dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="39dp"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Google_Login"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:minHeight="48dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

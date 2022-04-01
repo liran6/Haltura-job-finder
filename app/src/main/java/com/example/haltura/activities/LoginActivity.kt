@@ -1,6 +1,7 @@
 package com.example.haltura.activities
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -8,6 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.haltura.R
 import com.example.haltura.Sql.UserOpenHelper
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -19,25 +23,83 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var login: Button
     private lateinit var helper: UserOpenHelper
-    private lateinit var auth: FirebaseAuth;
+    private lateinit var auth: FirebaseAuth
+    private lateinit var oneTapClient: SignInClient
+    private lateinit var signInRequest: BeginSignInRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
         helper = UserOpenHelper(this)
         etEmail = findViewById<View>(R.id.et_Email) as EditText
         etPassword = findViewById<View>(R.id.et_Password) as EditText
         login = findViewById<View>(R.id.btn_SignIn) as Button
+
+        oneTapClient = Identity.getSignInClient(this)
+        val currentUser:FirebaseUser? = auth.currentUser
+        updateUI(currentUser)
+
+        login.setOnClickListener {
+            loginUserValidation()
+        }
+
+        signInRequest = BeginSignInRequest.builder()
+            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                .setSupported(true)
+                .build())
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(getString(R.string.default_web_client_id))
+                    // Only show accounts previously used to sign in.
+                    .setFilterByAuthorizedAccounts(true)
+                    .build())
+            // Automatically sign in when exactly one credential is retrieved.
+            .setAutoSelectEnabled(true)
+            .build()
     }
-//    public override fun onStart() {
-//        super.onStart()
-//        //todo: Check if user is signed in (non-null) and update UI accordingly.
-//        val currentUser = auth.currentUser
-//        if(currentUser != null){
-//            updateUI(currentUser);
-//        }
-//    }
+    private fun loginUserValidation() {
+
+        if (etEmail.text.toString().isEmpty()) {
+            etEmail.error = "Please enter Email"
+            return
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(etEmail.text.toString()).matches()) {
+            etEmail.error = "Please enter Valid Email"
+            etEmail.requestFocus()
+            return
+        }
+        if (etPassword.text.toString().isEmpty()) {
+            etPassword.error = "Please enter Password"
+            etPassword.requestFocus()
+            return
+        }
+        if (etPassword.length() < 6) {
+            etPassword.error = "Password must be > 6 characters"
+            return
+        }
+
+        auth.signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user: FirebaseUser? = auth.currentUser
+                    updateUI(user)
+                } else {
+                    Toast.makeText(baseContext, "Wrong email or password.", Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+            }
+    }
+    public override fun onStart() {
+        super.onStart()
+        //todo: Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            updateUI(currentUser);
+        }
+    }
     fun signIn(view: View){
 
     }

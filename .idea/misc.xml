@@ -11,7 +11,7 @@
         <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_business_account.xml" value="0.10054347826086957" />
         <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_calendar.xml" value="0.10054347826086957" />
         <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_chat.xml" value="0.17300724637681159" />
-        <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_main.xml" value="0.16802536231884058" />
         <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_reset_password.xml" value="0.16802536231884058" />
         <entry key="..\:/Users/Liran/StudioProjects/Haltura/app/src/main/res/layout/activity_sign_up.xml" value="0.16802536231884058" />
@@ -45,7 +45,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
