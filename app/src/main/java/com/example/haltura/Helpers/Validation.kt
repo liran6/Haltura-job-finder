@@ -16,7 +16,7 @@ class Validation {
         private val CONF_PASSWORD_ERROR = "those passwords didn't match. try again!"
         private val NAME_EXISTS_ERROR = "username already taken"
         private val SPINNER_EXISTS_ERROR = "choose city"
-
+        private val EMAIL_ERROR = "Please enter Valid Email!"
 
         private fun userNameValid(etName: EditText, limit: Int): Boolean {
             val text = etName.text.toString()
@@ -73,10 +73,11 @@ class Validation {
             return true
         }
 
-        private fun emailValid(etEmail: EditText): Boolean {
+        private fun userEmailValid(etEmail: EditText): Boolean {
             val text = etEmail.text.toString()
             if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
-                etEmail.error = PASSWORD_ERROR
+                etEmail.error = EMAIL_ERROR
+                etEmail.requestFocus()
                 return false
             }
             return true
@@ -84,25 +85,35 @@ class Validation {
 
         //todo: add username and or email check
 
-    //    fun userNameExists(edName: EditText, context: Context?): Boolean {
-    //        val helper = UserOpenHelper(context)
-    //        helper.open()
-    //        val text = edName.text.toString()
-    //        if (helper.checkUserName(text)) {
-    //            edName.error = NAME_EXISTS_ERROR
-    //            return false
-    //        }
-    //        if (text.length < 5) {
-    //            edName.error = NAME_ERROR
-    //        }
-    //        return true
-    //    }
+        //    fun userNameExists(edName: EditText, context: Context?): Boolean {
+        //        val helper = UserOpenHelper(context)
+        //        helper.open()
+        //        val text = edName.text.toString()
+        //        if (helper.checkUserName(text)) {
+        //            edName.error = NAME_EXISTS_ERROR
+        //            return false
+        //        }
+        //        if (text.length < 5) {
+        //            edName.error = NAME_ERROR
+        //        }
+        //        return true
+        //    }
 
 
         fun resetPasswordValid(etPassword: EditText, etConfPassword: EditText): Boolean {
             userPasswordValid(etPassword)
             confirmPasswordValid(etPassword, etConfPassword)
             return userPasswordValid(etPassword) && confirmPasswordValid(etPassword, etConfPassword)
+        }
+
+        fun signInValid(
+            etEmail: EditText,
+            etPassword: EditText,
+        ): Boolean {
+            var bool = true
+            bool = bool && userEmailValid(etEmail)
+            bool = bool && userPasswordValid(etPassword)
+            return bool
         }
 
         fun signUpValid(
@@ -130,6 +141,7 @@ class Validation {
             isEmpty(etFloor)
             isEmpty(etApartment)
             userPhoneValid(etPhone)
+            userEmailValid(etEmail)
             userPasswordValid(etPassword)
             confirmPasswordValid(etPassword, etConfPassword)
             return userNameValid(etName, 2) &&
@@ -141,6 +153,7 @@ class Validation {
                     isEmpty(etFloor) &&
                     isEmpty(etApartment) &&
                     userPhoneValid(etPhone) &&
+                    userEmailValid(etEmail) &&
                     userPasswordValid(etPassword) &&
                     confirmPasswordValid(etPassword, etConfPassword)
         }
