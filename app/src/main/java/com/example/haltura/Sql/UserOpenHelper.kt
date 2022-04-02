@@ -99,6 +99,23 @@ class UserOpenHelper
 //        }
     }
 
+    fun resetPassword(etEmail:EditText)
+    {
+        auth.sendPasswordResetEmail(etEmail.text.toString()).addOnCompleteListener(){ task ->
+            if (task.isSuccessful) {
+                Toast.makeText(activity, "Check your email to reset your password!",
+                    Toast.LENGTH_LONG).show()
+                    activity.startActivity(Intent(activity, LoginActivity::class.java))
+                    activity.finish()
+            }
+            else
+            {
+                Toast.makeText(activity, "Try again! something wrong happened!",
+                    Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     fun userSignIn(etEmail:EditText ,etPassword:EditText){
         auth.signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
             .addOnCompleteListener() { task ->

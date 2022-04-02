@@ -100,10 +100,14 @@ class Validation {
         //    }
 
 
-        fun resetPasswordValid(etPassword: EditText, etConfPassword: EditText): Boolean {
-            userPasswordValid(etPassword)
-            confirmPasswordValid(etPassword, etConfPassword)
-            return userPasswordValid(etPassword) && confirmPasswordValid(etPassword, etConfPassword)
+//        fun resetPasswordValid(etPassword: EditText, etConfPassword: EditText): Boolean {
+//            userPasswordValid(etPassword)
+//            confirmPasswordValid(etPassword, etConfPassword)
+//            return userPasswordValid(etPassword) && confirmPasswordValid(etPassword, etConfPassword)
+//        }
+
+        fun resetPasswordValid(edEmail: EditText): Boolean {
+            return userEmailValid(edEmail)
         }
 
         fun signInValid(
@@ -111,8 +115,8 @@ class Validation {
             etPassword: EditText,
         ): Boolean {
             var bool = true
-            bool = bool && userEmailValid(etEmail)
-            bool = bool && userPasswordValid(etPassword)
+            bool = userEmailValid(etEmail) && bool
+            bool = userPasswordValid(etPassword) && bool
             return bool
         }
 
@@ -131,31 +135,33 @@ class Validation {
             etConfPassword: EditText,
             etEmail: EditText
         ): Boolean {
+            var bool = true
             //NOTE: edName equ to private name
-            userNameValid(etName, 2)
-            userNameValid(etLastName, 2)
-            userNameValid(etUserName, 5)
-            spinnerCheck(spinner)
-            isEmpty(etStreet)
-            isEmpty(etStreetNumber)
-            isEmpty(etFloor)
-            isEmpty(etApartment)
-            userPhoneValid(etPhone)
-            userEmailValid(etEmail)
-            userPasswordValid(etPassword)
-            confirmPasswordValid(etPassword, etConfPassword)
-            return userNameValid(etName, 2) &&
-                    userNameValid(etLastName, 2) &&
-                    userNameValid(etUserName, 5) &&
-                    spinnerCheck(spinner) &&
-                    isEmpty(etStreet) &&
-                    isEmpty(etStreetNumber) &&
-                    isEmpty(etFloor) &&
-                    isEmpty(etApartment) &&
-                    userPhoneValid(etPhone) &&
-                    userEmailValid(etEmail) &&
-                    userPasswordValid(etPassword) &&
-                    confirmPasswordValid(etPassword, etConfPassword)
+            bool = userNameValid(etName, 2) && bool
+            bool = userNameValid(etLastName, 2) && bool
+            bool = userNameValid(etUserName, 5) && bool
+            bool = spinnerCheck(spinner) && bool
+            bool = isEmpty(etStreet) && bool
+            bool = isEmpty(etStreetNumber) && bool
+            bool = isEmpty(etFloor) && bool
+            bool = isEmpty(etApartment) && bool
+            bool = userPhoneValid(etPhone) && bool
+            bool = userEmailValid(etEmail) && bool
+            bool = userPasswordValid(etPassword) && bool
+            bool = confirmPasswordValid(etPassword, etConfPassword) && bool
+            return bool;
+//            return userNameValid(etName, 2) &&
+//                    userNameValid(etLastName, 2) &&
+//                    userNameValid(etUserName, 5) &&
+//                    spinnerCheck(spinner) &&
+//                    isEmpty(etStreet) &&
+//                    isEmpty(etStreetNumber) &&
+//                    isEmpty(etFloor) &&
+//                    isEmpty(etApartment) &&
+//                    userPhoneValid(etPhone) &&
+//                    userEmailValid(etEmail) &&
+//                    userPasswordValid(etPassword) &&
+//                    confirmPasswordValid(etPassword, etConfPassword)
         }
 
         fun updateValid(
@@ -170,27 +176,29 @@ class Validation {
             upPassword: EditText,
             upConfPassword: EditText
         ): Boolean {
+            var bool = true
             //NOTE: edName equ to private name
-            userNameValid(upName, 2)
+            bool = userNameValid(upName, 2) && bool
             //userNameValid(upLastName,2);
             //userNameValid(upUserName,5);
-            spinnerCheck(upSpinner)
-            isEmpty(upStreet)
-            isEmpty(upStreetNumber)
-            isEmpty(upFloor)
-            isEmpty(upApartment)
-            userPhoneValid(upPhone)
-            userPasswordValid(upPassword)
-            confirmPasswordValid(upPassword, upConfPassword)
-            return userNameValid(upName, 2) &&
-                    spinnerCheck(upSpinner) &&
-                    isEmpty(upStreet) &&
-                    isEmpty(upStreetNumber) &&
-                    isEmpty(upFloor) &&
-                    isEmpty(upApartment) &&
-                    userPhoneValid(upPhone) &&
-                    userPasswordValid(upPassword) &&
-                    confirmPasswordValid(upPassword, upConfPassword)
+            bool = spinnerCheck(upSpinner) && bool
+            bool = isEmpty(upStreet) && bool
+            bool = isEmpty(upStreetNumber) && bool
+            bool = isEmpty(upFloor) && bool
+            bool = isEmpty(upApartment) && bool
+            bool = userPhoneValid(upPhone) && bool
+            bool = userPasswordValid(upPassword) && bool
+            bool = confirmPasswordValid(upPassword, upConfPassword) && bool
+            return bool
+//            return userNameValid(upName, 2) &&
+//                    spinnerCheck(upSpinner) &&
+//                    isEmpty(upStreet) &&
+//                    isEmpty(upStreetNumber) &&
+//                    isEmpty(upFloor) &&
+//                    isEmpty(upApartment) &&
+//                    userPhoneValid(upPhone) &&
+//                    userPasswordValid(upPassword) &&
+//                    confirmPasswordValid(upPassword, upConfPassword)
         }
     }
 }

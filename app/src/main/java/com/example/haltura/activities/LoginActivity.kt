@@ -86,6 +86,11 @@ class LoginActivity : AppCompatActivity() {
 //        //todo: do this with user open helper - It is not the responsibility of the class
 //        auth.createUserWithEmailAndPassword(etEmail.text.toString(),etPassword.text.toString())
     }
+
+    fun forgotPassword(view: View)
+    {
+        startActivity(Intent(this, ForgotYourPasswordActivity::class.java))
+    }
 }
 
 //    private fun updateUI(currentUser: FirebaseUser?) {
