@@ -1,32 +1,18 @@
 package com.example.haltura.Sql
 
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
+import android.content.ContentValues.TAG
 import android.content.Intent
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import com.example.haltura.Sql.Items.Address
 import com.example.haltura.Sql.Items.User
 import com.example.haltura.activities.LoginActivity
 import com.example.haltura.activities.MainActivity
-import com.example.haltura.databinding.ActivityCalendarBinding
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
-import io.realm.Realm
 
 class UserOpenHelper
 {
@@ -58,7 +44,7 @@ class UserOpenHelper
                                 Toast.makeText(activity,
                                     "User registered successfully",
                                     Toast.LENGTH_SHORT).show()
-                                loginUpdateUi(fireBaseUser)
+                                loginUpdateUI(fireBaseUser)
 //                                activity.startActivity(Intent(activity, MainActivity::class.java))
 //                                activity.finish()
                             }
@@ -122,7 +108,7 @@ class UserOpenHelper
                 if (task.isSuccessful) {
                     val user: FirebaseUser? = auth.currentUser
                     if (user != null){
-                        loginUpdateUi(user)
+                        loginUpdateUI(user)
 //                        Toast.makeText(activity, "Login Successful!",
 //                            Toast.LENGTH_SHORT).show()
 //                        activity.startActivity(Intent(activity, MainActivity::class.java))
@@ -138,7 +124,7 @@ class UserOpenHelper
                 }
             }
     }
-    fun loginUpdateUi(currentUser: FirebaseUser?){
+    fun loginUpdateUI(currentUser: FirebaseUser?){
         if (currentUser != null){
             Toast.makeText(activity, "Login Successful!",
                 Toast.LENGTH_SHORT).show()
@@ -149,8 +135,24 @@ class UserOpenHelper
     fun isUserLoggedIn(){
         val currentUser = auth.currentUser
         if(currentUser != null){
-            loginUpdateUi(currentUser);
+            loginUpdateUI(currentUser)
         }
+    }
+    fun usersign(user: User){
+        auth.createUserWithEmailAndPassword(user.getEmail()!!, user.getPassword()!!)
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user1 = auth.currentUser
+                    loginUpdateUI(user1)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(activity, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
 //
