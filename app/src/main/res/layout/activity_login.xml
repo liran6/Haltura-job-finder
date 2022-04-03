@@ -59,6 +59,8 @@
             android:layout_margin="20dp"
             android:drawableLeft="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee"
             android:textSize="18sp"
+            android:onClick="googleSignIN"
+            tools:ignore="OnClick"
             app:layout_constraintTop_toBottomOf="@+id/btn_SignUp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp"

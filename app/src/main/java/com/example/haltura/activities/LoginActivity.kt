@@ -1,11 +1,8 @@
 package com.example.haltura.activities
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.haltura.R
 import com.example.haltura.Sql.UserOpenHelper
@@ -13,10 +10,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.example.haltura.Helpers.Validation.Companion.signInValid
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class LoginActivity : AppCompatActivity() {
@@ -71,7 +65,9 @@ class LoginActivity : AppCompatActivity() {
 //            updateUI(currentUser);
 //        }
     }
-
+    fun googleSignIN(view: View){
+        //startActivity(Intent(this, GoogleSignInActivity::class.java))
+    }
     fun signIn(view: View) {
         if (signInValid(
                 etEmail, etPassword
