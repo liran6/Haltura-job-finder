@@ -10,8 +10,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.example.haltura.R
+import com.example.haltura.Sql.UserOpenHelper
 import com.example.haltura.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -19,12 +21,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var helper: UserOpenHelper
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        helper = UserOpenHelper(this)
 //        auth = FirebaseAuth.getInstance()
 //
 //        logoutBtn.setOnClickListener {
@@ -33,5 +37,15 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(Intent(this,LoginActivity::class.java))
 //            finish()
 //        }
+    }
+
+    fun signOut(view: View)
+    {
+        helper.signOut()
+    }
+
+    fun chat(view: View)
+    {
+        helper.chats()
     }
 }

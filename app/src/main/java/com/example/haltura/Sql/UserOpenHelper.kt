@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import com.example.haltura.Sql.Items.Address
 import com.example.haltura.Sql.Items.User
+import com.example.haltura.activities.ChatsActivity
 import com.example.haltura.activities.LoginActivity
 import com.example.haltura.activities.MainActivity
 import com.example.haltura.databinding.ActivityCalendarBinding
@@ -38,6 +39,20 @@ class UserOpenHelper
     constructor(activity: Activity)
     {
         this.activity = activity
+    }
+
+    fun chats()
+    {
+        activity.startActivity(Intent(activity, ChatsActivity::class.java))
+    }
+
+    fun signOut()
+    {
+        auth.signOut()
+        Toast.makeText(activity, "Logged out",
+            Toast.LENGTH_SHORT).show()
+        activity.startActivity(Intent(activity, LoginActivity::class.java))
+        activity.finish()
     }
 
     fun createUser(user: User)
@@ -138,10 +153,13 @@ class UserOpenHelper
                 }
             }
     }
-    fun loginUpdateUi(currentUser: FirebaseUser?){
+    fun loginUpdateUi(currentUser: FirebaseUser? , wasLoggedIn : Boolean = false){
         if (currentUser != null){
-            Toast.makeText(activity, "Login Successful!",
-                Toast.LENGTH_SHORT).show()
+            if (!wasLoggedIn)
+            {
+                Toast.makeText(activity, "Login Successful!",
+                    Toast.LENGTH_SHORT).show()
+            }
             activity.startActivity(Intent(activity, MainActivity::class.java))
             activity.finish()
         }
@@ -149,7 +167,7 @@ class UserOpenHelper
     fun isUserLoggedIn(){
         val currentUser = auth.currentUser
         if(currentUser != null){
-            loginUpdateUi(currentUser);
+            loginUpdateUi(currentUser, true);
         }
     }
 }
