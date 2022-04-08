@@ -60,10 +60,6 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         //todo: Check if user is signed in (non-null) and update UI accordingly.
         helper.isUserLoggedIn()
-//        val currentUser = auth.currentUser
-//        if(currentUser != null){
-//            updateUI(currentUser);
-//        }
     }
     fun googleSignIN(view: View){
         //startActivity(Intent(this, GoogleSignInActivity::class.java))
