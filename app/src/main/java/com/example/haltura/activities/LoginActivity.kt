@@ -56,11 +56,11 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    public override fun onStart() {
-        super.onStart()
-        //todo: Check if user is signed in (non-null) and update UI accordingly.
-        helper.isUserLoggedIn()
-    }
+//    public override fun onStart() {
+//        super.onStart()
+//        //todo: Check if user is signed in (non-null) and update UI accordingly.
+//        helper.isUserLoggedIn()
+//    }
     fun googleSignIN(view: View){
         //startActivity(Intent(this, GoogleSignInActivity::class.java))
     }

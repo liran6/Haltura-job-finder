@@ -164,10 +164,13 @@ class UserOpenHelper
             activity.finish()
         }
     }
-    fun isUserLoggedIn(){
+    fun isUserLoggedIn(): Boolean {
         val currentUser = auth.currentUser
         if(currentUser != null){
             loginUpdateUi(currentUser, true);
+            return true
+        }else{
+            return false
         }
     }
 }

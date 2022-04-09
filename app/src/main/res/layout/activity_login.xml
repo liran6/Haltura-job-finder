@@ -21,7 +21,8 @@
             android:hint="@string/email_hint"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="192dp"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:autofillHints="" />
 
 
     <EditText
@@ -36,11 +37,13 @@
             android:hint="Password"
             app:layout_constraintTop_toBottomOf="@+id/et_Email"
             android:layout_marginTop="4dp"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:autofillHints=""
+            android:textColorHint="#757575" />
 
 
     <Button
-            android:text="Sign In"
+            android:text="@string/sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="signIn"
@@ -57,7 +60,7 @@
             android:text="Text"
             android:layout_alignParentTop="true"
             android:layout_margin="20dp"
-            android:drawableLeft="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee"
+            android:drawableLeft="@drawable/ic_haltura_logo"
             android:textSize="18sp"
             android:onClick="googleSignIN"
             tools:ignore="OnClick"
@@ -75,11 +78,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:srcCompat="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee"
+            tools:srcCompat="@drawable/ic_haltura_logo"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="26dp"
-            app:layout_constraintBottom_toTopOf="@+id/et_Email" />
+            app:layout_constraintBottom_toTopOf="@+id/et_Email"
+            android:contentDescription="TODO" />
 
     <Button
             android:text="Sign Up"
