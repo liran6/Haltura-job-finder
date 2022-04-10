@@ -120,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
 //            e.printStackTrace()
 //            _errorString.value = e.message
 //        }
-    }
+//    }
 
     fun signIn(view: View) {
         if (signInValid(
@@ -154,28 +154,6 @@ class LoginActivity : AppCompatActivity() {
                 .build())
         .build()
     }
-
-
-//    fun getLocationFromAddress(strAddress: String?): GeoPoint? {
-//        val coder = Geocoder(this)
-//        val address: List<Address>?
-//        var p1: GeoPoint? = null
-//        try {
-//            address = coder.getFromLocationName(strAddress, 5)
-//            if (address == null) {
-//                return null
-//            }
-//            val location: Address = address[0]
-//            return GeoPoint(location.getLatitude(), location.getLongitude())
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//        return null
-//    }
-
-
-
-
 
 }
 
