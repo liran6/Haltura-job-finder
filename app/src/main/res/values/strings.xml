@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Haltura</string>
+    <string name = "your_web_client_id">919904320191-k7vd5j0ub5p4rffc81igtq9ic5gbiel4.apps.googleusercontent.com</string>
     <string-array name="cities">
         <item>City</item>
         <item>Acre</item>

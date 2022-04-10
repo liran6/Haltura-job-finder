@@ -82,7 +82,7 @@
                     android:singleLine="true"
                     android:textAlignment="center"
                     android:textStyle="bold|italic" />
-            <EditText
+            <AutoCompleteTextView
                     android:id="@+id/upStreet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,16 +90,24 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:hint="location"
-                    android:onClick=""
                     android:textAlignment="center"
                     android:singleLine="true"
                     android:textStyle="bold|italic"
                     android:layout_gravity="center"/>
-            <ImageView
+<!--            <ImageView-->
+<!--                    android:layout_width="200dp"-->
+<!--                    android:layout_height="200dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:id="@+id/googleMaps"/>-->
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/googleMaps"/>
+                    android:layout_gravity="center" />
 <!--            https://stackoverflow.com/questions/22704451/open-google-maps-through-intent-for-specific-location-in-android-->
 
 <!--            <LinearLayout-->

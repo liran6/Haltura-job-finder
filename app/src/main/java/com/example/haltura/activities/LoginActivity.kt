@@ -1,5 +1,7 @@
 package com.example.haltura.activities
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -11,6 +13,12 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.example.haltura.Helpers.Validation.Companion.signInValid
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.GeoPoint
+import java.io.IOException
 
 
 class LoginActivity : AppCompatActivity() {
@@ -31,6 +39,8 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById<View>(R.id.et_Email) as EditText
         etPassword = findViewById<View>(R.id.et_Password) as EditText
         oneTapClient = Identity.getSignInClient(this)
+
+
 
 //        val currentUser:FirebaseUser? = auth.currentUser
 //        updateUI(currentUser)
@@ -61,9 +71,57 @@ class LoginActivity : AppCompatActivity() {
 //        //todo: Check if user is signed in (non-null) and update UI accordingly.
 //        helper.isUserLoggedIn()
 //    }
-    fun googleSignIN(view: View){
-        //startActivity(Intent(this, GoogleSignInActivity::class.java))
+
+
+//    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
+//        onStartLoading()
+//        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+//        mAuth.signInWithCredential(credential).addOnCompleteListener {
+//            if (it.isSuccessful) {
+//                val userId = it.result!!.user!!.uid
+//                db.collection("users").document(userId)
+//                    .get()
+//                    .addOnCompleteListener { task ->
+//                        if (task.isSuccessful) {
+//                            val document = task.result
+//
+//                            if (document!!["email"] != null) {
+//                                onFinishLoading()
+//                                val userInfo = document.toObject(UserModel::class.java)
+//                                MyApplication.currentUser = userInfo
+//                                FirestoreUtil.updateUser(MyApplication.currentUser!!) {
+//                                }
+//                                startHomeNavigation()
+//                            } else {
+//                                createGoogleUser(account)
+//                            }
+//                        } else {
+//                            onFinishLoading()
+//                            _errorString.value = task.exception?.message
+//                        }
+//                    }
+//
+//            } else {
+//                // If sign in fails, display a message to the user.
+//                onFinishLoading()
+//                _errorString.value = "Authentication failed."
+//            }
+//        }
+//
+//    }
+//
+//
+//    fun handleGoogleSignInResult(data: Intent?) {
+//        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//        try {
+//            val account = task.getResult(ApiException::class.java)
+//            firebaseAuthWithGoogle(account!!)
+//        } catch (e: ApiException) {
+//            e.printStackTrace()
+//            _errorString.value = e.message
+//        }
     }
+
     fun signIn(view: View) {
         if (signInValid(
                 etEmail, etPassword
@@ -74,15 +132,51 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun signUp(view: View) {
-        startActivity(Intent(this, SignUpActivity::class.java))
+        startActivity(Intent(this, AddWorkActivity::class.java))
+        //startActivity(Intent(this, SignUpActivity::class.java))
 //        //todo: do this with user open helper - It is not the responsibility of the class
-//        auth.createUserWithEmailAndPassword(etEmail.text.toString(),etPassword.text.toString())
     }
 
     fun forgotPassword(view: View)
     {
         startActivity(Intent(this, ForgotYourPasswordActivity::class.java))
     }
+
+    fun googleSignIn(view: View) {
+        signInRequest = BeginSignInRequest.builder()
+        .setGoogleIdTokenRequestOptions(
+            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                .setSupported(true)
+                // Your server's client ID, not your Android client ID.
+                .setServerClientId(getString(R.string.your_web_client_id))
+                // Only show accounts previously used to sign in.
+                .setFilterByAuthorizedAccounts(true)
+                .build())
+        .build()
+    }
+
+
+//    fun getLocationFromAddress(strAddress: String?): GeoPoint? {
+//        val coder = Geocoder(this)
+//        val address: List<Address>?
+//        var p1: GeoPoint? = null
+//        try {
+//            address = coder.getFromLocationName(strAddress, 5)
+//            if (address == null) {
+//                return null
+//            }
+//            val location: Address = address[0]
+//            return GeoPoint(location.getLatitude(), location.getLongitude())
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//        return null
+//    }
+
+
+
+
+
 }
 
 //    private fun updateUI(currentUser: FirebaseUser?) {
