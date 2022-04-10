@@ -55,6 +55,11 @@ class UserOpenHelper
         activity.finish()
     }
 
+    fun addWork()
+    {
+        activity.startActivity(Intent(activity, ChatsActivity::class.java))
+    }
+
     fun createUser(user: User)
     {
         //todo: log this to server
@@ -154,6 +159,7 @@ class UserOpenHelper
             }
     }
     fun loginUpdateUi(currentUser: FirebaseUser? , wasLoggedIn : Boolean = false){
+        // todo: check if needs to be here or should be after the calling in login
         if (currentUser != null){
             if (!wasLoggedIn)
             {
@@ -166,6 +172,7 @@ class UserOpenHelper
     }
     fun isUserLoggedIn(): Boolean {
         val currentUser = auth.currentUser
+        //todo: update ui according to the user - admin? user? business?
         if(currentUser != null){
             loginUpdateUi(currentUser, true);
             return true

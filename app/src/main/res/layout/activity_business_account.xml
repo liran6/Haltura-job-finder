@@ -6,4 +6,14 @@
         android:layout_height="match_parent"
         tools:context=".activities.BusinessAccountActivity">
 
+    <Button
+            android:text="add work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addWork"
+            android:onClick="addWork"
+            tools:layout_editor_absoluteY="355dp"
+            tools:layout_editor_absoluteX="149dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

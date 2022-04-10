@@ -46,6 +46,14 @@ class MainActivity : AppCompatActivity() {
 
     fun chat(view: View)
     {
-        helper.chats()
+        //helper.chats() // todo: should not be in user open helper
+        this.startActivity(Intent(this, ChatsActivity::class.java))
     }
+
+    fun MoveToBusiness(view: View)
+    {
+        //helper.moveToBusiness() // todo: should not be in user open helper
+        this.startActivity(Intent(this, BusinessAccountActivity::class.java))
+    }
+
 }

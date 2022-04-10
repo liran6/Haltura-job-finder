@@ -32,9 +32,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/button5"
             app:layout_constraintTop_toBottomOf="@+id/btn_SignOut"
-            android:layout_marginTop="72dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="112dp" />
+            android:layout_marginTop="108dp"
+            app:layout_constraintEnd_toEndOf="@+id/btn_SignOut"
+            app:layout_constraintStart_toEndOf="@+id/addWork"
+            app:layout_constraintHorizontal_bias="1.0" />
+
+    <Button
+            android:text="Move To Business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addWork"
+            android:onClick="MoveToBusiness"
+            app:layout_constraintTop_toBottomOf="@+id/btn_SignOut"
+            android:layout_marginTop="108dp"
+            app:layout_constraintStart_toStartOf="@+id/btn_SignOut" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

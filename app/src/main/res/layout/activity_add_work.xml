@@ -70,6 +70,75 @@
                     android:textAlignment="center"
                     android:textStyle="bold|italic" />
 
+            <EditText
+                    android:id="@+id/apNumberOfWorkers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:hint="NumberOfWorkers"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textStyle="bold|italic" />
+            <EditText
+                    android:id="@+id/upStreet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:hint="location"
+                    android:onClick=""
+                    android:textAlignment="center"
+                    android:singleLine="true"
+                    android:textStyle="bold|italic"
+                    android:layout_gravity="center"/>
+            <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/googleMaps"/>
+<!--            https://stackoverflow.com/questions/22704451/open-google-maps-through-intent-for-specific-location-in-android-->
+
+<!--            <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal">-->
+<!--                <EditText-->
+<!--                        android:id="@+id/upStreet"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="0.8"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:hint="location"-->
+<!--                        android:onClick=""-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:textStyle="bold|italic"-->
+<!--                        android:layout_gravity="center"/>-->
+<!--                <EditText-->
+<!--                        android:id="@+id/apNumberOfWorkers"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="0.8"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:hint="NumberOfWorkers"-->
+<!--                        android:inputType="number"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textStyle="bold|italic" />-->
+
+<!--            </LinearLayout>-->
+
+
+
+
             <!--todo: add location-->
 
 
@@ -98,6 +167,14 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="add work" />
+
+            <Button
+                    android:id="@+id/btn_preview"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="preview" />
         </LinearLayout>
 
     </ScrollView>
