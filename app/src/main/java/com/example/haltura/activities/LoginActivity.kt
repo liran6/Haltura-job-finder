@@ -15,10 +15,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.example.haltura.Helpers.Validation.Companion.signInValid
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.GeoPoint
 import java.io.IOException
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import android.view.LayoutInflater
+
+import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 
 
 class LoginActivity : AppCompatActivity() {
@@ -39,6 +47,18 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById<View>(R.id.et_Email) as EditText
         etPassword = findViewById<View>(R.id.et_Password) as EditText
         oneTapClient = Identity.getSignInClient(this)
+////        GoogleSignInOptions gso = new GoogleSignInOptions.builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+////            .requestEmail()
+//        signInRequest = BeginSignInRequest.builder()
+//            .setGoogleIdTokenRequestOptions(
+//                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+//                    .setSupported(true)
+//                    // Your server's client ID, not your Android client ID.
+//                    .setServerClientId(getString(R.string.web_client_id))
+//                    // Only show accounts previously used to sign in.
+//                    .setFilterByAuthorizedAccounts(true)
+//                    .build())
+//            .build()
 
 
 
@@ -143,16 +163,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun googleSignIn(view: View) {
-        signInRequest = BeginSignInRequest.builder()
-        .setGoogleIdTokenRequestOptions(
-            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                .setSupported(true)
-                // Your server's client ID, not your Android client ID.
-                .setServerClientId(getString(R.string.your_web_client_id))
-                // Only show accounts previously used to sign in.
-                .setFilterByAuthorizedAccounts(true)
-                .build())
-        .build()
+//        signInRequest = BeginSignInRequest.builder()
+//        .setGoogleIdTokenRequestOptions(
+//            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+//                .setSupported(true)
+//                // Your server's client ID, not your Android client ID.
+//                .setServerClientId(getString(R.string.my_web_client_id))
+//                // Only show accounts previously used to sign in.
+//                .setFilterByAuthorizedAccounts(true)
+//                .build())
+//        .build()
+        startActivity(Intent(this, GoogleSignInActivity::class.java))
     }
 
 }
