@@ -1,14 +1,37 @@
 package com.example.haltura.activities
 
-import android.Manifest
+//import com.google.android.gms.vision.barcode.Barcode.GeoPoint
+
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import android.graphics.Color;
+import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Intent
+//import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.ColorDrawable
+import android.icu.util.Calendar
 import android.location.Address
 import android.location.Geocoder
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
+import android.util.Log
+import android.view.View
+import android.widget.*
+import androidx.annotation.RequiresApi
+//import android.os.Bundle
+//import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.haltura.R
-import com.example.haltura.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -16,73 +39,125 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.GeoPoint
-//import com.google.android.gms.vision.barcode.Barcode.GeoPoint
 import java.io.IOException
+//import android.content.pm.ApplicationInfo
+//import com.google.android.gms.common.api.Status
+//import android.widget.TextView
+//import android.widget.Toast
+import com.google.android.gms.fitness.data.Field
+import java.lang.Exception
 
+//import com.google.android.gms.location.places.Place
+//import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+//import com.google.android.libraries.places.api.model.Place
+//import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 
+//iv_addItem,Imageed_Company,ed_Task,dp_Date,tp_StartTime,tp_EndTime,et_Salary,et_NumberOfWorkers,et_Address,btn_ShowLocation,map,et_Info
 class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
+    private lateinit var autocompleteSupportFragment : AutocompleteSupportFragment
+    private lateinit var edAddress: EditText
+    //private lateinit var calendar: Calendar
+    private lateinit var ivAddItemImage: ImageView
+    private lateinit var etCompany: EditText
+    private lateinit var etTask: EditText
+    private lateinit var etSalary: EditText
+    private lateinit var etNumberOfWorkers: EditText
+    private lateinit var etAddress: EditText
+    private lateinit var etInfo: EditText
+    //private lateinit var map : FrameLayout
+    private lateinit var dpDate: DatePicker
+    private lateinit var tpStartTime: TimePicker
+    private lateinit var tpEndTime: TimePicker
+    private lateinit var btnShowLocation: Button
+    private lateinit var btnAddWork: Button
+    private lateinit var btnPreview: Button
     //private lateinit var binding: ActivityMapsBinding
+
+    private lateinit var tvDate :TextView
+    private lateinit var tvStartTime:TextView// : tv_StartTime
+    private lateinit var tvEndTime:TextView// : tv_EndTime
+    private lateinit var mDateSetListener: DatePickerDialog.OnDateSetListener
+    private lateinit var mTimeSetListener: TimePickerDialog.OnTimeSetListener
+    private var isStartTime = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_add_work)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        val mapFragment = supportFragmentManager
-//            .findFragmentById(R.id.map) as SupportMapFragment
-//        mapFragment.getMapAsync(this)
+        edAddress = findViewById<View>(R.id.et_Address) as EditText
+        tvDate = findViewById<View>(R.id.tv_date) as TextView
+        tvStartTime = findViewById<View>(R.id.tv_StartTime) as TextView
+        tvEndTime = findViewById<View>(R.id.tv_EndTime) as TextView
 
-//        val mapFragment = SupportMapFragment.newInstance()
-//        supportFragmentManager
-//            .beginTransaction()
-//            .add(R.id.map, mapFragment)
-//            .commit()
+        mDateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+            var month = month
+            month = month + 1
+            Log.d("AddWorkActivity", "onDateSet: mm/dd/yyy: $month/$day/$year")
+            val date = "Date: $day/$month/$year"
+            tvDate!!.text = date
+        }
+
+        mTimeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+            Log.d("AddWorkActivity", "onTimeSet: hh:mm: $hourOfDay:$minute")
+            val time = "Time: $hourOfDay:$minute"
+            if (isStartTime)
+            {
+                tvStartTime!!.text = "Starting " + time
+            }
+            else
+            {
+                tvEndTime!!.text = "Ending " +time
+            }
+        }
+
+        ivAddItemImage = findViewById<View>(R.id.iv_AddItemImage) as ImageView
+        etCompany = findViewById<View>(R.id.et_Company) as EditText
+        etTask = findViewById<View>(R.id.et_Task) as EditText
+        etSalary = findViewById<View>(R.id.et_Salary) as EditText
+        etNumberOfWorkers = findViewById<View>(R.id.et_NumberOfWorkers) as EditText
+        etAddress = findViewById<View>(R.id.et_Address) as EditText
+        etInfo = findViewById<View>(R.id.et_Info) as EditText
+        btnShowLocation = findViewById<View>(R.id.btn_ShowLocation) as Button
+        btnAddWork = findViewById<View>(R.id.btn_AddWork) as Button
+        btnPreview = findViewById<View>(R.id.btn_Preview) as Button
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
     }
 
-//    override fun onMapReady(googleMap: GoogleMap) {
-//        mMap = googleMap
-//
-//        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-//    }
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        getLocationFromAddress("ben tzvi 40 givatayim")
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        mMap.setMyLocationEnabled(true)
+//        var p1 = getLocationFromAddress("ben tzvi 40 givatayim")
+//
+//        if (ActivityCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_COARSE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return
+//        }
+//        mMap.setMyLocationEnabled(true)
         //val p = getLocationFromAddress()
+        //todo set your location
         var p = LatLng(32.0589923, 34.8241127)
         mMap.addMarker(MarkerOptions().position(p).title("Marker"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p,15.0f))
     }
 
-    fun getLocationFromAddress(strAddress: String?): GeoPoint? {
+    fun getLocationFromAddress(strAddress: String?): LatLng? {
         val coder = Geocoder(this)
         val address: List<Address>?
         try {
@@ -91,10 +166,92 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
                 return null
             }
             val location: Address = address[0]
-            return GeoPoint(location.getLatitude(), location.getLongitude())
+            return LatLng(location.getLatitude(), location.getLongitude())
+            //return GeoPoint(location.getLatitude(), location.getLongitude())
         } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e : Exception)
+        {
             e.printStackTrace()
         }
         return null
     }
+
+    fun showOnMap(view: View)
+    {
+        var addr = edAddress.text.toString()
+        //todo remove markers
+        var point  = getLocationFromAddress(addr)
+        if (point != null)
+        {
+            mMap.addMarker(MarkerOptions().position(point).title(addr))
+            //mMap.get
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15.0f))
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun PickDate(view: View)
+    {
+        //todo: set current time or what we put before (the string)
+        // check if == date else split '/' and pass args
+        var cal: Calendar = Calendar.getInstance()
+        var year: Int = cal.get(Calendar.YEAR)
+        var month: Int = cal.get(Calendar.MONTH)
+        var day: Int = cal.get(Calendar.DAY_OF_MONTH)
+        var date = tvDate.text.toString()
+        if (date != "Date")
+        {
+            var arr = date.split('/')
+            day = Integer.parseInt(arr[0].split(' ')[1])
+            month = Integer.parseInt(arr[1]) - 1
+            year = Integer.parseInt(arr[2])
+        }
+        val dialog = DatePickerDialog(
+            this,
+            android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+            mDateSetListener,
+            year, month, day
+        )
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun PickTime(view: View)
+    {
+        var cal: Calendar = Calendar.getInstance()
+        var hour: Int = cal.get(Calendar.HOUR_OF_DAY)
+        var minute: Int = cal.get(Calendar.MINUTE)
+        var time = ""
+        if (view.getId() == R.id.tv_StartTime)
+        {
+            isStartTime = true;
+            time = tvStartTime.text.toString()
+        }
+        else
+        {
+            isStartTime = false;
+            time = tvEndTime.text.toString()
+        }
+        if (!(time == "Start Time" || time == "End Time"))
+        {
+            var arr = time.split(':')
+            hour = Integer.parseInt(arr[1].split(' ')[1])
+            minute = Integer.parseInt(arr[2])
+        }
+
+        val dialog = TimePickerDialog(
+            this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mTimeSetListener,hour,minute,false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    fun addWork(view: View)
+    {
+
+    }
+
+
 }

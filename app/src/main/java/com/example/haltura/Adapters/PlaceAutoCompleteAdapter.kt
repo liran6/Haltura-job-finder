@@ -14,7 +14,6 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // */
-//
 //import android.R
 //import android.content.Context
 //import android.graphics.Typeface
@@ -25,15 +24,15 @@
 //import android.view.ViewGroup
 //import android.widget.*
 //import com.google.android.gms.common.data.DataBufferUtils
-//import com.google.android.gms.common.data.Freezable
-//import com.google.android.gms.location.places.AutocompleteFilter
-//import com.google.android.gms.location.places.AutocompletePredictionBufferResponse
-//import com.google.android.gms.location.places.GeoDataClient
+////import com.google.android.gms.location.places.AutocompleteFilter
+////import com.google.android.gms.location.places.AutocompletePrediction
+////import com.google.android.gms.location.places.GeoDataClient
 //import com.google.android.gms.maps.model.LatLngBounds
 //import com.google.android.gms.tasks.RuntimeExecutionException
-//import com.google.android.gms.tasks.Task
 //import com.google.android.gms.tasks.Tasks
 //import com.google.android.libraries.places.api.model.AutocompletePrediction
+//import com.google.android.libraries.places.api.Places
+//import com.google.android.libraries.places.api.model
 //import java.util.concurrent.ExecutionException
 //import java.util.concurrent.TimeUnit
 //import java.util.concurrent.TimeoutException
@@ -44,8 +43,15 @@
 // * adapter. (See [AutocompletePrediction.freeze].)
 // */
 //class PlaceAutocompleteAdapter(
-//    context: Context?, geoDataClient: GeoDataClient,
-//    bounds: LatLngBounds, filter: AutocompleteFilter
+//    context: Context?,
+//    /**
+//     * Handles autocomplete requests.
+//     */
+//    private val mGeoDataClient: GeoDataClient,
+//    /**
+//     * The bounds used for Places Geo Data autocomplete API requests.
+//     */
+//    private var mBounds: LatLngBounds, filter: AutocompleteFilter
 //) : ArrayAdapter<AutocompletePrediction>(
 //    context!!,
 //    R.layout.simple_expandable_list_item_2,
@@ -56,16 +62,6 @@
 //     * Current results returned by this adapter.
 //     */
 //    private var mResultList: ArrayList<AutocompletePrediction>? = null
-//
-//    /**
-//     * Handles autocomplete requests.
-//     */
-//    private val mGeoDataClient: GeoDataClient
-//
-//    /**
-//     * The bounds used for Places Geo Data autocomplete API requests.
-//     */
-//    private var mBounds: LatLngBounds
 //
 //    /**
 //     * The autocomplete filter used to restrict queries to a specific set of place types.
@@ -178,11 +174,10 @@
 //
 //        // Submit the query to the autocomplete API and retrieve a PendingResult that will
 //        // contain the results when the query completes.
-//        val results: Task<AutocompletePredictionBufferResponse> =
-//            mGeoDataClient.getAutocompletePredictions(
-//                constraint.toString(), mBounds,
-//                mPlaceFilter
-//            )
+//        val results = mGeoDataClient.getAutocompletePredictions(
+//            constraint.toString(), mBounds,
+//            mPlaceFilter
+//        )
 //
 //        // This method should have been called off the main UI thread. Block and wait for at most
 //        // 60s for a result from the API.
@@ -196,16 +191,14 @@
 //            e.printStackTrace()
 //        }
 //        return try {
-//            val autocompletePredictions: AutocompletePredictionBufferResponse = results.getResult()
+//            val autocompletePredictions = results.result
 //            Log.i(
-//                TAG, "Query completed. Received " + autocompletePredictions.getCount()
-//                    .toString() + " predictions."
+//                TAG, "Query completed. Received " + autocompletePredictions.count
+//                        + " predictions."
 //            )
 //
 //            // Freeze the results immutable representation that can be stored safely.
-//            DataBufferUtils.freezeAndClose<AutocompletePrediction?, Freezable<AutocompletePrediction>>(
-//                autocompletePredictions
-//            )
+//            DataBufferUtils.freezeAndClose(autocompletePredictions)
 //        } catch (e: RuntimeExecutionException) {
 //            // If the query did not complete successfully return null
 //            Toast.makeText(
@@ -228,8 +221,7 @@
 //     * @see android.widget.ArrayAdapter.ArrayAdapter
 //     */
 //    init {
-//        mGeoDataClient = geoDataClient
-//        mBounds = bounds
+//        mBounds = mBounds
 //        mPlaceFilter = filter
 //    }
 //}

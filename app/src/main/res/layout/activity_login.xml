@@ -54,16 +54,16 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="88dp" />
 
-    <com.google.android.gms.common.SignInButton
+<!--    <com.google.android.gms.common.SignInButton-->
+    <Button
             android:id="@+id/btn_Google_Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Text"
+            android:text="googleLogIn"
             android:layout_alignParentTop="true"
             android:layout_margin="20dp"
             android:textSize="18sp"
             android:onClick="googleSignIn"
-            tools:ignore="OnClick"
             app:layout_constraintTop_toBottomOf="@+id/btn_SignUp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp"

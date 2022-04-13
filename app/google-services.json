@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "919904320191-assmqc13518ls321b4jdqio5arsrol1u.apps.googleusercontent.com",
+          "client_id": "919904320191-38e1m1u7h5e4apkchhqkbk1hleh6m09d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.haltura",
-            "certificate_hash": "3ba878690d9e6b7cc03e2c4e483c410a344b5eb2"
+            "certificate_hash": "c0a6b09bd718fcd753636970184f863b5d4f91bc"
           }
         },
         {

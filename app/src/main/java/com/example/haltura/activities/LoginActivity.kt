@@ -3,8 +3,10 @@ import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.haltura.R
 import com.example.haltura.Sql.UserOpenHelper
@@ -15,20 +17,32 @@ import com.google.firebase.auth.FirebaseAuth
 import com.example.haltura.Helpers.Validation.Companion.signInValid
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.ktx.Firebase
 import java.io.IOException
 
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
+    private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
+    private var showOneTapUI = true
+    private var TAG = "LoginActivity"
+
+    companion object {
+        private const val RC_SIGN_IN = 120
+    }
 
     //private lateinit var login: Button
     private lateinit var helper: UserOpenHelper
     private lateinit var auth: FirebaseAuth
     private lateinit var oneTapClient: SignInClient
+    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var signInRequest: BeginSignInRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,35 +56,23 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-//        val currentUser:FirebaseUser? = auth.currentUser
-//        updateUI(currentUser)
+        //auth = Firebase.auth // todo: move to user open helper
+
+        val gso =  GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this,gso)
+
+        auth  = FirebaseAuth.getInstance()
 
 
-        //todo google signin by liran code below
-//        signInRequest = BeginSignInRequest.builder()
-//            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
-//                .setSupported(true)
-//                .build())
-//            .setGoogleIdTokenRequestOptions(
-//                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-//                    .setSupported(true)
-//                    // Your server's client ID, not your Android client ID.
-//                    .setServerClientId(getString(R.string.default_web_client_id))
-//                    // Only show accounts previously used to sign in.
-//                    .setFilterByAuthorizedAccounts(true)
-//                    .build())
-//            // Automatically sign in when exactly one credential is retrieved.
-//            .setAutoSelectEnabled(true)
-//            .build()
+
 
 
     }
 
-//    public override fun onStart() {
-//        super.onStart()
-//        //todo: Check if user is signed in (non-null) and update UI accordingly.
-//        helper.isUserLoggedIn()
-//    }
+
 
 
 //    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
@@ -122,6 +124,59 @@ class LoginActivity : AppCompatActivity() {
 //        }
 //    }
 
+
+
+
+
+    fun googleSignIn(view: View) {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val exception = task.exception
+            if (task.isSuccessful) {
+                try {
+                    // Google Sign In was successful, authenticate with Firebase
+                    val account = task.getResult(ApiException::class.java)!!
+                    Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
+                    firebaseAuthWithGoogle(account.idToken!!)
+                } catch (e: ApiException) {
+                    // Google Sign In failed, update UI appropriately
+                    Log.w("SignInActivity", "Google sign in failed", e)
+                }
+            } else {
+                Log.w("SignInActivity", exception.toString())
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("SignInActivity", "signInWithCredential:success")
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.d("SignInActivity", "signInWithCredential:failure")
+                }
+            }
+    }
+
+
+
+
+
     fun signIn(view: View) {
         if (signInValid(
                 etEmail, etPassword
@@ -142,18 +197,76 @@ class LoginActivity : AppCompatActivity() {
         startActivity(Intent(this, ForgotYourPasswordActivity::class.java))
     }
 
-    fun googleSignIn(view: View) {
-        signInRequest = BeginSignInRequest.builder()
-        .setGoogleIdTokenRequestOptions(
-            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                .setSupported(true)
-                // Your server's client ID, not your Android client ID.
-                .setServerClientId(getString(R.string.your_web_client_id))
-                // Only show accounts previously used to sign in.
-                .setFilterByAuthorizedAccounts(true)
-                .build())
-        .build()
-    }
+//    fun googleSignIn(view: View) {
+//        signInRequest = BeginSignInRequest.builder()
+//        .setGoogleIdTokenRequestOptions(
+//            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+//                .setSupported(true)
+//                // Your server's client ID, not your Android client ID.
+//                .setServerClientId(getString(R.string.your_web_client_id))
+//                // Only show accounts previously used to sign in.
+//                .setFilterByAuthorizedAccounts(true)
+//                .build())
+//        .build()
+//    }
+//
+//
+//
+//
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        when (requestCode) {
+//            REQ_ONE_TAP -> {
+//                try {
+//                    val credential = oneTapClient.getSignInCredentialFromIntent(data)
+//                    val idToken = credential.googleIdToken
+//                    when {
+//                        idToken != null -> {
+//                            // Got an ID token from Google. Use it to authenticate
+//                            // with Firebase.
+//                            Log.d(TAG, "Got ID token.")
+//                        }
+//                        else -> {
+//                            // Shouldn't happen.
+//                            Log.d(TAG, "No ID token!")
+//                        }
+//                    }
+//                } catch (e: ApiException) {
+//                    // ...
+//                }
+//            }
+//        }
+//        val googleCredential = oneTapClient.getSignInCredentialFromIntent(data)
+//        val idToken = googleCredential.googleIdToken
+//        when {
+//            idToken != null -> {
+//                // Got an ID token from Google. Use it to authenticate
+//                // with Firebase.
+//                val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+//                auth.signInWithCredential(firebaseCredential)
+//                    .addOnCompleteListener(this) { task ->
+//                        if (task.isSuccessful) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "signInWithCredential:success")
+//                            val user = auth.currentUser
+//                            //updateUI(user) todo:
+//                            Toast.makeText(baseContext, "google Login Successful!", Toast.LENGTH_SHORT).show()
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "signInWithCredential:failure", task.exception)
+//                            Toast.makeText(baseContext, "Login unSuccessful!", Toast.LENGTH_SHORT).show()
+//                            //updateUI(null) todo:
+//                        }
+//                    }
+//            }
+//            else -> {
+//                // Shouldn't happen.
+//                Log.d(TAG, "No ID token!")
+//            }
+//        }
+//    }
 
 }
 
@@ -254,3 +367,5 @@ class LoginActivity : AppCompatActivity() {
 //    {
 //        startActivity(Intent(this, ForgotYourPasswordActivity::class.java))
 //    }
+
+
