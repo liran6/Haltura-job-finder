@@ -81,6 +81,7 @@ class UserOpenHelper
                                 loginUpdateUi(fireBaseUser)
 //                                activity.startActivity(Intent(activity, MainActivity::class.java))
 //                                activity.finish()
+                                //FirebaseDatabase.getInstance().getReference().child("Users").child("test").setValue(user(test = 'test1'))
                             }
                             else
                             {

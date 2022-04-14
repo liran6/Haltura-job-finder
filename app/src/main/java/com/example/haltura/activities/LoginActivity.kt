@@ -66,10 +66,6 @@ class LoginActivity : AppCompatActivity() {
 
         auth  = FirebaseAuth.getInstance()
 
-
-
-
-
     }
 
 
@@ -187,8 +183,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun signUp(view: View) {
-        startActivity(Intent(this, AddWorkActivity::class.java))
-        //startActivity(Intent(this, SignUpActivity::class.java))
+        //startActivity(Intent(this, AddWorkActivity::class.java))
+        startActivity(Intent(this, SignUpActivity::class.java))
 //        //todo: do this with user open helper - It is not the responsibility of the class
     }
 

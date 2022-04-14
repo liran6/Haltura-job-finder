@@ -1,59 +1,42 @@
 package com.example.haltura.activities
 
-//import com.google.android.gms.vision.barcode.Barcode.GeoPoint
-
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.google.android.gms.common.api.Status
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import android.graphics.Color;
-import android.Manifest
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
-//import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
+import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-//import android.os.Bundle
-//import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import com.example.haltura.R
+import com.example.haltura.Sql.BusinessOpenHelper
+import com.example.haltura.Sql.Items.Work
+import com.example.haltura.Sql.UserOpenHelper
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.GeoPoint
-import java.io.IOException
-//import android.content.pm.ApplicationInfo
-//import com.google.android.gms.common.api.Status
-//import android.widget.TextView
-//import android.widget.Toast
-import com.google.android.gms.fitness.data.Field
-import java.lang.Exception
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 
-//import com.google.android.gms.location.places.Place
-//import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-//import com.google.android.libraries.places.api.model.Place
-//import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import java.io.IOException
+import java.sql.Date
+import java.sql.Time
 
 //iv_addItem,Imageed_Company,ed_Task,dp_Date,tp_StartTime,tp_EndTime,et_Salary,et_NumberOfWorkers,et_Address,btn_ShowLocation,map,et_Info
 class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
+    private val REQ_CAMERA = 1
     private lateinit var mMap: GoogleMap
     private lateinit var autocompleteSupportFragment : AutocompleteSupportFragment
     private lateinit var edAddress: EditText
@@ -79,7 +62,10 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var tvEndTime:TextView// : tv_EndTime
     private lateinit var mDateSetListener: DatePickerDialog.OnDateSetListener
     private lateinit var mTimeSetListener: TimePickerDialog.OnTimeSetListener
+    var bm: Bitmap? = null
     private var isStartTime = true
+
+    var helper = BusinessOpenHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +86,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         mTimeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
             Log.d("AddWorkActivity", "onTimeSet: hh:mm: $hourOfDay:$minute")
             val time = "Time: $hourOfDay:$minute"
+            //todo: if the time is 18:05 it will be 18:5 (need to add zero)
             if (isStartTime)
             {
                 tvStartTime!!.text = "Starting " + time
@@ -250,8 +237,52 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun addWork(view: View)
     {
+        //todo: check validation...
+        var arrDate = tvDate.text.toString().split('/')
+        var arrStrtingTime = tvStartTime.text.toString().split(':')
+        var arrEndingTime = tvEndTime.text.toString().split(':')
 
+//        var date = Date(Integer.parseInt(arrDate[0].split(' ')[1]),
+//            Integer.parseInt(arrDate[1]) - 1,
+//            Integer.parseInt(arrDate[2]))
+        var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[0].split(' ')[1]),
+            Integer.parseInt(arrDate[1]),
+            Integer.parseInt(arrDate[2]))
+
+        var staringTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]))
+        var endingTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]))
+//        var staringTime = Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]),0)
+//        var endingTime = Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]),0)
+        var work = Work(
+            ivAddItemImage.drawable.toBitmap(),
+            etCompany.text.toString(),
+            etTask.text.toString(),
+            Integer.parseInt(etSalary.text.toString()),
+            Integer.parseInt(etNumberOfWorkers.text.toString()),
+            etAddress.text.toString(),
+            etInfo.text.toString(),
+            date,
+            staringTime,
+            endingTime
+        )
+        //var srt = work.toString()
+        helper.AddWork(work)
     }
 
+    fun SetImage(view: View)
+    {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQ_CAMERA)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_CAMERA && resultCode == RESULT_OK) {
+            if (data != null) {
+                bm = data.extras!!["data"] as Bitmap?
+                bm.toString()
+            }
+            ivAddItemImage.setImageBitmap(bm)
+        }
+    }
 }

@@ -17,6 +17,7 @@ class BusinessAccountActivity : AppCompatActivity() {
 
     fun addWork(view: View)
     {
+        startActivity(Intent(this, AddWorkActivity::class.java))
         //helper.addWork() // todo: should not be in user open helper
         //this.startActivity(Intent(this, AddWorkActivity::class.java))
     }

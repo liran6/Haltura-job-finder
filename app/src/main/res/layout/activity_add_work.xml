@@ -19,7 +19,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="60dp"
-                    android:text="add work"
+                    android:text="Add Work"
                     android:textColor="#000000"
                     android:textSize="40dp"
                     android:textStyle="bold|italic" />
@@ -29,6 +29,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:src="@mipmap/ic_launcher"
+                    android:onClick="SetImage"
                     android:id="@+id/iv_AddItemImage"/>
 
             <EditText
@@ -158,7 +159,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    android:hint="salary"
+                    android:hint="Salary"
                     android:inputType="number"
                     android:singleLine="true"
                     android:textAlignment="center"
