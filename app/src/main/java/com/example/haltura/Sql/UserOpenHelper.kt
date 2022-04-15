@@ -35,6 +35,8 @@ class UserOpenHelper
     private var reference = FirebaseDatabase.getInstance().getReference().child("Users")
     //private lateinit var reference : DatabaseReference
     private lateinit var activity: Activity
+    private lateinit var oneTapClient: SignInClient
+    private lateinit var signInRequest: BeginSignInRequest
 
     constructor(activity: Activity)
     {
