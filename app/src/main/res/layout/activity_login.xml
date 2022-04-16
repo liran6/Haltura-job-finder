@@ -54,16 +54,17 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="88dp" />
 
-    <com.google.android.gms.common.SignInButton
+<!--    <com.google.android.gms.common.SignInButton-->
+    <ImageView
+            android:src="@drawable/google"
             android:id="@+id/btn_Google_Login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Text"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="googleLogIn"
             android:layout_alignParentTop="true"
             android:layout_margin="20dp"
             android:textSize="18sp"
             android:onClick="googleSignIn"
-            tools:ignore="OnClick"
             app:layout_constraintTop_toBottomOf="@+id/btn_SignUp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp"
@@ -71,16 +72,16 @@
 
 
     <ImageView
-            android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             app:srcCompat="@drawable/ic_launcher_foreground"
             android:id="@+id/iv_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:srcCompat="@drawable/ic_haltura_login"
+            android:src="@drawable/haltura_icon2"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="26dp"
             app:layout_constraintBottom_toTopOf="@+id/et_Email"
             android:contentDescription="TODO" />
