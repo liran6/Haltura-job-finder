@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#F4511E</color>
+    <color name="colorPrimaryDark">#D84315</color>
+    <color name="colorAccent">#FFD600</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -10,4 +13,9 @@
     <color name="blue">#0000FF</color>
     <color name="gray">#5A5A5A</color>
     <color name="lightBlue">#0063FF</color>
+    <color name="colorLightGray">#ececec</color>
+    <color name="colorTitle">#ffffff</color>
+    <color name="colorGray">#dedede</color>
+    <color name="colorDarkGray">#b4b4b4</color>
+    <color name="colorBlue">#2962FF</color>
 </resources>
