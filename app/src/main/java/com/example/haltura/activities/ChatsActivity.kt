@@ -56,13 +56,13 @@ class ChatsActivity : AppCompatActivity() {
     private lateinit var manager: LinearLayoutManager
 
     // Firebase instance variables
-    private var auth =  FirebaseAuth.getInstance()
+    //private var auth =  FirebaseAuth.getInstance()
     //private lateinit var auth: FirebaseAuth.getInstance()
-    private lateinit var db: FirebaseDatabase
-    private lateinit var adapter: MessagesAdapter
+    //private lateinit var db: FirebaseDatabase
+    private var adapter: MessagesAdapter = MessagesAdapter(this)
 
     private val openDocument = registerForActivityResult(MyOpenDocumentContract.MyOpenDocumentContract()) { uri ->
-        onImageSelected(uri)
+        adapter.onImageSelected(uri)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,31 +77,22 @@ class ChatsActivity : AppCompatActivity() {
         // "10.0.2.2" is a special value which allows the Android emulator to
         // connect to "localhost" on the host computer. The port values are
         // defined in the firebase.json file.
-        if (BuildConfig.DEBUG) {
-//            Firebase.database.useEmulator("10.0.2.2", 9000)
-//            Firebase.auth.useEmulator("10.0.2.2", 9099)
-//            Firebase.storage.useEmulator("10.0.2.2", 9199)
-        }
-
-        // Initialize Firebase Auth and check if the user is signed in
-//        auth = Firebase.auth
-//        if (auth.currentUser == null) {
-//            // Not signed in, launch the Sign In activity
-//            startActivity(Intent(this, SignInActivity::class.java))
-//            finish()
-//            return
+//        if (BuildConfig.DEBUG) {
+////            Firebase.database.useEmulator("10.0.2.2", 9000)
+////            Firebase.auth.useEmulator("10.0.2.2", 9099)
+////            Firebase.storage.useEmulator("10.0.2.2", 9199)
 //        }
 
         // Initialize Realtime Database
-        db = Firebase.database
-        val messagesRef = db.reference.child(MESSAGES_CHILD)
+        //db = Firebase.database
+        //val messagesRef = db.reference.child(MESSAGES_CHILD)
 
         // The FirebaseRecyclerAdapter class and options come from the FirebaseUI library
         // See: https://github.com/firebase/FirebaseUI-Android
         val options = FirebaseRecyclerOptions.Builder<Message>()
-            .setQuery(messagesRef, Message::class.java)
+            .setQuery(adapter.getMessagesRef(), Message::class.java)
             .build()
-        adapter = MessagesAdapter(options, getUserName())
+        //adapter = MessagesAdapter(this)
         binding.progressBar.visibility = ProgressBar.INVISIBLE
         manager = LinearLayoutManager(this)
         manager.stackFromEnd = true
@@ -122,11 +113,12 @@ class ChatsActivity : AppCompatActivity() {
         binding.sendButton.setOnClickListener {
             val friendlyMessage = Message(
                 binding.messageEditText.text.toString(),
-                getUserName(),
-                getPhotoUrl(),
+                adapter.getUserName(),
+                adapter.getPhotoUrl(),
                 null
             )
-            db.reference.child(MESSAGES_CHILD).push().setValue(friendlyMessage)
+            //db.reference.child(MESSAGES_CHILD).push().setValue(friendlyMessage)
+            adapter.sendingMessage(friendlyMessage)
             binding.messageEditText.setText("")
         }
 
@@ -173,59 +165,59 @@ class ChatsActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun onImageSelected(uri: Uri) {
-        Log.d(TAG, "Uri: $uri")
-        val user = auth.currentUser
-        val tempMessage = Message(null, getUserName(), getPhotoUrl(), LOADING_IMAGE_URL)
-        db.reference
-            .child(MESSAGES_CHILD)
-            .push()
-            .setValue(
-                tempMessage,
-                DatabaseReference.CompletionListener { databaseError, databaseReference ->
-                    if (databaseError != null) {
-                        Log.w(
-                            TAG, "Unable to write message to database.",
-                            databaseError.toException()
-                        )
-                        return@CompletionListener
-                    }
+//    private fun onImageSelected(uri: Uri) {
+//        Log.d(TAG, "Uri: $uri")
+//        val user = auth.currentUser
+//        val tempMessage = Message(null, adapter.getUserName(), adapter.getPhotoUrl(), LOADING_IMAGE_URL)
+//        db.reference
+//            .child(MESSAGES_CHILD)
+//            .push()
+//            .setValue(
+//                tempMessage,
+//                DatabaseReference.CompletionListener { databaseError, databaseReference ->
+//                    if (databaseError != null) {
+//                        Log.w(
+//                            TAG, "Unable to write message to database.",
+//                            databaseError.toException()
+//                        )
+//                        return@CompletionListener
+//                    }
+//
+//                    // Build a StorageReference and then upload the file
+//                    val key = databaseReference.key
+//                    val storageReference = Firebase.storage
+//                        .getReference(user!!.uid)
+//                        .child(key!!)
+//                        .child(uri.lastPathSegment!!)
+//                    putImageInStorage(storageReference, uri, key)
+//                })
+//    }
 
-                    // Build a StorageReference and then upload the file
-                    val key = databaseReference.key
-                    val storageReference = Firebase.storage
-                        .getReference(user!!.uid)
-                        .child(key!!)
-                        .child(uri.lastPathSegment!!)
-                    putImageInStorage(storageReference, uri, key)
-                })
-    }
-
-    private fun putImageInStorage(storageReference: StorageReference, uri: Uri, key: String?) {
-        // First upload the image to Cloud Storage
-        storageReference.putFile(uri)
-            .addOnSuccessListener(
-                this
-            ) { taskSnapshot -> // After the image loads, get a public downloadUrl for the image
-                // and add it to the message.
-                taskSnapshot.metadata!!.reference!!.downloadUrl
-                    .addOnSuccessListener { uri ->
-                        val friendlyMessage =
-                            Message(null, getUserName(), getPhotoUrl(), uri.toString())
-                        db.reference
-                            .child(MESSAGES_CHILD)
-                            .child(key!!)
-                            .setValue(friendlyMessage)
-                    }
-            }
-            .addOnFailureListener(this) { e ->
-                Log.w(
-                    TAG,
-                    "Image upload task was unsuccessful.",
-                    e
-                )
-            }
-    }
+//    private fun putImageInStorage(storageReference: StorageReference, uri: Uri, key: String?) {
+//        // First upload the image to Cloud Storage
+//        storageReference.putFile(uri)
+//            .addOnSuccessListener(
+//                this
+//            ) { taskSnapshot -> // After the image loads, get a public downloadUrl for the image
+//                // and add it to the message.
+//                taskSnapshot.metadata!!.reference!!.downloadUrl
+//                    .addOnSuccessListener { uri ->
+//                        val friendlyMessage =
+//                            Message(null, adapter.getUserName(), adapter.getPhotoUrl(), uri.toString())
+//                        db.reference
+//                            .child(MESSAGES_CHILD)
+//                            .child(key!!)
+//                            .setValue(friendlyMessage)
+//                    }
+//            }
+//            .addOnFailureListener(this) { e ->
+//                Log.w(
+//                    TAG,
+//                    "Image upload task was unsuccessful.",
+//                    e
+//                )
+//            }
+//    }
 
 //    private fun signOut() {
 //        AuthUI.getInstance().signOut(this)
@@ -233,20 +225,20 @@ class ChatsActivity : AppCompatActivity() {
 //        finish()
 //    }
 
-    private fun getPhotoUrl(): String? {
-        val user = auth.currentUser
-        return user?.photoUrl?.toString()
-    }
-
-    private fun getUserName(): String? {
-        val user = auth.currentUser
-        return if (user != null) {
-            user.displayName
-        } else ANONYMOUS
-    }
+//    private fun getPhotoUrl(): String? {
+//        val user = auth.currentUser
+//        return user?.photoUrl?.toString()
+//    }
+//
+//    private fun getUserName(): String? {
+//        val user = auth.currentUser
+//        return if (user != null) {
+//            user.displayName
+//        } else ANONYMOUS
+//    }
 
     companion object {
-        private const val TAG = "MainActivity"
+        const val TAG = "ChatsActivity"
         const val MESSAGES_CHILD = "messages"
         const val ANONYMOUS = "anonymous"
         private const val LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif"

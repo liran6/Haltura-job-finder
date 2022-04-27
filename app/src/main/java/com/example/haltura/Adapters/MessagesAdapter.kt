@@ -1,6 +1,8 @@
 package com.example.haltura.Adapters
 
+import android.app.Activity
 import android.graphics.Color
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,14 +16,31 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.example.haltura.databinding.ImageMessageBinding
 import com.example.haltura.databinding.MessageBinding
 import com.example.haltura.Sql.Items.Message
+import com.example.haltura.activities.ChatsActivity
 import com.example.haltura.activities.ChatsActivity.Companion.ANONYMOUS
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 
+
 class MessagesAdapter(
-    private val options: FirebaseRecyclerOptions<Message>,
-    private val currentUserName: String?
+//    private val options: FirebaseRecyclerOptions<Message> = FirebaseRecyclerOptions.Builder<Message>()
+//.setQuery(getMessagesRef(), Message::class.java)
+//.build() ,
+    //private val currentUserName: String?,
+    private var chats: ChatsActivity,
+    private var auth: FirebaseAuth =  FirebaseAuth.getInstance(),
+    private var db: FirebaseDatabase = Firebase.database,
+    private val messages_ref: DatabaseReference = db.reference.child(MESSAGES_CHILD),
+    private val options: FirebaseRecyclerOptions<Message> = FirebaseRecyclerOptions.Builder<Message>()
+        .setQuery(messages_ref, Message::class.java)
+        .build(),
 ) : FirebaseRecyclerAdapter<Message, ViewHolder>(options) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return if (viewType == VIEW_TYPE_TEXT) {
@@ -61,7 +80,7 @@ class MessagesAdapter(
         }
 
         private fun setTextColor(userName: String?, textView: TextView) {
-            if (userName != ANONYMOUS && currentUserName == userName && userName != null) {
+            if (userName != ANONYMOUS && getUserName() == userName && userName != null) {
                 textView.setBackgroundResource(R.drawable.rounded_message_blue)
                 textView.setTextColor(Color.WHITE)
             } else {
@@ -106,10 +125,93 @@ class MessagesAdapter(
             Glide.with(view.context).load(url).into(view)
         }
     }
+    fun getPhotoUrl(): String? {
+        val user = auth.currentUser
+        return user?.photoUrl?.toString()
+    }
+
+     fun getUserName(): String? {
+        val user = auth.currentUser
+        return if (user != null) {
+            user.displayName
+        } else ANONYMOUS
+    }
+    fun getMessagesRef(): DatabaseReference {
+        //val messages_ref = db.reference.child(MESSAGES_CHILD)
+        return messages_ref
+        }
+    fun sendingMessage(message: Message){
+        messages_ref.push().setValue(message)
+    }
+
+
+
+    fun onImageSelected(uri: Uri) {
+        Log.d(ChatsActivity.TAG, "Uri: $uri")
+        val user = auth.currentUser
+        val tempMessage = Message(null, getUserName(), getPhotoUrl(),
+            LOADING_IMAGE_URL
+        )
+        db.reference
+            .child(ChatsActivity.MESSAGES_CHILD)
+            .push()
+            .setValue(
+                tempMessage,
+                DatabaseReference.CompletionListener { databaseError, databaseReference ->
+                    if (databaseError != null) {
+                        Log.w(
+                            ChatsActivity.TAG, "Unable to write message to database.",
+                            databaseError.toException()
+                        )
+                        return@CompletionListener
+                    }
+
+                    // Build a StorageReference and then upload the file
+                    val key = databaseReference.key
+                    val storageReference = Firebase.storage
+                        .getReference(user!!.uid)
+                        .child(key!!)
+                        .child(uri.lastPathSegment!!)
+                    putImageInStorage(storageReference, uri, key)
+                })
+    }
+
+
+    private fun putImageInStorage(storageReference: StorageReference, uri: Uri, key: String?) {
+        // First upload the image to Cloud Storage
+        storageReference.putFile(uri)
+            .addOnSuccessListener { taskSnapshot -> // After the image loads, get a public downloadUrl for the image
+                // and add it to the message.
+                taskSnapshot.metadata!!.reference!!.downloadUrl
+                    .addOnSuccessListener { uri ->
+                        val friendlyMessage =
+                            Message(null, getUserName(), getPhotoUrl(), uri.toString())
+                        db.reference
+                            .child(ChatsActivity.MESSAGES_CHILD)
+                            .child(key!!)
+                            .setValue(friendlyMessage)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.w(
+                    ChatsActivity.TAG,
+                    "Image upload task was unsuccessful.",
+                    e
+                )
+            }
+    }
+
+
+
+
+
+
 
     companion object {
+        const val MESSAGES_CHILD = "messages"
         const val TAG = "MessageAdapter"
         const val VIEW_TYPE_TEXT = 1
         const val VIEW_TYPE_IMAGE = 2
+        private const val LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif"
     }
 }
