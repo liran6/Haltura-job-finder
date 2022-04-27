@@ -202,11 +202,6 @@ class MessagesAdapter(
     }
 
 
-
-
-
-
-
     companion object {
         const val MESSAGES_CHILD = "messages"
         const val TAG = "MessageAdapter"

@@ -269,6 +269,31 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         helper.AddWork(work)
     }
 
+    fun preview(view: View)
+    {
+        //todo: check validation...
+        //todo: this is exactly like addWork - at the end instead of helper.AddWork(work) we show it
+        var arrDate = tvDate.text.toString().split('/')
+        var arrStrtingTime = tvStartTime.text.toString().split(':')
+        var arrEndingTime = tvEndTime.text.toString().split(':')
+        var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[0].split(' ')[1]), Integer.parseInt(arrDate[1]), Integer.parseInt(arrDate[2]))
+        var staringTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]))
+        var endingTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]))
+        var work = Work(
+            ivAddItemImage.drawable.toBitmap(),
+            etCompany.text.toString(),
+            etTask.text.toString(),
+            Integer.parseInt(etSalary.text.toString()),
+            Integer.parseInt(etNumberOfWorkers.text.toString()),
+            etAddress.text.toString(),
+            etInfo.text.toString(),
+            date,
+            staringTime,
+            endingTime
+        )
+        //show work as work_item_list
+    }
+
     fun SetImage(view: View)
     {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -285,4 +310,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             ivAddItemImage.setImageBitmap(bm)
         }
     }
+
+
 }

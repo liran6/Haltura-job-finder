@@ -27,6 +27,6 @@ class Time {
     }
 
     override fun toString(): String {
-        return "Time(hour=$hour, minutes=$minutes)"
+        return "$hour:$minutes"
     }
 }

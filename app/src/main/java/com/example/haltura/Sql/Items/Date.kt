@@ -36,6 +36,6 @@ class Date {
     }
 
     override fun toString(): String {
-        return "Date(year=$year, month=$month, day=$day)"
+        return "$year/$month/$day"
     }
 }

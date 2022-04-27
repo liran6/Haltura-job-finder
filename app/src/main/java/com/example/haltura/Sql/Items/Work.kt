@@ -98,7 +98,7 @@ class Work {
         return company
     }
     //Task
-    fun setTask(company: String?) {
+    fun setTask(task: String?) {
         this.task = task!!
     }
 
@@ -122,7 +122,7 @@ class Work {
         return numberOfWorkers
     }
     //Address
-    fun setAddress(company: String?) {
+    fun setAddress(address: String?) {
         this.address = address!!
     }
 

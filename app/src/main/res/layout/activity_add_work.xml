@@ -86,7 +86,36 @@
 <!--                    android:layout_gravity="center"-->
 <!--                    android:calendarViewShown="false"/>-->
 
-        <LinearLayout
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                <EditText
+                        android:id="@+id/et_Address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:hint="Address"
+                        android:layout_marginTop="20dp"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:textStyle="bold|italic" />
+
+                <Button
+                        android:id="@+id/btn_ShowLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:onClick="showOnMap"
+                        android:text="show" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -192,35 +221,7 @@
                     android:textAlignment="center"
                     android:textStyle="bold|italic" />
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-            <EditText
-                    android:id="@+id/et_Address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:hint="Address"
-                    android:layout_marginTop="20dp"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:textAlignment="center"
-                    android:textStyle="bold|italic" />
-            <Button
-                    android:id="@+id/btn_ShowLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:onClick="showOnMap"
-                    android:text="show"
-                    />
-
-        </LinearLayout>
-
-<!--            <EditText-->
+            <!--            <EditText-->
 <!--                    android:id="@+id/et_Address"-->
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
@@ -336,6 +337,7 @@
 
             <Button
                     android:id="@+id/btn_Preview"
+                    android:onClick="preview"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
