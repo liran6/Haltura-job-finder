@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Haltura</string>
-    <string name = "my_web_client_id">919904320191-k7vd5j0ub5p4rffc81igtq9ic5gbiel4.apps.googleusercontent.com</string>
+    <string name="my_web_client_id">919904320191-k7vd5j0ub5p4rffc81igtq9ic5gbiel4.apps.googleusercontent.com</string>
     <string-array name="cities">
         <item>City</item>
         <item>Acre</item>
@@ -82,4 +82,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

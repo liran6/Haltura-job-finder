@@ -1,10 +1,11 @@
 package com.example.haltura.activities
 
-import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -105,7 +106,14 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
     override fun onWorkClick(pos: Int){
         //todo: here make dialog
         var dwork = workArrayList.get(pos)
-        Log.d("Main","onClick: Clicked" + pos)
+        val view = View.inflate(this,R.layout.watch_work_dialog2, null)
+        view.
+        val builder = AlertDialog.Builder(this)
+        builder.setView(view)
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+        //Log.d("Main","onClick: Clicked" + pos)
     }
 
 

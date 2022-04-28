@@ -2,17 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        tools:context=".Dialogs.WatchWorkDialog2">
+        android:orientation="vertical">
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Task(Company)"
+            android:text="company"
             android:textSize="40sp"
             android:textColor="#000000"
-            android:id="@+id/itemTaskAndCompany" />
+            android:id="@+id/itemCompanyWW" />
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="task"
+            android:textSize="30sp"
+            android:textColor="#787878"
+            android:id="@+id/itemTaskWW" />
 
 
     <LinearLayout
@@ -35,52 +41,36 @@
                     android:orientation="vertical">
 
                 <TextView
+                        android:id="@+id/WarrantyATC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:textSize="30dp"
-                        android:id="@+id/itemTask"
+                        android:gravity="left"
                         android:singleLine="true"
-                        android:text="item Task" />
+                        android:text="add here "
+
+                        android:textSize="20dp" />
+
+
+
                 <TextView
+                        android:id="@+id/workSalaryWW"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:textSize="22dp"
-                        android:id="@+id/itemSalary"
+                        android:gravity="left"
                         android:singleLine="true"
-                        android:text="item Salary" />
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:textSize="20dp"
-                        android:id="@+id/itemDateAndTime"
-                        android:singleLine="true"
-                        android:text="item Date and Time" />
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:textSize="25dp"
-                        android:id="@+id/itemLocation"
-                        android:text="Location"
-                        android:singleLine="true"/>
+                        android:text="salary"
+                        android:textColor="#00b300"
+
+                        android:textSize="20dp" />
 
 
 
             </LinearLayout>
 
             <ImageView
-                    android:id="@+id/itemImage"
+                    android:id="@+id/PicATC"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_gravity="center"
@@ -91,22 +81,13 @@
 
     </LinearLayout>
     <TextView
-            android:id="@+id/itemInfo"
+            android:id="@+id/workInfoWW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:singleLine="false"
             android:text="info"
             android:textSize="20dp" />
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center" />
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -115,12 +96,14 @@
             android:orientation="horizontal">
 
         <Button
-                android:id="@+id/RegisterToWork"
-                android:layout_width="150dp"
+                android:id="@+id/btnScheduleYourself"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textSize="20sp"
                 android:layout_margin="5dp"
-                android:text="register to work" />
+
+                android:text="schedule yourself" />
 
 
     </LinearLayout>
