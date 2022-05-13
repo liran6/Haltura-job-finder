@@ -62,6 +62,16 @@ class UserOpenHelper
         activity.startActivity(Intent(activity, ChatsActivity::class.java))
     }
 
+    fun getUserId() : String
+    {
+        var user =  auth.getCurrentUser()
+        if (user != null)
+        {
+            return user.getUid()
+        }
+        return null!!
+    }
+
     fun createUser(user: User)
     {
         //todo: log this to server

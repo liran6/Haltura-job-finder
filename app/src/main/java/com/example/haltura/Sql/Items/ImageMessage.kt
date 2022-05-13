@@ -1,14 +1,25 @@
 package com.example.haltura.Sql.Items
 
-import java.util.*
-
-class ImageMessage{}
-//data class ImageMessage(val imagePath: String,
-//                        override val time: Date,
-//                        override val senderId: String,
-//                        override val recipientId: String,
-//                        override val senderName: String,
-//                        override val type: String = MessageType.IMAGE)
-//    : Message {
-//    constructor() : this("", Date(0), "", "", "")
+//class ImageMessage : Message
+//{
+//    companion object {
+//        const val TYPE_IMAGE = 1
+//    }
+//
+//    private lateinit var image: String
+//
+//    constructor():super()
+//
+//    constructor(image: String, userId: String, name: String , userImage : String, time: Time):super(name, userId, time, userImage, TYPE_IMAGE) {
+//        this.image = image
+//    }
+//
+//
+//    fun setImage(image: String?) {
+//        this.image = image!!
+//    }
+//
+//    fun getImage(): String? {
+//        return image
+//    }
 //}

@@ -14,6 +14,7 @@ import android.util.Base64.DEFAULT
 import android.util.Base64.decode
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
+//todo: change to WorkAdapter
 class MyAdapter : RecyclerView.Adapter<MyAdapter.myViewHolder>{
     lateinit var workList : ArrayList<Work>
     lateinit var onWorkListener : MyAdapter.OnWorkListener
@@ -44,8 +45,6 @@ class MyAdapter : RecyclerView.Adapter<MyAdapter.myViewHolder>{
     override fun getItemCount(): Int {
         return workList.size
     }
-
-
 
     class myViewHolder : RecyclerView.ViewHolder, View.OnClickListener
     {

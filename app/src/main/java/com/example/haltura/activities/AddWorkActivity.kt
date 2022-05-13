@@ -117,7 +117,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-//        var p1 = getLocationFromAddress("ben tzvi 40 givatayim")
+//        var p1 = getLocationFromAddress("ben tzvi 50 givatayim")
 //
 //        if (ActivityCompat.checkSelfPermission(
 //                this,

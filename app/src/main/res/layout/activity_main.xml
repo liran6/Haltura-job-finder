@@ -11,7 +11,7 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/workRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="500dp"
             android:background="@android:color/white"
             android:paddingHorizontal="16dp"
             tools:layout_editor_absoluteX="0dp"
@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintTop_toBottomOf="@+id/workRecyclerView"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="40dp" />
 
     <Button
             android:text="chat"

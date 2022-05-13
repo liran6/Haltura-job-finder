@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.*
+import com.example.haltura.Dialogs.WatchWorkDialog
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.UserOpenHelper
+import com.google.android.gms.dynamic.SupportFragmentWrapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 //import jdk.jpackage.internal.Arguments.CLIOptions.context
@@ -63,7 +65,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
 
     private fun getWorkData() {
         dbref = FirebaseDatabase.getInstance().getReference("Works")
-        dbref.addValueEventListener(object : ValueEventListener{
+        //dbref.addValueEventListener(object : ValueEventListener{
+        dbref.addListenerForSingleValueEvent(object : ValueEventListener{ // todo: will not change data after first init - need to add check for is work still available
             override fun onDataChange(snapshot: DataSnapshot) {
                 workArrayList.clear()
                 if (snapshot.exists())
@@ -94,7 +97,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
     fun chat(view: View)
     {
         //helper.chats() // todo: should not be in user open helper
-        this.startActivity(Intent(this, ChatsActivity::class.java))
+        //this.startActivity(Intent(this, ChatsActivity::class.java))
+        this.startActivity(Intent(this, ChatActivity::class.java))
     }
 
     fun MoveToBusiness(view: View)
@@ -106,13 +110,15 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
     override fun onWorkClick(pos: Int){
         //todo: here make dialog
         var dwork = workArrayList.get(pos)
-        val view = View.inflate(this,R.layout.watch_work_dialog2, null)
-        view.
-        val builder = AlertDialog.Builder(this)
-        builder.setView(view)
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.show()
+//        val view = View.inflate(this,R.layout.watch_work_dialog2, null)
+//        //view.
+//        val builder = AlertDialog.Builder(this)
+//        builder.setView(view)
+//        val dialog = builder.create()
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog.show()
+        var dialog = WatchWorkDialog(dwork,this)
+        dialog.show(supportFragmentManager,"WatchWorkDialog")//SupportFragmentManager,"WatchWorkDialog")
         //Log.d("Main","onClick: Clicked" + pos)
     }
 

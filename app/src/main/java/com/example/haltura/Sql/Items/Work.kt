@@ -37,6 +37,7 @@ class Work {
         startTime = Time(0,0)
         endTime = Time(0,0)
     }
+    //todo: add constructor of image type string ()
 
     constructor(
     image: Bitmap,

@@ -13,12 +13,12 @@ import com.bumptech.glide.Glide
 import com.example.haltura.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.example.haltura.databinding.ImageMessageBinding
+//import com.example.haltura.databinding.ImageMessageBinding
 import com.example.haltura.databinding.WorkItemListBinding
 import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.activities.ChatsActivity
-import com.example.haltura.activities.ChatsActivity.Companion.ANONYMOUS
+//import com.example.haltura.activities.ChatsActivity.Companion.ANONYMOUS
 import com.example.haltura.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
