@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
     {
         //helper.chats() // todo: should not be in user open helper
         //this.startActivity(Intent(this, ChatsActivity::class.java))
-        this.startActivity(Intent(this, ChatActivity::class.java))
+        this.startActivity(Intent(this, ChatsActivity::class.java))
     }
 
     fun MoveToBusiness(view: View)

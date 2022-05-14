@@ -27,6 +27,18 @@ class Time {
     }
 
     override fun toString(): String {
-        return "$hour:$minutes"
+        var h :String = ""
+        var m :String = ""
+        if (hour < 10)
+        {
+            h += "0"
+        }
+        h += hour.toString()
+        if (minutes < 10)
+        {
+            m += "0"
+        }
+        m += minutes.toString()
+        return h + ":" + m
     }
 }

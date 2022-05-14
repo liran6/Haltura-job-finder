@@ -40,7 +40,7 @@ class ChatActivity : AppCompatActivity() {
     private var auth =  FirebaseAuth.getInstance() //todo delete(move to open helper)
     private lateinit var helper: UserOpenHelper
 
-    var context: MyAdapter.OnWorkListener? = null
+    //var context: MyAdapter.OnWorkListener? = null
 
     private lateinit var dbref : DatabaseReference
     private lateinit var messageRecyclerView: RecyclerView

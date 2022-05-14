@@ -1,8 +1,5 @@
 package com.example.haltura.Adapters
 
-//import com.example.haltura.Sql.Items.ImageMessage
-//import com.example.haltura.Sql.Items.TextMessage
-//import com.example.haltura.databinding.MessageBinding
 
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory

@@ -1,5 +1,6 @@
 package com.example.haltura.activities
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.haltura.R
@@ -7,16 +8,24 @@ import com.example.haltura.Util.FirestoreUtil
 import com.google.firebase.firestore.ListenerRegistration
 import com.xwray.groupie.Section
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.haltura.Adapters.*
+import com.example.haltura.Sql.Items.Chat
 //import com.example.haltura.Adapters.MessagesAdapter
-import com.example.haltura.Adapters.MyButtonObserver
-import com.example.haltura.Adapters.MyOpenDocumentContract
-import com.example.haltura.Adapters.MyScrollToBottomObserver
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.*
 import com.firebase.ui.database.BuildConfig
@@ -25,20 +34,235 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.example.haltura.databinding.ActivityChatsBinding
 import com.example.haltura.Sql.Items.Message
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.haltura.Sql.Items.Time
+import com.example.haltura.Sql.Items.Work
+import com.example.haltura.Sql.UserOpenHelper
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-
+import java.io.ByteArrayOutputStream
 
 
 class ChatsActivity : AppCompatActivity() {
+    private var auth =  FirebaseAuth.getInstance() //todo delete(move to open helper)
+    private lateinit var helper: UserOpenHelper
+
+    //var context: MyAdapter.OnWorkListener? = null
+
+    private lateinit var dbref : DatabaseReference
+    private lateinit var chatsRecyclerView: RecyclerView //
+    private lateinit var chatsArrayList: ArrayList<Chat>
+    private lateinit var searchToolbar: EditText //toolbar_search
+    private lateinit var manager: LinearLayoutManager
+    private lateinit var adapt: ChatsAdapter
+    private lateinit var activity: Activity
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chats)
+        init()
+        activity = this
+        searchToolbar = findViewById(R.id.toolbar_search)
+        chatsRecyclerView = findViewById(R.id.chatsRecyclerView)
+        manager = LinearLayoutManager(this)
+        manager.stackFromEnd = false
+        chatsRecyclerView.layoutManager = manager
+
+        chatsArrayList = arrayListOf<Chat>()
+
+        getChatsData()
+
+        searchToolbar.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.toString().trim { it <= ' ' }.length == 0) {
+                    //todo: filter
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // TODO Auto-generated method stub
+            }
+        })
     }
+
+    fun init()
+    {
+        val members = ArrayList<String>()
+        members.add("QaSXkzHuD3NQdHmUkgnU9e5Ntxu2")
+        members.add("C8AKORnTi7QKL5yxqwwxcHpP2O03")
+        val messages = ArrayList<Message>()
+        messages.add(Message(
+            "test1",
+            null,
+            getUserid(),
+            getUserName(),
+            Time(1,1)
+        ))
+        messages.add(Message(
+            "test2",
+            null,
+            getUserid(),
+            getUserName(),
+            Time(1,1)
+        ))
+        val chat = Chat(
+            members,
+            messages
+        )
+        dbref = FirebaseDatabase.getInstance().getReference("Chats")
+        val key = dbref.push().key
+        if (key != null) {
+            dbref.child(key).setValue(chat)
+        }
+        //todo: add to list of chats of each members
+    }
+
+    private fun getChatsData() {
+        //todo pick specific chat
+        dbref = FirebaseDatabase.getInstance().getReference("Chats")
+//        adapt =
+//            ChatsAdapter(chatsArrayList, getUserid(), _clickOnItemListener = { onClickChat(it) })
+//        chatsRecyclerView.adapter = adapt
+
+
+        dbref.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists())
+                {
+                    for(chatSnap in snapshot.children)
+                    {
+                        val chat = chatSnap.getValue(Chat::class.java)
+                        chatsArrayList.add(chat!!)
+                    }
+                    adapt = ChatsAdapter(chatsArrayList, getUserid(), _clickOnItemListener = { onClickChat(it) })
+                    chatsRecyclerView.adapter = adapt
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+//        dbref.addChildEventListener(object : ChildEventListener {
+//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//                var chat = snapshot.getValue(Chat::class.java)
+//                if (chat != null) {
+//                    chatsArrayList.add(chat)
+//                    adapt.notifyDataSetChanged()
+//                }
+//                else {
+//                    //todo err (error text message)
+//                }
+//                //adapt.notifyDataSetChanged() //todo: delete?
+//            }
+//
+//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildRemoved(snapshot: DataSnapshot) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+    }
+
+//    fun sendMessage(view: View)
+//    {
+//        //todo: send the text message
+//
+//        val msg = Message(
+//            textMessage.text.toString(),
+//            null,
+//            getUserid(),
+//            getUserName(),
+//            Time(1,1)
+//        )
+//        //adapter.sendMessage(msg)
+//        //var helper =  ChatOpenHelper(this) //todo: move to global
+//        dbref = FirebaseDatabase.getInstance().getReference("Messages")
+//        dbref.push().setValue(msg)
+//        textMessage.setText("")
+//    }
+//
+//    fun sendImageMessage(image: Bitmap)
+//    {
+//        val baos = ByteArrayOutputStream()
+//        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+//        val data = baos.toByteArray()
+//        var txt :String? = null
+//        if(textMessage.text.toString() != "")
+//        {
+//            txt = textMessage.text.toString()
+//        }
+//        val msg = Message(
+//            txt,
+//            Base64.encodeToString(data, Base64.DEFAULT),
+//            getUserid(),
+//            getUserName(),
+//            Time(1,1)
+//        )
+//        //adapter.sendMessage(msg)
+//        //var helper =  ChatOpenHelper(this) //todo: move to global
+//        dbref = FirebaseDatabase.getInstance().getReference("Messages")
+//        dbref.push().setValue(msg)
+//        textMessage.setText("")
+//    }
+
+    private fun onClickChat(chat: Chat)
+    {
+        //todo: open and set priority in chat order (will be first when we open this activity again)
+    }
+
+    fun getUserid(): String {
+        val user = auth.currentUser
+        if (user != null) {
+            return user.getUid()!!!!
+        }
+        else {
+            return "err"
+        }
+        //todo: take userid from user (not google login)
+    }
+
+    fun getUserName(): String {
+        val user = auth.currentUser
+        if (user != null) {
+            return user.displayName!!
+        }
+        else {
+            return "ANONYMOUS"
+        }
+        //todo: take name from user (not google login)
+    }
+
+    companion object {
+        const val TAG = "ChatsActivity"
+        const val MESSAGES_CHILD = "messages"
+        const val ANONYMOUS = "anonymous"
+        private const val LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif"
+    }
+}
+
+
 //    private lateinit var binding: ActivityChatsBinding
 //    private lateinit var manager: LinearLayoutManager
 //    private var adapter: MessagesAdapter = MessagesAdapter(this)
@@ -117,4 +341,4 @@ class ChatsActivity : AppCompatActivity() {
 //        const val ANONYMOUS = "anonymous"
 //        private const val LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif"
 //    }
-}
+//}

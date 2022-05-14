@@ -6,88 +6,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.ChatsActivity">
-<!--    <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-<!--        <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal">-->
-<!--            <EditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="search..."/>-->
-
-<!--        </LinearLayout>-->
-
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recycler_view_people"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                tools:listitem="@layout/user_chat_item"-->
-<!--                android:layout_marginTop="50dp" />-->
-
-<!--    </RelativeLayout>-->
 
     <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="@color/colorLightGray"
             android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
-
-        <ImageView
-                android:id="@+id/addMessageImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/outline_add_photo_alternate_24" />
-
-        <ImageView
-                android:layout_marginLeft="5dp"
-                android:id="@+id/addMessagePic"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-                android:id="@+id/messageEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
+                android:id="@+id/toolbar_search"
                 android:background="@drawable/edit_text_shadow"
-                android:hint="Say something..."
-                android:inputType="text" />
-
-        <ImageView
-                android:id="@+id/sendButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:enabled="false"
-                android:src="@drawable/outline_send_gray_24" />
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text=" search..."
+                android:textSize="16sp" />
 
     </LinearLayout>
 
-    <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/messageRecyclerView"
+            android:id="@+id/chatsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/linearLayout"
-            android:background="@android:color/white"
-            android:paddingHorizontal="16dp" />
+            android:layout_marginTop="0dp"
+            android:layout_below="@+id/toolbar" />
+
+
 </RelativeLayout>
