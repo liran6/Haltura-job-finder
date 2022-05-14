@@ -22,7 +22,7 @@ open class Message {
     private lateinit var time: Time
     private lateinit var name: String
     private lateinit var userId: String
-    private lateinit var userImage :String
+    //private lateinit var userImage :String
     private lateinit var timestamp : Timestamp
 
     private var text: String? = null
@@ -38,13 +38,13 @@ open class Message {
     // Empty constructor needed for Firestore serialization
     constructor()
 
-    constructor(text: String, image: String, userId: String, name: String , userImage : String, time: Time){
+    constructor(text: String?, image: String?, userId: String, name: String , time: Time){
         this.text = text
         this.image = image
         this.name = name
         this.userId = userId
         this.time = time
-        this.userImage =userImage //todo: change in image and text
+        //this.userImage =userImage //todo: change in image and text
         this.type = TYPE_TEXT
     }
 
@@ -56,14 +56,14 @@ open class Message {
 //        this.type = TYPE_IMAGE
 //    }
 
-    constructor(name: String, userId: String ,time: Time, userImage : String, type :Int) {
+    //constructor(name: String, userId: String ,time: Time, userImage : String, type :Int) {
 //        this.name = name
 //        this.userId = userId
 //        this.time = time
 //        this.userImage =userImage //todo: change in image and text
 //        this.type = type
         //Timestamp.get
-    }
+    //}
 
     fun setTime(time: Time?) {
         this.time = time!!
@@ -89,13 +89,13 @@ open class Message {
         return userId
     }
 
-    fun setUserImage(userImage: String?) {
-        this.userImage = userImage!!
-    }
-
-    fun getUserImage(): String? {
-        return userImage
-    }
+//    fun setUserImage(userImage: String?) {
+//        this.userImage = userImage!!
+//    }
+//
+//    fun getUserImage(): String? {
+//        return userImage
+//    }
 
 
     fun setType(type: Int?) {

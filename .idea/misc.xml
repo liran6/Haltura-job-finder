@@ -102,12 +102,16 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/image_message.xml" value="0.5" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/manage_work_dialog.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/message.xml" value="0.7102803738317757" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/message_item.xml" value="0.553125" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/register_to_work_dialog.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/text_item_in.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/text_item_out.xml" value="0.33" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/update_delete_dialog.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/user_chat_item.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/user_item_list.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/watch_work_dialog.xml" value="0.25" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/watch_work_dialog2.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/watch_work_dialog3.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/work_item_list.xml" value="0.45471014492753625" />
       </map>
     </option>

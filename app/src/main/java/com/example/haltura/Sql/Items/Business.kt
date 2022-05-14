@@ -8,8 +8,6 @@ class Business {
     private lateinit var image: Image
     private lateinit var listOfWork : List<Work>
 
-
-
     constructor(name: String, about: String, image: Image, listOfWork: List<Work>) {
         this.name = name
         this.about = about
@@ -23,6 +21,4 @@ class Business {
         this.image = image
         this.listOfWork = emptyList()
     }
-
-
 }

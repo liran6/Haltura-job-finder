@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -19,9 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.*
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.ImageMessage
+//import com.example.haltura.Sql.Items.ImageMessage
 import com.example.haltura.Sql.Items.Message
-import com.example.haltura.Sql.Items.TextMessage
+//import com.example.haltura.Sql.Items.TextMessage
 import com.example.haltura.Sql.Items.Time
 import com.example.haltura.Sql.UserOpenHelper
 import com.google.firebase.auth.FirebaseAuth
@@ -105,70 +106,42 @@ class ChatActivity : AppCompatActivity() {
         dbref = FirebaseDatabase.getInstance().getReference("Messages")
 
 
-        dbref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                //messageArrayList.clear()
-                if (snapshot.exists())
-                {
-                    for(messageSnapshot in snapshot.children)
-                    {
-                        //todo check if we can make it specific
-                        val w = messageSnapshot.getValue(Message::class.java)
-                        when (w?.getType()) {
-                            0 -> {
-                                //var w = messageSnapshot.getValue(TextMessage::class.java)
-                                messageArrayList.add(messageSnapshot.getValue(TextMessage::class.java)!!)
-                            }
-                            1 -> {
-                                //var w = messageSnapshot.getValue(ImageMessage::class.java)
-                                messageArrayList.add(messageSnapshot.getValue(ImageMessage::class.java)!!)
-                            }
-                            else -> {
-                                //todo err
-                            }
-                        }
-                    }
-//                    adapt = ChatAdapter(messageArrayList)
-//                    //messageRecyclerView.adapter = ChatAdapter(messageArrayList)
-//                    messageRecyclerView.adapter = adapt
-//                    adapt.notifyDataSetChanged()
-                    //todo: onOnChatOpenHelper create the List and add func to notify when new message arrives
-                }
-                adapt = ChatAdapter(messageArrayList, activity)
-                //messageRecyclerView.adapter = ChatAdapter(messageArrayList)
-                messageRecyclerView.adapter = adapt
-                //adapt.notifyDataSetChanged()
-                isFirstTime = false
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+        adapt = ChatAdapter(messageArrayList, getUserid(),_clickOnItemListener = { onClickMessage(it) })
+        messageRecyclerView.adapter = adapt
 
         dbref.addChildEventListener(object : ChildEventListener
         {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                if (isFirstTime)
-                {
-                    return
-                }
+//                if (isFirstTime)
+//                {
+//                    return
+//                }
                 var w = snapshot.getValue(Message::class.java)
-                when (w?.getType()) {
-                    0 ->
-                    {
-                        messageArrayList.add(snapshot.getValue(TextMessage::class.java)!!)
-                    }
-                    1 ->
-                    {
-                        messageArrayList.add(snapshot.getValue(ImageMessage::class.java)!!)
-                    }
-                    else ->
-                    {
-                        //todo err
-                    }
+                if (w != null) {
+                    messageArrayList.add(w)
+                    adapt.notifyDataSetChanged()
                 }
-                //adapt.notifyDataSetChanged()
+                else
+                {
+                    //todo err (error text message)
+                }
+//                when (w?.getType()) {
+//                    0 ->
+//                    {
+//                        messageArrayList.add(snapshot.getValue(TextMessage::class.java)!!)
+//                    }
+//                    1 ->
+//                    {
+//                        messageArrayList.add(snapshot.getValue(ImageMessage::class.java)!!)
+//                    }
+//                    else ->
+//                    {
+//                        //todo err
+//                    }
+//                }
+                adapt.notifyDataSetChanged()
+                messageRecyclerView.smoothScrollToPosition(adapt.getItemCount() - 1);
+
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -188,18 +161,172 @@ class ChatActivity : AppCompatActivity() {
             }
 
         })
+
+//        dbref.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                //messageArrayList.clear()
+//                if (snapshot.exists())
+//                {
+//                    for(messageSnapshot in snapshot.children)
+//                    {
+//                        //todo check if we can make it specific
+//                        val w = messageSnapshot.getValue(Message::class.java)
+//                        if (w != null) {
+//                            messageArrayList.add(w)
+//                        }
+//                        else
+//                        {
+//                            //todo err (error text message)
+//                        }
+////                        when (w?.getType()) {
+////                            0 -> {
+////                                //var w = messageSnapshot.getValue(TextMessage::class.java)
+////                                messageArrayList.add(messageSnapshot.getValue(TextMessage::class.java)!!)
+////                            }
+////                            1 -> {
+////                                //var w = messageSnapshot.getValue(ImageMessage::class.java)
+////                                messageArrayList.add(messageSnapshot.getValue(ImageMessage::class.java)!!)
+////                            }
+////                            else -> {
+////                                //todo err
+////                            }
+////                        }
+//                    }
+////                    adapt = ChatAdapter(messageArrayList)
+////                    //messageRecyclerView.adapter = ChatAdapter(messageArrayList)
+////                    messageRecyclerView.adapter = adapt
+////                    adapt.notifyDataSetChanged()
+//                    //todo: onOnChatOpenHelper create the List and add func to notify when new message arrives
+//                }
+//                adapt = ChatAdapter(messageArrayList, getUserid(),_clickOnItemListener = { onClickMessage(it) })
+//                //messageRecyclerView.adapter = ChatAdapter(messageArrayList)
+//                messageRecyclerView.adapter = adapt
+//                //adapt.notifyDataSetChanged()
+//                isFirstTime = false
+//                //initChildEventListener()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
+
+//        dbref.addChildEventListener(object : ChildEventListener
+//        {
+//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//                if (isFirstTime)
+//                {
+//                    return
+//                }
+//                var w = snapshot.getValue(Message::class.java)
+//                if (w != null) {
+//                    messageArrayList.add(w)
+//                    adapt.notifyDataSetChanged()
+//                }
+//                else
+//                {
+//                    //todo err (error text message)
+//                }
+////                when (w?.getType()) {
+////                    0 ->
+////                    {
+////                        messageArrayList.add(snapshot.getValue(TextMessage::class.java)!!)
+////                    }
+////                    1 ->
+////                    {
+////                        messageArrayList.add(snapshot.getValue(ImageMessage::class.java)!!)
+////                    }
+////                    else ->
+////                    {
+////                        //todo err
+////                    }
+////                }
+//                adapt.notifyDataSetChanged()
+//            }
+//
+//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildRemoved(snapshot: DataSnapshot) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
     }
+
+//    fun initChildEventListener()
+//    {
+//        dbref.addChildEventListener(object : ChildEventListener
+//        {
+//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//                if (isFirstTime)
+//                {
+//                    return
+//                }
+//                var w = snapshot.getValue(Message::class.java)
+//                if (w != null) {
+//                    messageArrayList.add(w)
+//                    adapt.notifyDataSetChanged()
+//                }
+//                else
+//                {
+//                    //todo err (error text message)
+//                }
+////                when (w?.getType()) {
+////                    0 ->
+////                    {
+////                        messageArrayList.add(snapshot.getValue(TextMessage::class.java)!!)
+////                    }
+////                    1 ->
+////                    {
+////                        messageArrayList.add(snapshot.getValue(ImageMessage::class.java)!!)
+////                    }
+////                    else ->
+////                    {
+////                        //todo err
+////                    }
+////                }
+//                adapt.notifyDataSetChanged()
+//            }
+//
+//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildRemoved(snapshot: DataSnapshot) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+//    }
 
 
     fun sendMessage(view: View)
     {
         //todo: send the text message
 
-        val msg = TextMessage(
+        val msg = Message(
             textMessage.text.toString(),
-            auth.getCurrentUser()?.getUid()!!,
-            "test",
-            getPhotoUrl()!!,
+            null,
+            getUserid(),
+            getUserName(),
             Time(1,1)
             )
         //adapter.sendMessage(msg)
@@ -209,34 +336,78 @@ class ChatActivity : AppCompatActivity() {
         textMessage.setText("")
     }
 
-
-
-    fun getPhotoUrl(): String? {
-        //todo: make it work (can upload the image and use current method)
-        //val user = auth.currentUser
-        //user?.photoUrl
-        //sendButton.setImageURI(user?.photoUrl)
-        //var bitmap =
-        var bitmap = getResources().getDrawable(R.drawable.haltura_icon2).toBitmap()
+    fun sendImageMessage(image: Bitmap)
+    {
         val baos = ByteArrayOutputStream()
-        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
-        return Base64.encodeToString(data, Base64.DEFAULT)
-
-        //val user = auth.currentUser
-//        val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, user?.photoUrl)
-//        val baos = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-//        val data = baos.toByteArray()
-//        return Base64.encodeToString(data, Base64.DEFAULT)
-        //todo: take image from user (not google login)
+        var txt :String? = null
+        if(textMessage.text.toString() != "")
+        {
+            txt = textMessage.text.toString()
+        }
+        val msg = Message(
+            txt,
+            Base64.encodeToString(data, Base64.DEFAULT),
+            getUserid(),
+            getUserName(),
+            Time(1,1)
+        )
+        //adapter.sendMessage(msg)
+        //var helper =  ChatOpenHelper(this) //todo: move to global
+        dbref = FirebaseDatabase.getInstance().getReference("Messages")
+        dbref.push().setValue(msg)
+        textMessage.setText("")
     }
 
-    fun getUserName(): String? {
+
+
+//    fun getPhotoUrl(): String? {
+//        //todo: make it work (can upload the image and use current method)
+//        //val user = auth.currentUser
+//        //user?.photoUrl
+//        //sendButton.setImageURI(user?.photoUrl)
+//        //var bitmap =
+//        var bitmap = getResources().getDrawable(R.drawable.haltura_icon2).toBitmap()
+//        val baos = ByteArrayOutputStream()
+//        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+//        val data = baos.toByteArray()
+//        return Base64.encodeToString(data, Base64.DEFAULT)
+//
+//        //val user = auth.currentUser
+////        val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, user?.photoUrl)
+////        val baos = ByteArrayOutputStream()
+////        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+////        val data = baos.toByteArray()
+////        return Base64.encodeToString(data, Base64.DEFAULT)
+//        //todo: take image from user (not google login)
+//    }
+
+
+
+    private fun onClickMessage(message: Message) {
+
+    }
+
+    fun getUserid(): String {
         val user = auth.currentUser
-        return if (user != null) {
-            user.displayName
-        } else "ANONYMOUS"
+        if (user != null) {
+            return user.getUid()!!!!
+        }
+        else {
+            return "err"
+        }
+        //todo: take userid from user (not google login)
+    }
+
+    fun getUserName(): String {
+        val user = auth.currentUser
+        if (user != null) {
+            return user.displayName!!
+        }
+        else {
+            return "ANONYMOUS"
+        }
         //todo: take name from user (not google login)
     }
 
@@ -257,22 +428,16 @@ class ChatActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CAMERA && resultCode == RESULT_OK) {
             if (data != null) {
-//                var bm = data.extras!!["data"] as Bitmap?
-//                bm.toString()
-//                val msg = TextMessage()
-//                adapter.sendMessage(msg)
-//                binding.messageEditText.setText("")
+                sendImageMessage(data.extras!!["data"] as Bitmap)
             }
             //todo: toast err
         }
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             //todo:check if it is work
             if (data != null) {
-//                var bm = data.extras!!["data"] as Bitmap?
-//                bm.toString()
-//                val msg = TextMessage()
-//                adapter.sendMessage(msg)
-//                binding.messageEditText.setText("")
+                val uri = data.getData();
+                val imageBitMap =MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri)
+                sendImageMessage(imageBitMap)
             }
             //todo: toast err
         }
