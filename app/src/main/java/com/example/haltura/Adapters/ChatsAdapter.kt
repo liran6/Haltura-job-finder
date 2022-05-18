@@ -34,9 +34,9 @@ class ChatsAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.name_chat)
-        val message: TextView = view.findViewById(R.id.message) //🖼️
-        val image: ImageView = view.findViewById(R.id.chat_image)
-        val time: TextView = view.findViewById(R.id.time)
+        val message: TextView = view.findViewById(R.id.message_chat) //🖼️
+        val image: ImageView = view.findViewById(R.id.image_chat)
+        val time: TextView = view.findViewById(R.id.time_chat)
     }
 
 //    fun setData(data: MutableList<Message>) {
@@ -47,7 +47,7 @@ class ChatsAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.message_item, viewGroup, false)
+            .inflate(R.layout.user_chat_item, viewGroup, false)
 
         return ViewHolder(view)
     }
@@ -70,7 +70,7 @@ class ChatsAdapter(
                 userId = currentItem.getMembers()?.get(1)
             }
             //todo: get username from userid
-            viewHolder.name.text = userId
+            viewHolder.name.text = "username"
         }
         else
         {

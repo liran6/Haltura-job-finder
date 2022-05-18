@@ -37,11 +37,14 @@ import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.Time
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.UserOpenHelper
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.awaitAll
 import java.io.ByteArrayOutputStream
 
 
@@ -63,7 +66,7 @@ class ChatsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chats)
-        init()
+        //init()
         activity = this
         searchToolbar = findViewById(R.id.toolbar_search)
         chatsRecyclerView = findViewById(R.id.chatsRecyclerView)
@@ -95,7 +98,7 @@ class ChatsActivity : AppCompatActivity() {
     fun init()
     {
         val members = ArrayList<String>()
-        members.add("QaSXkzHuD3NQdHmUkgnU9e5Ntxu2")
+        members.add("0RQ6xNR5mvZ1WByrJGDZusszFPj2")
         members.add("C8AKORnTi7QKL5yxqwwxcHpP2O03")
         val messages = ArrayList<Message>()
         messages.add(Message(
@@ -116,17 +119,25 @@ class ChatsActivity : AppCompatActivity() {
             members,
             messages
         )
-        dbref = FirebaseDatabase.getInstance().getReference("Chats")
-        val key = dbref.push().key
+        var dbrefChat = FirebaseDatabase.getInstance().getReference("Chats")
+        val key = dbrefChat.push().key
         if (key != null) {
-            dbref.child(key).setValue(chat)
+            dbrefChat.child(key).setValue(chat)
         }
         //todo: add to list of chats of each members
+        var dbrefUsers = FirebaseDatabase.getInstance().getReference("/Users/0RQ6xNR5mvZ1WByrJGDZusszFPj2/").child("chats")
+        dbrefUsers.child("1").setValue(key)
+        dbrefUsers = FirebaseDatabase.getInstance().getReference("/Users/0RQ6xNR5mvZ1WByrJGDZusszFPj2/").child("contacts")
+        dbrefUsers.child("C8AKORnTi7QKL5yxqwwxcHpP2O03").setValue("C8AKORnTi7QKL5yxqwwxcHpP2O03")
+        dbrefUsers = FirebaseDatabase.getInstance().getReference("/Users/C8AKORnTi7QKL5yxqwwxcHpP2O03/").child("chats")
+        dbrefUsers.child("1").setValue(key)
+        dbrefUsers = FirebaseDatabase.getInstance().getReference("/Users/C8AKORnTi7QKL5yxqwwxcHpP2O03/").child("contacts")
+        dbrefUsers.child("0RQ6xNR5mvZ1WByrJGDZusszFPj2").setValue("0RQ6xNR5mvZ1WByrJGDZusszFPj2")
     }
 
     private fun getChatsData() {
         //todo pick specific chat
-        dbref = FirebaseDatabase.getInstance().getReference("Chats")
+        dbref = FirebaseDatabase.getInstance().getReference("Users/"+getUserid()+"/chats/")
 //        adapt =
 //            ChatsAdapter(chatsArrayList, getUserid(), _clickOnItemListener = { onClickChat(it) })
 //        chatsRecyclerView.adapter = adapt
@@ -136,13 +147,42 @@ class ChatsActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists())
                 {
-                    for(chatSnap in snapshot.children)
-                    {
-                        val chat = chatSnap.getValue(Chat::class.java)
-                        chatsArrayList.add(chat!!)
-                    }
                     adapt = ChatsAdapter(chatsArrayList, getUserid(), _clickOnItemListener = { onClickChat(it) })
                     chatsRecyclerView.adapter = adapt
+                    var dbrefChats = FirebaseDatabase.getInstance().getReference("/Chats/")
+//                    var chatsArrayList = chatsArrayList
+//                    var adapt = adapt
+                    for(chatSnap in snapshot.children)
+                    {
+                        //mDatabase.child("users").child(userId).get().addOnSuccessListener {
+                        //    Log.i("firebase", "Got value ${it.value}")
+                        //}
+                        //chatSnap.value
+                        dbrefChats.child(chatSnap.value.toString()).get().addOnCompleteListener(
+                            OnCompleteListener { task ->
+                                var chatsArrayList = chatsArrayList
+                                var adapt = adapt
+                                if (task.isSuccessful) {
+                                val chat = task.result.getValue(Chat::class.java)
+                                chatsArrayList.add(chat!!)
+                                adapt.notifyDataSetChanged()
+                            }
+
+//                            {
+//                            val chat = it.getValue(Chat::class.java)
+//                            rChatsArrayList.add(chat!!)
+//                            rAdapt.notifyDataSetChanged()
+//                        }.addOnFailureListener{
+//                            Log.e("firebase", "Error getting data", it)
+//                        }
+
+//                        val chat = chatSnap.getValue(Chat::class.java)
+//                        chatsArrayList.add(chat!!)
+                            })
+                    }
+                    //Thread.sleep(10_000)//todo: make it wait for the data
+//                    adapt = ChatsAdapter(chatsArrayList, getUserid(), _clickOnItemListener = { onClickChat(it) })
+//                    chatsRecyclerView.adapter = adapt
                 }
             }
 
@@ -151,6 +191,7 @@ class ChatsActivity : AppCompatActivity() {
             }
 
         })
+
 
 
 //        dbref.addChildEventListener(object : ChildEventListener {
@@ -229,6 +270,7 @@ class ChatsActivity : AppCompatActivity() {
 
     private fun onClickChat(chat: Chat)
     {
+        var a =5
         //todo: open and set priority in chat order (will be first when we open this activity again)
     }
 

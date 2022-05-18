@@ -18,7 +18,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     tools:srcCompat="@tools:sample/avatars"
-                    android:id="@+id/chat_image" />
+                    android:id="@+id/image_chat" />
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 </LinearLayout>
 
                 <TextView
-                        android:id="@+id/tv_MessageTime"
+                        android:id="@+id/time_chat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -62,7 +62,7 @@
                         android:padding="2dp">
 
                     <TextView
-                            android:id="@+id/message"
+                            android:id="@+id/message_chat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"

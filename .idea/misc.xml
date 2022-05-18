@@ -88,13 +88,18 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.327" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.327" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_add_work.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_business_account.xml" value="0.309375" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_calendar.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_chat.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_chats.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_forgot_your_password.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_google_sign_in.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_login.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_main.xml" value="0.47412982126058323" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_maps.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_reset_password.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_sign_up.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_update_information.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/audio_item_in.xml" value="0.5083333333333333" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/audio_item_out.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/image_item_in.xml" value="0.67" />
@@ -103,7 +108,9 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/manage_work_dialog.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/message.xml" value="0.7102803738317757" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/message_item.xml" value="0.553125" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/nope.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/register_to_work_dialog.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/sms_dialog.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/text_item_in.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/text_item_out.xml" value="0.33" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/update_delete_dialog.xml" value="0.45471014492753625" />
