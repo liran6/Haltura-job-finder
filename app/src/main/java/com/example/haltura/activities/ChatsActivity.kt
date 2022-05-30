@@ -63,6 +63,13 @@ class ChatsActivity : AppCompatActivity() {
     private lateinit var activity: Activity
 
 
+    override fun onRestart() {
+        super.onRestart()
+        adapt.notifyDataSetChanged()
+        //todo reset adapter
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chats)
@@ -121,6 +128,7 @@ class ChatsActivity : AppCompatActivity() {
         )
         var dbrefChat = FirebaseDatabase.getInstance().getReference("Chats")
         val key = dbrefChat.push().key
+        chat.setChatId(key)
         if (key != null) {
             dbrefChat.child(key).setValue(chat)
         }
@@ -270,7 +278,9 @@ class ChatsActivity : AppCompatActivity() {
 
     private fun onClickChat(chat: Chat)
     {
-        var a =5
+        var i = Intent(this, ChatActivity::class.java)
+        i.putExtra("chatId",chat.getChatId())
+        this.startActivity(i)
         //todo: open and set priority in chat order (will be first when we open this activity again)
     }
 

@@ -26,7 +26,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:text=" search..."
+                android:hint=" search..."
                 android:textSize="16sp" />
 
     </LinearLayout>

@@ -5,6 +5,8 @@ import android.media.Image
 class Chat {
     private var name: String? = null
     private var image: String? = null
+    private var chatId: String? = null
+    private var adminId: String? = null
     //todo: admin
 
     private lateinit var members: ArrayList<String>
@@ -39,6 +41,24 @@ class Chat {
 
     fun setName(name: String?) {
         this.name = name!!
+    }
+
+    //ChatId
+    fun getChatId(): String? {
+        return chatId
+    }
+
+    fun setChatId(chatId: String?) {
+        this.chatId = chatId!!
+    }
+
+    //AdminId
+    fun getAdminId(): String? {
+        return adminId
+    }
+
+    fun setAdminId(chatId: String?) {
+        this.adminId = adminId!!
     }
 
     //image

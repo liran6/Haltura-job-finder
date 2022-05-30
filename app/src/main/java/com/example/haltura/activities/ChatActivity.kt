@@ -50,7 +50,9 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var manager: LinearLayoutManager
     private lateinit var adapt: ChatAdapter
     private lateinit var activity: Activity
-    private  var isFirstTime = true
+    private var isFirstTime = true
+    private var chatId :String? = null
+    private var numOfMessages = 0
     //private lateinit var userImage: String
 
     //private var adapter: MessagesAdapter = ChatAdapter(this)
@@ -59,6 +61,19 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+        var extras = getIntent().getExtras()
+        if (extras != null)
+        {
+            this.chatId = extras.getString("chatId")
+            if (this.chatId == null)
+            {
+                //todo: err
+            }
+        }
+        else
+        {
+            //todo: err
+        }
         activity = this
         sendButton = findViewById(R.id.sendButton)
         textMessage = findViewById(R.id.messageEditText)
@@ -103,7 +118,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun getMessageData() {
         //todo pick specific chat
-        dbref = FirebaseDatabase.getInstance().getReference("Messages")
+        dbref = FirebaseDatabase.getInstance().getReference("Chats/"+chatId+"/messages")
 
 
         adapt = ChatAdapter(messageArrayList, getUserid(),_clickOnItemListener = { onClickMessage(it) })
@@ -118,6 +133,7 @@ class ChatActivity : AppCompatActivity() {
 //                }
                 var w = snapshot.getValue(Message::class.java)
                 if (w != null) {
+                    numOfMessages += 1
                     messageArrayList.add(w)
                     adapt.notifyDataSetChanged()
                 }
@@ -331,8 +347,8 @@ class ChatActivity : AppCompatActivity() {
             )
         //adapter.sendMessage(msg)
         //var helper =  ChatOpenHelper(this) //todo: move to global
-        dbref = FirebaseDatabase.getInstance().getReference("Messages")
-        dbref.push().setValue(msg)
+        //dbref = FirebaseDatabase.getInstance().getReference("Messages")
+        dbref.child(numOfMessages.toString()).setValue(msg)
         textMessage.setText("")
     }
 
@@ -355,8 +371,8 @@ class ChatActivity : AppCompatActivity() {
         )
         //adapter.sendMessage(msg)
         //var helper =  ChatOpenHelper(this) //todo: move to global
-        dbref = FirebaseDatabase.getInstance().getReference("Messages")
-        dbref.push().setValue(msg)
+        //dbref = FirebaseDatabase.getInstance().getReference("Messages")
+        dbref.child(numOfMessages.toString()).setValue(msg)
         textMessage.setText("")
     }
 
