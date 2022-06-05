@@ -1,4 +1,58 @@
 package com.example.haltura.Sql.Items
+import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.descriptors.StructureKind
+
+data class UserSerializable(
+    @SerializedName("email") var email: String,
+    @SerializedName("createdDate") var createdDate: String,
+    @SerializedName("id") var id: String,
+    @SerializedName("token") var token: String,
+    @SerializedName("password") var password: String
+)
+data class ProfileSerializable(
+    @SerializedName("userId") var userId: String,
+    @SerializedName("firstName") var firstName: String,
+    @SerializedName("lastName") var lastName: String,
+    @SerializedName("phone") var phone: String,
+    @SerializedName("address") var address: String,
+    @SerializedName("chatList") var chatList: List<String> ,
+    @SerializedName("workList") var workList: List<String> ,
+    @SerializedName("businessList") var businessList: List<String> ,
+    @SerializedName("id") var id: String,
+    )
+data class BusinessSerializable(
+    @SerializedName("listOfWork") var listOfWork: List<String>?,
+    @SerializedName("userId") var userId: String,
+    @SerializedName("name") var name: String ,
+    @SerializedName("about") var about: String ,
+    @SerializedName("image") var image: String ,
+    @SerializedName("id") var id: String,
+    )
+data class WorkSerializable(
+    @SerializedName("publisher") var publisher: String,
+    @SerializedName("company") var company: String,
+    @SerializedName("task") var task: String,
+    @SerializedName("salary") var salary: String,
+    @SerializedName("numberOfWorkers") var numberOfWorkers: String,
+    @SerializedName("address") var address: AddresSerializable,
+    @SerializedName("info") var info: String,
+    @SerializedName("startTime") var startTime: String,
+    @SerializedName("endTime") var endTime: String,
+    @SerializedName("image") var image: String,
+)
+data class AddresSerializable(
+    @SerializedName("image") var city: String,
+    @SerializedName("street") var street: String,
+    @SerializedName("streetNum") var streetNum: String,
+    @SerializedName("floor") var floor: String,
+    @SerializedName("appartment") var appartment: String,
+    )
+data class BusinessesList( @SerializedName("business_list") val business_list: List<BusinessSerializable>)
+data class UserResponse(val error: Boolean, val message:String, val code: Int?, val meta: String?, val data: User?)
+data class RetroUser(val email: String, val password: String)
+
+
+
 
 class User {
     private var id: Long = 0

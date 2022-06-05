@@ -1,4 +1,5 @@
 package com.example.haltura.activities
+
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
@@ -15,6 +16,8 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.example.haltura.Helpers.Validation.Companion.signInValid
+import com.example.haltura.Sql.Items.RetroUser
+import com.example.haltura.Sql.Items.UserSerializable
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -55,20 +58,17 @@ class LoginActivity : AppCompatActivity() {
         oneTapClient = Identity.getSignInClient(this)
 
 
-
         //auth = Firebase.auth // todo: move to user open helper
 
-        val gso =  GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        googleSignInClient = GoogleSignIn.getClient(this,gso)
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        auth  = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
 
     }
-
-
 
 
 //    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
@@ -121,9 +121,6 @@ class LoginActivity : AppCompatActivity() {
 //    }
 
 
-
-
-
     fun googleSignIn(view: View) {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -170,26 +167,30 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-
-
-
     fun signIn(view: View) {
         if (signInValid(
                 etEmail, etPassword
             )
         ) {
-            helper.userSignIn(etEmail, etPassword)
+            val user = UserSerializable(
+                etEmail.text.toString(),
+                "",
+                "",
+                "",
+                etPassword.text.toString()
+            )// ,"0","0","0")
+            helper.userSignIn(user)
         }
     }
 
     fun signUp(view: View) {
         //startActivity(Intent(this, AddWorkActivity::class.java))
-        startActivity(Intent(this, SignUpActivity::class.java))
+//        startActivity(Intent(this, SignUpActivity::class.java))
+        startActivity(Intent(this, RegisterActivity::class.java))
 //        //todo: do this with user open helper - It is not the responsibility of the class
     }
 
-    fun forgotPassword(view: View)
-    {
+    fun forgotPassword(view: View) {
         startActivity(Intent(this, ForgotYourPasswordActivity::class.java))
     }
 

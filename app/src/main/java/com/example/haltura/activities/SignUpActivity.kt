@@ -115,7 +115,7 @@ class SignUpActivity : AppCompatActivity() {
                 )
                 user.setUserPhone(etPhone!!.text.toString())
                 user.setIsAdmin(false)
-                helper.createUser(user)
+                //helper.createUser(user)
             } else {
                 Toast.makeText(
                     this,

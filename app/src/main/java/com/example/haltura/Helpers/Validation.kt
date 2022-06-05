@@ -120,6 +120,18 @@ class Validation {
             return bool
         }
 
+        fun registerValid(
+            etPassword: EditText,
+            etConfPassword: EditText,
+            etEmail: EditText
+        ): Boolean {
+            var bool = true
+            //NOTE: edName equ to private name
+            bool = userEmailValid(etEmail) && bool
+            bool = userPasswordValid(etPassword) && bool
+            bool = confirmPasswordValid(etPassword, etConfPassword) && bool
+            return bool;
+        }
         fun signUpValid(
             etName: EditText,
             etLastName: EditText,
