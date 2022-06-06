@@ -32,8 +32,8 @@ data class WorkSerializable(
     @SerializedName("publisher") var publisher: String,
     @SerializedName("company") var company: String,
     @SerializedName("task") var task: String,
-    @SerializedName("salary") var salary: String,
-    @SerializedName("numberOfWorkers") var numberOfWorkers: String,
+    @SerializedName("salary") var salary: Int,
+    @SerializedName("numberOfWorkers") var numberOfWorkers: Int,
     @SerializedName("address") var address: AddresSerializable,
     @SerializedName("info") var info: String,
     @SerializedName("startTime") var startTime: String,
@@ -41,13 +41,14 @@ data class WorkSerializable(
     @SerializedName("image") var image: String,
 )
 data class AddresSerializable(
-    @SerializedName("image") var city: String,
+    @SerializedName("city") var city: String,
     @SerializedName("street") var street: String,
-    @SerializedName("streetNum") var streetNum: String,
-    @SerializedName("floor") var floor: String,
+    @SerializedName("streetNum") var streetNum: Int,
+    @SerializedName("floor") var floor: Int,
     @SerializedName("appartment") var appartment: String,
     )
 data class BusinessesList( @SerializedName("business_list") val business_list: List<BusinessSerializable>)
+data class WorksList( @SerializedName("work_list") val work_list: List<WorkSerializable>)
 data class UserResponse(val error: Boolean, val message:String, val code: Int?, val meta: String?, val data: User?)
 data class RetroUser(val email: String, val password: String)
 

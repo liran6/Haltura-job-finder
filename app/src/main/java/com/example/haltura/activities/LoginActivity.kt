@@ -179,7 +179,10 @@ class LoginActivity : AppCompatActivity() {
                 "",
                 etPassword.text.toString()
             )// ,"0","0","0")
-            helper.userSignIn(user)
+           var test =  helper.userSignIn(user)
+            if(test){
+                startActivity(Intent(this, MainActivity2::class.java))
+            }
         }
     }
 

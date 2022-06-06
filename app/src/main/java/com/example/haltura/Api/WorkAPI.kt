@@ -44,10 +44,11 @@ interface WorkAPI {
     ): Call<ResponseBody>
 
     // get all works of userId (AS WORKER AND AS EMPLOYER)
-    @GET("works/all/{userId}")
+    @GET("works/{who}/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun getAllWorksOfUserID(
         @Header("Authorization") token: String,
+        @Path("who") who: String,
         @Path("userId") userId: String,
     ): Call<ResponseBody>
 

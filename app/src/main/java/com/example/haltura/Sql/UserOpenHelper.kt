@@ -313,14 +313,14 @@ class UserOpenHelper {
 
     fun createWork(user: UserSerializable) {
         var address = AddresSerializable(
-            "givatayim", "ben", "43", "3", "9"
+            "givatayim", "ben", 43, 3, "9"
         )
         var work = WorkSerializable(
             user.id,
             "isr",
             "tasktest",
-            "400",
-            "1",
+            400,
+            1,
             address,
             "blabla",
             "1999-12-31T22:00:00.000+00:00",
@@ -348,7 +348,56 @@ class UserOpenHelper {
         })
     }
 
-    fun userSignIn(user: UserSerializable) {
+    fun getWorkByWorkId(user: UserSerializable, workID: String) {
+        //ToDo check
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.getWork("Bearer " + (user.token), workID)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                createNewUserLiveData.postValue(null)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    var res = response.body()?.string()
+                    var work  = json.fromJson(res, WorkSerializable::class.java)  //val listType = object : TypeToken<List<String>>(){ }.type
+
+                    var x = 1
+                } else {
+                    var x = 1
+                }
+            }
+        })
+    }
+
+    fun getAllWorksOFUserId(user: UserSerializable) {
+        //ToDo check
+        var whoIsAsking = "all" //default
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.getAllWorksOfUserID("Bearer " + (user.token),whoIsAsking, user.id)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                createNewUserLiveData.postValue(null)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    var res = response.body()?.string()
+                    //val listType = object : TypeToken<List<String>>(){ }.type
+                    var work_list = json.fromJson(res, WorksList::class.java)
+                    var x = 1
+                } else {
+                    var x = 1
+                }
+            }
+        })
+    }
+
+
+    fun userSignIn(user: UserSerializable): Boolean {
+        var test = false
         val retroService =
             ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
         val call = retroService.userAuth(user)
@@ -362,11 +411,13 @@ class UserOpenHelper {
                     var res = response.body()?.string()
                     var user = json.fromJson(res, UserSerializable::class.java)
                     if (user.token != "") {
+                        true.also { test = it }
                         Toast.makeText(
                             activity, "Signing In",
                             Toast.LENGTH_SHORT
                         ).show()
-                        createWork(user)
+                        var workID = "629e429134ef7f54d08c0ede"
+                        getAllWorksOFUserId(user)
                         //val intent = Intent(this,MainActivity::class.java)
 //                        activity.startActivity(Intent(activity, MainActivity::class.java))
 //                        activity.finish()
@@ -390,7 +441,13 @@ class UserOpenHelper {
                     ).show()
                 }
             }
-        })
+
+        }
+        )
+       if(test!=false){
+           return test
+       }else
+       {return test}
 
 
 ////        Firebase
