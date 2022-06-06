@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
         workRecyclerView.setHasFixedSize(true)
 
         workArrayList = arrayListOf<Work>()
-        getWorkData()
+        //getWorkData()
+
 
         //workRecyclerView.addOnItemTouchListener(RecyclerItemClickListener(){})
 //            RecyclerItemClickListener(
@@ -56,8 +57,6 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
 //                        // do whatever
 //                    }
 //                })
-
-
 
 
 
