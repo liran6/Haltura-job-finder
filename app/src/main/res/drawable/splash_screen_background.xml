@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@android:color/white"/>
     <item>
-        <bitmap android:src="@drawable/ic_haltura_splash"
+        <bitmap android:src="@drawable/haltura_icon2"
                 android:gravity="center"/>
 
     </item>
