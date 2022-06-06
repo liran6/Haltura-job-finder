@@ -3,17 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout-w1240dp/activity_login2.xml" value="0.1757028112449799" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout-w936dp/activity_login2.xml" value="0.205078125" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_google_sign_in.xml" value="0.13297872340425532" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login2.xml" value="0.15489130434782608" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login_2.xml" value="0.22" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_register.xml" value="0.2708333333333333" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_sign_up.xml" value="0.1431159420289855" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_login.xml" value="0.13297872340425532" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_splash_screen.xml" value="0.1" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/loading_screen.xml" value="0.2734375" />
         <entry key="..\:/Users/Liran/Desktop/Haltura/app/src/main/res/drawable-v24/ic_account_circle_black_24dp.xml" value="0.136" />
         <entry key="..\:/Users/Liran/Desktop/Haltura/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/Liran/Desktop/Haltura/app/src/main/res/drawable-v24/ic_people_black_24dp.xml" value="0.136" />
@@ -91,13 +80,21 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura/app/src/main/res/layout/user_chat_item.xml" value="0.49682971014492755" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura/app/src/main/res/layout/user_item_list.xml" value="0.4296875" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura/app/src/main/res/layout/watch_work_dialog.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable-v24/ic_account_circle_black_24dp.xml" value="0.2445" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable-v24/ic_send_black_24dp.xml" value="0.3125" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable-v24/outline_add_photo_alternate_24.xml" value="0.327" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable-v24/outline_send_24.xml" value="0.327" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable-v24/outline_send_gray_24.xml" value="0.327" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable-v24/rounded_message_blue.xml" value="0.327" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable-v24/rounded_message_gray.xml" value="0.2445" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.373" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.373" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.327" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_baseline_work2_35.xml" value="0.373" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_baseline_work_24.xml" value="0.373" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.327" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/search_icon.xml" value="0.2445" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/drawable/splash_screen_background.xml" value="0.2445" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_add_work.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_business_account.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_calendar.xml" value="0.309375" />
@@ -106,19 +103,29 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_forgot_your_password.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_google_sign_in.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_login.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_login_2.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_main.xml" value="0.47412982126058323" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_main2.xml" value="0.3723958333333333" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_maps.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_reset_password.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_sign_up.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/activity_update_information.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/audio_item_in.xml" value="0.5083333333333333" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/audio_item_out.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/fragment_calendar.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/fragment_chats.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/fragment_dashboard.xml" value="0.35833333333333334" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/fragment_home.xml" value="0.3723958333333333" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/fragment_main.xml" value="0.45606884057971014" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/fragment_notifications.xml" value="0.3723958333333333" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/fragment_work.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/image_item_in.xml" value="0.67" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/image_item_out.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/image_message.xml" value="0.5" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/manage_work_dialog.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/message.xml" value="0.7102803738317757" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/message_item.xml" value="0.553125" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/navigator.xml" value="0.18" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/nope.xml" value="0.309375" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/register_to_work_dialog.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/sms_dialog.xml" value="0.309375" />
@@ -131,10 +138,12 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/watch_work_dialog2.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/watch_work_dialog3.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/work_item_list.xml" value="0.45471014492753625" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3723958333333333" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/menu/menu_main.xml" value="0.3723958333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
