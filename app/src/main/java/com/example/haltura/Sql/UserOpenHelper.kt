@@ -418,7 +418,7 @@ class UserOpenHelper {
     }
 
     fun createUser(email: String, password: String) {
-        //todo: log this to server
+        //todo: log this to server now
         var user = UserSerializable(email, "", "", "", password)
         val retroService =
             ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
