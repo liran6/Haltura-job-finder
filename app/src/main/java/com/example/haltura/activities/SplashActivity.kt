@@ -11,7 +11,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         helper = UserOpenHelper(this)
         if(!(helper.isUserLoggedIn())){
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, MainActivity2::class.java)) //todo: change
         }
         finish()
     }

@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.haltura.R
 import com.example.haltura.ViewModels.LoginViewModel
-import com.example.haltura.activities.R
 
 class LoginFragment : Fragment() {
 
