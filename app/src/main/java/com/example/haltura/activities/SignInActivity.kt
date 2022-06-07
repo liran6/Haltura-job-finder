@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.AppNotifications.snackBar
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import com.example.haltura.AppNotifications.toastBar
 import com.example.haltura.Fragments.SignInFragments.LoginFragment
 import com.example.haltura.Menagment.Preferences
 import com.example.haltura.R
@@ -38,7 +40,7 @@ class SignInActivity : AppCompatActivity() {
         loading()
         val toastObserver = Observer<String> { message ->
             loadingScreen.visibility = View.GONE
-            snackBar(this, message)
+            toastBar(this, message)
         }
 
         val authObserver = Observer<UserSerializable> { authObserver ->
@@ -58,10 +60,11 @@ class SignInActivity : AppCompatActivity() {
 //        createChannelForNotification()
 //        stayLoggedIn()//todo: implement
         if (savedInstanceState == null) {
-            val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.add(R.id.login_fragment, LoginFragment(), "login_fragment")
-            fragmentTransaction.addToBackStack("login_fragment")
-            fragmentTransaction.commit()
+            //val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.login_fragment, LoginFragment(), Const.login_fragment)
+                .addToBackStack(Const.login_fragment)
+                .commit()
         }
 
     }
@@ -69,8 +72,8 @@ class SignInActivity : AppCompatActivity() {
 
     private fun observersInit(
         toastObserver: Observer<String>,
-        authObserver: Observer<UserSerializable>)
-     {
+        authObserver: Observer<UserSerializable>
+    ) {
         viewModel.mutableMessageToasting.observe(this, toastObserver)
         viewModel.mutableUserHolder.observe(this, authObserver)
     }
@@ -97,8 +100,8 @@ class SignInActivity : AppCompatActivity() {
 
 
     private fun loggingIn(user: UserSerializable) {
-        val intent = Intent(this, MainActivity::class.java)
-        val userBundle = Bundle()
+        val intent = Intent(this, MainActivity2::class.java)
+        //val userBundle = Bundle()
         intent.putExtra(Const.Logged_User, user)
         //  hide loading screen
         loadingScreen.visibility = View.GONE
@@ -113,6 +116,7 @@ class SignInActivity : AppCompatActivity() {
     private fun loading() {
         loadingScreen = findViewById(R.id.loading_screen)
     }
+
 
 
 //    private fun createChannelForNotification() {

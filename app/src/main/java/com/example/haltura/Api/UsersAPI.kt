@@ -19,7 +19,7 @@ interface UsersAPI {
     @POST("users/authenticate")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun userAuth(
-        @Body user: UserSerializable
+        @Body user: UserLoginSerializable
     ): Call<ResponseBody>
 
     @GET("users/current")

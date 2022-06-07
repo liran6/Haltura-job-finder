@@ -417,147 +417,147 @@ class UserOpenHelper {
         })
     }
 
-    fun userSignIn(user: UserSerializable): Boolean {
-        var test = false
-        val retroService =
-            ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
-        val call = retroService.userAuth(user)
-        call.enqueue(object : retrofit2.Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                val b = 1
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    var res = response.body()?.string()
-                    var user = json.fromJson(res, UserSerializable::class.java)
-                    if (user.token != "") {
-                        true.also { test = it }
-                        Toast.makeText(
-                            activity, "Signing In",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        var workID = "629e429134ef7f54d08c0ede"
-                        getAllWorksOFUserId(user)
-                        //val intent = Intent(this,MainActivity::class.java)
-//                        activity.startActivity(Intent(activity, MainActivity::class.java))
-//                        activity.finish()
-                    } else {
-                        Toast.makeText(
-                            activity, "There was a problem signing you in, please try again",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    //val profileID = retroService.
-//                    val editor = getSharedPreferences(PREFS, MODE_PRIVATE).edit()
-//                    editor.putString("username", username)
-//                    editor.apply()
-//                    val intent = Intent(this@LogInActivity, MenuActivity::class.java)
-//                    intent.putExtra("myUsername", username)
-//                    startActivity(intent)
-                } else {
-                    Toast.makeText(
-                        activity, "Wrong email or password.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-        }
-        )
-       if(test!=false){
-           return test
-       }else
-       {return test}
-
-
-////        Firebase
-
-//        auth.signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
-//            .addOnCompleteListener() { task ->
-//                if (task.isSuccessful) {
-//                    val user: FirebaseUser? = auth.currentUser
-//                    if (user != null){
-//                        loginUpdateUi(user)
-////                        Toast.makeText(activity, "Login Successful!",
-////                            Toast.LENGTH_SHORT).show()
+//    fun userSignIn(user: UserSerializable): Boolean {
+//        var test = false
+//        val retroService =
+//            ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
+//        val call = retroService.userAuth(user)
+//        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                val b = 1
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                if (response.isSuccessful) {
+//                    var res = response.body()?.string()
+//                    var user = json.fromJson(res, UserSerializable::class.java)
+//                    if (user.token != "") {
+//                        true.also { test = it }
+//                        Toast.makeText(
+//                            activity, "Signing In",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                        var workID = "629e429134ef7f54d08c0ede"
+//                        getAllWorksOFUserId(user)
+//                        //val intent = Intent(this,MainActivity::class.java)
 ////                        activity.startActivity(Intent(activity, MainActivity::class.java))
 ////                        activity.finish()
+//                    } else {
+//                        Toast.makeText(
+//                            activity, "There was a problem signing you in, please try again",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
 //                    }
-//
-//                    //updateUI(user)
+//                    //val profileID = retroService.
+////                    val editor = getSharedPreferences(PREFS, MODE_PRIVATE).edit()
+////                    editor.putString("username", username)
+////                    editor.apply()
+////                    val intent = Intent(this@LogInActivity, MenuActivity::class.java)
+////                    intent.putExtra("myUsername", username)
+////                    startActivity(intent)
 //                } else {
-//                    Toast.makeText(activity, "Wrong email or password.",
-//                        Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(
+//                        activity, "Wrong email or password.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
 //
-//                    //updateUI(null)
-//                }
-//            }
-    }
-
-    fun createUser(email: String, password: String) {
-        //todo: log this to server now
-        var user = UserSerializable(email, "", "", "", password)
-        val retroService =
-            ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
-        val call = retroService.createUser(user)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //createNewUserLiveData.postValue(null)
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(
-                        activity,
-                        "User registered successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    userSignIn(user)
-                } else {
-                    Toast.makeText(
-                        activity,
-                        "User could not be created",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        })
-////       FIREBASE(OLD)
-
-//        //var reference = FirebaseDatabase.getInstance().getReference().child("Users")
-//        auth.createUserWithEmailAndPassword(user.getEmail()!!, user.getPassword()!!)
-//            .addOnCompleteListener(OnCompleteListener {task ->
-//                var fireBaseUser = auth.getCurrentUser()
-//                if (fireBaseUser != null)
-//                {
-//                    var reference= this.reference
-//                    var activity = this.activity
-//                    reference.child(fireBaseUser.getUid()).setValue(user).addOnCompleteListener(
-//                        OnCompleteListener {
-//                            task -> if (task.isSuccessful)
-//                            {
-//                                Toast.makeText(activity,
-//                                    "User registered successfully",
-//                                    Toast.LENGTH_SHORT).show()
-//                                loginUpdateUi(fireBaseUser)
-////                                activity.startActivity(Intent(activity, MainActivity::class.java))
-////                                activity.finish()
-//                                //FirebaseDatabase.getInstance().getReference().child("Users").child("test").setValue(user(test = 'test1'))
-//                            }
-//                            else
-//                            {
-//                                Toast.makeText(activity,
-//                                    "User could not be created",
-//                                    Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-//                    )
-//                }
-//            }
+//        }
 //        )
+//       if(test!=false){
+//           return test
+//       }else
+//       {return test}
+//
+//
+//////        Firebase
+//
+////        auth.signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
+////            .addOnCompleteListener() { task ->
+////                if (task.isSuccessful) {
+////                    val user: FirebaseUser? = auth.currentUser
+////                    if (user != null){
+////                        loginUpdateUi(user)
+//////                        Toast.makeText(activity, "Login Successful!",
+//////                            Toast.LENGTH_SHORT).show()
+//////                        activity.startActivity(Intent(activity, MainActivity::class.java))
+//////                        activity.finish()
+////                    }
+////
+////                    //updateUI(user)
+////                } else {
+////                    Toast.makeText(activity, "Wrong email or password.",
+////                        Toast.LENGTH_SHORT).show()
+////
+////                    //updateUI(null)
+////                }
+////            }
+//    }
 
-    }
+//    fun createUser(email: String, password: String) {
+//        //todo: log this to server now
+//        var user = UserSerializable(email, "", "", "", password)
+//        val retroService =
+//            ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
+//        val call = retroService.createUser(user)
+//        call.enqueue(object : Callback<ResponseBody> {
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                //createNewUserLiveData.postValue(null)
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                if (response.isSuccessful) {
+//                    Toast.makeText(
+//                        activity,
+//                        "User registered successfully",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    userSignIn(user)
+//                } else {
+//                    Toast.makeText(
+//                        activity,
+//                        "User could not be created",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
+//        })
+//////       FIREBASE(OLD)
+//
+////        //var reference = FirebaseDatabase.getInstance().getReference().child("Users")
+////        auth.createUserWithEmailAndPassword(user.getEmail()!!, user.getPassword()!!)
+////            .addOnCompleteListener(OnCompleteListener {task ->
+////                var fireBaseUser = auth.getCurrentUser()
+////                if (fireBaseUser != null)
+////                {
+////                    var reference= this.reference
+////                    var activity = this.activity
+////                    reference.child(fireBaseUser.getUid()).setValue(user).addOnCompleteListener(
+////                        OnCompleteListener {
+////                            task -> if (task.isSuccessful)
+////                            {
+////                                Toast.makeText(activity,
+////                                    "User registered successfully",
+////                                    Toast.LENGTH_SHORT).show()
+////                                loginUpdateUi(fireBaseUser)
+//////                                activity.startActivity(Intent(activity, MainActivity::class.java))
+//////                                activity.finish()
+////                                //FirebaseDatabase.getInstance().getReference().child("Users").child("test").setValue(user(test = 'test1'))
+////                            }
+////                            else
+////                            {
+////                                Toast.makeText(activity,
+////                                    "User could not be created",
+////                                    Toast.LENGTH_SHORT).show()
+////                            }
+////                        }
+////                    )
+////                }
+////            }
+////        )
+//
+//    }
 
     fun resetPassword(etEmail: EditText) {
         auth.sendPasswordResetEmail(etEmail.text.toString()).addOnCompleteListener() { task ->

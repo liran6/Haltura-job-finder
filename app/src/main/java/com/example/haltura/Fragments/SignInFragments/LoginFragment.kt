@@ -21,9 +21,11 @@ import com.google.firebase.auth.FirebaseAuth
 import androidx.fragment.app.activityViewModels
 import com.example.haltura.DeviceNotifications
 import com.example.haltura.Helpers.Validation
+import com.example.haltura.Sql.Items.UserLoginSerializable
 import com.example.haltura.Sql.Items.UserSerializable
 
 import com.example.haltura.Sql.UserOpenHelper
+import com.example.haltura.Utils.Const
 import com.example.haltura.activities.MainActivity2
 import com.example.haltura.activities.RegisterActivity
 import com.example.haltura.activities.SignInActivity
@@ -39,6 +41,7 @@ class LoginFragment : Fragment() {
     lateinit var loadingScreen: RelativeLayout
     private lateinit var fragmentView: View
     private lateinit var loginButton: Button
+    private lateinit var signUpButton: Button
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private val viewModel: LoginViewModel by activityViewModels()
@@ -50,6 +53,8 @@ class LoginFragment : Fragment() {
         // Inflation layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_login, container, false)
         loginButton = fragmentView.findViewById<View>(R.id.btn_SignIn) as Button
+        signUpButton = fragmentView.findViewById<View>(R.id.btn_SignUp) as Button
+
         loadingScreen = (activity as SignInActivity).loadingScreen
 
         //helper = UserOpenHelper(this)
@@ -59,11 +64,25 @@ class LoginFragment : Fragment() {
         setClickListeners()
         return fragmentView
     }
+        //todo: try to change it
+    private fun switchFragment(fragment: Fragment, fragmentId: String) {
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        if (transaction != null) {
+            transaction.replace(R.id.login_fragment, fragment, fragmentId)
+            transaction.addToBackStack(fragmentId)
+            transaction.commit()
+        }
+    }
+
+
     private fun setClickListeners() {
         loginButton.setOnClickListener {
             signIn()
         }
+        signUpButton.setOnClickListener{
+            switchFragment(SignUpFragment(), Const.signup_fragment)
 
+        }
 //        _fragmentView.findViewById<TextView>(R.id.login_reset_password).setOnClickListener {
 //            forgotPassword()
 //        }
@@ -74,11 +93,8 @@ class LoginFragment : Fragment() {
                 etEmail, etPassword
             )
         ) {
-            val user = UserSerializable(
+            val user = UserLoginSerializable(
                 etEmail.text.toString(),
-                "",
-                "",
-                "",
                 etPassword.text.toString()
             )// ,"0","0","0")
             //DeviceNotifications.notifyDefault(this,"Test","testing")

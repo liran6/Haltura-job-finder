@@ -23,6 +23,8 @@ object Const{
     const val Token_Error = "There was a problem signing you in, please try again"
     const val Signing_In = "Signing In"
     const val Email_Password_incorrect = "Your Email or Password is incorrect"
+    const val login_fragment = "login_fragment"
+    const val signup_fragment = "signup_fragment"
 
 
     //snack

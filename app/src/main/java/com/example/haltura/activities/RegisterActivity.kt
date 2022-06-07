@@ -38,16 +38,16 @@ class RegisterActivity : AppCompatActivity() {
         etConfirmPassword = findViewById<View>(R.id.et_ConfirmPassword) as EditText
         btnSignUp = findViewById<View>(R.id.btn_SignUp) as Button
     }
-    fun signUp(view: View) {
-        if (registerValid(
-                etPassword, etConfirmPassword,
-                etEmail
-            )
-        ) {
-            //todo: Admin user
-           var email =  etEmail!!.text.toString()
-            var password =etPassword!!.text.toString()
-            helper.createUser(email, password)
-        }
-    }
+//    fun signUp(view: View) {
+//        if (registerValid(
+//                etPassword, etConfirmPassword,
+//                etEmail
+//            )
+//        ) {
+//            //todo: Admin user
+//           var email =  etEmail!!.text.toString()
+//            var password =etPassword!!.text.toString()
+//            helper.createUser(email, password)
+//        }
+//    }
 }

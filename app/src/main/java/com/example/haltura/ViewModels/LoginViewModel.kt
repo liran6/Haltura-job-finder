@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.UsersAPI
+import com.example.haltura.Sql.Items.UserLoginSerializable
 import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
 import com.google.gson.Gson
@@ -47,7 +48,7 @@ class LoginViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     //todo save user and password for fast login
                     mutableMessageToasting.postValue(Const.Registration_Success)
-                    userSignIn(user)
+                    //userSignIn(user)
                 } else {
                     var res = response.body()?.string()
                     var x = 1
@@ -56,7 +57,7 @@ class LoginViewModel : ViewModel() {
         })
     }
 
-    fun userSignIn(user: UserSerializable){
+    fun userSignIn(user: UserLoginSerializable){
 
         val retroService =
             ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
