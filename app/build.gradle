@@ -148,6 +148,9 @@ dependencies {
 //    // Also declare the dependency for the Google Play services library and specify its version
 //    implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'org.jetbrains.anko:anko:0.10.8'
+    //Notify
+    implementation 'io.karn:notify:1.4.0'
+
 
 }
 //apply plugins: 'com.google.gms.google-services'

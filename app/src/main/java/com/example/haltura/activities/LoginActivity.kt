@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.haltura.DeviceNotifications
 import com.example.haltura.R
 import com.example.haltura.Sql.UserOpenHelper
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -179,7 +180,9 @@ class LoginActivity : AppCompatActivity() {
                 "",
                 etPassword.text.toString()
             )// ,"0","0","0")
-           var test =  helper.userSignIn(user)
+            DeviceNotifications.notifyDefault(this,"Test","testing")
+            var test = false
+            helper.userSignIn(user)
             if(test){
                 startActivity(Intent(this, MainActivity2::class.java))
             }
