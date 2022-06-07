@@ -33,7 +33,7 @@ class UserOpenHelper {
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
     private var json = Gson()
-    lateinit var createNewUserLiveData: MutableLiveData<UserResponse?>
+    lateinit var createNewUserLiveData: MutableLiveData<ResponseBody>
 
     init {
         createNewUserLiveData = MutableLiveData()
@@ -43,7 +43,7 @@ class UserOpenHelper {
         this.activity = activity
     }
 
-    fun getCreateNewUserObserver(): MutableLiveData<UserResponse?> {
+    fun getCreateNewUserObserver(): MutableLiveData<ResponseBody> {
         return createNewUserLiveData
     }
 
@@ -82,7 +82,7 @@ class UserOpenHelper {
         val call = retroService.updateUserInfo(user.id, "Bearer " + (user.token), user)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -107,7 +107,7 @@ class UserOpenHelper {
         val call = retroService.getUserInfo("Bearer " + (user.token))
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -133,7 +133,7 @@ class UserOpenHelper {
         val call = retroService.getProfile("Bearer " + (user.token), user.id)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -159,7 +159,7 @@ class UserOpenHelper {
         val call = retroService.updateProfileInfo(user.userId, "Bearer " + token, user)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -186,7 +186,7 @@ class UserOpenHelper {
         val call = retroService.getBusinesses("Bearer " + (user.token), user.id)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -209,7 +209,7 @@ class UserOpenHelper {
         val call = retroService.addBusiness("Bearer " + (user.token), user.id, business)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -235,7 +235,7 @@ class UserOpenHelper {
         )
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -264,7 +264,7 @@ class UserOpenHelper {
         )
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -290,7 +290,7 @@ class UserOpenHelper {
         val call = retroService.deleteAllBusinesses(profile.id, "Bearer $token")
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -332,7 +332,7 @@ class UserOpenHelper {
         val call = retroService.addWork("Bearer " + (user.token), user.id, work)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -355,7 +355,7 @@ class UserOpenHelper {
         val call = retroService.getWork("Bearer " + (user.token), workID)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -379,7 +379,7 @@ class UserOpenHelper {
         val call = retroService.getAllWorksOfUserID("Bearer " + (user.token),whoIsAsking, user.id)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -401,7 +401,7 @@ class UserOpenHelper {
         val call = retroService.getAllWorks("Bearer " + (user.token))
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -503,7 +503,7 @@ class UserOpenHelper {
         val call = retroService.createUser(user)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                createNewUserLiveData.postValue(null)
+                //createNewUserLiveData.postValue(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

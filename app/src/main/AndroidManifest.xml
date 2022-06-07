@@ -20,7 +20,7 @@
                 android:exported="false"
                 android:label="@string/title_activity_main2" />
         <activity
-                android:name=".activities.loginActivity2"
+                android:name=".activities.SignInActivity"
                 android:exported="false"
                 android:label="@string/title_activity_login2" />
 

@@ -1,16 +1,19 @@
 package com.example.haltura.Sql.Items
+
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.descriptors.StructureKind
 
+@Parcelize
 data class UserSerializable(
     @SerializedName("email") var email: String,
     @SerializedName("createdDate") var createdDate: String,
     @SerializedName("id") var id: String,
     @SerializedName("token") var token: String,
     @SerializedName("password") var password: String
-)
+) : Parcelable
+
 @Parcelize
 class UserObject(
     @SerializedName("userId") var userId: String,
@@ -19,25 +22,30 @@ class UserObject(
     @SerializedName("profile") var currentBusiness: BusinessSerializable?
 ) : Parcelable
 
+@Parcelize
 data class ProfileSerializable(
     @SerializedName("userId") var userId: String,
     @SerializedName("firstName") var firstName: String,
     @SerializedName("lastName") var lastName: String,
     @SerializedName("phone") var phone: String,
     @SerializedName("address") var address: String,
-    @SerializedName("chatList") var chatList: List<String> ,
-    @SerializedName("workList") var workList: List<String> ,
-    @SerializedName("businessList") var businessList: List<String> ,
+    @SerializedName("chatList") var chatList: List<String>,
+    @SerializedName("workList") var workList: List<String>,
+    @SerializedName("businessList") var businessList: List<String>,
     @SerializedName("id") var id: String,
-    )
+) : Parcelable
+
+@Parcelize
 data class BusinessSerializable(
     @SerializedName("listOfWork") var listOfWork: List<String>?,
     @SerializedName("userId") var userId: String,
-    @SerializedName("name") var name: String ,
-    @SerializedName("about") var about: String ,
-    @SerializedName("image") var image: String ,
+    @SerializedName("name") var name: String,
+    @SerializedName("about") var about: String,
+    @SerializedName("image") var image: String,
     @SerializedName("id") var id: String,
-    )
+) : Parcelable
+
+@Parcelize
 data class WorkSerializable(
     @SerializedName("publisher") var publisher: String,
     @SerializedName("company") var company: String,
@@ -49,20 +57,40 @@ data class WorkSerializable(
     @SerializedName("startTime") var startTime: String,
     @SerializedName("endTime") var endTime: String,
     @SerializedName("image") var image: String,
-)
+) : Parcelable
+
+@Parcelize
 data class AddresSerializable(
     @SerializedName("city") var city: String,
     @SerializedName("street") var street: String,
     @SerializedName("streetNum") var streetNum: Int,
     @SerializedName("floor") var floor: Int,
     @SerializedName("appartment") var appartment: String,
-    )
-data class BusinessesList( @SerializedName("business_list") val business_list: List<BusinessSerializable>)
-data class WorksList( @SerializedName("work_list") val work_list: List<WorkSerializable>)
-data class UserResponse(val error: Boolean, val message:String, val code: Int?, val meta: String?, val data: User?)
-data class RetroUser(val email: String, val password: String)
+) : Parcelable
+
+@Parcelize
+data class BusinessesList(
+    @SerializedName("business_list")
+    val business_list: List<BusinessSerializable>
+) : Parcelable
+
+@Parcelize
+data class WorksList(
+    @SerializedName("work_list")
+    val work_list: List<WorkSerializable>
+) : Parcelable
 
 
+data class UserResponse(
+    val error: Boolean,
+    val message: String,
+    val code: Int?,
+    val meta: String?,
+    val data: User?
+)
+
+@Parcelize
+data class RetroUser(val email: String, val password: String) : Parcelable
 
 
 class User {
@@ -222,6 +250,7 @@ class User {
     fun getEmail(): String? {
         return email
     }
+
     fun getUserPhone(): String? {
         return userPhone
     }

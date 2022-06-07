@@ -168,26 +168,26 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    fun signIn(view: View) {
-        if (signInValid(
-                etEmail, etPassword
-            )
-        ) {
-            val user = UserSerializable(
-                etEmail.text.toString(),
-                "",
-                "",
-                "",
-                etPassword.text.toString()
-            )// ,"0","0","0")
-            DeviceNotifications.notifyDefault(this,"Test","testing")
-            var test = false
-            helper.userSignIn(user)
-            if(test){
-                startActivity(Intent(this, MainActivity2::class.java))
-            }
-        }
-    }
+//    fun signIn(view: View) {
+//        if (signInValid(
+//                etEmail, etPassword
+//            )
+//        ) {
+//            val user = UserSerializable(
+//                etEmail.text.toString(),
+//                "",
+//                "",
+//                "",
+//                etPassword.text.toString()
+//            )// ,"0","0","0")
+//            DeviceNotifications.notifyDefault(this,"Test","testing")
+//            var test = false
+//            helper.userSignIn(user)
+//            if(test){
+//                startActivity(Intent(this, MainActivity2::class.java))
+//            }
+//        }
+//    }
 
     fun signUp(view: View) {
         //startActivity(Intent(this, AddWorkActivity::class.java))
