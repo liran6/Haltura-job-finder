@@ -16,7 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
 
-object AppNotification {
+object AppNotifications {
+
     fun toastBar(activity: Activity,message: String){
         Toast.makeText(
             activity, message,
