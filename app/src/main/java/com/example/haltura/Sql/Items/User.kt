@@ -1,5 +1,7 @@
 package com.example.haltura.Sql.Items
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.descriptors.StructureKind
 
 data class UserSerializable(
@@ -9,6 +11,14 @@ data class UserSerializable(
     @SerializedName("token") var token: String,
     @SerializedName("password") var password: String
 )
+@Parcelize
+class UserObject(
+    @SerializedName("userId") var userId: String,
+    @SerializedName("email") var email: String,
+    @SerializedName("token") var token: String,
+    @SerializedName("profile") var currentBusiness: BusinessSerializable?
+) : Parcelable
+
 data class ProfileSerializable(
     @SerializedName("userId") var userId: String,
     @SerializedName("firstName") var firstName: String,

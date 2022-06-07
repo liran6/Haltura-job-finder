@@ -395,6 +395,27 @@ class UserOpenHelper {
         })
     }
 
+    fun getAllWorks(user: UserSerializable) {
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.getAllWorks("Bearer " + (user.token))
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                createNewUserLiveData.postValue(null)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    var res = response.body()?.string()
+                    //val listType = object : TypeToken<List<String>>(){ }.type
+                    var work_list = json.fromJson(res, WorksList::class.java)
+                    var x = 1
+                } else {
+                    var x = 1
+                }
+            }
+        })
+    }
 
     fun userSignIn(user: UserSerializable): Boolean {
         var test = false

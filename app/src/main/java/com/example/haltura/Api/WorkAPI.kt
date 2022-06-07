@@ -25,6 +25,14 @@ interface WorkAPI {
         @Body user: WorkSerializable
     ): Call<ResponseBody>
 
+
+    //TODO what this call do?
+    @PUT("works/all")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun getAllWorks(
+        @Header("Authorization") token: String
+    ): Call<ResponseBody>
+
     //TODO what this call do?
     @PUT("works/add/{workId}/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
