@@ -27,7 +27,7 @@ interface WorkAPI {
 
 
     //TODO what this call do?
-    @PUT("works/all")
+    @GET("works/all")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun getAllWorks(
         @Header("Authorization") token: String
