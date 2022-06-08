@@ -8,19 +8,22 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.haltura.R
+import com.example.haltura.Sql.Items.UserSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.databinding.ActivityMain2Binding
 
 
 class MainActivity2 : AppCompatActivity() {
 
     private lateinit var binding: ActivityMain2Binding
-
+    private lateinit var user: UserSerializable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        user = intent.getParcelableExtra(Const.USER_OBJECT)!!
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main2)

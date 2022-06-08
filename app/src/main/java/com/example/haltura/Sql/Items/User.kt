@@ -11,7 +11,7 @@ data class UserSerializable(
     @SerializedName("createdDate") var createdDate: String,
     @SerializedName("id") var id: String,
     @SerializedName("token") var token: String,
-    @SerializedName("password") var password: String
+    @SerializedName("password") var password: String?
 ) : Parcelable
 
 @Parcelize
@@ -25,7 +25,7 @@ class UserObject(
     @SerializedName("userId") var userId: String,
     @SerializedName("email") var email: String,
     @SerializedName("token") var token: String,
-    @SerializedName("profile") var currentBusiness: BusinessSerializable?
+    @SerializedName("profile") var profile: BusinessSerializable?
 ) : Parcelable
 
 @Parcelize

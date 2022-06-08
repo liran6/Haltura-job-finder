@@ -102,7 +102,11 @@ class SignInActivity : AppCompatActivity() {
     private fun loggingIn(user: UserSerializable) {
         val intent = Intent(this, MainActivity2::class.java)
         //val userBundle = Bundle()
-        intent.putExtra(Const.Logged_User, user)
+       // intent.putExtra(Const.Logged_User, user)
+
+        val bundle = Bundle()
+        bundle.putParcelable(Const.USER_OBJECT, user)
+        intent.putExtras(bundle)
         //  hide loading screen
         loadingScreen.visibility = View.GONE
         startActivity(intent)
