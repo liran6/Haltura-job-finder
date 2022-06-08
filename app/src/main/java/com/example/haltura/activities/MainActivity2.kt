@@ -9,15 +9,18 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.haltura.R
 import com.example.haltura.databinding.ActivityMain2Binding
+import com.example.haltura.Sql.Items.UserSerializable
+import com.example.haltura.Utils.Const
 
 
 class MainActivity2 : AppCompatActivity() {
 
     private lateinit var binding: ActivityMain2Binding
+    private lateinit var user: UserSerializable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        user = intent.getParcelableExtra(Const.USER_OBJECT)!!
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 

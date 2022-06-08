@@ -22,6 +22,10 @@ import com.example.haltura.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
+    private val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mjk2NDg1ZDQ0NzBhZGE1YzBmYWJlOGYiLCJpYXQiOjE2NTQ3MTc3MjksImV4cCI6MTY1NTMyMjUyOX0.kINx9at8G7aZkJUWfghCojlYk3DHKqgpt2gZJTHd5s4"
+    private val userId: String = "6296485d4470ada5c0fabe8f"
+
+
     private val _viewModel: HomeViewModel by activityViewModels()
     private lateinit var _fragmentView: View
     private lateinit var _workRecycle: RecyclerView
@@ -56,7 +60,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewModelData() {
-        //_viewModel.getAllWorks(userObject.token)
+        _viewModel.getAllWorks(token)
     }
 
     private fun initObservers() {
