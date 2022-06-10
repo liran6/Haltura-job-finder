@@ -21,11 +21,12 @@ data class UserLoginSerializable(
 ) : Parcelable
 
 @Parcelize
-class UserObject(
+data class UserObject(
     @SerializedName("userId") var userId: String,
     @SerializedName("email") var email: String,
     @SerializedName("token") var token: String,
-    @SerializedName("profile") var profile: BusinessSerializable?
+    @SerializedName("profile") var profile: ProfileSerializable?,
+    @SerializedName("business") var business: BusinessSerializable?
 ) : Parcelable
 
 @Parcelize

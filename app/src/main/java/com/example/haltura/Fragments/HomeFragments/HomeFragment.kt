@@ -14,9 +14,10 @@ import com.example.haltura.ViewModels.HomeViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haltura.Adapters.WorkAdapter
-import com.example.haltura.Dialogs.WatchWorkDialog
+//import com.example.haltura.Dialogs.WatchWorkDialog
 import com.example.haltura.Fragments.FragmentWithUserObject
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.UserData
 import com.example.haltura.databinding.FragmentHomeBinding
 
 
@@ -60,7 +61,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewModelData() {
-        _viewModel.getAllWorks(token)
+        _viewModel.getAllWorks(UserData.currentUser?.token!!)
     }
 
     private fun initObservers() {
@@ -90,6 +91,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun showWorkDetails(work: WorkSerializable) {
+        var dialog = WatchWorkDialog(work)
+        activity?.supportFragmentManager?.let {
+            dialog.show(it, "WatchWorkDialog")
+        }
+        //dialog.show(supportFragmentManager,"WatchWorkDialog")
         //showWorkDetailsPopup(supervisorEmail)
         // todo: in here or view model?
         //todo: do it from the beginning

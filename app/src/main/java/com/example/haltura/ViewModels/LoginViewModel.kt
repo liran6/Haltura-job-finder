@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.UsersAPI
 import com.example.haltura.Sql.Items.UserLoginSerializable
+import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
 import com.google.gson.Gson
@@ -71,9 +72,12 @@ class LoginViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     var res = response.body()?.string()
                     var user = json.fromJson(res, UserSerializable::class.java)
+//                    var userObject = UserObject(user.id,user.email,user.token,null)
                     if (user.token != "") {
+                        //var userObject = UserObject(user.id,user.email,user.token,null)
                         mutableMessageToasting.postValue(Const.Signing_In)
                         mutableUserHolder.postValue(user)
+                    //mutableUserHolder.postValue(UserObject(user.id,user.email,user.token,null,null))
                     } else {
                         mutableMessageToasting.postValue(Const.Token_Error)
                     }
