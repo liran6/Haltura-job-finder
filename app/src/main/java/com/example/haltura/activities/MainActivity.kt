@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.*
-import com.example.haltura.Dialogs.WatchWorkDialog
+//import com.example.haltura.Dialogs.WatchWorkDialog
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.UserOpenHelper
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
 
     override fun onWorkClick(pos: Int){
         //todo: here make dialog
-        var dwork = workArrayList.get(pos)
+        //var dwork = workArrayList.get(pos)
 //        val view = View.inflate(this,R.layout.watch_work_dialog2, null)
 //        //view.
 //        val builder = AlertDialog.Builder(this)
@@ -116,8 +116,9 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
 //        val dialog = builder.create()
 //        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 //        dialog.show()
-        var dialog = WatchWorkDialog(dwork,this)
-        dialog.show(supportFragmentManager,"WatchWorkDialog")//SupportFragmentManager,"WatchWorkDialog")
+
+        //var dialog = WatchWorkDialog(dwork,this)
+        //dialog.show(supportFragmentManager,"WatchWorkDialog")//SupportFragmentManager,"WatchWorkDialog")
         //Log.d("Main","onClick: Clicked" + pos)
     }
 

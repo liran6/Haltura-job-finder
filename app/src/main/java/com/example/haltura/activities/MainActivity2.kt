@@ -26,6 +26,11 @@ class MainActivity2 : AppCompatActivity() {
         user = intent.getParcelableExtra(Const.USER_OBJECT)!!
         val navView: BottomNavigationView = binding.navView
 
+//        navView.setOnNavigationItemSelectedListener { item ->
+//            navController.navigate(item.itemId, args)
+//            true
+//        }
+
         val navController = findNavController(R.id.nav_host_fragment_activity_main2)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

@@ -15,8 +15,10 @@ import com.example.haltura.AppNotifications.toastBar
 import com.example.haltura.Fragments.SignInFragments.LoginFragment
 import com.example.haltura.Menagment.Preferences
 import com.example.haltura.R
+import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.UserData
 import com.example.haltura.ViewModels.LoginViewModel
 import com.google.gson.Gson
 
@@ -102,7 +104,8 @@ class SignInActivity : AppCompatActivity() {
     private fun loggingIn(user: UserSerializable) {
         val intent = Intent(this, MainActivity2::class.java)
         //val userBundle = Bundle()
-       // intent.putExtra(Const.Logged_User, user)
+        // intent.putExtra(Const.Logged_User, user)
+        UserData.currentUser = UserObject(user.id,user.email,user.token,null,null)// add in node server profile info
 
         val bundle = Bundle()
         bundle.putParcelable(Const.USER_OBJECT, user)
