@@ -63,7 +63,7 @@ interface WorkAPI {
     //get all works of userId (AS EMPLOYER)
     @GET("works/publish/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
-    fun getAllWorksOfUserID1(
+    fun getAllWorksThatUserIdPublished(
         @Header("Authorization") token: String,
         @Path("userId") userId: String,
     ): Call<ResponseBody>

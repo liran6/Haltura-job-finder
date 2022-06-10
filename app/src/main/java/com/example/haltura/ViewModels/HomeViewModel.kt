@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.WorkAPI
 import com.example.haltura.Sql.Items.*
+import com.example.haltura.Utils.notifyAllObservers
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -53,6 +54,7 @@ class HomeViewModel : ViewModel() {
                         val work = json.fromJson(works.getJSONObject(i).toString(), WorkSerializable::class.java)
                         mutableWorkList.value!!.add(work)
                     }
+                    mutableWorkList.notifyAllObservers()
                     //mutableWorkList.notifyObserver()
 //                    var res = response.body()?.string()
 //                    //val listType = object : TypeToken<List<String>>(){ }.type
