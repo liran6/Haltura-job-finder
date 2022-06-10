@@ -64,6 +64,7 @@ data class WorkSerializable(
     @SerializedName("startTime") var startTime: String,
     @SerializedName("endTime") var endTime: String,
     @SerializedName("image") var image: String,
+    @SerializedName("id") var id: String? = null,
 ) : Parcelable
 
 @Parcelize

@@ -36,7 +36,7 @@ interface WorkAPI {
     //TODO what this call do?
     @PUT("works/add/{workId}/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
-    fun addToWorkUserId(
+    fun addToWorkWorkIdUser(
         @Header("Authorization") token: String,
         @Path("workId") workId: String,
         @Path("userId") userId: String,
