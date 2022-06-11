@@ -13,6 +13,7 @@ import com.example.haltura.Sql.Items.Chat
 import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.ImageHelper
 
 
 class ManageWorkAdapter(
@@ -25,7 +26,8 @@ class ManageWorkAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val task: TextView = view.findViewById(R.id.task)
         val date: TextView = view.findViewById(R.id.date)
-        val image: ImageView= view.findViewById(R.id.Image)
+        val image: ImageView= view.findViewById(R.id.image)
+        val trash : ImageView= view.findViewById(R.id.trash)
     }
 
     fun setData(data: MutableList<WorkSerializable>) {
@@ -50,9 +52,10 @@ class ManageWorkAdapter(
         viewHolder.date.text = "FROM: " +currentItem.startTime + " TO " + currentItem.startTime
         var bm = Base64.decode(currentItem.image, Base64.DEFAULT)
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-        viewHolder.image.setImageBitmap(data)
+        var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
+        viewHolder.image.setImageBitmap(dataRoundedCorner)
 
-        viewHolder.image.setOnClickListener()
+        viewHolder.trash.setOnClickListener()
         {
             _clickDeleteItemListener(_dataSet[position])
         }

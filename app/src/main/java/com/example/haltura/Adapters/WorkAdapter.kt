@@ -13,6 +13,7 @@ import com.example.haltura.Sql.Items.Chat
 import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.ImageHelper
 
 
 class WorkAdapter(
@@ -54,7 +55,8 @@ class WorkAdapter(
 
         var bm = Base64.decode(currentItem.image, Base64.DEFAULT)
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-        viewHolder.image.setImageBitmap(data)
+        var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
+        viewHolder.image.setImageBitmap(dataRoundedCorner)
 
         viewHolder.itemView.setOnClickListener {
             _clickOnItemListener(_dataSet[position])//todo: check if it is your work

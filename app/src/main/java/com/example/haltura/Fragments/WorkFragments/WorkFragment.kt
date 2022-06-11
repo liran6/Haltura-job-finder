@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,7 @@ import com.example.haltura.Fragments.HomeFragments.WatchWorkDialog
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.UserData
+import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.HomeViewModel
 import com.example.haltura.ViewModels.WorkViewModel
 import com.example.haltura.databinding.FragmentHomeBinding
@@ -30,6 +33,7 @@ class WorkFragment : Fragment() {
     private lateinit var _manageWorkRecycle: RecyclerView
     private lateinit var _manageWorksAdapter: ManageWorkAdapter
     private var _binding: FragmentWorkBinding? = null
+    private lateinit var _layout: ConstraintLayout
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -56,6 +60,8 @@ class WorkFragment : Fragment() {
 
     private fun initViews() {
         _manageWorkRecycle = binding.manageWorkRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
+        _manageWorkRecycle.addItemDecoration(VerticalSpaceItemDecoration(15))
+        _layout = binding.manageWorkLayout
     }
 
     private fun initViewModelData() {
@@ -91,7 +97,7 @@ class WorkFragment : Fragment() {
     }
 
     private fun openWorkEditMode(work: WorkSerializable) {
-
+        var a = 1
     }
 
     private fun deleteWork(work: WorkSerializable) {
@@ -112,13 +118,25 @@ class WorkFragment : Fragment() {
 
         cancel.setOnClickListener {
             popup.dismiss()
+            removeBackground(true)
         }
 
         delete.setOnClickListener {
             _viewModel.deleteWork(work)
             popup.dismiss()
+            removeBackground(true)
         }
+        removeBackground(false)
         popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
+    }
+
+    private fun removeBackground(show: Boolean) {
+        if (show) {
+            _layout.visibility = View.VISIBLE
+
+        } else {
+            _layout.visibility = View.GONE
+        }
     }
 
     override fun onDestroyView() {

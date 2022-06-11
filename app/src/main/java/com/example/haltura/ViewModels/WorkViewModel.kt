@@ -29,6 +29,7 @@ class WorkViewModel : ViewModel() {
 
 
     fun getAllOfYourWorks() {
+        mutableWorkList.value!!.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
         val call = retroService.getAllWorksThatUserIdPublished("Bearer " +
@@ -71,6 +72,7 @@ class WorkViewModel : ViewModel() {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
+                    mutableWorkList.value!!.remove(work) //to delete from the list
                     //todo: toast delete was successfully
                     var x = 1
                 } else {
