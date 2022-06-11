@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_edges">
+
+    <TextView
+            android:id="@+id/task"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:padding="3dp"
+            android:text="task"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="normal"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image" />
+
+    <TextView
+            android:id="@+id/date"
+            android:layout_width="215dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:padding="2dp"
+            android:text="date"
+            android:textColor="@color/teal_200"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/task"
+            app:layout_constraintTop_toBottomOf="@+id/task"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.27" />
+
+<!--    <ImageView-->
+<!--            android:id="@+id/edit"-->
+<!--            android:layout_width="35dp"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:srcCompat="@drawable/ic_edit_24"-->
+<!--            android:contentDescription="delete work" />-->
+
+    <ImageView
+            android:id="@+id/trash"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/ic_delete_24"
+            android:contentDescription="delete work"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintVertical_bias="0.507" />
+
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/haltura_icon2"
+            android:layout_marginStart="5sp"
+            android:id="@+id/image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginBottom="10dp"-->
+<!--android:background="@drawable/round_edges">-->
+
+<!--<TextView-->
+<!--        android:id="@+id/task"-->
+<!--        android:layout_width="225dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:padding="3dp"-->
+<!--        android:text="task"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="normal"-->
+
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/image" />-->
+
+<!--<TextView-->
+<!--        android:id="@+id/date"-->
+<!--        android:layout_width="215dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginBottom="3dp"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:padding="2dp"-->
+<!--        android:text="date"-->
+<!--        android:textColor="@color/teal_200"-->
+<!--        android:textSize="12sp"-->
+<!--        android:textStyle="normal"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/task"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/task"-->
+<!--        app:layout_constraintVertical_bias="0.0"-->
+<!--        app:layout_constraintHorizontal_bias="0.27" />-->
+
+<!--<ImageView-->
+<!--        android:id="@+id/edit"-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_marginEnd="5dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_edit_24"-->
+<!--        android:contentDescription="delete work" />-->
+
+<!--<ImageView-->
+<!--        android:id="@+id/trash"-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        app:srcCompat="@drawable/ic_delete_24"-->
+<!--        android:contentDescription="delete work"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/edit" />-->
+
+<!--<ImageView-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:srcCompat="@drawable/haltura_icon2"-->
+<!--        android:layout_marginStart="5sp"-->
+<!--        android:id="@+id/image"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

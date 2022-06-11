@@ -14,9 +14,14 @@
     <color name="gray">#5A5A5A</color>
     <color name="lightBlue">#0063FF</color>
     <color name="colorLightGray">#ececec</color>
+    <color name="backGround">#F6F6F6</color>
     <color name="colorTitle">#ffffff</color>
     <color name="colorGray">#dedede</color>
     <color name="colorDarkGray">#b4b4b4</color>
     <color name="colorBlue">#CAD8FF</color>
     <color name="chatColorBlue">#FFAA8B</color>
+    <color name="removeColor">#F31C00</color>
+    <color name="deleteColor">#F31C00</color>
+    <color name="cancelColor">#1C82DC</color>
+    removeColor
 </resources>

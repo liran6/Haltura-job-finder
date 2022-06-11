@@ -18,6 +18,7 @@ import com.example.haltura.Adapters.WorkAdapter
 import com.example.haltura.Fragments.FragmentWithUserObject
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.UserData
+import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.databinding.FragmentHomeBinding
 
 
@@ -58,6 +59,7 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
+        _workRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
     }
 
     private fun initViewModelData() {
