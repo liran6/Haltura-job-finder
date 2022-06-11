@@ -25,6 +25,7 @@ object Const{
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"
     const val Logged_User = "Logged User"
+    const val Email_Is_Taken = "Email address is already in use."
     const val Token_Error = "There was a problem signing you in, please try again"
     const val Signing_In = "Signing In"
     const val Email_Password_incorrect = "Your Email or Password is incorrect"

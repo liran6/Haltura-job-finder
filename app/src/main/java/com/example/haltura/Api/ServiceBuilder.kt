@@ -12,7 +12,7 @@ class ServiceBuilder {
 
     companion object {
 
-        val BASE_URL = "http://192.168.31.233:4000/"
+        val BASE_URL = Const.SERVER_URL
 
         private var gson: Gson = GsonBuilder()
             .setLenient()
