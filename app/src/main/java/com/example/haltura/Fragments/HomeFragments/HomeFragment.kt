@@ -63,7 +63,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewModelData() {
-        _viewModel.getAllWorks(UserData.currentUser?.token!!)
+        _viewModel.getAllWorks()
     }
 
     private fun initObservers() {

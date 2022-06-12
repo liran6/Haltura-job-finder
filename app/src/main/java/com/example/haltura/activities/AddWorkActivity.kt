@@ -13,7 +13,9 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +23,8 @@ import androidx.core.graphics.drawable.toBitmap
 import com.example.haltura.R
 import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.Work
-import com.example.haltura.Sql.UserOpenHelper
+import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.UserData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,14 +32,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-
+import kotlinx.android.synthetic.main.manage_work_item.*
 import java.io.IOException
-import java.sql.Date
-import java.sql.Time
+import java.text.SimpleDateFormat
+
 
 //iv_addItem,Imageed_Company,ed_Task,dp_Date,tp_StartTime,tp_EndTime,et_Salary,et_NumberOfWorkers,et_Address,btn_ShowLocation,map,et_Info
 class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
-    private val REQ_CAMERA = 1
     private lateinit var mMap: GoogleMap
     private lateinit var autocompleteSupportFragment : AutocompleteSupportFragment
     private lateinit var edAddress: EditText
@@ -57,24 +59,86 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var btnPreview: Button
     //private lateinit var binding: ActivityMapsBinding
 
+
+    //
+    private lateinit var city: String
+    private lateinit var cities: Array<String>
+    private lateinit var spinnerCity: Spinner
+    private lateinit var etApartment: EditText
+    private lateinit var etStreetName: EditText
+    private lateinit var etStreetNumber: EditText
+    private lateinit var etFloor: EditText
+    //
+
+
     private lateinit var tvDate :TextView
     private lateinit var tvStartTime:TextView// : tv_StartTime
     private lateinit var tvEndTime:TextView// : tv_EndTime
     private lateinit var mDateSetListener: DatePickerDialog.OnDateSetListener
     private lateinit var mTimeSetListener: TimePickerDialog.OnTimeSetListener
+    private lateinit var _layout: LinearLayout
     var bm: Bitmap? = null
     private var isStartTime = true
+    //private lateinit var background :Drawable
 
     var helper = BusinessOpenHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_work)
+        initViews()
+        initTimePickers()
+        initMap()
+    }
+
+    private fun initMap() {
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    fun initViews(){
         edAddress = findViewById<View>(R.id.et_Address) as EditText
         tvDate = findViewById<View>(R.id.tv_date) as TextView
         tvStartTime = findViewById<View>(R.id.tv_StartTime) as TextView
         tvEndTime = findViewById<View>(R.id.tv_EndTime) as TextView
+        _layout = findViewById<View>(R.id.addWorkLayout) as LinearLayout
+        ivAddItemImage = findViewById<View>(R.id.iv_AddItemImage) as ImageView
+        etCompany = findViewById<View>(R.id.et_Company) as EditText
+        etTask = findViewById<View>(R.id.et_Task) as EditText
+        etSalary = findViewById<View>(R.id.et_Salary) as EditText
+        etNumberOfWorkers = findViewById<View>(R.id.et_NumberOfWorkers) as EditText
+        etAddress = findViewById<View>(R.id.et_Address) as EditText
+        etInfo = findViewById<View>(R.id.et_Info) as EditText
+        btnShowLocation = findViewById<View>(R.id.btn_ShowLocation) as Button
+        btnAddWork = findViewById<View>(R.id.btn_AddWork) as Button
+        btnPreview = findViewById<View>(R.id.btn_Preview) as Button
 
+
+        ///
+
+
+        cities = resources.getStringArray(R.array.cities)
+        etStreetName = findViewById<View>(R.id.et_StreetName) as EditText
+        etStreetNumber = findViewById<View>(R.id.et_StreetNumber) as EditText
+        etFloor = findViewById<View>(R.id.et_Floor) as EditText
+        etApartment = findViewById<View>(R.id.et_Apartment) as EditText
+        spinnerCity = findViewById<View>(R.id.spinner_City) as Spinner
+        spinnerCity!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                city = cities[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    fun initTimePickers(){
         mDateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
             var month = month
             month = month + 1
@@ -96,22 +160,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
                 tvEndTime!!.text = "Ending " +time
             }
         }
-
-        ivAddItemImage = findViewById<View>(R.id.iv_AddItemImage) as ImageView
-        etCompany = findViewById<View>(R.id.et_Company) as EditText
-        etTask = findViewById<View>(R.id.et_Task) as EditText
-        etSalary = findViewById<View>(R.id.et_Salary) as EditText
-        etNumberOfWorkers = findViewById<View>(R.id.et_NumberOfWorkers) as EditText
-        etAddress = findViewById<View>(R.id.et_Address) as EditText
-        etInfo = findViewById<View>(R.id.et_Info) as EditText
-        btnShowLocation = findViewById<View>(R.id.btn_ShowLocation) as Button
-        btnAddWork = findViewById<View>(R.id.btn_AddWork) as Button
-        btnPreview = findViewById<View>(R.id.btn_Preview) as Button
-
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -235,38 +283,96 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         dialog.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun addWork(view: View)
     {
         //todo: check validation...
         var arrDate = tvDate.text.toString().split('/')
         var arrStrtingTime = tvStartTime.text.toString().split(':')
         var arrEndingTime = tvEndTime.text.toString().split(':')
-
-//        var date = Date(Integer.parseInt(arrDate[0].split(' ')[1]),
-//            Integer.parseInt(arrDate[1]) - 1,
-//            Integer.parseInt(arrDate[2]))
         var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[0].split(' ')[1]),
             Integer.parseInt(arrDate[1]),
             Integer.parseInt(arrDate[2]))
-
         var staringTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]))
         var endingTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]))
-//        var staringTime = Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]),0)
-//        var endingTime = Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]),0)
-        var work = Work(
-            ivAddItemImage.drawable.toBitmap(),
+//        var work = Work(
+//            ivAddItemImage.drawable.toBitmap(),
+//            etCompany.text.toString(),
+//            etTask.text.toString(),
+//            Integer.parseInt(etSalary.text.toString()),
+//            Integer.parseInt(etNumberOfWorkers.text.toString()),
+//            etAddress.text.toString(),
+//            etInfo.text.toString(),
+//            date,
+//            staringTime,
+//            endingTime
+//        )
+        var work = getWorkFromForm()
+        //var srt = work.toString()
+        var a = 1
+        //helper.AddWork(work)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getWorkFromForm()
+    {
+        var arrDate = tvDate.text.toString().split('/')
+        var arrStrtingTime = tvStartTime.text.toString().split(':')
+        var arrEndingTime = tvEndTime.text.toString().split(':')
+        var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[0].split(' ')[1]),
+            Integer.parseInt(arrDate[1]),
+            Integer.parseInt(arrDate[2]))
+        var staringTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]))
+        var endingTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]))
+
+        var work = WorkSerializable(UserData.currentUser?.userId!!,
             etCompany.text.toString(),
             etTask.text.toString(),
             Integer.parseInt(etSalary.text.toString()),
             Integer.parseInt(etNumberOfWorkers.text.toString()),
-            etAddress.text.toString(),
+            null!!,//todo:change
             etInfo.text.toString(),
-            date,
-            staringTime,
-            endingTime
-        )
-        //var srt = work.toString()
-        helper.AddWork(work)
+            getTime(date,staringTime,endingTime,true),
+            getTime(date,staringTime,endingTime,false),
+            ivAddItemImage.drawable.toBitmap().toString())
+//        ivAddItemImage.drawable.toBitmap(),
+//        etCompany.text.toString(),
+//        etTask.text.toString(),
+//        Integer.parseInt(etSalary.text.toString()),
+//        Integer.parseInt(etNumberOfWorkers.text.toString()),
+//        etAddress.text.toString(),
+//        etInfo.text.toString(),
+//        date,
+//        staringTime,
+//        endingTime
+//        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getTime(date: com.example.haltura.Sql.Items.Date,
+                        startTime: com.example.haltura.Sql.Items.Time,
+                        endTime: com.example.haltura.Sql.Items.Time,
+                        isStart:Boolean
+    ): String {
+        //"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        var dt = date.toString() // Start date
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val c = Calendar.getInstance()
+        c.time = sdf.parse(dt)
+        if (isStart)
+        {
+            dt = sdf.format(c.time) // dt is now the new date
+            return "$dt$startTime:00.000+00:00"
+        }
+        else
+        {
+            if(endTime.isBefore(startTime))
+            {
+                c.add(Calendar.DATE, 1) // number of days to add
+            }
+            dt = sdf.format(c.time) // dt is now the new date
+            return "$dt$endTime:00.000+00:00"
+        }
     }
 
     fun preview(view: View)
@@ -296,8 +402,58 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun SetImage(view: View)
     {
+        val imagePopup: View = layoutInflater.inflate(R.layout.camera_or_gallery_popup, null)
+
+        val popup = PopupWindow(
+            imagePopup,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        popup.elevation = 3.0f
+
+        val camera = imagePopup.findViewById(R.id.camera) as ImageView
+        val gallery = imagePopup.findViewById(R.id.gallery) as ImageView
+
+
+        camera.setOnClickListener {
+            setCameraImage()
+            popup.dismiss()
+            removeBackground(true)
+        }
+
+        gallery.setOnClickListener {
+            setGalleryImage()
+            popup.dismiss()
+            removeBackground(true)
+        }
+        removeBackground(false)
+        popup.showAtLocation(_layout, Gravity.CENTER, 0, 0) //popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
+    }
+
+    private fun removeBackground(show: Boolean) {
+        if (show) {
+            _layout.visibility = View.VISIBLE
+            //_layout.setBackgroundDrawable(background)
+
+        } else {
+            _layout.visibility = View.GONE
+            //_layout.setBackgroundColor(Color.GRAY)
+        }
+    }
+
+    fun setCameraImage()
+    {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQ_CAMERA)
+    }
+
+    fun setGalleryImage()
+    {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -309,7 +465,20 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             ivAddItemImage.setImageBitmap(bm)
         }
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            //todo:check if it is work
+            if (data != null) {
+                val uri = data.getData();
+                val bm =MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri)
+                ivAddItemImage.setImageBitmap(bm)//sendImageMessage(imageBitMap)
+            }
+            //todo: toast err
+        }
     }
 
-
+    companion object
+    {
+        private val REQ_CAMERA = 1
+        private  val PICK_IMAGE = 2
+    }
 }

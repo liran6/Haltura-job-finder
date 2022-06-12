@@ -4,7 +4,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.AddWorkActivity">
+        tools:context=".activities.AddWorkActivity"
+        android:background="@color/backGround"
+        android:id="@+id/addWorkLayout">
+
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -21,16 +24,17 @@
                     android:layout_marginTop="60dp"
                     android:text="Add Work"
                     android:textColor="#000000"
-                    android:textSize="40dp"
+                    android:textSize="50dp"
                     android:textStyle="bold|italic" />
+
             <ImageView
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/haltura_icon2"
                     android:onClick="SetImage"
-                    android:id="@+id/iv_AddItemImage"/>
+                    android:id="@+id/iv_AddItemImage" />
 
             <EditText
                     android:id="@+id/et_Company"
@@ -42,7 +46,7 @@
                     android:textAlignment="center"
                     android:layout_marginTop="20dp"
                     android:singleLine="true"
-                    android:textStyle="bold|italic"/>
+                    android:textStyle="bold|italic" />
 
             <EditText
                     android:id="@+id/et_Task"
@@ -54,7 +58,7 @@
                     android:textAlignment="center"
                     android:layout_marginTop="20dp"
                     android:singleLine="true"
-                    android:textStyle="bold|italic"/>
+                    android:textStyle="bold|italic" />
 
             <TextView
                     android:id="@+id/tv_date"
@@ -67,122 +71,101 @@
                     android:textAlignment="center"
                     android:layout_marginTop="20dp"
                     android:singleLine="true"
-                    android:textStyle="bold|italic"/>
+                    android:textStyle="bold|italic" />
 
-<!--            <EditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:inputType="time"-->
-<!--                    android:ems="10"-->
-<!--                    android:hint="time"-->
-<!--                    android:id="@+id/editTextTime" />-->
+            <!--            <EditText-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="time"-->
+            <!--                    android:ems="10"-->
+            <!--                    android:hint="time"-->
+            <!--                    android:id="@+id/editTextTime" />-->
 
 
-<!--            <DatePicker-->
-<!--                    android:id="@+id/dp_Date"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:datePickerMode="spinner"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:calendarViewShown="false"/>-->
+            <!--            <DatePicker-->
+            <!--                    android:id="@+id/dp_Date"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:datePickerMode="spinner"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:calendarViewShown="false"/>-->
+
+
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                <EditText
-                        android:id="@+id/et_Address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:hint="Address"
-                        android:layout_marginTop="20dp"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textAlignment="center"
-                        android:textStyle="bold|italic" />
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                <Button
-                        android:id="@+id/btn_ShowLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:onClick="showOnMap"
-                        android:text="show" />
+                    <TextView
+                            android:id="@+id/tv_StartTime"
+                            android:onClick="PickTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="Start Time"
+                            android:textAlignment="center"
+                            android:layout_marginTop="20dp"
+                            android:singleLine="true"
+                            android:textStyle="bold|italic" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_EndTime"
+                            android:onClick="PickTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="End Time"
+                            android:textAlignment="center"
+                            android:layout_marginTop="20dp"
+                            android:singleLine="true"
+                            android:textStyle="bold|italic" />
+
+                </LinearLayout>
+
+
+                <!--            <TimePicker-->
+                <!--                    android:id="@+id/tp_StartTime"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:timePickerMode="spinner" />-->
+
+                <!--            todo: set edit text that open this when you click-->
+
+
+                <!--            <TimePicker-->
+                <!--                    android:id="@+id/tp_EndTime"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:timePickerMode="spinner"/>-->
+
 
             </LinearLayout>
 
-            <LinearLayout
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                <TextView
-                        android:id="@+id/tv_StartTime"
-                        android:onClick="PickTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:text="Start Time"
-                        android:textAlignment="center"
-                        android:layout_marginTop="20dp"
-                        android:singleLine="true"
-                        android:textStyle="bold|italic"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:id="@+id/tv_EndTime"
-                        android:onClick="PickTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:text="End Time"
-                        android:textAlignment="center"
-                        android:layout_marginTop="20dp"
-                        android:singleLine="true"
-                        android:textStyle="bold|italic"/>
-
-            </LinearLayout>
-
-
-<!--            <TimePicker-->
-<!--                    android:id="@+id/tp_StartTime"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:timePickerMode="spinner" />-->
-
-            <!--            todo: set edit text that open this when you click-->
-
-
-<!--            <TimePicker-->
-<!--                    android:id="@+id/tp_EndTime"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:timePickerMode="spinner"/>-->
-
-
-
-        </LinearLayout>
-
-
             <EditText
                     android:id="@+id/et_Salary"
+                    android:layout_weight="0.5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -193,25 +176,11 @@
                     android:singleLine="true"
                     android:textAlignment="center"
                     android:textStyle="bold|italic" />
-
-<!--            <EditText-->
-<!--                    android:id="@+id/apSalary"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="10dp"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:layout_marginRight="10dp"-->
-<!--                    android:hint="salary"-->
-<!--                    android:inputType="datetime"-->
-<!--                    android:singleLine="true"-->
-<!--                    android:textAlignment="center"-->
-<!--                    android:textStyle="bold|italic" />-->
-
             <EditText
                     android:id="@+id/et_NumberOfWorkers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
+                    android:layout_weight="0.5"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="20dp"
@@ -221,88 +190,206 @@
                     android:textAlignment="center"
                     android:textStyle="bold|italic" />
 
-            <!--            <EditText-->
-<!--                    android:id="@+id/et_Address"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="0.8"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:layout_marginRight="5dp"-->
-<!--                    android:hint="Address"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:inputType="text"-->
-<!--                    android:singleLine="true"-->
-<!--                    android:textAlignment="center"-->
-<!--                    android:textStyle="bold|italic" />-->
+        </LinearLayout>
 
-<!--            <fragment android:id="@+id/autocomplete_fragment"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
-<!--                    />-->
-<!--            <AutoCompleteTextView-->
-<!--                    android:id="@+id/upStreet"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="0.8"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:layout_marginRight="5dp"-->
-<!--                    android:hint="location"-->
-<!--                    android:textAlignment="center"-->
-<!--                    android:singleLine="true"-->
-<!--                    android:textStyle="bold|italic"-->
-<!--                    android:layout_gravity="center"/>-->
-<!--            <ImageView-->
-<!--                    android:layout_width="200dp"-->
-<!--                    android:layout_height="200dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:id="@+id/googleMaps"/>-->
+
+            <!--            <EditText-->
+            <!--                    android:id="@+id/apSalary"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginLeft="10dp"-->
+            <!--                    android:layout_marginTop="20dp"-->
+            <!--                    android:layout_marginRight="10dp"-->
+            <!--                    android:hint="salary"-->
+            <!--                    android:inputType="datetime"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    android:textAlignment="center"-->
+            <!--                    android:textStyle="bold|italic" />-->
+
+            <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:entries="@array/cities"
+                    android:id="@+id/spinner_City">
+            </Spinner>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <EditText
+                        android:id="@+id/et_StreetName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:hint="street"
+                        android:textAlignment="center"
+                        android:singleLine="true"
+                        android:textStyle="bold|italic"
+                        android:layout_gravity="center"/>
+                <EditText
+                        android:id="@+id/et_StreetNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:hint="number"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:singleLine="true"
+                        android:layout_weight="0.9"
+                        android:inputType="number"
+                        android:textStyle="bold|italic"/>
+                <EditText
+                        android:id="@+id/et_Floor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:hint="floor"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:singleLine="true"
+                        android:layout_weight="0.9"
+                        android:inputType="number"
+                        android:textStyle="bold|italic"/>
+                <EditText
+                        android:id="@+id/et_Apartment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:hint="apartment"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:singleLine="true"
+                        android:layout_weight="0.8"
+                        android:textStyle="bold|italic"
+                        android:inputType="number"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+<!--                <EditText-->
+<!--                        android:id="@+id/et_Address"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="0.8"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:hint="Address"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        android:inputType="text"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textStyle="bold|italic" />-->
+
+<!--                <Button-->
+<!--                        android:id="@+id/btn_ShowLocation"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        android:onClick="showOnMap"-->
+<!--                        android:text="show" />-->
+
+            </LinearLayout>
+            <Button
+                    android:id="@+id/btn_ShowLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:onClick="showOnMap"
+                    android:text="show" />
+
+            <!--            <EditText-->
+            <!--                    android:id="@+id/et_Address"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_weight="0.8"-->
+            <!--                    android:layout_marginLeft="5dp"-->
+            <!--                    android:layout_marginRight="5dp"-->
+            <!--                    android:hint="Address"-->
+            <!--                    android:layout_marginTop="20dp"-->
+            <!--                    android:inputType="text"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    android:textAlignment="center"-->
+            <!--                    android:textStyle="bold|italic" />-->
+
+            <!--            <fragment android:id="@+id/autocomplete_fragment"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+            <!--                    />-->
+            <!--            <AutoCompleteTextView-->
+            <!--                    android:id="@+id/upStreet"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_weight="0.8"-->
+            <!--                    android:layout_marginLeft="5dp"-->
+            <!--                    android:layout_marginRight="5dp"-->
+            <!--                    android:hint="location"-->
+            <!--                    android:textAlignment="center"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    android:textStyle="bold|italic"-->
+            <!--                    android:layout_gravity="center"/>-->
+            <!--            <ImageView-->
+            <!--                    android:layout_width="200dp"-->
+            <!--                    android:layout_height="200dp"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:id="@+id/googleMaps"/>-->
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:map="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_gravity="center" />
-<!--            https://stackoverflow.com/questions/22704451/open-google-maps-through-intent-for-specific-location-in-android-->
+            <!--            https://stackoverflow.com/questions/22704451/open-google-maps-through-intent-for-specific-location-in-android-->
 
-<!--            <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_marginRight="5dp"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
-<!--                <EditText-->
-<!--                        android:id="@+id/upStreet"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="0.8"-->
-<!--                        android:layout_marginLeft="5dp"-->
-<!--                        android:layout_marginRight="5dp"-->
-<!--                        android:hint="location"-->
-<!--                        android:onClick=""-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:textStyle="bold|italic"-->
-<!--                        android:layout_gravity="center"/>-->
-<!--                <EditText-->
-<!--                        android:id="@+id/apNumberOfWorkers"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="0.8"-->
-<!--                        android:layout_marginLeft="5dp"-->
-<!--                        android:layout_marginRight="5dp"-->
-<!--                        android:hint="NumberOfWorkers"-->
-<!--                        android:inputType="number"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textStyle="bold|italic" />-->
+            <!--            <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_marginRight="5dp"-->
+            <!--                    android:layout_marginLeft="5dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="horizontal">-->
+            <!--                <EditText-->
+            <!--                        android:id="@+id/upStreet"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_weight="0.8"-->
+            <!--                        android:layout_marginLeft="5dp"-->
+            <!--                        android:layout_marginRight="5dp"-->
+            <!--                        android:hint="location"-->
+            <!--                        android:onClick=""-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:textStyle="bold|italic"-->
+            <!--                        android:layout_gravity="center"/>-->
+            <!--                <EditText-->
+            <!--                        android:id="@+id/apNumberOfWorkers"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_weight="0.8"-->
+            <!--                        android:layout_marginLeft="5dp"-->
+            <!--                        android:layout_marginRight="5dp"-->
+            <!--                        android:hint="NumberOfWorkers"-->
+            <!--                        android:inputType="number"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textStyle="bold|italic" />-->
 
-<!--            </LinearLayout>-->
-
-
+            <!--            </LinearLayout>-->
 
 
             <!--todo: add location-->
@@ -314,6 +401,7 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/info_background"
                     android:padding="10dp">
+
                 <EditText
                         android:id="@+id/et_Info"
                         android:background="@null"
@@ -323,7 +411,7 @@
                         android:hint="info"
                         android:inputType="textMultiLine"
                         android:singleLine="false"
-                        android:textStyle="bold|italic"/>
+                        android:textStyle="bold|italic" />
             </LinearLayout>
 
             <Button
