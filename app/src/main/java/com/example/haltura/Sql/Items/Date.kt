@@ -36,6 +36,9 @@ class Date {
     }
 
     override fun toString(): String {
-        return "$year/$month/$day"
+        var m = (if (month<10)  "0" else "") + month
+        var d = (if (day<10)  "0" else "") + day
+
+        return "$year-$m-$d"
     }
 }

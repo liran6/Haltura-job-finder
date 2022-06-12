@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.WorkAPI
 import com.example.haltura.Sql.Items.*
+import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.notifyAllObservers
 import com.google.gson.Gson
 import okhttp3.ResponseBody
@@ -36,14 +37,14 @@ class HomeViewModel : ViewModel() {
     private var json = Gson()
 
 
-    fun getAllWorks(token: String) {
+    fun getAllWorks() {
         mutableWorkList.value!!.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
-        val call = retroService.getAllWorks("Bearer $token")
+        val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                WorkApiLiveData.postValue(null)
+                //WorkApiLiveData.postValue(null)//todo:init
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

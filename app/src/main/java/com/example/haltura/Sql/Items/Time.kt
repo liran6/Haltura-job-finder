@@ -9,6 +9,20 @@ class Time {
         this.minutes = minutes
     }
 
+    fun isBefore(other: Time) :Boolean
+    {
+        //note same date is not before
+        if(this.hour == other.hour)
+        {
+            return this.minutes < other.minutes
+        }
+        else
+        {
+            return this.hour < other.hour
+        }
+    }
+
+
     //Hour
     fun getHour(): Int? {
         return hour

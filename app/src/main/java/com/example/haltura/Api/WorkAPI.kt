@@ -11,7 +11,7 @@ interface WorkAPI {
     //TODO check if works(not yet)
     @POST("works/create/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
-    fun addWork(
+    fun createWork(
         @Header("Authorization") token: String,
         @Path("userId") userId: String,
         @Body work: WorkSerializable
@@ -22,7 +22,7 @@ interface WorkAPI {
     fun updateWork(
         @Header("Authorization") token: String,
         @Path("workId") workId: String,
-        @Body user: WorkSerializable
+        @Body work: WorkSerializable
     ): Call<ResponseBody>
 
 
