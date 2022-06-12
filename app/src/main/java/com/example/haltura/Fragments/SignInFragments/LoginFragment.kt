@@ -1,7 +1,5 @@
 package com.example.haltura.Fragments.SignInFragments
 
-import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,31 +8,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.example.haltura.R
 import com.example.haltura.ViewModels.LoginViewModel
-import com.google.firebase.auth.FirebaseAuth
 
-import androidx.fragment.app.activityViewModels
-import com.example.haltura.DeviceNotifications
 import com.example.haltura.Helpers.Validation
 import com.example.haltura.Sql.Items.UserLoginSerializable
-import com.example.haltura.Sql.Items.UserSerializable
 
-import com.example.haltura.Sql.UserOpenHelper
 import com.example.haltura.Utils.Const
-import com.example.haltura.activities.MainActivity2
-import com.example.haltura.activities.RegisterActivity
-import com.example.haltura.activities.SignInActivity
-
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import kotlinx.android.synthetic.main.fragment_login.*
+import com.example.haltura.activities.LoginActivity
 
 
 class LoginFragment : Fragment() {
@@ -55,7 +37,7 @@ class LoginFragment : Fragment() {
         loginButton = fragmentView.findViewById<View>(R.id.btn_SignIn) as Button
         signUpButton = fragmentView.findViewById<View>(R.id.btn_SignUp) as Button
 
-        loadingScreen = (activity as SignInActivity).loadingScreen
+        loadingScreen = (activity as LoginActivity).loadingScreen
 
         //helper = UserOpenHelper(this)
         etEmail = fragmentView.findViewById<View>(R.id.et_Email) as EditText

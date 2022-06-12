@@ -13,7 +13,7 @@ interface UsersAPI {
     @POST("users/register")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun createUser(
-        @Body params: UserSerializable
+        @Body params: UserLoginSerializable
     ): Call<ResponseBody>
 
     @POST("users/authenticate")

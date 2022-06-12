@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.example.haltura.Api.UsersAPI
 import com.example.haltura.Api.ProfileAPI
 import com.example.haltura.activities.ChatsActivity
-import com.example.haltura.activities.LoginActivity
+import com.example.haltura.activities.LoginActivityOld
 import com.example.haltura.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -57,7 +57,7 @@ class UserOpenHelper {
             activity, "Logged out",
             Toast.LENGTH_SHORT
         ).show()
-        activity.startActivity(Intent(activity, LoginActivity::class.java))
+        activity.startActivity(Intent(activity, LoginActivityOld::class.java))
         activity.finish()
     }
 
@@ -566,7 +566,7 @@ class UserOpenHelper {
                     activity, "Check your email to reset your password!",
                     Toast.LENGTH_LONG
                 ).show()
-                activity.startActivity(Intent(activity, LoginActivity::class.java))
+                activity.startActivity(Intent(activity, LoginActivityOld::class.java))
                 activity.finish()
             } else {
                 Toast.makeText(

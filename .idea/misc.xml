@@ -9,12 +9,14 @@
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login2.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login_2.xml" value="0.1" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_main2.xml" value="0.12" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_register.xml" value="0.2708333333333333" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_sign_in.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_sign_in.xml" value="0.18" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_sign_up.xml" value="0.1431159420289855" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_update_information.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_home.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/loading_screen.xml" value="0.2734375" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/navigator.xml" value="0.2734375" />
@@ -137,13 +139,10 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/watch_work_dialog2.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/watch_work_dialog3.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura2/app/src/main/res/layout/work_item_list.xml" value="0.45471014492753625" />
-        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/activity_main2.xml" value="0.2625" />
-        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_chats.xml" value="0.2625" />
-        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/menu/bottom_nav_menu.xml" value="0.5541666666666667" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

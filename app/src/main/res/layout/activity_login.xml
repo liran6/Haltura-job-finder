@@ -1,227 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:context=".activities.LoginActivity">
-
-
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/et_Email"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/email_hint"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="192dp"
-            android:minHeight="48dp"
-            android:autofillHints="" />
-
-
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/et_Password"
-            app:layout_constraintStart_toStartOf="@+id/et_Email"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:hint="Password"
-            app:layout_constraintTop_toBottomOf="@+id/et_Email"
-            android:layout_marginTop="4dp"
-            android:minHeight="48dp"
-            android:autofillHints=""
-            android:textColorHint="#757575" />
-
-
-    <Button
-            android:text="@string/sign_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="signIn"
-            tools:ignore="OnClick"
-            android:id="@+id/btn_SignIn"
-            app:layout_constraintTop_toBottomOf="@+id/et_Password"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="88dp" />
-
-<!--    <com.google.android.gms.common.SignInButton-->
-    <ImageView
-            android:src="@drawable/google"
-            android:id="@+id/btn_Google_Login"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="googleLogIn"
-            android:layout_alignParentTop="true"
-            android:layout_margin="20dp"
-            android:textSize="18sp"
-            android:onClick="googleSignIn"
-            app:layout_constraintTop_toBottomOf="@+id/btn_SignUp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent" />
-
+        android:layout_height="match_parent">
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--        android:background="@color/background"-->
 
     <ImageView
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="220dp"
+            android:layout_height="240dp"
             app:srcCompat="@drawable/ic_launcher_foreground"
             android:id="@+id/iv_logo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/haltura_icon2"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="26dp"
-            app:layout_constraintBottom_toTopOf="@+id/et_Email"
-            android:contentDescription="TODO" />
+            android:contentDescription="@string/logo" />
 
-
-    <Button
-            android:text="Sign Up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_SignUp"
-            android:onClick="signUp"
-            app:layout_constraintTop_toBottomOf="@+id/et_Password"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toEndOf="@+id/btn_SignIn"
-            android:layout_marginStart="44dp" />
-
-    <TextView
-            android:text="FORGOT YOUR PASSWORD?"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_ForgotYourPassword"
-            android:onClick="forgotPassword"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="39dp"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Google_Login"
+    <FrameLayout
+            android:id="@+id/login_fragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:minHeight="48dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
+    <include
+            android:id="@+id/loading_screen"
+            layout="@layout/loading_screen" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--        <?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:tools="http://schemas.android.com/tools"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--android:orientation="vertical"-->
-<!--tools:context=".activities.LoginActivity"-->
-<!--        >-->
-
-
-<!--<ImageView-->
-<!--        android:layout_width="150dp"-->
-<!--        android:layout_margin="15dp"-->
-<!--        android:layout_height="150dp"-->
-<!--        app:srcCompat="@drawable/ic_launcher_foreground"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:id="@+id/iv_logo"-->
-<!--        tools:layout_editor_absoluteY="16dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        tools:srcCompat="@drawable/d8de59f9_11a7_4215_9f0f_c086c71108ee" />-->
-
-<!--<EditText-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:inputType="textPersonName"-->
-<!--        android:ems="10"-->
-<!--        android:id="@+id/et_UserName"-->
-<!--        tools:layout_editor_absoluteY="192dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:hint="username" />-->
-
-<!--<EditText-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:inputType="textPassword"-->
-<!--        android:ems="10"-->
-<!--        android:id="@+id/et_Password"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/et_UserName"-->
-<!--        android:layout_gravity="center"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:hint="password"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/et_UserName"-->
-<!--        android:layout_marginTop="4dp" />-->
-
-<!--<CheckBox-->
-<!--        android:text="remember me"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/cb_RememberMe"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/et_Password"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/et_Password" />-->
-
-<!--<LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_gravity="center">-->
-<!--    <Button-->
-<!--            android:text="register"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/btn_Register"-->
-<!--            android:onClick="register"-->
-<!--            tools:layout_editor_absoluteY="341dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginEnd="84dp" />-->
-<!--    <Button-->
-<!--            android:text="login"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/btn_Login"-->
-<!--            tools:layout_editor_absoluteY="341dp"-->
-<!--            android:onClick="login"-->
-<!--            tools:ignore="OnClick"-->
-<!--            tools:layout_editor_absoluteX="101dp" />-->
-
-
-<!--</LinearLayout>-->
-
-
-
-
-<!--<com.google.android.gms.common.SignInButton-->
-<!--        android:id="@+id/btn_Google_Login"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Text"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/btn_Register"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent" />-->
-
-<!--<TextView-->
-<!--        android:text="FORGOT YOUR PASSWORD?"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/tv_ForgotYourPassword"-->
-<!--        android:onClick="forgotPassword"-->
-<!--        tools:layout_editor_absoluteY="503dp"-->
-<!--        tools:layout_editor_absoluteX="117dp" />-->
-
-<!--</LinearLayout>-->

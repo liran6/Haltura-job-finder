@@ -1302,4 +1302,7 @@
     <string name="Password">Password</string>
     <string name="ForgotYourPassword">Forgot Your Password ?</string>
     <string name="title_activity_main3">MainActivity3</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="todo">TODO</string>
 </resources>

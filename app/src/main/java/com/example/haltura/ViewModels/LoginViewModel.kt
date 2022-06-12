@@ -9,6 +9,7 @@ import com.example.haltura.Sql.Items.UserLoginSerializable
 import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.Preferences
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -26,15 +27,15 @@ class LoginViewModel : ViewModel() {
     val mutableUserHolder: MutableLiveData<UserSerializable> by lazy {
         MutableLiveData<UserSerializable>()
     }
+    val mutableSignUpSucess: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 
 
     fun createUser(email: String, password: String) {
         //todo: log this to server now
-        var user = UserSerializable(
+        val user = UserLoginSerializable(
             email,
-            Const.EmptyStringValue,
-            Const.EmptyStringValue,
-            Const.EmptyStringValue,
             password
         )
         val retroService =
@@ -43,16 +44,20 @@ class LoginViewModel : ViewModel() {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 mutableMessageToasting.postValue(Const.Connecting_Error)
+
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     //todo save user and password for fast login
                     mutableMessageToasting.postValue(Const.Registration_Success)
-                    //userSignIn(user)
+                    mutableSignUpSucess.postValue(true)
                 } else {
-                    var res = response.body()?.string()
+                    mutableSignUpSucess.postValue(false)
+                    var res = response.errorBody()?.string()
                     var x = 1
+                    mutableMessageToasting.postValue(Const.Email_Is_Taken)
+
                 }
             }
         })
@@ -63,20 +68,23 @@ class LoginViewModel : ViewModel() {
         val retroService =
             ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
         val call = retroService.userAuth(user)
-        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+        call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 val b = 1
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    var res = response.body()?.string()
-                    var user = json.fromJson(res, UserSerializable::class.java)
+                    val res = response.body()?.string()
+                    val userInfo = json.fromJson(res, UserSerializable::class.java)
+                    //store user password for shared preferences
+                    userInfo.password = user.password
 //                    var userObject = UserObject(user.id,user.email,user.token,null)
-                    if (user.token != "") {
+                    if (userInfo.token != "") {
                         //var userObject = UserObject(user.id,user.email,user.token,null)
                         mutableMessageToasting.postValue(Const.Signing_In)
-                        mutableUserHolder.postValue(user)
+                        mutableUserHolder.postValue(userInfo)
+
                     //mutableUserHolder.postValue(UserObject(user.id,user.email,user.token,null,null))
                     } else {
                         mutableMessageToasting.postValue(Const.Token_Error)
@@ -89,7 +97,6 @@ class LoginViewModel : ViewModel() {
         }
         )
     }
-
 
 
 
