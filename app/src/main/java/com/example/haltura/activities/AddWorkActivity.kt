@@ -12,6 +12,7 @@ import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -20,11 +21,16 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.R
 import com.example.haltura.Sql.BusinessOpenHelper
+import com.example.haltura.Sql.Items.AddresSerializable
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.UserData
+import com.example.haltura.ViewModels.AddWorkViewModel
+import com.example.haltura.ViewModels.HomeViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -32,13 +38,16 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.manage_work_item.*
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 
 
 //iv_addItem,Imageed_Company,ed_Task,dp_Date,tp_StartTime,tp_EndTime,et_Salary,et_NumberOfWorkers,et_Address,btn_ShowLocation,map,et_Info
 class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
+    private lateinit var _viewModel: AddWorkViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var autocompleteSupportFragment : AutocompleteSupportFragment
     private lateinit var edAddress: EditText
@@ -86,6 +95,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_work)
+        _viewModel = ViewModelProvider(this).get(AddWorkViewModel::class.java)
         initViews()
         initTimePickers()
         initMap()
@@ -98,7 +108,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun initViews(){
-        edAddress = findViewById<View>(R.id.et_Address) as EditText
+        //edAddress = findViewById<View>(R.id.et_Address) as EditText
         tvDate = findViewById<View>(R.id.tv_date) as TextView
         tvStartTime = findViewById<View>(R.id.tv_StartTime) as TextView
         tvEndTime = findViewById<View>(R.id.tv_EndTime) as TextView
@@ -108,7 +118,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         etTask = findViewById<View>(R.id.et_Task) as EditText
         etSalary = findViewById<View>(R.id.et_Salary) as EditText
         etNumberOfWorkers = findViewById<View>(R.id.et_NumberOfWorkers) as EditText
-        etAddress = findViewById<View>(R.id.et_Address) as EditText
         etInfo = findViewById<View>(R.id.et_Info) as EditText
         btnShowLocation = findViewById<View>(R.id.btn_ShowLocation) as Button
         btnAddWork = findViewById<View>(R.id.btn_AddWork) as Button
@@ -214,7 +223,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun showOnMap(view: View)
     {
-        var addr = edAddress.text.toString()
+        var addr = etStreetName.text.toString() + " " + etStreetNumber.text.toString() + " ," + city //edAddress.text.toString()
         //todo remove markers
         var point  = getLocationFromAddress(addr)
         if (point != null)
@@ -287,14 +296,14 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     fun addWork(view: View)
     {
         //todo: check validation...
-        var arrDate = tvDate.text.toString().split('/')
-        var arrStrtingTime = tvStartTime.text.toString().split(':')
-        var arrEndingTime = tvEndTime.text.toString().split(':')
-        var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[0].split(' ')[1]),
-            Integer.parseInt(arrDate[1]),
-            Integer.parseInt(arrDate[2]))
-        var staringTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]))
-        var endingTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]))
+//        var arrDate = tvDate.text.toString().split('/')
+//        var arrStrtingTime = tvStartTime.text.toString().split(':')
+//        var arrEndingTime = tvEndTime.text.toString().split(':')
+//        var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[0].split(' ')[1]),
+//            Integer.parseInt(arrDate[1]),
+//            Integer.parseInt(arrDate[2]))
+//        var staringTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]))
+//        var endingTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]))
 //        var work = Work(
 //            ivAddItemImage.drawable.toBitmap(),
 //            etCompany.text.toString(),
@@ -307,34 +316,41 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 //            staringTime,
 //            endingTime
 //        )
+        //todo: check validation...
         var work = getWorkFromForm()
-        //var srt = work.toString()
-        var a = 1
-        //helper.AddWork(work)
+        _viewModel.createWork(work)
+        this.finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun getWorkFromForm()
+    fun getWorkFromForm() : WorkSerializable
     {
         var arrDate = tvDate.text.toString().split('/')
         var arrStrtingTime = tvStartTime.text.toString().split(':')
         var arrEndingTime = tvEndTime.text.toString().split(':')
-        var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[0].split(' ')[1]),
+        var date = com.example.haltura.Sql.Items.Date(Integer.parseInt(arrDate[2]),
             Integer.parseInt(arrDate[1]),
-            Integer.parseInt(arrDate[2]))
+            Integer.parseInt(arrDate[0].split(' ')[1]))
         var staringTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrStrtingTime[1].split(' ')[1]),Integer.parseInt(arrStrtingTime[2]))
         var endingTime = com.example.haltura.Sql.Items.Time(Integer.parseInt(arrEndingTime[1].split(' ')[1]),Integer.parseInt(arrEndingTime[2]))
 
-        var work = WorkSerializable(UserData.currentUser?.userId!!,
+        var address = AddresSerializable(city,
+            etStreetName.text.toString(),
+            etStreetNumber.text.toString().toInt(),
+            etFloor.text.toString().toInt(),
+            etApartment.text.toString())
+
+
+        return WorkSerializable(UserData.currentUser?.userId!!,
             etCompany.text.toString(),
             etTask.text.toString(),
             Integer.parseInt(etSalary.text.toString()),
             Integer.parseInt(etNumberOfWorkers.text.toString()),
-            null!!,//todo:change
+            address,//todo:change
             etInfo.text.toString(),
             getTime(date,staringTime,endingTime,true),
             getTime(date,staringTime,endingTime,false),
-            ivAddItemImage.drawable.toBitmap().toString())
+            convertImageToString(ivAddItemImage.drawable.toBitmap()))
 //        ivAddItemImage.drawable.toBitmap(),
 //        etCompany.text.toString(),
 //        etTask.text.toString(),
@@ -346,6 +362,13 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 //        staringTime,
 //        endingTime
 //        )
+    }
+
+    private fun convertImageToString(image: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val data = baos.toByteArray()
+        return  Base64.encodeToString(data, Base64.DEFAULT)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -362,7 +385,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         if (isStart)
         {
             dt = sdf.format(c.time) // dt is now the new date
-            return "$dt$startTime:00.000+00:00"
+            return dt + "T" + startTime + ":00.000+00:00"
         }
         else
         {
@@ -371,7 +394,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
                 c.add(Calendar.DATE, 1) // number of days to add
             }
             dt = sdf.format(c.time) // dt is now the new date
-            return "$dt$endTime:00.000+00:00"
+            return dt + "T" + endTime + ":00.000+00:00"
         }
     }
 
