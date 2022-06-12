@@ -68,15 +68,16 @@ class LoginViewModel : ViewModel() {
         val retroService =
             ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
         val call = retroService.userAuth(user)
-        call.enqueue(object : Callback<ResponseBody> {
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 val b = 1
+                mutableMessageToasting.postValue(Const.Connecting_Error)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val res = response.body()?.string()
-                    val userInfo = json.fromJson(res, UserSerializable::class.java)
+                    var res = response.body()?.string()
+                    var userInfo = json.fromJson(res, UserSerializable::class.java)
                     //store user password for shared preferences
                     userInfo.password = user.password
 //                    var userObject = UserObject(user.id,user.email,user.token,null)
