@@ -44,7 +44,7 @@ class HomeViewModel : ViewModel() {
         val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                WorkApiLiveData.postValue(null)
+                //WorkApiLiveData.postValue(null)//todo:init
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

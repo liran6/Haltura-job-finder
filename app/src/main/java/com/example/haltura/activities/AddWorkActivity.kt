@@ -319,7 +319,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         //todo: check validation...
         var work = getWorkFromForm()
         _viewModel.createWork(work)
-        this.finish()
+        //startActivity(Intent(this, MainActivity2::class.java)) //todo: change
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

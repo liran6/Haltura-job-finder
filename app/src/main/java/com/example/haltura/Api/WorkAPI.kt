@@ -14,7 +14,7 @@ interface WorkAPI {
     fun createWork(
         @Header("Authorization") token: String,
         @Path("userId") userId: String,
-        @Body user: WorkSerializable
+        @Body work: WorkSerializable
     ): Call<ResponseBody>
 
     @PUT("works/update/{workId}")
@@ -22,7 +22,7 @@ interface WorkAPI {
     fun updateWork(
         @Header("Authorization") token: String,
         @Path("workId") workId: String,
-        @Body user: WorkSerializable
+        @Body work: WorkSerializable
     ): Call<ResponseBody>
 
 
