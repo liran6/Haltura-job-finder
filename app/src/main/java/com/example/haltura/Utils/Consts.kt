@@ -7,6 +7,7 @@ object Const{
     //DataObjects
     const val LOGGED_USER_BUNDLE = "LOGGED_USER_BUNDLE"
     const val USER_OBJECT = "USER_OBJECT"
+    const val WORK_OBJECT = "WORK_OBJECT"
     const val PROFILE_OBJECT = "Profile_OBJECT"
     //app ui
     const val LoginFragment = "LoginFragment"
@@ -20,7 +21,7 @@ object Const{
     const val showNotifications = "showNotifications"
 
     // server
-    const val SERVER_URL = "http://10.0.0.25:4000/"
+    const val SERVER_URL = "http://192.168.1.239:4000/" // http://10.0.0.25:4000/
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"

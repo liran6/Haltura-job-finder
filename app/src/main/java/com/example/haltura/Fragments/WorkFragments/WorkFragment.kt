@@ -16,10 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.ManageWorkAdapter
 import com.example.haltura.R
+import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
+import com.example.haltura.Utils.WorkData
 import com.example.haltura.ViewModels.WorkViewModel
 import com.example.haltura.activities.AddWorkActivity
+import com.example.haltura.activities.MainActivity2
 import com.example.haltura.databinding.FragmentWorkBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -64,6 +69,7 @@ class WorkFragment : Fragment() {
 
     private fun moveToAddWorkActivity() {
         val intent = Intent(activity, AddWorkActivity::class.java)
+        WorkData.currentWork = null
         startActivity(intent)
     }
 
@@ -107,7 +113,12 @@ class WorkFragment : Fragment() {
     }
 
     private fun openWorkEditMode(work: WorkSerializable) {
-        var a = 1
+        val intent = Intent(activity, AddWorkActivity::class.java)
+//        val bundle = Bundle()
+//        bundle.putParcelable(Const.WORK_OBJECT, work)
+//        intent.putExtras(bundle)
+        WorkData.currentWork = work
+        startActivity(intent)
     }
 
     private fun deleteWork(work: WorkSerializable) {

@@ -23,7 +23,7 @@ class MainActivity2 : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        user = intent.getParcelableExtra(Const.USER_OBJECT)!!
+        //user = intent.getParcelableExtra(Const.USER_OBJECT)!!
         val navView: BottomNavigationView = binding.navView
 
 //        navView.setOnNavigationItemSelectedListener { item ->
@@ -41,5 +41,7 @@ class MainActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        //todo: add menu of logout and profile
+        //todo: change stay login to just token - func of getCurrent and check if token still valid
     }
 }

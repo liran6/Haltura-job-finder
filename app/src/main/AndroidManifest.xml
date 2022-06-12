@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         package="com.example.haltura">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,6 +16,7 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Haltura"
             android:usesCleartextTraffic="true">
+        <!--            tools:replace="android:supportsRTL"-->
         <activity
                 android:name=".activities.MainActivity2"
                 android:exported="false"
