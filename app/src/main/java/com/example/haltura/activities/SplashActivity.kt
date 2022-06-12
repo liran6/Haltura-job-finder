@@ -12,9 +12,9 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        helper = UserOpenHelper(this)
-        if(!(helper.isUserLoggedIn())){
+//        if(!(helper.isUserLoggedIn())){
             startActivity(Intent(this, LoginActivity::class.java)) //todo: change
-        }
+//        }
         finish()
     }
 }

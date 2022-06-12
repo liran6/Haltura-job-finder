@@ -9,6 +9,7 @@ import com.example.haltura.Sql.Items.UserLoginSerializable
 import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.Preferences
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -33,7 +34,7 @@ class LoginViewModel : ViewModel() {
 
     fun createUser(email: String, password: String) {
         //todo: log this to server now
-        var user = UserLoginSerializable(
+        val user = UserLoginSerializable(
             email,
             password
         )
@@ -67,20 +68,23 @@ class LoginViewModel : ViewModel() {
         val retroService =
             ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
         val call = retroService.userAuth(user)
-        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+        call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 val b = 1
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    var res = response.body()?.string()
-                    var userInfo = json.fromJson(res, UserSerializable::class.java)
+                    val res = response.body()?.string()
+                    val userInfo = json.fromJson(res, UserSerializable::class.java)
+                    //store user password for shared preferences
+                    userInfo.password = user.password
 //                    var userObject = UserObject(user.id,user.email,user.token,null)
                     if (userInfo.token != "") {
                         //var userObject = UserObject(user.id,user.email,user.token,null)
                         mutableMessageToasting.postValue(Const.Signing_In)
                         mutableUserHolder.postValue(userInfo)
+
                     //mutableUserHolder.postValue(UserObject(user.id,user.email,user.token,null,null))
                     } else {
                         mutableMessageToasting.postValue(Const.Token_Error)
@@ -93,7 +97,6 @@ class LoginViewModel : ViewModel() {
         }
         )
     }
-
 
 
 

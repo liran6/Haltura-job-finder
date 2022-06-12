@@ -13,14 +13,14 @@ object Const{
     //preferences
 
     const val loginPreferences = "LoginPreferences"
-    const val isLogin = "is_login"
-    const val email = "email"
-    const val password = "password"
+    const val IsLogin = "is_login"
+    const val Email = "email"
+    const val Password = "password"
     const val EmptyStringValue = ""
     const val showNotifications = "showNotifications"
 
     // server
-    const val SERVER_URL = "http://10.0.0.8:4000/"
+    const val SERVER_URL = "http://10.0.0.25:4000/"
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"
