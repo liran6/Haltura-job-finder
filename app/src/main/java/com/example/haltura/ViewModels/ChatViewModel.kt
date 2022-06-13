@@ -1,6 +1,7 @@
 package com.example.haltura.ViewModels
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ChatAPI
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.WorkAPI
@@ -17,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChatViewModel {
+class ChatViewModel : ViewModel() {
 
     val mutableMessagesList: MutableLiveData<MutableList<MessageSerializable>> by lazy { //by lazy
         MutableLiveData<MutableList<MessageSerializable>>(mutableListOf())
@@ -40,7 +41,8 @@ class ChatViewModel {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val messages = JSONObject(response.body()!!.string()) as JSONArray
+                    val jObject = JSONObject(response.body()!!.string())
+                    val messages = jObject.get("messages") as JSONArray
                     //val works = jObject.get("work_list") as JSONArray
                     for (i in 0 until messages.length())
                     {

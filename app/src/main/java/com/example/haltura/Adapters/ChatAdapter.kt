@@ -18,6 +18,7 @@ import com.example.haltura.R
 import com.example.haltura.Sql.Items.ChatSerializable
 import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.MessageSerializable
+import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.UserData
 
 
@@ -98,7 +99,7 @@ class ChatAdapter(
             viewHolder.text.text = text //empty
         }
         val time = currentItem.time
-        viewHolder.time.text = time.toString()
+        viewHolder.time.text = DateTime.getTime(time)
 
 
         //viewHolder.itemView.

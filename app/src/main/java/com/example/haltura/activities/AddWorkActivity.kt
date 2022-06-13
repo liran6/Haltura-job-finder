@@ -96,8 +96,18 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_work)
-        _viewModel = ViewModelProvider(this).get(AddWorkViewModel::class.java)
+        initViewModel()
         initViews()
+        setWork()
+        initTimePickers()
+        initMap()
+    }
+
+    private fun initViewModel() {
+        _viewModel = ViewModelProvider(this).get(AddWorkViewModel::class.java)
+    }
+
+    private fun setWork() {
         _work = WorkData.currentWork
         if (_work != null)
         {
@@ -105,8 +115,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             setValues()
             WorkData.currentWork = null
         }
-        initTimePickers()
-        initMap()
     }
 
     private fun setValues() {

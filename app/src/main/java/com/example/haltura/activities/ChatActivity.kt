@@ -2,13 +2,16 @@ package com.example.haltura.activities
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,8 +22,10 @@ import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Utils.ChatData
 import com.example.haltura.ViewModels.ChatViewModel
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.Adapters.ChatsAdapter
 import com.example.haltura.Sql.Items.MessageSerializable
+import com.example.haltura.ViewModels.AddWorkViewModel
 import java.util.*
 
 //todo:
@@ -37,6 +42,10 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var _sendButton: ImageView
     private lateinit var _cameraButton: ImageView
     private lateinit var _galleryButton: ImageView
+    private lateinit var _chatImage: ImageView
+    private lateinit var _backButton: ImageView
+    private lateinit var _chatName: TextView
+    private lateinit var _members: TextView
     private lateinit var _textMessage: EditText
     private lateinit var _manager: LinearLayoutManager
     private lateinit var _chatAdapter: ChatAdapter
@@ -45,12 +54,28 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+        initViewModel()
         setChat()
         initViews()
+        setValues()
         initViewModelData()
         initObservers()
         initButtons()
         initRecyclersAndAdapters()
+    }
+
+    private fun setValues() {
+//        _chatName.setText(_chat?.chatName)//todo: check if null and bring real name
+//        _members.setText(_chat?.chatName)//todo: set members names and if too long cut with "..."
+//
+//        var bm = Base64.decode(_chat?.chatImage, Base64.DEFAULT)
+//        var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+//        _chatImage.setImageBitmap(data)
+//        //todo: add profile picture
+    }
+
+    private fun initViewModel() {
+        _viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
     }
 
     private fun initButtons() {
@@ -127,6 +152,10 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        _chatImage = findViewById(R.id.image_chat)
+        _backButton = findViewById(R.id.back_button)
+        _chatName = findViewById(R.id.name_chat)
+        _members = findViewById(R.id.members)
         _cameraButton = findViewById(R.id.camera)
         _galleryButton = findViewById(R.id.gallery)
         _sendButton = findViewById(R.id.sendButton)

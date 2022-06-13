@@ -1,5 +1,6 @@
 package com.example.haltura.Fragments.ChatsFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,10 @@ import com.example.haltura.ViewModels.ChatsViewModel
 import androidx.lifecycle.Observer
 import com.example.haltura.Adapters.ChatsAdapter
 import com.example.haltura.Sql.Items.ChatSerializable
+import com.example.haltura.Utils.ChatData
+import com.example.haltura.Utils.WorkData
+import com.example.haltura.activities.AddWorkActivity
+import com.example.haltura.activities.ChatActivity
 import com.example.haltura.databinding.FragmentChatsBinding
 
 class ChatsFragment : Fragment() {
@@ -79,7 +84,9 @@ class ChatsFragment : Fragment() {
     }
 
     private fun moveToChat(chat: ChatSerializable) {
-        //todo: intent to chat activity
+        val intent = Intent(activity, ChatActivity::class.java)
+        ChatData.currentChat = chat
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

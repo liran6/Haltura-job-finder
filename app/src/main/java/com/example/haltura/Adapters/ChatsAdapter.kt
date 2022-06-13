@@ -80,17 +80,24 @@ class ChatsAdapter(
             viewHolder.name.text = name
         }
         val image = currentItem.chatImage
-        if (image == null)
+        if (currentItem.chatName == null) //not group
         {
-            //todo: add user image
+            //todo: add profile image
             val bm = decode(USER_NO_PIC, DEFAULT)
+            val data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+            var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
+            viewHolder.image.setImageBitmap(dataRoundedCorner)
+        }
+        else if (currentItem.chatImage == null)
+        {
+            val bm = decode(GROUP_NO_PIC, DEFAULT)
             val data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
             var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
             viewHolder.image.setImageBitmap(dataRoundedCorner)
         }
         else
         {
-            val bm = decode(GROUP_NO_PIC, DEFAULT)
+            val bm = decode(image, DEFAULT)
             val data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
             var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
             viewHolder.image.setImageBitmap(dataRoundedCorner)
