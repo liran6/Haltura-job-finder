@@ -6,6 +6,24 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.descriptors.StructureKind
 
 @Parcelize
+data class MessageSerializable(
+    @SerializedName("userId") var userId: String,
+    @SerializedName("text") var text: String?,
+    @SerializedName("image") var image: String?,
+    @SerializedName("time") var time: String
+) : Parcelable
+
+@Parcelize
+data class ChatSerializable(
+    @SerializedName("id") var id: String? = null,
+    @SerializedName("adminID") var adminID: String,
+    @SerializedName("chatName") var chatName: String?,
+    @SerializedName("chatImage") var chatImage: String?,
+    @SerializedName("members") var members: List<String>,
+    @SerializedName("messages") var messages: String
+) : Parcelable
+
+@Parcelize
 data class UserSerializable(
     @SerializedName("email") var email: String,
     @SerializedName("createdDate") var createdDate: String,

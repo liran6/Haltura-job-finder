@@ -93,12 +93,12 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnWorkListener {
         helper.signOut()
     }
 
-    fun chat(view: View)
-    {
-        //helper.chats() // todo: should not be in user open helper
-        //this.startActivity(Intent(this, ChatsActivity::class.java))
-        this.startActivity(Intent(this, ChatsActivity::class.java))
-    }
+//    fun chat(view: View)
+//    {
+//        //helper.chats() // todo: should not be in user open helper
+//        //this.startActivity(Intent(this, ChatsActivity::class.java))
+//        this.startActivity(Intent(this, ChatsActivity::class.java))
+//    }
 
     fun MoveToBusiness(view: View)
     {
