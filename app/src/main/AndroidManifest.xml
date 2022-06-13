@@ -17,6 +17,7 @@
             tools:replace="android:supportsRtl"
             android:theme="@style/Theme.Haltura"
             android:usesCleartextTraffic="true">
+        <!--            tools:replace="android:supportsRTL"-->
         <activity
                 android:name=".activities.MainActivity2"
                 android:exported="false"

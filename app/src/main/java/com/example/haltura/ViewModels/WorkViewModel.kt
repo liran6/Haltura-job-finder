@@ -73,6 +73,7 @@ class WorkViewModel : ViewModel() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     mutableWorkList.value!!.remove(work) //to delete from the list
+                    mutableWorkList.notifyAllObservers()
                     //todo: toast delete was successfully
                     var x = 1
                 } else {

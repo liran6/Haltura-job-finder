@@ -16,34 +16,36 @@ import retrofit2.Response
 
 class AddWorkViewModel : ViewModel() {
 
-//    fun createWork(work: WorkSerializable) {
-//        val retroService =
-//            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
-//        val call = retroService.createWork("Bearer " + UserData.currentUser?.token!!,
-//            UserData.currentUser?.userId!!, work)
-//        call.enqueue(object : Callback<ResponseBody> {
-//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                var a = 1
-//            }
-//
-//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                if (response.isSuccessful) {
-//                    var res = response.body()?.string()
-//                    //val listType = object : TypeToken<List<String>>(){ }.type
-//                    //var buisness= json.fromJson(res,BusinessSerializable::class.java)
-//                    var x = 1
-//                } else {
-//                    var x = 1
-//                }
-//            }
-//        })
-//    }
 
     fun createWork(work :WorkSerializable) {
         var user = UserData.currentUser
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
         val call = retroService.createWork("Bearer " + user?.token!!, user?.userId!!, work)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                var a =1
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    var res = response.body()?.string()
+                    //val listType = object : TypeToken<List<String>>(){ }.type
+                    //var buisness= json.fromJson(res,BusinessSerializable::class.java)
+                    var x = 1
+                } else {
+                    var x = 1
+                }
+            }
+        })
+    }
+
+    //updateWork
+    fun updateWork(work :WorkSerializable) {
+        var user = UserData.currentUser
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.updateWork("Bearer " + user?.token!!, work?.id!!, work)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 var a =1

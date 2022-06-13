@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
@@ -21,16 +22,16 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.R
 import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.AddresSerializable
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
+import com.example.haltura.Utils.WorkData
 import com.example.haltura.ViewModels.AddWorkViewModel
-import com.example.haltura.ViewModels.HomeViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -38,7 +39,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.manage_work_item.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -79,7 +79,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var etFloor: EditText
     //
 
-
+    private lateinit var tvTitle :TextView
     private lateinit var tvDate :TextView
     private lateinit var tvStartTime:TextView// : tv_StartTime
     private lateinit var tvEndTime:TextView// : tv_EndTime
@@ -88,7 +88,8 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var _layout: LinearLayout
     var bm: Bitmap? = null
     private var isStartTime = true
-    //private lateinit var background :Drawable
+    private var _work :WorkSerializable? = null
+    private var isUpdate :Boolean = false
 
     var helper = BusinessOpenHelper(this)
 
@@ -97,8 +98,59 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_add_work)
         _viewModel = ViewModelProvider(this).get(AddWorkViewModel::class.java)
         initViews()
+        _work = WorkData.currentWork
+        if (_work != null)
+        {
+            isUpdate = true
+            setValues()
+            WorkData.currentWork = null
+        }
         initTimePickers()
         initMap()
+    }
+
+    private fun setValues() {
+        //date time
+        tvDate.setText("Date: "+ getDate(_work?.startTime))
+        tvStartTime.setText("Starting Time: "+ getTime(_work?.startTime))
+        tvEndTime.setText("Ending Time: "+ getTime(_work?.endTime))
+        //form
+        btnAddWork.setText("UPDATE WORK")
+        tvTitle.setText("Update Work")
+        //work
+        etCompany.setText(_work?.company!!)
+        etTask.setText(_work?.task!!)
+        etSalary.setText(_work?.salary.toString()!!)
+        etNumberOfWorkers.setText(_work?.numberOfWorkers.toString()!!)
+        etInfo.setText(_work?.info!!)
+        //address
+        etStreetName.setText(_work?.address?.street!!)
+        etStreetNumber.setText(_work?.address?.streetNum.toString()!!)
+        etFloor.setText(_work?.address?.floor.toString()!!)
+        etApartment.setText(_work?.address?.appartment!!)
+        spinnerCity.setSelection(cities.indexOf(_work?.address?.city))
+        //image
+        var bm = Base64.decode(_work?.image, Base64.DEFAULT)
+        var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+        ivAddItemImage.setImageBitmap(data)
+        //map
+        //showAdderssOnMap()
+    }
+
+    private fun getDate(dateTime: String?): String? {
+        //"yyyy-MM-dd'T'HH:mm:ss:00.000+00:00"
+        var arrDate = dateTime?.split('T')?.get(0)?.split('-')//"yyyy-MM-dd'
+        val year = arrDate?.get(0)
+        val month = arrDate?.get(1)
+        val day = arrDate?.get(2)
+        return "$day/$month/$year"
+    }
+    private fun getTime(dateTime: String?): String? {
+        //"yyyy-MM-dd'T'HH:mm:ss:00.000+00:00"
+        var arrDate = dateTime?.split('T')?.get(1)?.split(':')//"yyyy-MM-dd'
+        val hours = arrDate?.get(0)
+        val minutes = arrDate?.get(1)
+        return "$hours:$minutes"
     }
 
     private fun initMap() {
@@ -109,6 +161,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun initViews(){
         //edAddress = findViewById<View>(R.id.et_Address) as EditText
+        tvTitle = findViewById<View>(R.id.tv_title) as TextView
         tvDate = findViewById<View>(R.id.tv_date) as TextView
         tvStartTime = findViewById<View>(R.id.tv_StartTime) as TextView
         tvEndTime = findViewById<View>(R.id.tv_EndTime) as TextView
@@ -195,10 +248,19 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 //        }
 //        mMap.setMyLocationEnabled(true)
         //val p = getLocationFromAddress()
-        //todo set your location
-        var p = LatLng(32.0589923, 34.8241127)
-        mMap.addMarker(MarkerOptions().position(p).title("Marker"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p,15.0f))
+        if(isUpdate)
+        {
+            //etStreetName.text.toString() + " " + etStreetNumber.text.toString() + " ," + city
+            showAdderssOnMap(_work?.address?.street+ " " + _work?.address?.streetNum +
+                    " ," + _work?.address?.city)
+        }
+        else
+        {
+            //todo set your location
+            var p = LatLng(32.0589923, 34.8241127)
+            mMap.addMarker(MarkerOptions().position(p).title("Marker"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p,15.0f))
+        }
     }
 
     fun getLocationFromAddress(strAddress: String?): LatLng? {
@@ -221,9 +283,9 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         return null
     }
 
-    fun showOnMap(view: View)
+    fun showAdderssOnMap(addr : String)
     {
-        var addr = etStreetName.text.toString() + " " + etStreetNumber.text.toString() + " ," + city //edAddress.text.toString()
+        //var addr = etStreetName.text.toString() + " " + etStreetNumber.text.toString() + " ," + city //edAddress.text.toString()
         //todo remove markers
         var point  = getLocationFromAddress(addr)
         if (point != null)
@@ -232,6 +294,11 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             //mMap.get
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15.0f))
         }
+    }
+
+    fun showOnMap(view: View)
+    {
+        showAdderssOnMap(etStreetName.text.toString() + " " + etStreetNumber.text.toString() + " ," + city)
     }
 
 
@@ -318,7 +385,14 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 //        )
         //todo: check validation...
         var work = getWorkFromForm()
-        _viewModel.createWork(work)
+        if(!isUpdate)
+        {
+            _viewModel.createWork(work)
+        }
+        else
+        {
+            _viewModel.updateWork(work)
+        }
         //startActivity(Intent(this, MainActivity2::class.java)) //todo: change
     }
 
@@ -350,7 +424,9 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             etInfo.text.toString(),
             getTime(date,staringTime,endingTime,true),
             getTime(date,staringTime,endingTime,false),
-            convertImageToString(ivAddItemImage.drawable.toBitmap()))
+            convertImageToString(ivAddItemImage.drawable.toBitmap()),
+            if(_work == null) null else _work?.id!!
+        )
 //        ivAddItemImage.drawable.toBitmap(),
 //        etCompany.text.toString(),
 //        etTask.text.toString(),
