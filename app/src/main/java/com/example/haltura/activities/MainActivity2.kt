@@ -15,13 +15,14 @@ import com.example.haltura.databinding.ActivityMain2Binding
 
 class MainActivity2 : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMain2Binding
+    internal lateinit var binding: ActivityMain2Binding
     private lateinit var user: UserSerializable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         //user = intent.getParcelableExtra(Const.USER_OBJECT)!!
         val navView: BottomNavigationView = binding.navView

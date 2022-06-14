@@ -1,4 +1,4 @@
-package com.example.haltura.Fragments.ProfileFragments
+package com.example.haltura.ViewModels
 
 import androidx.lifecycle.ViewModel
 

@@ -21,7 +21,7 @@ object Const{
     const val showNotifications = "showNotifications"
 
     // server
-    const val SERVER_URL = "http://192.168.1.239:4000/" // http://10.0.0.25:4000/
+    const val SERVER_URL = "http://10.0.0.8:4000/" // "http://192.168.1.239:4000/"
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"
@@ -38,5 +38,9 @@ object Const{
     const val Snack_Bar = "snackBar"
     const val Action_Snack_Bar = "actionSnackBar"
     const val Success_Snack_Bar = "successSnackBar"
+
+    //calendar
+    const val Calendar = "Calendar"
+
 
 }
