@@ -23,6 +23,7 @@ import com.example.haltura.Utils.ChatData
 import com.example.haltura.ViewModels.ChatViewModel
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.haltura.Adapters.ChatAdapter2
 import com.example.haltura.Adapters.ChatsAdapter
 import com.example.haltura.Sql.Items.MessageSerializable
 import com.example.haltura.ViewModels.AddWorkViewModel
@@ -48,7 +49,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var _members: TextView
     private lateinit var _textMessage: EditText
     private lateinit var _manager: LinearLayoutManager
-    private lateinit var _chatAdapter: ChatAdapter
+    private lateinit var _chatAdapter: ChatAdapter2
     private lateinit var _chat: ChatSerializable
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,7 +116,7 @@ class ChatActivity : AppCompatActivity() {
     private fun initRecyclersAndAdapters() {
         val chatsList = _viewModel.mutableMessagesList.value!!
         //_messageRecycle.layoutManager = LinearLayoutManager(context)
-        _chatAdapter = ChatAdapter(
+        _chatAdapter = ChatAdapter2(
             chatsList,
             _clickOnItemListener = { moveToChat(it) })
         _messageRecycle.adapter = _chatAdapter
