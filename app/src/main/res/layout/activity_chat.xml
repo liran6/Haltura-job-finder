@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.ChatActivity">
+        tools:context=".activities.ChatActivity"
+        android:background="@color/cancelColor">
     <!--    <RelativeLayout-->
     <!--            android:layout_width="match_parent"-->
     <!--            android:layout_height="wrap_content">-->
@@ -29,6 +30,68 @@
 
     <!--    </RelativeLayout>-->
 
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/topBar">
+
+        <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back_24"
+                android:id="@+id/back_button" />
+
+        <ImageView
+                android:id="@+id/image_chat"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:background="@drawable/img" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/name_chat"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="8dp"
+                    android:textSize="30dp"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:text="name">
+
+            </TextView>
+
+
+                <TextView
+                        android:layout_marginStart="8dp"
+                        android:id="@+id/members"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="left"
+                        android:layout_marginRight="8dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:text="members">
+
+                </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -39,17 +102,15 @@
             android:paddingHorizontal="10dp">
 
         <ImageView
-                android:onClick="uploadImage"
-                android:id="@+id/addMessageImageView"
+                android:id="@+id/gallery"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/outline_add_photo_alternate_24" />
 
         <ImageView
+                android:id="@+id/camera"
                 android:layout_marginLeft="5dp"
-                android:onClick="takeCameraImage"
-                android:id="@+id/addMessagePic"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -64,7 +125,7 @@
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:background="@drawable/edit_text_shadow"
+                android:background="@drawable/round_edges"
                 android:hint="Say something..."
                 android:inputType="text" />
 
@@ -90,8 +151,10 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/messageRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_above="@+id/linearLayout"
             android:background="@android:color/white"
-            android:paddingHorizontal="16dp" />
+            android:paddingHorizontal="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_below="@+id/topBar" />
 </RelativeLayout>

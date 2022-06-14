@@ -15,13 +15,16 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.R
+import com.example.haltura.Sql.Items.ChatSerializable
 import com.example.haltura.Sql.Items.Message
+import com.example.haltura.Sql.Items.MessageSerializable
+import com.example.haltura.Utils.DateTime
+import com.example.haltura.Utils.UserData
 
 
 class ChatAdapter(
-    private var _dataSet: List<Message>,
-    private var _currentUserid: String,
-    private val _clickOnItemListener: (Message) -> Unit,
+    private var _dataSet: List<MessageSerializable>,
+    private val _clickOnItemListener: (MessageSerializable) -> Unit,
 ) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
 
@@ -34,9 +37,9 @@ class ChatAdapter(
         val time: TextView = view.findViewById(R.id.time)
     }
 
-//    fun setData(data: MutableList<Message>) {
-//        _dataSet = data
-//    }
+    fun setData(data: MutableList<MessageSerializable>) {
+        _dataSet = data
+    }
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -56,13 +59,13 @@ class ChatAdapter(
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         val currentItem = _dataSet[position]
-        val name = currentItem.getName()
-        if (_currentUserid == currentItem.getUserId())
+        val name = currentItem.userId //todo get func
+        if (UserData.currentUser?.userId == currentItem.userId)
         {
             //-0x352701
             viewHolder.card.setCardBackgroundColor(ColorStateList.valueOf(-0x352701))
             //(viewHolder.messageLayout.getLayoutParams() as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            (viewHolder.card.getLayoutParams()as ViewGroup.MarginLayoutParams).setMargins(0, 0, 15, 0)
+            (viewHolder.card.getLayoutParams() as ViewGroup.MarginLayoutParams).setMargins(0, 0, 15, 0)
             viewHolder.name.setTextSize(0f)
             viewHolder.name.text = null // check if legal
         }
@@ -73,7 +76,7 @@ class ChatAdapter(
             (viewHolder.card.getLayoutParams()as ViewGroup.MarginLayoutParams).setMargins(15, 0, 0, 0)
 
         }
-        val image = currentItem.getImage()
+        val image = currentItem.image
         if (image == null)
         {
             viewHolder.image.setImageResource(0) //empty
@@ -85,7 +88,7 @@ class ChatAdapter(
             val data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
             viewHolder.image.setImageBitmap(data)
         }
-        val text = currentItem.getText()
+        val text = currentItem.text
         if (text == null)
         {
             viewHolder.text.setTextSize(0f)
@@ -95,8 +98,8 @@ class ChatAdapter(
         {
             viewHolder.text.text = text //empty
         }
-        val time = currentItem.getTime()
-        viewHolder.time.text = time.toString()
+        val time = currentItem.time
+        viewHolder.time.text = DateTime.getTime(time)
 
 
         //viewHolder.itemView.

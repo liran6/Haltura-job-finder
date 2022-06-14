@@ -1,17 +1,31 @@
 package com.example.haltura.Fragments.ChatsFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.ChatsViewModel
+import androidx.lifecycle.Observer
+import com.example.haltura.Adapters.ChatsAdapter
+import com.example.haltura.Sql.Items.ChatSerializable
+import com.example.haltura.Utils.ChatData
+import com.example.haltura.Utils.WorkData
+import com.example.haltura.activities.AddWorkActivity
+import com.example.haltura.activities.ChatActivity
 import com.example.haltura.databinding.FragmentChatsBinding
 
 class ChatsFragment : Fragment() {
 
+    private val _viewModel: ChatsViewModel by activityViewModels()
+    private lateinit var _fragmentView: View
+    private lateinit var _chatsRecycle: RecyclerView
+    private lateinit var _chatsAdapter: ChatsAdapter
     private var _binding: FragmentChatsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -23,17 +37,56 @@ class ChatsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val chatsViewModel =
-            ViewModelProvider(this).get(ChatsViewModel::class.java)
-
         _binding = FragmentChatsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        _fragmentView = binding.root
 
-        val textView: TextView = binding.textChats
-        chatsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        initViews()
+        initViewModelData()
+        initObservers()
+        initRecyclersAndAdapters()
+
+        return _fragmentView
+    }
+
+    private fun initViews() {
+        _chatsRecycle = binding.chatsRecyclerView
+        _chatsRecycle.addItemDecoration(VerticalSpaceItemDecoration(10))
+    }
+
+    private fun initViewModelData() {
+        _viewModel.getAllOfYourChats()
+    }
+
+    private fun initObservers() {
+        _viewModel.mutableChatsList.observe(
+            viewLifecycleOwner,
+            Observer { chatsList ->
+                chatsList?.let {
+                    updateRecyclersAndAdapters()
+                }
+            }
+        )
+    }
+
+    private fun updateRecyclersAndAdapters() {
+        _chatsAdapter.setData(_viewModel.mutableChatsList.value!!)
+        _chatsAdapter.notifyDataSetChanged()
+    }
+
+    private fun initRecyclersAndAdapters() {
+        _chatsRecycle = binding.chatsRecyclerView
+        val chatsList = _viewModel.mutableChatsList.value!!
+        _chatsRecycle.layoutManager = LinearLayoutManager(context)
+        _chatsAdapter = ChatsAdapter(
+            chatsList,
+            _clickOnItemListener = { moveToChat(it) })
+        _chatsRecycle.adapter = _chatsAdapter
+    }
+
+    private fun moveToChat(chat: ChatSerializable) {
+        val intent = Intent(activity, ChatActivity::class.java)
+        ChatData.currentChat = chat
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

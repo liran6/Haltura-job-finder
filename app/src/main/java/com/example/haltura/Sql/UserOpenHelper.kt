@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.haltura.Api.UsersAPI
 import com.example.haltura.Api.ProfileAPI
-import com.example.haltura.activities.ChatsActivity
+//import com.example.haltura.activities.ChatsActivity
 import com.example.haltura.activities.LoginActivityOld
 import com.example.haltura.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -47,9 +47,9 @@ class UserOpenHelper {
         return createNewUserLiveData
     }
 
-    fun chats() {
-        activity.startActivity(Intent(activity, ChatsActivity::class.java))
-    }
+//    fun chats() {
+//        activity.startActivity(Intent(activity, ChatsActivity::class.java))
+//    }
 
     fun signOut() {
         auth.signOut()
@@ -61,9 +61,9 @@ class UserOpenHelper {
         activity.finish()
     }
 
-    fun addWork() {
-        activity.startActivity(Intent(activity, ChatsActivity::class.java))
-    }
+//    fun addWork() {
+//        activity.startActivity(Intent(activity, ChatsActivity::class.java))
+//    }
 
     fun getUserId(): String {
         var user = auth.getCurrentUser()
