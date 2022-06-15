@@ -26,7 +26,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.Adapters.ChatAdapter2
 import com.example.haltura.Adapters.ChatsAdapter
 import com.example.haltura.Sql.Items.MessageSerializable
+import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.UserData
+import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.AddWorkViewModel
+import com.google.gson.Gson
+import io.socket.client.IO
+import io.socket.client.Socket
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 //todo:
@@ -63,6 +70,32 @@ class ChatActivity : AppCompatActivity() {
         initObservers()
         initButtons()
         initRecyclersAndAdapters()
+        startLive()
+    }
+
+
+//    private lateinit var _socket: Socket
+//    private lateinit var _chatId : String
+//    private var json = Gson()
+//    private fun startLive() {
+//        //_viewModel.startLive(_chat.id!!)
+//        //SocketHandler.setSocket()
+//        _socket = IO.socket(Const.SERVER_URL)
+//        _socket.connect()
+//        _chatId = _chat.id!!
+//
+//        _socket.emit("user-connect", _chatId, UserData.currentUser?.userId)
+//
+//        _socket.on("new-message") { args ->
+//            if (args[0] != null) {
+//                var message = json.fromJson(args[0].toString(), MessageSerializable::class.java)
+//                _chatAdapter.setData(mutableListOf(message))
+//                _chatAdapter.notifyDataSetChanged()
+//            }
+//        }
+//    }
+    private fun startLive() {
+        _viewModel.startLive(_chat.id!!,this)
     }
 
     private fun setValues() {
@@ -81,7 +114,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun initButtons() {
         _cameraButton.setOnClickListener {
-            sendMessage()
+            takeCameraImage()
         }
 
         _galleryButton.setOnClickListener {
@@ -89,7 +122,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         _sendButton.setOnClickListener {
-            takeCameraImage()
+            sendMessage()
         }
         _sendButton.setEnabled(false)
         _textMessage.addTextChangedListener(object : TextWatcher {
@@ -141,6 +174,7 @@ class ChatActivity : AppCompatActivity() {
     private fun updateRecyclersAndAdapters() {
         _chatAdapter.setData(_viewModel.mutableMessagesList.value!!)
         _chatAdapter.notifyDataSetChanged()
+        //_messageRecycle.smoothScrollToPosition(_chatAdapter.getItemCount() - 1);
     }
 
     private fun initViewModelData() {
@@ -165,19 +199,31 @@ class ChatActivity : AppCompatActivity() {
         _manager = LinearLayoutManager(this)
         _manager.stackFromEnd = true
         _messageRecycle.layoutManager = _manager
+        _messageRecycle.addItemDecoration(VerticalSpaceItemDecoration(10))
     }
 
     fun sendMessage(image: Bitmap? = null)//view: View)
     {
+        var imageString : String? = null
         if(image != null)
         {
-
+            imageString = convertImageToString(image)
         }
-        //todo: send the text message
+        var txt = _textMessage.text.toString()
 
-        //textMessage.text.toString(),
+        if(txt != null || image != null)
+        {
+            _viewModel.SendMessage(MessageSerializable(UserData.currentUser?.userId!!,_textMessage.text.toString(), imageString))
+        }
 
         _textMessage.setText("")
+    }
+
+    private fun convertImageToString(image: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val data = baos.toByteArray()
+        return  Base64.encodeToString(data, Base64.DEFAULT)
     }
 
 

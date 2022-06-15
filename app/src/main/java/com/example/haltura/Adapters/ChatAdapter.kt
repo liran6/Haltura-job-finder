@@ -99,7 +99,7 @@ class ChatAdapter(
             viewHolder.text.text = text //empty
         }
         val time = currentItem.time
-        viewHolder.time.text = DateTime.getTime(time)
+        viewHolder.time.text = DateTime.getTime(time!!)
 
 
         //viewHolder.itemView.

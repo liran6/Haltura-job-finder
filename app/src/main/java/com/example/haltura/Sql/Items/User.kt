@@ -10,7 +10,7 @@ data class MessageSerializable(
     @SerializedName("userId") var userId: String,
     @SerializedName("text") var text: String?,
     @SerializedName("image") var image: String?,
-    @SerializedName("createdAt") var time: String
+    @SerializedName("createdAt") var time: String? = null
 ) : Parcelable
 
 @Parcelize
