@@ -15,10 +15,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.Chat
-import com.example.haltura.Sql.Items.ChatSerializable
-import com.example.haltura.Sql.Items.Message
-import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Sql.Items.*
+import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
 
@@ -72,8 +70,7 @@ class ChatsAdapter(
             {
                 userId = currentItem.members?.get(1)
             }
-            //todo: get username from userid - bring function that do that to the constructor of the adapter
-            viewHolder.name.text = "username"
+            viewHolder.name.text = currentItem.mapUsernames[userId]
         }
         else
         {
@@ -123,13 +120,62 @@ class ChatsAdapter(
 //        viewHolder.message.text = txt
 //        val time = message?.getTime()
 //        viewHolder.time.text = time.toString()
-        viewHolder.message.text = "txt"
-        viewHolder.time.text = "00:00"//todo: if today hour if yesterday -yesterday if before yesterday date
+        viewHolder.message.text = getMessageInfo(currentItem.lastMessage,currentItem.mapUsernames)
+        viewHolder.time.text = getMessageTime(currentItem.lastMessage)
 
         viewHolder.itemView.setOnClickListener {
             _clickOnItemListener(_dataSet[position])
         }
     }
+
+    private fun getMessageTime(message: MessageSerializable): String? {
+        //todo: if today hour if yesterday -yesterday if before yesterday date
+        if (message == null)
+        {
+            return ""
+        }
+        return DateTime.getDate(message.time!!) + " " + DateTime.getTime(message.time!!)
+    }
+
+    private fun getMessageInfo(message: MessageSerializable, map: Map<String, String>): String? {
+        var txt: String = ""
+        var flag :Boolean = false
+        if (message == null)
+        {
+            return "There are no messages yet"
+        }
+        else
+        {
+            if (message.userId == UserData.currentUser?.userId) {//(group)
+                txt += "me: "
+            }
+            else
+            {
+                txt += map[message.userId] +": "
+            }
+            if (message.image != null)
+            {
+                txt += "🖼️"
+                flag = true
+            }
+            if (message?.text != null)
+            {
+                if (flag){txt += "-"}
+                //todo cut 20 chars with 3 dots (...)
+                var messageText = message?.text
+                if (messageText?.length!! > 20)
+                {
+                    txt += messageText.substring(0,20) + "..."
+                }
+                else
+                {
+                    txt += messageText
+                }
+            }
+            return txt
+        }
+    }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = _dataSet.size

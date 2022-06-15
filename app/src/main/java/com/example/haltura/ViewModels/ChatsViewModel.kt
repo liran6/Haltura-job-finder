@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ChatAPI
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Sql.Items.ChatSerializable
-import com.example.haltura.Sql.Items.ExtendedChatSerializable
 import com.example.haltura.Sql.Items.UserResponse
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.UserData
@@ -50,7 +49,7 @@ class ChatsViewModel : ViewModel() {
                     for (i in 0 until chats.length())
                     {
                         val chat = json.fromJson(chats.getJSONObject(i).toString(), ChatSerializable::class.java)
-                        var chat2 = json.fromJson(chats.getJSONObject(i).toString(), ExtendedChatSerializable::class.java)
+                        // var chat2 = json.fromJson(chats.getJSONObject(i).toString(), ExtendedChatSerializable::class.java)
                         mutableAllChatsList!!.add(chat)
                         //mutableChatsList.value!!.add(chat)
                     }
@@ -81,7 +80,7 @@ class ChatsViewModel : ViewModel() {
                         mutableChatsList.value!!.add(it)
                     }
                 }
-                else if(isUserNameContainsString(it.members,textToFilter))//name of the contact (not group)
+                else if(isUserNameContainsString(it,textToFilter))//name of the contact (not group)
                 {
                     mutableChatsList.value!!.add(it)
                 }
@@ -90,17 +89,18 @@ class ChatsViewModel : ViewModel() {
         mutableChatsList.notifyAllObservers()
     }
 
-    private fun isUserNameContainsString(members: List<String>, textToFilter: String): Boolean {
+    private fun isUserNameContainsString(chat: ChatSerializable, textToFilter: String): Boolean {
+        var members = chat.members
         if(members[0] != UserData.currentUser?.userId)
         {
             //todo: map to user name
-            if (members[0]!!.toLowerCase().contains(textToFilter))
+            if (chat.mapUsernames[members[0]]!!.toLowerCase().contains(textToFilter))
             {
                 return true
             }
             return false
         }
-        return members[1]!!.toLowerCase().contains(textToFilter)
+        return chat.mapUsernames[members[1]]!!.toLowerCase().contains(textToFilter)
     }
 }
 
