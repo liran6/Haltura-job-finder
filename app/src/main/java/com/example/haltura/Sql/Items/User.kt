@@ -26,7 +26,7 @@ data class ChatSerializable(
 @Parcelize
 data class UserSerializable(
     @SerializedName("email") var email: String,
-    @SerializedName("createdDate") var createdDate: String,
+    @SerializedName("createdDate") var createdDate: String?,
     @SerializedName("id") var id: String,
     @SerializedName("token") var token: String,
     @SerializedName("password") var password: String?
@@ -40,7 +40,7 @@ data class UserLoginSerializable(
 
 @Parcelize
 data class UserObject(
-    @SerializedName("userId") var userId: String,
+    @SerializedName("id") var userId: String,
     @SerializedName("email") var email: String,
     @SerializedName("token") var token: String,
     @SerializedName("profile") var profile: ProfileSerializable?,

@@ -20,6 +20,7 @@ import com.example.haltura.Adapters.ManageWorkAdapter
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.WorkData
+import com.example.haltura.ViewModels.CalendarViewModel
 import com.example.haltura.ViewModels.WorkViewModel
 import com.example.haltura.activities.AddWorkActivity
 import com.example.haltura.databinding.*
@@ -176,7 +177,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 //                }
 //            }
 //    }
-    private val _viewModel: WorkViewModel by activityViewModels()
+    private val _viewModel: CalendarViewModel by activityViewModels()
     private lateinit var _fragmentView: View
     private lateinit var _manageWorkRecycle: RecyclerView
     private lateinit var _manageWorksAdapter: ManageWorkAdapter
@@ -201,10 +202,9 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentCalendarBinding.bind(view)
+
         initViewModelData()
         initObservers()
-
         val workList = _viewModel.mutableWorkList.value!!
         _manageWorksAdapter = ManageWorkAdapter(
             workList,
@@ -214,8 +214,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 
         val daysOfWeek = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
-
-        //binding = FragmentCalendarBinding.bind(view)
+        binding = FragmentCalendarBinding.bind(view)
 
         binding.worksCreatedRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -223,10 +222,17 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         }
 
+
+
+        //binding = FragmentCalendarBinding.bind(view)
+
+
+
         binding.calendarView.apply {
             setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), daysOfWeek.first())
             scrollToMonth(currentMonth)
         }
+
         if (savedInstanceState == null) {
             binding.calendarView.post {
                 // Show today's events initially.
@@ -272,6 +278,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             val binding = CalendarDayBinding.bind(view)
 
             init {
+                //binding.dotView.makeInVisible()
                 view.setOnClickListener {
                     if (day.owner == DayOwner.THIS_MONTH) {
                         selectDate(day.date)
@@ -287,10 +294,10 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
                 container.day = day
                 val textView = container.binding.dayText
                 val dotView = container.binding.dotView
-                dotView.makeInVisible()
                 textView.text = day.date.dayOfMonth.toString()
                 if (day.owner == DayOwner.THIS_MONTH) {
                     textView.makeVisible()
+                    dotView.makeInVisible()
                     when (day.date) {
                         today -> {
                             textView.setTextColorRes(R.color.calendar_white)
@@ -316,6 +323,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
                     dotView.makeInVisible()
                 }
             }
+
         }
         binding.calendarView.monthHeaderBinder =
             object : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -338,6 +346,8 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 //        }
 
 
+        //binding.calendarView.scrollToMonth(currentMonth)
+
     }
 
 
@@ -351,6 +361,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             Observer { workList ->
                 workList?.let {
                     updateRecyclersAndAdapters(null)
+
                 }
             }
         )
@@ -421,6 +432,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
     private fun updateRecyclersAndAdapters(date: LocalDate?) {
         _manageWorksAdapter.setData(_viewModel.mutableWorkList.value!!)
         _manageWorksAdapter.notifyDataSetChanged()
+        binding.calendarView.notifyCalendarChanged()
         if (date != null) {
             binding.selectedDateText.text = selectionFormatter.format(date)
         }
@@ -452,7 +464,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 //        binding.exThreeSelectedDateText.text = selectionFormatter.format(date)
 //    }
 
-    //implementation of the actionbar back press!!!
+    //todo:implementation of the actionbar back press!!!
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.getItemId() == android.R.id.home) {
             if (activity != null) {

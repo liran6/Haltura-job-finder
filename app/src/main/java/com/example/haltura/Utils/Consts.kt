@@ -17,17 +17,20 @@ object Const{
     const val IsLogin = "is_login"
     const val Email = "email"
     const val Password = "password"
+    const val Id = "Id"
+    const val Token = "token"
     const val EmptyStringValue = ""
     const val showNotifications = "showNotifications"
 
     // server
-    const val SERVER_URL = "http://10.0.0.8:4000/" // "http://192.168.1.239:4000/"
+    const val SERVER_URL = "http://10.0.0.25:4000/" // "http://192.168.1.239:4000/"
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"
     const val Logged_User = "Logged User"
     const val Email_Is_Taken = "Email address is already in use."
     const val Token_Error = "There was a problem signing you in, please try again"
+    const val INVALID_TOKEN = "Your Session Has Timed Out, please login again"
     const val Signing_In = "Signing In"
     const val Email_Password_incorrect = "Your Email or Password is incorrect"
     const val login_fragment = "login_fragment"

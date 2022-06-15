@@ -62,9 +62,9 @@
         <activity
                 android:name=".activities.ChatActivity"
                 android:exported="false" />
-        <activity
-                android:name=".activities.ChatsActivity"
-                android:exported="false" />
+<!--        <activity-->
+<!--                android:name=".activities.ChatsActivity"-->
+<!--                android:exported="false" />-->
         <activity
                 android:name=".activities.SignUpActivity"
                 android:exported="false" />
