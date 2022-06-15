@@ -24,10 +24,6 @@ import com.example.haltura.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mjk2NDg1ZDQ0NzBhZGE1YzBmYWJlOGYiLCJpYXQiOjE2NTQ3MTc3MjksImV4cCI6MTY1NTMyMjUyOX0.kINx9at8G7aZkJUWfghCojlYk3DHKqgpt2gZJTHd5s4"
-    private val userId: String = "6296485d4470ada5c0fabe8f"
-
-
     private val _viewModel: HomeViewModel by activityViewModels()
     private lateinit var _fragmentView: View
     private lateinit var _workRecycle: RecyclerView
@@ -43,8 +39,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val homeViewModel =
-//            ViewModelProvider(this).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         //val root: View = binding.root
         _fragmentView = binding.root
@@ -83,7 +77,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecyclersAndAdapters() {
-        _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
+        _workRecycle = binding.workRecyclerView
         val workList = _viewModel.mutableWorkList.value!!
         _workRecycle.layoutManager = LinearLayoutManager(context)
         _worksAdapter = WorkAdapter(

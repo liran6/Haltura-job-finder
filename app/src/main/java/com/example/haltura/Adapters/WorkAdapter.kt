@@ -13,6 +13,7 @@ import com.example.haltura.Sql.Items.Chat
 import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.ImageHelper
 
 
@@ -49,7 +50,9 @@ class WorkAdapter(
         val currentItem = _dataSet[position]
         viewHolder.task.text = currentItem.task
         viewHolder.salary.text = currentItem.salary.toString()
-        viewHolder.dateAndTime.text = "FROM: " +currentItem.startTime + " TO " + currentItem.startTime
+        viewHolder.dateAndTime.text = DateTime.getDate(currentItem.startTime) + " From " +
+                DateTime.getTime(currentItem.startTime) + " To " +
+                DateTime.getTime(currentItem.endTime)
         viewHolder.location.text = currentItem.address.street + " " + currentItem.address.streetNum +
                 ", " + currentItem.address.city
 

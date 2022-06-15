@@ -69,31 +69,33 @@ class ChatActivity : AppCompatActivity() {
         initViewModelData()
         initObservers()
         initButtons()
+        initTextListener()
         initRecyclersAndAdapters()
         startLive()
     }
 
+    private fun initTextListener() {
+        _textMessage.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.toString().trim { it <= ' ' }.length == 0) {
+                    _sendButton.setEnabled(false)
+                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_gray_24))
+                } else {
+                    _sendButton.setEnabled(true)
+                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_24));
+                }
+            }
 
-//    private lateinit var _socket: Socket
-//    private lateinit var _chatId : String
-//    private var json = Gson()
-//    private fun startLive() {
-//        //_viewModel.startLive(_chat.id!!)
-//        //SocketHandler.setSocket()
-//        _socket = IO.socket(Const.SERVER_URL)
-//        _socket.connect()
-//        _chatId = _chat.id!!
-//
-//        _socket.emit("user-connect", _chatId, UserData.currentUser?.userId)
-//
-//        _socket.on("new-message") { args ->
-//            if (args[0] != null) {
-//                var message = json.fromJson(args[0].toString(), MessageSerializable::class.java)
-//                _chatAdapter.setData(mutableListOf(message))
-//                _chatAdapter.notifyDataSetChanged()
-//            }
-//        }
-//    }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // TODO Auto-generated method stub
+            }
+        })
+    }
+
     private fun startLive() {
         _viewModel.startLive(_chat.id!!,this)
     }
@@ -125,25 +127,6 @@ class ChatActivity : AppCompatActivity() {
             sendMessage()
         }
         _sendButton.setEnabled(false)
-        _textMessage.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.toString().trim { it <= ' ' }.length == 0) {
-                    _sendButton.setEnabled(false)
-                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_gray_24))
-                } else {
-                    _sendButton.setEnabled(true)
-                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_24));
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // TODO Auto-generated method stub
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                // TODO Auto-generated method stub
-            }
-        })
     }
 
     private fun initRecyclersAndAdapters() {
@@ -174,7 +157,8 @@ class ChatActivity : AppCompatActivity() {
     private fun updateRecyclersAndAdapters() {
         _chatAdapter.setData(_viewModel.mutableMessagesList.value!!)
         _chatAdapter.notifyDataSetChanged()
-        //_messageRecycle.smoothScrollToPosition(_chatAdapter.getItemCount() - 1);
+        //recyclerView.scrollToPosition(items.size());
+        _messageRecycle.smoothScrollToPosition(_chatAdapter.getItemCount());
     }
 
     private fun initViewModelData() {
@@ -210,6 +194,11 @@ class ChatActivity : AppCompatActivity() {
             imageString = convertImageToString(image)
         }
         var txt = _textMessage.text.toString()
+
+        if (txt.trim { it <= ' ' }.length == 0)
+        {
+            txt == null
+        }
 
         if(txt != null || image != null)
         {
@@ -252,6 +241,7 @@ class ChatActivity : AppCompatActivity() {
     fun takeCameraImage()
     {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        //intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         startActivityForResult(intent, REQ_CAMERA)
     }
 

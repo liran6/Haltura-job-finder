@@ -2,9 +2,13 @@ package com.example.haltura.Fragments.ChatsFragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +17,7 @@ import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.ChatsViewModel
 import androidx.lifecycle.Observer
 import com.example.haltura.Adapters.ChatsAdapter
+import com.example.haltura.R
 import com.example.haltura.Sql.Items.ChatSerializable
 import com.example.haltura.Utils.ChatData
 import com.example.haltura.Utils.WorkData
@@ -26,6 +31,8 @@ class ChatsFragment : Fragment() {
     private lateinit var _fragmentView: View
     private lateinit var _chatsRecycle: RecyclerView
     private lateinit var _chatsAdapter: ChatsAdapter
+    private lateinit var _searchText : EditText
+    private lateinit var _searchButton : ImageButton
     private var _binding: FragmentChatsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -41,6 +48,8 @@ class ChatsFragment : Fragment() {
         _fragmentView = binding.root
 
         initViews()
+        initButtons()
+        initTextListener()
         initViewModelData()
         initObservers()
         initRecyclersAndAdapters()
@@ -48,9 +57,37 @@ class ChatsFragment : Fragment() {
         return _fragmentView
     }
 
+    private fun initTextListener() {
+        _searchText.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                filter()
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // TODO Auto-generated method stub
+            }
+        })
+    }
+
+    private fun initButtons() {
+        _searchButton.setOnClickListener {
+            filter() //todo: make the search btn to open search text instead
+        }
+    }
+
+    private fun filter() {
+        _viewModel.filter(_searchText.text.toString())
+    }
+
     private fun initViews() {
         _chatsRecycle = binding.chatsRecyclerView
         _chatsRecycle.addItemDecoration(VerticalSpaceItemDecoration(10))
+        _searchText = binding.searchText
+        _searchButton = binding.searchButton
     }
 
     private fun initViewModelData() {

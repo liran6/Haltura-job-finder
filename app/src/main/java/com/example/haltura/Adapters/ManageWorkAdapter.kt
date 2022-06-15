@@ -13,6 +13,7 @@ import com.example.haltura.Sql.Items.Chat
 import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.ImageHelper
 
 
@@ -49,7 +50,9 @@ class ManageWorkAdapter(
         // contents of the view with that element
         val currentItem = _dataSet[position]
         viewHolder.task.text = currentItem.task
-        viewHolder.date.text = "FROM: " +currentItem.startTime + " TO " + currentItem.startTime
+        viewHolder.date.text = DateTime.getDate(currentItem.startTime) + " From " +
+                DateTime.getTime(currentItem.startTime) + " To " +
+                DateTime.getTime(currentItem.endTime)//"FROM: " +currentItem.startTime + " TO " + currentItem.startTime
         var bm = Base64.decode(currentItem.image, Base64.DEFAULT)
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
         var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)

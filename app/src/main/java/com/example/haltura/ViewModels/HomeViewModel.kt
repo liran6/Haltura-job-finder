@@ -1,6 +1,5 @@
 package com.example.haltura.ViewModels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ServiceBuilder
@@ -16,20 +15,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
-
-//class HomeViewModel : ViewModel() {
-//
-//    private val _text = MutableLiveData<String>().apply {
-//        value = "This is home Fragment"
-//    }
-//    val text: LiveData<String> = _text
-//}
-
-
 class HomeViewModel : ViewModel() {
 
-    val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy { //by lazy
+    val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }
 

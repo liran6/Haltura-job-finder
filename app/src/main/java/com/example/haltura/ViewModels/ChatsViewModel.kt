@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ChatAPI
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Sql.Items.ChatSerializable
+import com.example.haltura.Sql.Items.ExtendedChatSerializable
 import com.example.haltura.Sql.Items.UserResponse
+import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.notifyAllObservers
 import com.google.gson.Gson
@@ -18,9 +20,11 @@ import retrofit2.Response
 
 class ChatsViewModel : ViewModel() {
 
-    val mutableChatsList: MutableLiveData<MutableList<ChatSerializable>> by lazy { //by lazy
+    val mutableChatsList: MutableLiveData<MutableList<ChatSerializable>> by lazy {
         MutableLiveData<MutableList<ChatSerializable>>(mutableListOf())
     }
+
+    val mutableAllChatsList: MutableList<ChatSerializable> =mutableListOf()
 
     lateinit var ChatApiLiveData: MutableLiveData<UserResponse?>
     private var json = Gson()
@@ -28,6 +32,7 @@ class ChatsViewModel : ViewModel() {
 
     fun getAllOfYourChats() {
         mutableChatsList.value!!.clear()
+        mutableAllChatsList.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(ChatAPI::class.java)
         val call = retroService.getAllChatsOfUserId("Bearer " + UserData.currentUser?.token!!,
@@ -45,8 +50,11 @@ class ChatsViewModel : ViewModel() {
                     for (i in 0 until chats.length())
                     {
                         val chat = json.fromJson(chats.getJSONObject(i).toString(), ChatSerializable::class.java)
-                        mutableChatsList.value!!.add(chat)
+                        var chat2 = json.fromJson(chats.getJSONObject(i).toString(), ExtendedChatSerializable::class.java)
+                        mutableAllChatsList!!.add(chat)
+                        //mutableChatsList.value!!.add(chat)
                     }
+                    mutableChatsList.value!!.addAll(mutableAllChatsList)
                     mutableChatsList.notifyAllObservers()
                 } else {
                     var x = 1
@@ -55,4 +63,64 @@ class ChatsViewModel : ViewModel() {
         })
     }
 
+    fun filter(textToFilter: String) {
+        if (textToFilter.toString().trim { it <= ' ' }.length == 0) // not empty
+        {
+            //mutableChatsList.value!!.clear()
+            mutableChatsList.value!!.addAll(mutableAllChatsList)
+        }
+        else
+        {
+            mutableChatsList.value!!.clear()
+            mutableAllChatsList.forEach{
+
+                if (it.chatName != null)
+                {
+                    if (it.chatName!!.toLowerCase().contains(textToFilter))
+                    {
+                        mutableChatsList.value!!.add(it)
+                    }
+                }
+                else if(isUserNameContainsString(it.members,textToFilter))//name of the contact (not group)
+                {
+                    mutableChatsList.value!!.add(it)
+                }
+            }
+        }
+        mutableChatsList.notifyAllObservers()
+    }
+
+    private fun isUserNameContainsString(members: List<String>, textToFilter: String): Boolean {
+        if(members[0] != UserData.currentUser?.userId)
+        {
+            //todo: map to user name
+            if (members[0]!!.toLowerCase().contains(textToFilter))
+            {
+                return true
+            }
+            return false
+        }
+        return members[1]!!.toLowerCase().contains(textToFilter)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
