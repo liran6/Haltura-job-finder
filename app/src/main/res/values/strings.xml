@@ -1305,4 +1305,20 @@
     <string name="confirm_password">Confirm password</string>
     <string name="sign_up">Sign up</string>
     <string name="todo">TODO</string>
+<!--    calander-->
+    <string name="save">Save</string>
+    <string name="close">Close</string>
+    <string name="example_3_input_dialog_title">Enter event title</string>
+    <string name="example_3_empty_input_text">Text is empty</string>
+    <string name="example_3_dialog_delete_confirmation">Delete this event?</string>
+    <string name="delete">Delete</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="clear">Clear</string>
+    <string name="week_mode">Week mode</string>
+    <string name="example_3_title">Calendar</string>
+    <string name="works_created_by_you">Works Created By You :</string>
+    <string name="works_you_are_registered_for">Works you are registered for :</string>
+
+
 </resources>

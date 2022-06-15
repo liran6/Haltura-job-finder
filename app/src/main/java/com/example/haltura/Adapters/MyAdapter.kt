@@ -12,7 +12,7 @@ import com.example.haltura.R
 import com.example.haltura.Sql.Items.Work
 import android.util.Base64.DEFAULT
 import android.util.Base64.decode
-import org.jetbrains.anko.sdk27.coroutines.onClick
+//import org.jetbrains.anko.sdk27.coroutines.onClick
 
 //todo: change to WorkAdapter
 class MyAdapter : RecyclerView.Adapter<MyAdapter.myViewHolder>{

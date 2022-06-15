@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F4511E</color>
+    <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#373535</color>
+    <color name="colorPrimaryVariant">#373535</color>
     <color name="colorAccent">#FFD600</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -23,5 +24,12 @@
     <color name="removeColor">#F31C00</color>
     <color name="deleteColor">#F31C00</color>
     <color name="cancelColor">#1C82DC</color>
+<!--    Calander-->
+    <color name="calendar_black">#D9000000</color>
+    <color name="calendar_white">#D9FFFFFF</color>
+    <color name="calendar_blue">#1973E8</color>
+    <color name="calendar_blue_light">#D2E3FC</color>
+    <color name="calendar_toolbar_color">#607D8B</color>
+    <color name="calendar_statusbar_color">#455A64</color>
     removeColor
 </resources>

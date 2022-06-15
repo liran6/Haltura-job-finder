@@ -17,14 +17,14 @@ import retrofit2.Response
 class AddWorkViewModel : ViewModel() {
 
 
-    fun createWork(work :WorkSerializable) {
+    fun createWork(work: WorkSerializable) {
         var user = UserData.currentUser
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
         val call = retroService.createWork("Bearer " + user?.token!!, user?.userId!!, work)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                var a =1
+                var a = 1
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

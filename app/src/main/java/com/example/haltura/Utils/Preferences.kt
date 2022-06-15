@@ -2,12 +2,15 @@ package com.example.haltura.Utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.haltura.Sql.Items.UserObject
+import com.google.gson.Gson
 
 
 object Preferences {
     private const val preferenceName = Const.loginPreferences
     private const val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
+    private var json = Gson()
 
 //    fun defaultPrefs(context: Context): SharedPreferences
 //            = PreferenceManager.getDefaultSharedPreferences(context)
@@ -26,6 +29,7 @@ object Preferences {
      */
     operator fun SharedPreferences.set(key: String, value: Any?)
             = when (value) {
+        is UserObject? -> edit{it.putString(key, (json.toJson(value)))}
         is String? -> edit { it.putString(key, value) }
         is Int -> edit { it.putInt(key, value) }
         is Boolean -> edit { it.putBoolean(key, value) }

@@ -12,9 +12,7 @@ import com.example.haltura.AppNotifications.toastBar
 import com.example.haltura.Fragments.SignInFragments.LoginFragment
 import com.example.haltura.Utils.Preferences
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.UserLoginSerializable
 import com.example.haltura.Sql.Items.UserObject
-import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.Preferences.get
 import com.example.haltura.Utils.Preferences.set
@@ -27,12 +25,10 @@ import io.reactivex.disposables.CompositeDisposable
 
 class LoginActivity : AppCompatActivity() {
     lateinit var loadingScreen: RelativeLayout
-    private lateinit var sharedPreferences:SharedPreferences
+    private lateinit var preferences:SharedPreferences
     private var compositeDisposable = CompositeDisposable()
-    private val userEmail = Const.Email
-    private val userPassword = Const.Password
-    private val isUserLoggedIn = Const.IsLogin
-    private val viewModel: LoginViewModel by viewModels()
+    private lateinit var userObject:UserObject
+    private val loginViewModel: LoginViewModel by viewModels()
 
     //private lateinit var viewModel: LoginViewModel
     //private val sharedPreferences:Preferences
@@ -41,7 +37,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         loadingScreen = findViewById(R.id.loading_screen)
-        sharedPreferences=Preferences.customPrefs(this, Const.loginPreferences)
+        //sharedPreferences=Preferences
+        preferences= Preferences.customPrefs(this, Const.loginPreferences)
 //        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         isLoggedIn()
         val toastObserver = Observer<String> { message ->
@@ -49,10 +46,14 @@ class LoginActivity : AppCompatActivity() {
             toastBar(this, message)
         }
 
-        val authObserver = Observer<UserSerializable> { authObserver ->
-            sharedPreferences.set(userEmail, authObserver.email)
-            sharedPreferences.set(userPassword, authObserver.password)
-            sharedPreferences.set(isUserLoggedIn, true)
+        val authObserver = Observer<UserObject> { authObserver ->
+//            sharedPreferences.set(userEmail, authObserver.email)
+//            sharedPreferences.set(userPassword, authObserver.password)
+//            sharedPreferences.set(userToken, authObserver.token)
+//            sharedPreferences.set(userId, authObserver.id)
+
+            preferences.set(Const.Logged_User,authObserver)
+            preferences.set(Const.IsLoggedIn, true)
             loggingIn(authObserver)
         }
 
@@ -74,27 +75,28 @@ class LoginActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.login_fragment, LoginFragment(), Const.login_fragment)
                 .addToBackStack(Const.login_fragment)
+                .setReorderingAllowed(true)
                 .commit()
         }
 
     }
 
     private fun isLoggedIn() {
-        if (sharedPreferences.get(isUserLoggedIn)) {
+        if (preferences.get(Const.IsLoggedIn)) {
             loadingScreen.visibility = View.VISIBLE
-            val user = UserLoginSerializable(
-                sharedPreferences.get(userEmail), sharedPreferences.get(userPassword)
-            )
-            viewModel.userSignIn(user)
+            val us:String = preferences.get(Const.Logged_User)
+            val user = json.fromJson(us, UserObject::class.java)
+                //UserLoginSerializable(preferences.get(userEmail), preferences.get(userPassword))
+            loggingIn(user)
         }
     }
 
     private fun observersInit(
         toastObserver: Observer<String>,
-        authObserver: Observer<UserSerializable>
+        authObserver: Observer<UserObject>
     ) {
-        viewModel.mutableMessageToasting.observe(this, toastObserver)
-        viewModel.mutableUserHolder.observe(this, authObserver)
+        loginViewModel.mutableMessageToasting.observe(this, toastObserver)
+        loginViewModel.mutableUserHolder.observe(this, authObserver)
     }
 //        viewModel.mutableMessageToasting.observe(
 //            this,
@@ -118,17 +120,11 @@ class LoginActivity : AppCompatActivity() {
 //    }
 
 
-    private fun loggingIn(user: UserSerializable) {
+    private fun loggingIn(user: UserObject) {
         val intent = Intent(this, MainActivity2::class.java)
         //val userBundle = Bundle()
         // intent.putExtra(Const.Logged_User, user)
-        UserData.currentUser = UserObject(
-            user.id,
-            user.email,
-            user.token,
-            null,
-            null
-        )// add in node server profile info
+        UserData.currentUser = user// add in node server profile info
 
         val bundle = Bundle()
         bundle.putParcelable(Const.USER_OBJECT, user)
