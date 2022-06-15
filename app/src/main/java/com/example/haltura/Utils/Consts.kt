@@ -4,6 +4,7 @@ import androidx.paging.RemoteMediator
 
 object Const{
 
+
     //DataObjects
     const val LOGGED_USER_BUNDLE = "LOGGED_USER_BUNDLE"
     const val USER_OBJECT = "USER_OBJECT"
@@ -14,7 +15,7 @@ object Const{
     //preferences
 
     const val loginPreferences = "LoginPreferences"
-    const val IsLogin = "is_login"
+    const val IsLoggedIn = "is_logged_in"
     const val Email = "email"
     const val Password = "password"
     const val Id = "Id"
@@ -23,7 +24,7 @@ object Const{
     const val showNotifications = "showNotifications"
 
     // server
-    const val SERVER_URL = "http://10.0.0.25:4000/" // "http://192.168.1.239:4000/"
+    const val SERVER_URL = "http://10.0.0.8:4000/" // "http://192.168.1.239:4000/"
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"

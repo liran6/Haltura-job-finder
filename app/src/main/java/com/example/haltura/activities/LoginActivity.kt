@@ -25,16 +25,9 @@ import io.reactivex.disposables.CompositeDisposable
 
 class LoginActivity : AppCompatActivity() {
     lateinit var loadingScreen: RelativeLayout
-    //private lateinit var sharedPreferences:SharedPreferences
-    private lateinit var preferences: SharedPreferences
+    private lateinit var preferences:SharedPreferences
     private var compositeDisposable = CompositeDisposable()
-    private val loggedUser = Const.Logged_User
-    private val userEmail = Const.Email
-    private val userPassword = Const.Password
-    private val userId = Const.Id
-    private val userToken = Const.Token
     private lateinit var userObject:UserObject
-    private val isUserLoggedIn = Const.IsLogin
     private val loginViewModel: LoginViewModel by viewModels()
 
     //private lateinit var viewModel: LoginViewModel
@@ -59,8 +52,8 @@ class LoginActivity : AppCompatActivity() {
 //            sharedPreferences.set(userToken, authObserver.token)
 //            sharedPreferences.set(userId, authObserver.id)
 
-            preferences.set(loggedUser,authObserver)
-            preferences.set(isUserLoggedIn, true)
+            preferences.set(Const.Logged_User,authObserver)
+            preferences.set(Const.IsLoggedIn, true)
             loggingIn(authObserver)
         }
 
@@ -89,9 +82,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isLoggedIn() {
-        if (preferences.get(isUserLoggedIn)) {
+        if (preferences.get(Const.IsLoggedIn)) {
             loadingScreen.visibility = View.VISIBLE
-            val us:String = preferences.get(loggedUser)
+            val us:String = preferences.get(Const.Logged_User)
             val user = json.fromJson(us, UserObject::class.java)
                 //UserLoginSerializable(preferences.get(userEmail), preferences.get(userPassword))
             loggingIn(user)

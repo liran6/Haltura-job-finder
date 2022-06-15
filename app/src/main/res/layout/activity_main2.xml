@@ -19,6 +19,7 @@
                 android:id="@+id/toolbar"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:popupTheme="@style/Theme.Haltura.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 

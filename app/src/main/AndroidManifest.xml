@@ -25,6 +25,7 @@
         <activity
                 android:name=".activities.LoginActivity"
                 android:exported="false"
+                android:noHistory="true"
                 android:label="@string/title_activity_login2" />
 
         <meta-data
