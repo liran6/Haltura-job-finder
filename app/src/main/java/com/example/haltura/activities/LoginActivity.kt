@@ -74,6 +74,7 @@ class LoginActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.login_fragment, LoginFragment(), Const.login_fragment)
                 .addToBackStack(Const.login_fragment)
+                .setReorderingAllowed(true)
                 .commit()
         }
 

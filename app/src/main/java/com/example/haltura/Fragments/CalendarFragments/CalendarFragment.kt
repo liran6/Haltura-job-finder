@@ -3,13 +3,16 @@ package com.example.haltura.Fragments.CalendarFragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,10 +29,10 @@ import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
+import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import androidx.lifecycle.Observer
 
 
 data class Event(val id: String, val text: String, val date: LocalDate)
@@ -177,7 +180,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
     private lateinit var _fragmentView: View
     private lateinit var _manageWorkRecycle: RecyclerView
     private lateinit var _manageWorksAdapter: ManageWorkAdapter
-    private lateinit var _layout: ConstraintLayout
+    private lateinit var _layout: LinearLayout
     //private var _binding: FragmentWorkBinding? = null
 
     // This property is only valid between onCreateView and
@@ -197,22 +200,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //todo manage back press
-//        activity?.onBackPressedDispatcher?.addCallback(
-//            this.viewLifecycleOwner,
-//            object : OnBackPressedCallback(true) {
-//                override fun handleOnBackPressed() {
-//                    if (selectedDate!=today) {
-//                        titleSameYearFormatter.format(today.yearMonth)
-//                        selectDate(today)
-//                        //this@CalendarFragment.onViewCreated(view,savedInstanceState)
-//                        //onStart()
-//                    } else {
-//                        isEnabled = false
-//                        activity?.onBackPressed()
-//                    }
-//                }
-//            })
+
         binding = FragmentCalendarBinding.bind(view)
         initViewModelData()
         initObservers()
@@ -227,7 +215,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
         val daysOfWeek = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
 
-        binding = FragmentCalendarBinding.bind(view)
+        //binding = FragmentCalendarBinding.bind(view)
 
         binding.worksCreatedRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -251,13 +239,32 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             } else {
                 titleFormatter.format(it.yearMonth)
             }
-
-            // Select the first day of the month when
-            // we scroll to a new month.
-            selectDate(it.yearMonth.atDay(1))
+            if(it.month == today.monthValue){
+                selectDate(today)
+            }else {
+                // Select the first day of the month when
+                // we scroll to a new month.
+                selectDate(it.yearMonth.atDay(1))
+            }
         }
-
-
+        setHasOptionsMenu(true)
+        //todo manage back press
+        activity?.onBackPressedDispatcher?.addCallback(
+            this.viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (selectedDate!=today) {
+                        binding.calendarView.smoothScrollToDate(today,DayOwner.THIS_MONTH)
+                        //binding.calendarView.scrollToMonth(currentMonth)
+                        //selectDate(today)
+                        //this@CalendarFragment.onViewCreated(view,savedInstanceState)
+                        //onStart()
+                    } else {
+                        isEnabled = false
+                        activity?.onBackPressed()
+                    }
+                }
+            })
 
 
         class DayViewContainer(view: View) : ViewContainer(view) {
@@ -280,9 +287,8 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
                 container.day = day
                 val textView = container.binding.dayText
                 val dotView = container.binding.dotView
-
+                dotView.makeInVisible()
                 textView.text = day.date.dayOfMonth.toString()
-
                 if (day.owner == DayOwner.THIS_MONTH) {
                     textView.makeVisible()
                     when (day.date) {
@@ -388,16 +394,16 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             removeBackground(true)
         }
         removeBackground(false)
-        popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
+        popup.showAtLocation(view, Gravity.CENTER, 0, 0)
     }
 
     //todo need to put away from here
     private fun removeBackground(show: Boolean) {
         if (show) {
-            _layout.visibility = View.VISIBLE
+            worksCreatedRecyclerView.visibility = View.VISIBLE
 
         } else {
-            _layout.visibility = View.GONE
+            worksCreatedRecyclerView.visibility = View.GONE
         }
     }
 
@@ -445,6 +451,17 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 //        }
 //        binding.exThreeSelectedDateText.text = selectionFormatter.format(date)
 //    }
+
+    //implementation of the actionbar back press!!!
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() == android.R.id.home) {
+            if (activity != null) {
+                activity?.onBackPressed()
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onStart() {
         super.onStart()

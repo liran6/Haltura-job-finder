@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
         setClickListeners()
         return fragmentView
     }
-        //todo: try to change it
+        //todo: try to change it - bug: cant go to signup twice.
     private fun switchFragment(fragment: Fragment, fragmentId: String) {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         if (transaction != null) {

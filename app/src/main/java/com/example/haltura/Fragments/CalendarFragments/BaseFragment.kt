@@ -28,7 +28,7 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
         if (this is HasBackButton) {
             val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
             actionBar?.title = if (titleRes != null) context?.getString(titleRes!!) else ""
-            actionBar?.setDisplayHomeAsUpEnabled(true)
+            actionBar?. setDisplayHomeAsUpEnabled(true)
         }
     }
 
