@@ -80,7 +80,7 @@ class ChatsFragment : Fragment() {
     }
 
     private fun filter() {
-        _viewModel.filter(_searchText.text.toString())
+        _viewModel.filter(_searchText.text.toString())//
     }
 
     private fun initViews() {
