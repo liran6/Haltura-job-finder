@@ -109,7 +109,7 @@
                             android:textColor="#5089fa"
                             android:textSize="10sp"
                             android:layout_alignParentStart="true"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="6dp"
                             android:layout_marginTop="1dp"
                             android:layout_below="@+id/text" />
 

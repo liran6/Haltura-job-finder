@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.message_item2.view.*
 class ChatAdapter2(
     private var _dataSet: List<MessageSerializable>,
     private val _clickOnItemListener: (MessageSerializable) -> Unit,
+    private val _mapUsernames: Map<String,String>
 ) : RecyclerView.Adapter<ChatAdapter2.ViewHolder>() {
 
 
@@ -56,7 +57,7 @@ class ChatAdapter2(
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         val currentItem = _dataSet[position]
-        val name = currentItem.userId //todo get func
+        val name = _mapUsernames[currentItem.userId]
         if (UserData.currentUser?.userId == currentItem.userId)
         {
             //-0x352701
