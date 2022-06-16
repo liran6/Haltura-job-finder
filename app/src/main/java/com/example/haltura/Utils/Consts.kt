@@ -36,6 +36,8 @@ object Const{
     const val Email_Password_incorrect = "Your Email or Password is incorrect"
     const val login_fragment = "login_fragment"
     const val signup_fragment = "signup_fragment"
+    //action bar titles
+    const val home_title = "snackBar"
 
 
     //snack

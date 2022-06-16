@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.ManageWorkAdapter
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.WorkData
 import com.example.haltura.ViewModels.CalendarViewModel
-import com.example.haltura.ViewModels.WorkViewModel
 import com.example.haltura.activities.AddWorkActivity
 import com.example.haltura.databinding.*
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -189,7 +189,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
     //private val binding get() = _binding!!
 
 
-    override val titleRes: Int = R.string.example_3_title
+    override val titleRes: String = Const.Calendar
     private var selectedDate: LocalDate? = null
     private val today = LocalDate.now()
     private val titleSameYearFormatter = DateTimeFormatter.ofPattern("MMMM")
@@ -259,10 +259,18 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             this.viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (selectedDate!=today) {
+                    if(selectedDate!!.monthValue != today.monthValue){
                         binding.calendarView.smoothScrollToDate(today,DayOwner.THIS_MONTH)
-                        //binding.calendarView.scrollToMonth(currentMonth)
+                    }
+                    else if (selectedDate!=today) {
                         //selectDate(today)
+                        binding.calendarView.post {
+                            // Show today's events initially.
+                            selectDate(today)
+                        }
+
+                        //binding.calendarView.scrollToMonth(currentMonth)
+
                         //this@CalendarFragment.onViewCreated(view,savedInstanceState)
                         //onStart()
                     } else {
@@ -465,15 +473,15 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 //    }
 
     //todo:implementation of the actionbar back press!!!
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() == android.R.id.home) {
-            if (activity != null) {
-                activity?.onBackPressed()
-            }
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if (item.getItemId() == android.R.id.home) {
+//            if (activity != null) {
+//                activity?.onBackPressed()
+//            }
+//            return true
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun onStart() {
         super.onStart()

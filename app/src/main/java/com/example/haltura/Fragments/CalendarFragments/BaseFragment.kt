@@ -1,5 +1,6 @@
 package com.example.haltura.Fragments.CalendarFragments
 
+import android.view.MenuItem
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -27,7 +28,7 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
 
         if (this is HasBackButton) {
             val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-            actionBar?.title = if (titleRes != null) context?.getString(titleRes!!) else ""
+            actionBar?.title = if (titleRes != null) titleRes!! else ""
             actionBar?. setDisplayHomeAsUpEnabled(true)
         }
     }
@@ -41,10 +42,19 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
 
         if (this is HasBackButton) {
             val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-            actionBar?.title = context?.getString(R.string.app_name)
+            //actionBar?.title = context?.getString(R.string.app_name)
             actionBar?.setDisplayHomeAsUpEnabled(false)
         }
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() == android.R.id.home) {
+            if (activity != null) {
+                activity?.onBackPressed()
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
-    abstract val titleRes: Int?
+    abstract val titleRes: String?
 }

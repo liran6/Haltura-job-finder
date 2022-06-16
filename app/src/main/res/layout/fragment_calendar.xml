@@ -39,7 +39,7 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="12dp"
                 android:textAllCaps="true"
-                android:textColor="@color/calendar_black"
+                android:textColor="@color/calendar_blue"
                 android:textSize="14sp"
                 tools:text="7 Jan, 2019" />
             <TextView

@@ -97,12 +97,12 @@ class MainActivity2 : AppCompatActivity() {
         loginViewModel.mutableLogout.observe(this, logOutObserver)
     }
 
-    override fun onStart() {
-        super.onStart()
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Welcome back "+UserData.currentUser?.email
-
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        setSupportActionBar(binding.toolbar)
+//        supportActionBar?.setDisplayShowTitleEnabled(true)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.title = "Welcome back "+UserData.currentUser?.email
+//
+//    }
 }

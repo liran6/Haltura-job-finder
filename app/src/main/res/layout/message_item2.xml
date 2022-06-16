@@ -8,19 +8,20 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
             android:orientation="vertical">
 
         <TextView
                 android:paddingEnd="5dp"
                 android:id="@+id/username_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:textAlignment="textEnd"
                 android:ellipsize="end"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:textColor="#5089fa"
+                android:textAlignment="viewEnd"
                 android:text="name"
                 android:layout_marginBottom="5dp"
                 android:layout_alignParentEnd="true"
@@ -104,7 +105,7 @@
                             android:layout_marginRight="8dp"
                             android:text="03:50 am"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-
+                            android:layout_marginEnd="6dp"
                             android:textColor="#5089fa"
                             android:textSize="10sp"
                             android:layout_alignParentStart="true"

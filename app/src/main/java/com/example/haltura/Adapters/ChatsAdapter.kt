@@ -96,7 +96,7 @@ class ChatsAdapter(
         {
             val bm = decode(image, DEFAULT)
             val data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-            var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
+             var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
             viewHolder.image.setImageBitmap(dataRoundedCorner)
         }
 //        val messages = currentItem.messages

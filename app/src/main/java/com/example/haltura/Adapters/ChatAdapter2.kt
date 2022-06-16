@@ -17,6 +17,7 @@ import com.example.haltura.Sql.Items.MessageSerializable
 import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
+import kotlinx.android.synthetic.main.message_item2.view.*
 
 class ChatAdapter2(
     private var _dataSet: List<MessageSerializable>,
@@ -79,6 +80,8 @@ class ChatAdapter2(
             viewHolder.name.text = name
             (viewHolder.messageLayout.getLayoutParams() as RelativeLayout.LayoutParams).addRule(
                 RelativeLayout.ALIGN_PARENT_RIGHT)
+
+            viewHolder.name.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
             //(viewHolder.body.getLayoutParams()as ViewGroup.MarginLayoutParams).setMargins(15, 0, 0, 0)
 
         }
