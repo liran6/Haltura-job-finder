@@ -21,6 +21,12 @@ data class ExtendedChatSerializable(
 
 
 @Parcelize
+data class MapSerializable(
+    @SerializedName("map") var map: Map<String,List<WorkSerializable>>,
+) : Parcelable
+
+
+@Parcelize
 data class MessageSerializable(
     @SerializedName("userId") var userId: String,
     @SerializedName("text") var text: String?,

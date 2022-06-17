@@ -84,7 +84,7 @@ class ChatsFragment : Fragment() {
     }
 
     private fun initViews() {
-        _chatsRecycle = binding.chatsRecyclerView
+        _chatsRecycle = binding.chatsRecyclerView //todo remove? (move to initadapterand re)
         _chatsRecycle.addItemDecoration(VerticalSpaceItemDecoration(10))
         _searchText = binding.searchText
         _searchButton = binding.searchButton

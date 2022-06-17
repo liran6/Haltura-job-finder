@@ -65,7 +65,7 @@ class ChatsViewModel : ViewModel() {
     fun filter(textToFilter: String) {
         if (textToFilter.toString().trim { it <= ' ' }.length == 0) // not empty
         {
-            //mutableChatsList.value!!.clear()
+            mutableChatsList.value!!.clear()
             mutableChatsList.value!!.addAll(mutableAllChatsList)
         }
         else
