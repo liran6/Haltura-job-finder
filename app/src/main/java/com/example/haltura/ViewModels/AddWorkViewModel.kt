@@ -35,11 +35,12 @@ class AddWorkViewModel : ViewModel() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     var res = response.body()?.string()
+                    mutableMessageToasting.postValue(Const.AddWorkSuccess)
                     //val listType = object : TypeToken<List<String>>(){ }.type
                     //var buisness= json.fromJson(res,BusinessSerializable::class.java)
                     var x = 1
                 } else {
-                    var x = 1
+                    mutableMessageToasting.postValue(Const.Token_Error)
                 }
             }
         })
@@ -53,16 +54,22 @@ class AddWorkViewModel : ViewModel() {
         val call = retroService.updateWork("Bearer " + user?.token!!, work?.id!!, work)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+
                 var a =1
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     var res = response.body()?.string()
+                    mutableMessageToasting.postValue(Const.AddWorkSuccess)
+
                     //val listType = object : TypeToken<List<String>>(){ }.type
                     //var buisness= json.fromJson(res,BusinessSerializable::class.java)
                     var x = 1
                 } else {
+                    mutableMessageToasting.postValue(Const.Token_Error)
+
                     var x = 1
                 }
             }

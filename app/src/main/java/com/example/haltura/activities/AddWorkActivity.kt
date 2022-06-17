@@ -23,11 +23,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
+import com.example.haltura.AppNotifications
 import com.example.haltura.R
 import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.AddresSerializable
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.WorkData
@@ -96,13 +98,28 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_work)
+
         initViewModel()
         initViews()
         setWork()
         initTimePickers()
         initMap()
+        initObservers()
     }
-
+    private fun initObservers() {
+        _viewModel.mutableMessageToasting.observe(
+            this
+        ) { message ->
+            message.let {
+                if (message == Const.AddWorkSuccess) {
+                    AppNotifications.toastBar(this, message)
+                    this.onBackPressed()
+                } else {
+                    AppNotifications.toastBar(this, message)
+                }
+            }
+            }
+        }
     private fun initViewModel() {
         _viewModel = ViewModelProvider(this).get(AddWorkViewModel::class.java)
     }
@@ -362,7 +379,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         val dialog = TimePickerDialog(
-            this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,mTimeSetListener,hour,minute,false)
+            this,android.R.style.Theme_DeviceDefault_DayNight,mTimeSetListener,hour,minute,true)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }

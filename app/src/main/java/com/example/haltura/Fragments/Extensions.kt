@@ -1,4 +1,4 @@
-package com.example.haltura.Fragments.CalendarFragments
+package com.example.haltura.Fragments
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable

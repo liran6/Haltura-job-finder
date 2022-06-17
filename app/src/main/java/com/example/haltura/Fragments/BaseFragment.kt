@@ -1,11 +1,10 @@
-package com.example.haltura.Fragments.CalendarFragments
-
+package com.example.haltura.Fragments
+import android.R
 import android.view.MenuItem
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.example.haltura.R
 import com.example.haltura.activities.MainActivity2
 
 interface HasToolbar {
@@ -47,7 +46,7 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == R.id.home) {
             if (activity != null) {
                 activity?.onBackPressed()
             }

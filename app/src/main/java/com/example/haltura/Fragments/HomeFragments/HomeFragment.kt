@@ -4,31 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import com.example.haltura.Fragments.*
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.R
 import com.example.haltura.ViewModels.HomeViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haltura.Adapters.WorkAdapter
-import com.example.haltura.Fragments.CalendarFragments.BaseFragment
-import com.example.haltura.Fragments.CalendarFragments.HasBackButton
-import com.example.haltura.Fragments.CalendarFragments.getColorCompat
-import com.example.haltura.Fragments.CalendarFragments.makeVisible
+import com.example.haltura.Fragments.BaseFragment
+import com.example.haltura.Fragments.HasBackButton
+import com.example.haltura.Fragments.getColorCompat
+import com.example.haltura.Fragments.makeVisible
 //import com.example.haltura.Dialogs.WatchWorkDialog
-import com.example.haltura.Fragments.FragmentWithUserObject
 import com.example.haltura.Sql.Items.WorkSerializable
-import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.UserData
-import com.example.haltura.Utils.VerticalSpaceItemDecoration
-import com.example.haltura.activities.MainActivity2
 import com.example.haltura.databinding.FragmentHomeBinding
+import com.kizitonwose.calendarview.model.DayOwner
 
 
 class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
@@ -59,6 +56,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
         initViewModelData()
         initObservers()
         initRecyclersAndAdapters()
+        setHasOptionsMenu(true)
 
         return _fragmentView
     }
