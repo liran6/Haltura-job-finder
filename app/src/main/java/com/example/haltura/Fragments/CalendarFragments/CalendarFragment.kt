@@ -3,7 +3,6 @@ package com.example.haltura.Fragments.CalendarFragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.ManageWorkAdapter
+import com.example.haltura.AppNotifications
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.Const
@@ -30,6 +30,7 @@ import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
+import com.kizitonwose.calendarview.utils.yearMonth
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.time.LocalDate
 import java.time.YearMonth
@@ -129,6 +130,39 @@ data class Event(val id: String, val text: String, val date: LocalDate)
 ////        }
 ////    }
 //}
+
+//class Example3EventsAdapter(val onClick: (Event) -> Unit) :
+//    RecyclerView.Adapter<Example3EventsAdapter.Example3EventsViewHolder>() {
+//
+//    val events = mutableListOf<Event>()
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Example3EventsViewHolder {
+//        return Example3EventsViewHolder(
+//            Example3EventItemViewBinding.inflate(parent.context.layoutInflater, parent, false)
+//        )
+//    }
+//
+//    override fun onBindViewHolder(viewHolder: Example3EventsViewHolder, position: Int) {
+//        viewHolder.bind(events[position])
+//    }
+//
+//    override fun getItemCount(): Int = events.size
+//
+//    inner class Example3EventsViewHolder(private val binding: Example3EventItemViewBinding) :
+//        RecyclerView.ViewHolder(binding.root) {
+//
+//        init {
+//            itemView.setOnClickListener {
+//                onClick(events[bindingAdapterPosition])
+//            }
+//        }
+//
+//        fun bind(event: Event) {
+//            binding.itemEventText.text = event.text
+//        }
+//    }
+//}
+
 class MonthViewContainer(view: View) : ViewContainer(view) {
     val legendLayout = CalendarHeaderBinding.bind(view).legendLayout.root
 }
@@ -182,6 +216,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
     private lateinit var _manageWorkRecycle: RecyclerView
     private lateinit var _manageWorksAdapter: ManageWorkAdapter
     private lateinit var _layout: LinearLayout
+
     //private var _binding: FragmentWorkBinding? = null
 
     // This property is only valid between onCreateView and
@@ -195,8 +230,9 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
     private val titleSameYearFormatter = DateTimeFormatter.ofPattern("MMMM")
     private val titleFormatter = DateTimeFormatter.ofPattern("MMM yyyy")
     private val selectionFormatter = DateTimeFormatter.ofPattern("d MMM yyyy")
-    private val events = mutableMapOf<LocalDate, List<Event>>()
+    //private val events = mutableMapOf<LocalDate, MutableList<WorkSerializable>>()
     private lateinit var binding: FragmentCalendarBinding
+    private var events = mutableMapOf<LocalDate, MutableList<WorkSerializable>>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -205,11 +241,13 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 
         initViewModelData()
         initObservers()
-        val workList = _viewModel.mutableWorkList.value!!
+        val initData = mutableListOf<WorkSerializable>()
+
+        //val workList = _viewModel.mutableWorkList.value!!
         _manageWorksAdapter = ManageWorkAdapter(
-            workList,
-            _clickOnItemListener = { openWorkEditMode(it) },
-            _clickDeleteItemListener = { deleteWork(it) }
+            initData,
+            _clickOnItemListener = { openWorkEditMode(it,null) },
+            _clickDeleteItemListener = { deleteWork(it,null) }
         )
 
         val daysOfWeek = daysOfWeekFromLocale()
@@ -233,12 +271,12 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             scrollToMonth(currentMonth)
         }
 
-        if (savedInstanceState == null) {
-            binding.calendarView.post {
-                // Show today's events initially.
-                selectDate(today)
-            }
-        }
+//        if (savedInstanceState == null) {
+//            binding.calendarView.post {
+//                // Show today's events initially.
+//                selectDate(today)
+//            }
+//        }
         binding.calendarView.monthScrollListener = {
             homeActivityToolbar.title = if (it.year == today.year) {
                 titleSameYearFormatter.format(it.yearMonth)
@@ -320,7 +358,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
                         else -> {
                             textView.setTextColorRes(R.color.calendar_black)
                             textView.background = null
-                            if (workList.size > 0) {
+                            if (events.get(day.date)!=null) {
                                 dotView.makeVisible()
                             }
                             //dotView.isVisible = workList.orEmpty().isNotEmpty()
@@ -353,22 +391,45 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 //            inputDialog.show()
 //        }
 
-
+        if (savedInstanceState == null) {
+            binding.calendarView.post {
+                // Show today's events initially.
+                selectDate(today)
+            }
+        }
         //binding.calendarView.scrollToMonth(currentMonth)
 
     }
 
 
     private fun initViewModelData() {
-        _viewModel.getAllOfYourWorks()
+        //_viewModel.getAllOfYourWorks()
+        _viewModel.UserWorkListByDate()
     }
 
     private fun initObservers() {
-        _viewModel.mutableWorkList.observe(
+//        _viewModel.mutableWorkList.observe(
+//            viewLifecycleOwner,
+//            Observer { workList ->
+//                workList?.let {
+//                    updateRecyclersAndAdapters(null)
+//
+//                }
+//            }
+//        )
+        _viewModel.mutableMessageToasting.observe(
+            viewLifecycleOwner
+        ) { message ->
+            message.let {
+                activity?.let { it1 -> AppNotifications.toastBar(it1, message) }
+            }
+        }
+        _viewModel.mutableWorksByDateList.observe(
             viewLifecycleOwner,
             Observer { workList ->
                 workList?.let {
-                    updateRecyclersAndAdapters(null)
+                    updateRecycleAndAdapterForDate(null)
+                    binding.calendarView.notifyCalendarChanged()
 
                 }
             }
@@ -376,17 +437,18 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
     }
 
     //todo need to put away from here
-    private fun openWorkEditMode(work: WorkSerializable) {
+    private fun openWorkEditMode(work: WorkSerializable,date: LocalDate?) {
         val intent = Intent(activity, AddWorkActivity::class.java)
 //        val bundle = Bundle()
 //        bundle.putParcelable(Const.WORK_OBJECT, work)
 //        intent.putExtras(bundle)
         WorkData.currentWork = work
         startActivity(intent)
+        updateRecycleAndAdapterForDate(date)
     }
 
     //todo need to put away from here
-    private fun deleteWork(work: WorkSerializable) {
+    private fun deleteWork(work: WorkSerializable,date: LocalDate?) {
         val removeWorkView: View = layoutInflater.inflate(R.layout.work_remove_popup, null)
         val popup = PopupWindow(
             removeWorkView,
@@ -408,12 +470,13 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
         }
 
         delete.setOnClickListener {
-            _viewModel.deleteWork(work)
+            _viewModel.deleteWork(work,date)
             popup.dismiss()
             removeBackground(true)
         }
         removeBackground(false)
         popup.showAtLocation(view, Gravity.CENTER, 0, 0)
+        updateRecycleAndAdapterForDate(date)
     }
 
     //todo need to put away from here
@@ -432,9 +495,28 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
             selectedDate = date
             oldDate?.let { binding.calendarView.notifyDateChanged(it) }
             binding.calendarView.notifyDateChanged(date)
-            //updateAdapterForDate(date)
-            updateRecyclersAndAdapters(null)
+            updateRecycleAndAdapterForDate(date)
+            //updateRecyclersAndAdapters(null)
         }
+        binding.selectedDateText.text = selectionFormatter.format(date)
+    }
+    private fun updateRecycleAndAdapterForDate(date: LocalDate?) {
+        events = _viewModel.mutableWorksByDateList.value!!
+        if (events.get(date)!=null) {
+            _manageWorksAdapter = ManageWorkAdapter(
+                events.get(date)!!,
+                _clickOnItemListener = { openWorkEditMode(it,date) },
+                _clickDeleteItemListener = { deleteWork(it,date) }
+            )
+            _manageWorksAdapter.setData(events.get(date)!!)
+            _manageWorksAdapter.notifyDataSetChanged()
+            binding.worksCreatedRecyclerView.adapter = _manageWorksAdapter
+            binding.calendarView.scrollToMonth(date!!.yearMonth)
+        }
+//        if (date!= null){
+//            binding.selectedDateText.text = selectionFormatter.format(date)
+//        }
+        binding.calendarView.notifyCalendarChanged()
     }
 
     private fun updateRecyclersAndAdapters(date: LocalDate?) {

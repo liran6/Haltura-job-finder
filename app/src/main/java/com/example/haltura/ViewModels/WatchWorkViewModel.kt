@@ -16,7 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class WatchWorkViewModel : ViewModel() {
-
+    val mutableMessageToasting: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
     lateinit var WorkApiLiveData: MutableLiveData<UserResponse?>
 
     lateinit var ChatApiLiveData: MutableLiveData<UserResponse?>

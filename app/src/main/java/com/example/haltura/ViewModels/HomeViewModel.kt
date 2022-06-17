@@ -17,6 +17,9 @@ import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
 
+    val mutableMessageToasting: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
     val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }

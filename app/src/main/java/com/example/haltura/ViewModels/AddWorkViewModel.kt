@@ -8,6 +8,7 @@ import com.example.haltura.Api.WorkAPI
 import com.example.haltura.Sql.Items.AddresSerializable
 import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -16,6 +17,9 @@ import retrofit2.Response
 
 class AddWorkViewModel : ViewModel() {
 
+    val mutableMessageToasting: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
     fun createWork(work: WorkSerializable) {
         var user = UserData.currentUser
@@ -24,6 +28,7 @@ class AddWorkViewModel : ViewModel() {
         val call = retroService.createWork("Bearer " + user?.token!!, user?.userId!!, work)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
                 var a = 1
             }
 

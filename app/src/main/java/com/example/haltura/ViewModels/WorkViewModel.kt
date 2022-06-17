@@ -7,6 +7,7 @@ import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.WorkAPI
 import com.example.haltura.Sql.Items.UserResponse
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.notifyAllObservers
 import com.google.gson.Gson
@@ -23,7 +24,9 @@ class WorkViewModel : ViewModel() {
     val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy { //by lazy
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }
-
+    val mutableMessageToasting: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
     lateinit var WorkApiLiveData: MutableLiveData<UserResponse?>
     private var json = Gson()
 
@@ -36,7 +39,8 @@ class WorkViewModel : ViewModel() {
                 UserData.currentUser?.token!!, UserData.currentUser?.userId!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                WorkApiLiveData.postValue(null)
+                //WorkApiLiveData.postValue(null)
+                mutableMessageToasting.postValue(Const.Connecting_Error)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -54,7 +58,7 @@ class WorkViewModel : ViewModel() {
 //                    var work_list = json.fromJson(res, WorksList::class.java)
                     var x = 1
                 } else {
-                    var x = 1
+                    mutableMessageToasting.postValue(Const.Token_Error)
                 }
             }
         })
@@ -67,7 +71,9 @@ class WorkViewModel : ViewModel() {
         val call = retroService.deleteWork("Bearer " + UserData.currentUser?.token!!,work.id!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                WorkApiLiveData.postValue(null)
+                //WorkApiLiveData.postValue(null)
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -77,7 +83,7 @@ class WorkViewModel : ViewModel() {
                     //todo: toast delete was successfully
                     var x = 1
                 } else {
-                    //todo: toast message
+                    mutableMessageToasting.postValue(Const.Token_Error)
                     var x = 1
                 }
             }

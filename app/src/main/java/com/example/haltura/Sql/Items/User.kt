@@ -122,7 +122,10 @@ data class WorksList(
     @SerializedName("work_list")
     val work_list: List<WorkSerializable>
 ) : Parcelable
-
+@Parcelize
+data class WorksByDateMap(
+    @SerializedName ("works_list") val works_list: Map<String,WorksList>
+): Parcelable
 
 data class UserResponse(
     val error: Boolean,

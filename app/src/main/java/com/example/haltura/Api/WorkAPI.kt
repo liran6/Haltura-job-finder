@@ -68,6 +68,13 @@ interface WorkAPI {
         @Path("userId") userId: String,
     ): Call<ResponseBody>
 
+    @GET("works/calendar/{userId}")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun getAllWorksThatUserIdPublishedByDate(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: String,
+    ): Call<ResponseBody>
+
     //get all works of userId (AS EMPLOYEE)
     @GET("works/employee/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")

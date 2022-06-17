@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.ManageWorkAdapter
+import com.example.haltura.AppNotifications
 import com.example.haltura.Fragments.CalendarFragments.BaseFragment
 import com.example.haltura.Fragments.CalendarFragments.HasBackButton
 import com.example.haltura.Fragments.CalendarFragments.getColorCompat
@@ -98,6 +99,13 @@ class WorkFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
                 }
             }
         )
+        _viewModel.mutableMessageToasting.observe(
+            viewLifecycleOwner
+        ) { message ->
+            message.let {
+                activity?.let { it1 -> AppNotifications.toastBar(it1, message) }
+            }
+        }
     }
 
     private fun updateRecyclersAndAdapters() {
