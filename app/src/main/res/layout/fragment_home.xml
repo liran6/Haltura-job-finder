@@ -14,8 +14,18 @@
             android:background="@android:color/transparent"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
+            android:orientation="horizontal"
+            tools:listitem="@layout/work_item_list"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:layout_width="386dp"-->
+<!--            android:layout_height="189dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            tools:listitem="@layout/me"-->
+<!--            tools:layout_editor_absoluteY="147dp"-->
+<!--            tools:layout_editor_absoluteX="1dp" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

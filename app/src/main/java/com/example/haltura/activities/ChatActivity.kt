@@ -52,7 +52,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var _sendButton: ImageView
     private lateinit var _cameraButton: ImageView
     private lateinit var _galleryButton: ImageView
-    private lateinit var _chatImage: ImageView
+    //private lateinit var _chatImage: ImageView
+    private lateinit var _chatImage: de.hdodenhof.circleimageview.CircleImageView
     private lateinit var _backButton: ImageView
     private lateinit var _chatName: TextView
     private lateinit var _members: TextView

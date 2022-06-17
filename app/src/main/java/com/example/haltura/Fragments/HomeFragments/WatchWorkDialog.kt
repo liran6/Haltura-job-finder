@@ -18,6 +18,7 @@ import androidx.fragment.app.findFragment
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.DateTime
 import com.example.haltura.ViewModels.HomeViewModel
 import com.example.haltura.ViewModels.WatchWorkViewModel
 import com.example.haltura.databinding.FragmentHomeBinding
@@ -153,7 +154,9 @@ class WatchWorkDialog : DialogFragment{// , OnMapReadyCallback {
         _salary.text = "Salary: " + _work.salary + "₪ per hour"
         _location.text = getAddress()
         _info.text = _work.info
-        _dateAndTime.text = "FROM: " +_work.startTime + " TO " + _work.startTime
+        _dateAndTime.text = DateTime.getDate(_work.startTime) + " From " +
+                DateTime.getTime(_work.startTime) + " To " +
+                DateTime.getTime(_work.endTime)//= "FROM: " +_work.startTime + " TO " + _work.startTime
         var bm = Base64.decode(_work.image, Base64.DEFAULT)
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
         _image.setImageBitmap(data)
