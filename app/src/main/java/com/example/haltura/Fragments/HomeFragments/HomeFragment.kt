@@ -24,6 +24,7 @@ import com.example.haltura.Fragments.CalendarFragments.makeVisible
 import com.example.haltura.Fragments.FragmentWithUserObject
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.activities.MainActivity2
@@ -46,20 +47,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-//    val homeActivityToolbar: Toolbar
-//        get() = (requireActivity() as MainActivity2).binding.toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val homeViewModel =
-//            ViewModelProvider(this).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        //val root: View = binding.root
-        _fragmentView = binding.root
-
+        initBinding()
         initViews()
         initViewModelData()
         initObservers()
@@ -67,19 +62,20 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
 
         return _fragmentView
     }
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.getItemId() == android.R.id.home) {
-//            if (activity != null) {
-//                activity?.onBackPressed()
-//            }
-//            return true
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+
+    private fun initBinding() {
+        _fragmentView = binding.root
+    }
 
     private fun initViews() {
         _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
-        _workRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
+//        _workRecycle.layoutManager = LinearLayoutManager(activity,
+//            LinearLayoutManager.HORIZONTAL, false)
+//        _workRecycle.setHasFixedSize(true);
+//        val layoutManager = LinearLayoutManager(getContext(),
+//            LinearLayoutManager.HORIZONTAL,false)
+//        _workRecycle.layoutManager = layoutManager
+        //_workRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
     }
 
     private fun initViewModelData() {
@@ -105,7 +101,12 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
     private fun initRecyclersAndAdapters() {
         _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
         val workList = _viewModel.mutableWorkList.value!!
-        _workRecycle.layoutManager = LinearLayoutManager(context)
+        //_workRecycle.layoutManager = LinearLayoutManager(context)
+        //_workRecycle.setHasFixedSize(true);
+        val layoutManager = LinearLayoutManager(getContext(),
+            LinearLayoutManager.HORIZONTAL,false)
+        _workRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _workRecycle.layoutManager = layoutManager
         _worksAdapter = WorkAdapter(
             workList,
             _clickOnItemListener = { showWorkDetails(it) })
@@ -142,130 +143,3 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
         _binding = null
     }
 }
-
-
-//        val homeViewModel =
-//            ViewModelProvider(this).get(HomeViewModel::class.java)
-//
-////        _fragmentView = inflater.inflate(R.layout.fragment_home, container, false)
-//        initViews()
-//        initViewModelData()
-//        initObservers()
-//        initRecyclersAndAdapters()
-//        return _fragmentView
-//    }
-//
-//    private fun initViews() {
-//        //_workRecycle = _fragmentView.findViewById(R.id.workRecyclerView)
-//    }
-//
-//    private fun initViewModelData() {
-//        _viewModel.getAllWorks(userObject.token)
-//    }
-//
-//    private fun initObservers() {
-//        _viewModel.mutableWorkList.observe(
-//            viewLifecycleOwner,
-//            Observer { workList ->
-//                workList?.let {
-//                    updateRecyclersAndAdapters()
-//                }
-//            }
-//        )
-//    }
-//
-//    private fun updateRecyclersAndAdapters() {
-//        _worksAdapter.setData(_viewModel.mutableWorkList.value!!)
-//        _worksAdapter.notifyDataSetChanged()
-//    }
-//
-//    private fun initRecyclersAndAdapters() {
-//        _workRecycle = _fragmentView.findViewById(R.id.workRecyclerView)
-//        // initiate list of profiles with recyclers and adapters
-//        val supervisorList = _viewModel.mutableWorkList.value!!
-//        _workRecycle.layoutManager = LinearLayoutManager(context)
-//        _worksAdapter = WorkAdapter(
-//            supervisorList,
-//            _clickOnItemListener = { showWorkDetails(it) })
-//        _workRecycle.adapter = _worksAdapter
-//    }
-//
-//    private fun showWorkDetails(work: WorkSerializable) {
-//        //showWorkDetailsPopup(supervisorEmail)
-//        // todo: in here or view model?
-//        //todo: do it from the beginning
-//        //var dialog = WatchWorkDialog(work,this)
-//        //dialog.show(supportFragmentManager,"WatchWorkDialog")
-//    }
-//
-//}
-
-
-
-//class HomeFragment : FragmentWithUserObject() {
-//
-//    private val _viewModel: HomeViewModel by activityViewModels()
-//    private lateinit var _fragmentView: View
-//    private lateinit var _workRecycle: RecyclerView
-//    private lateinit var _worksAdapter: WorkAdapter
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        val homeViewModel =
-//            ViewModelProvider(this).get(HomeViewModel::class.java)
-//
-//        _fragmentView = inflater.inflate(R.layout.fragment_home, container, false)
-//        initViews()
-//        initViewModelData()
-//        initObservers()
-//        initRecyclersAndAdapters()
-//        return _fragmentView
-//    }
-//
-//    private fun initViews() {
-//        //_workRecycle = _fragmentView.findViewById(R.id.workRecyclerView)
-//    }
-//
-//    private fun initViewModelData() {
-//        _viewModel.getAllWorks(userObject.token)
-//    }
-//
-//    private fun initObservers() {
-//        _viewModel.mutableWorkList.observe(
-//            viewLifecycleOwner,
-//            Observer { workList ->
-//                workList?.let {
-//                    updateRecyclersAndAdapters()
-//                }
-//            }
-//        )
-//    }
-//
-//    private fun updateRecyclersAndAdapters() {
-//        _worksAdapter.setData(_viewModel.mutableWorkList.value!!)
-//        _worksAdapter.notifyDataSetChanged()
-//    }
-//
-//    private fun initRecyclersAndAdapters() {
-//        _workRecycle = _fragmentView.findViewById(R.id.workRecyclerView)
-//        // initiate list of profiles with recyclers and adapters
-//        val supervisorList = _viewModel.mutableWorkList.value!!
-//        _workRecycle.layoutManager = LinearLayoutManager(context)
-//        _worksAdapter = WorkAdapter(
-//            supervisorList,
-//            _clickOnItemListener = { showWorkDetails(it) })
-//        _workRecycle.adapter = _worksAdapter
-//    }
-//
-//    private fun showWorkDetails(work: WorkSerializable) {
-//        //showWorkDetailsPopup(supervisorEmail)
-//        // todo: in here or view model?
-//        //todo: do it from the beginning
-//        //var dialog = WatchWorkDialog(work,this)
-//        //dialog.show(supportFragmentManager,"WatchWorkDialog")
-//    }
-//
-//}

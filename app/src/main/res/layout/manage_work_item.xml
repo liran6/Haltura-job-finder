@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="0dp"
         android:background="@drawable/round_edges">
 
     <TextView
@@ -26,21 +26,16 @@
     <TextView
             android:id="@+id/date"
             android:layout_width="215dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="10dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="20dp"
             android:padding="0dp"
             android:text="date"
             android:textColor="@color/teal_200"
             android:textSize="12sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/task"
-            app:layout_constraintTop_toBottomOf="@+id/task"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintHorizontal_bias="0.27" />
+            app:layout_constraintTop_toBottomOf="@+id/task" />
 
 <!--    <ImageView-->
 <!--            android:id="@+id/edit"-->

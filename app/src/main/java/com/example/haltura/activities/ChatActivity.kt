@@ -30,9 +30,11 @@ import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.AddWorkViewModel
+import com.firebase.ui.auth.viewmodel.email.EmailLinkSendEmailHandler
 import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
+import kotlinx.android.synthetic.main.activity_chat.view.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -50,7 +52,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var _sendButton: ImageView
     private lateinit var _cameraButton: ImageView
     private lateinit var _galleryButton: ImageView
-    private lateinit var _chatImage: ImageView
+    //private lateinit var _chatImage: ImageView
+    private lateinit var _chatImage: de.hdodenhof.circleimageview.CircleImageView
     private lateinit var _backButton: ImageView
     private lateinit var _chatName: TextView
     private lateinit var _members: TextView
@@ -101,13 +104,44 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun setValues() {
-//        _chatName.setText(_chat?.chatName)//todo: check if null and bring real name
-//        _members.setText(_chat?.chatName)//todo: set members names and if too long cut with "..."
-//
-//        var bm = Base64.decode(_chat?.chatImage, Base64.DEFAULT)
-//        var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-//        _chatImage.setImageBitmap(data)
-//        //todo: add profile picture
+        if(_chat?.chatName == null)
+        {
+            if (_chat.members[0] == UserData.currentUser!!.userId)
+            {
+                _chatName.setText(_chat?.mapUsernames[_chat.members[1]])
+            }
+            else
+            {
+                _chatName.setText(_chat?.mapUsernames[_chat.members[0]])
+            }
+        }
+        else
+        {
+            _chatName.setText(_chat?.chatName)
+        }
+        var members = ""
+        _chat.members.sorted().forEach{
+            members += _chat.mapUsernames[it] + ", "
+        }
+        if (members.length > 2) {
+            members = members.substring(0, members.length - 2)
+        }
+        if (members.length > 30)
+        {
+            members = members.substring(0,30) + "..."
+        }
+        _members.setText(members)
+
+        if (_chat?.chatImage != null)
+        {
+            var bm = Base64.decode(_chat?.chatImage, Base64.DEFAULT)
+            var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+            _chatImage.setImageBitmap(data)
+        }
+        else
+        {
+            //todo: add profile picture
+        }
     }
 
     private fun initViewModel() {
@@ -134,7 +168,9 @@ class ChatActivity : AppCompatActivity() {
         //_messageRecycle.layoutManager = LinearLayoutManager(context)
         _chatAdapter = ChatAdapter2(
             chatsList,
-            _clickOnItemListener = { moveToChat(it) })
+            _clickOnItemListener = { moveToChat(it) },
+            _chat.mapUsernames
+        )
         _messageRecycle.adapter = _chatAdapter
     }
 

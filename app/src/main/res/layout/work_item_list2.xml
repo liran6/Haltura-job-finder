@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+
+    <RelativeLayout
+            android:id="@+id/cardView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/colorLightGray"
+            android:layout_marginLeft="13dp">
+
+        <!--                    <TextView-->
+        <!--                            android:layout_width="wrap_content"-->
+        <!--                            android:id="@+id/text"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_marginStart="10dp"-->
+        <!--                            android:layout_marginEnd="10dp"-->
+        <!--                            android:text="hello"></TextView>-->
+
+        <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="200dp"
+                android:maxWidth="300dp"
+                android:scaleType="fitCenter"
+                tools:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:text="03:50 am"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#5089fa"
+                android:textSize="10sp"
+                android:layout_marginEnd="139dp"
+                android:layout_alignEnd="@+id/image"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="21dp" />
+
+
+    </RelativeLayout>
+</RelativeLayout>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:theme="@style/Theme.Haltura"-->
+<!--        android:background="@drawable/round_edges">-->
+<!--    <ImageView-->
+<!--            android:layout_width="160dp"-->
+<!--            android:layout_height="160dp"-->
+<!--            android:id="@+id/Image"-->
+<!--            android:src="@drawable/haltura_icon2"-->
+<!--            android:layout_margin="10dp"/>-->
+
+<!--    <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical">-->
+<!--        <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textStyle="bold|italic"-->
+<!--                android:gravity="center"-->
+<!--                android:textSize="30dp"-->
+<!--                android:id="@+id/itemTask"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="item Task" />-->
+<!--        <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:gravity="center"-->
+<!--                android:textSize="22dp"-->
+<!--                android:id="@+id/itemSalary"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="item Salary" />-->
+<!--        <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:gravity="center"-->
+<!--                android:textSize="10dp"-->
+<!--                android:id="@+id/itemDateAndTime"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="item Date and Time" />-->
+<!--        <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:textAlignment="center"-->
+<!--                android:gravity="center"-->
+<!--                android:textSize="10dp"-->
+<!--                android:id="@+id/itemLocation"-->
+<!--                android:text="Location"-->
+<!--                android:singleLine="true"/>-->
+<!--    </LinearLayout>-->
+<!--    &lt;!&ndash;    <ImageView&ndash;&gt;-->
+<!--    &lt;!&ndash;            android:layout_width="160dp"&ndash;&gt;-->
+<!--    &lt;!&ndash;            android:layout_height="160dp"&ndash;&gt;-->
+<!--    &lt;!&ndash;            android:id="@+id/Image"&ndash;&gt;-->
+<!--    &lt;!&ndash;            android:layout_margin="10dp"/>&ndash;&gt;-->
+<!--</LinearLayout>-->
