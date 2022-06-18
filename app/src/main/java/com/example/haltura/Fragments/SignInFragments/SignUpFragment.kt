@@ -34,6 +34,7 @@ class SignUpFragment : Fragment() {
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
+    private lateinit var etUserName: EditText
     private val viewModel: LoginViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ class SignUpFragment : Fragment() {
         loadingScreen = (activity as LoginActivity).loadingScreen
 
         etEmail = fragmentView.findViewById<View>(R.id.et_Email) as EditText
+        etUserName = fragmentView.findViewById<View>(R.id.et_UserName) as EditText
         etPassword = fragmentView.findViewById<View>(R.id.et_Password) as EditText
         etConfirmPassword = fragmentView.findViewById<View>(R.id.et_ConfirmPassword) as EditText
         val registrationSuccess = Observer<Boolean>{value ->
@@ -85,13 +87,14 @@ class SignUpFragment : Fragment() {
     fun signUp() {
         if (Validation.registerValid(
                 etPassword, etConfirmPassword,
-                etEmail
+                etEmail, etUserName
             )
         ) {
             //todo: Admin user
            var email =  etEmail!!.text.toString()
+            var userName = etUserName!!.text.toString()
             var password =etPassword!!.text.toString()
-            viewModel.createUser(email, password)
+            viewModel.createUser(email, userName, password)
         }
     }
 

@@ -239,7 +239,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton
 
 
     private fun initViewModelData() {
-        _viewModel.UserWorkListByDate()
+        _viewModel.UserCreatedWorksByDate()
         //events = _viewModel.mutableWorksByDateMap.value!!
     }
 

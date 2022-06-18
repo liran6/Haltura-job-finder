@@ -36,12 +36,13 @@ class LoginViewModel : ViewModel() {
     }
 
 
-    fun createUser(email: String, password: String) {
+    fun createUser(email: String, username:String, password: String) {
         //todo: log this to server now
         val user = UserLoginSerializable(
             email,
+            username,
             password
-        )
+                )
         val retroService =
             ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
         val call = retroService.createUser(user)

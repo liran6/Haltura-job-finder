@@ -77,8 +77,7 @@ class LoginFragment : Fragment() {
         ) {
             val user = UserLoginSerializable(
                 etEmail.text.toString(),
-                etPassword.text.toString()
-            )// ,"0","0","0")
+                null, etPassword.text.toString())// ,"0","0","0")
             //DeviceNotifications.notifyDefault(this,"Test","testing")
             viewModel.userSignIn(user)
         }

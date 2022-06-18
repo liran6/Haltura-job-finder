@@ -38,23 +38,56 @@ class CalendarViewModel : ViewModel() {
     private fun jsonToMap(jsonO: JSONObject): MutableMap<LocalDate, MutableList<WorkSerializable>> {
         val map: MutableMap<LocalDate, MutableList<WorkSerializable>> = mutableMapOf()
         val keys = jsonO.names()
+        if (keys !=null) {
             for (i in 0 until keys.length()) {
                 val key = keys.getString(i)
                 val value = jsonO.getJSONArray(key)
-                val works= mutableListOf<WorkSerializable>()
-                for (j in 0 until value.length()){
-                    val work = json.fromJson(value.getJSONObject(j).toString(), WorkSerializable::class.java)
+                val works = mutableListOf<WorkSerializable>()
+                for (j in 0 until value.length()) {
+                    val work = json.fromJson(
+                        value.getJSONObject(j).toString(),
+                        WorkSerializable::class.java
+                    )
                     works.add(work)
 
                     val x = 1
                 }
                 val dateKey = LocalDate.parse(key)
-                map.put(dateKey,works)
+                map.put(dateKey, works)
+            }
         }
         return map
     }
 
-    fun UserWorkListByDate() {
+    fun UserCreatedWorksByDate() {
+        mutableWorksByDateMap.value!!.clear()
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.getAllWorksThatUserIdPublishedByDate("Bearer " +
+                UserData.currentUser?.token!!, UserData.currentUser?.userId!!)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val jObject = JSONObject(response.body()!!.string())
+                    val map = jsonToMap(jObject)
+                    //todo check here!
+                    mutableWorksByDateMap.value!!.putAll(map)
+                    mutableWorksByDateMap.notifyAllObservers()
+                    var x = 1
+                }
+                else
+                {
+                    mutableMessageToasting.postValue(Const.Token_Error)
+                }
+            }
+        })
+    }
+    fun UserRegisterdWorksByDate() {
         mutableWorksByDateMap.value!!.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)

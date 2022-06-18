@@ -14,7 +14,7 @@
     <fragment
             android:id="@+id/navigation_work"
             android:name="com.example.haltura.Fragments.WorkFragments.WorkFragment"
-            android:label="@string/title_work"
+            android:label=""
             tools:layout="@layout/fragment_work" />
 
     <fragment

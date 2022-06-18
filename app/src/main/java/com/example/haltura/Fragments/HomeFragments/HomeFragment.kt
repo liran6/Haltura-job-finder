@@ -30,7 +30,7 @@ import com.kizitonwose.calendarview.model.DayOwner
 
 class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
 
-    override val titleRes: String = "Welcome back "+UserData.currentUser?.email
+    override val titleRes: String = "Welcome back "+UserData.currentUser?.username
     private val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mjk2NDg1ZDQ0NzBhZGE1YzBmYWJlOGYiLCJpYXQiOjE2NTQ3MTc3MjksImV4cCI6MTY1NTMyMjUyOX0.kINx9at8G7aZkJUWfghCojlYk3DHKqgpt2gZJTHd5s4"
     private val userId: String = "6296485d4470ada5c0fabe8f"
 
@@ -50,6 +50,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        var user = UserData
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         initBinding()
         initViews()

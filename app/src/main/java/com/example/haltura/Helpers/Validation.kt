@@ -11,6 +11,9 @@ import com.example.haltura.Sql.UserOpenHelper
 class Validation {
     companion object {
         private val NAME_ERROR = "you must to insert %s or more characters!"
+        private val USER_NAME_ERROR = "username must contain only lowercase letters! [a-z]\n" +
+                "username must start with a letter!\n" +
+                "username length must be between 4-16 characters!"
         private val PHONE_ERROR = "you must to insert a valid phone!"
         private val PASSWORD_ERROR = "you must to insert 5 or more characters!"
         private val CONF_PASSWORD_ERROR = "those passwords didn't match. try again!"
@@ -18,10 +21,20 @@ class Validation {
         private val SPINNER_EXISTS_ERROR = "choose city"
         private val EMAIL_ERROR = "Please enter Valid Email!"
 
-        private fun userNameValid(etName: EditText, limit: Int): Boolean {
-            val text = etName.text.toString()
-            if (text.length < limit) {
-                etName.error = String.format(NAME_ERROR, "" + limit)
+//        private fun userNameValid(etName: EditText, limit: Int): Boolean {
+//            val text = etName.text.toString()
+//            if (text.length < limit) {
+//                etName.error = String.format(NAME_ERROR, "" + limit)
+//                return false
+//            }
+//            return true
+//        }
+        //  ^[a-z]([._-](?![._-])|[a-z0-9]){3,16}$
+        private fun userNameValid(etUsername:EditText):Boolean{
+            val text = etUsername.text.toString()
+            val regex = "^[a-z]([._-](?![._-])|[a-z0-9]){3,16}\$".toRegex()
+            if (text == "" || !text.matches(regex)) {
+                etUsername.error = USER_NAME_ERROR
                 return false
             }
             return true
@@ -83,6 +96,7 @@ class Validation {
             return true
         }
 
+
         //todo: add username and or email check
 
         //    fun userNameExists(edName: EditText, context: Context?): Boolean {
@@ -123,11 +137,13 @@ class Validation {
         fun registerValid(
             etPassword: EditText,
             etConfPassword: EditText,
-            etEmail: EditText
+            etEmail: EditText,
+            etUserName: EditText
         ): Boolean {
             var bool = true
             //NOTE: edName equ to private name
             bool = userEmailValid(etEmail) && bool
+            bool = userNameValid(etUserName) && bool
             bool = userPasswordValid(etPassword) && bool
             bool = confirmPasswordValid(etPassword, etConfPassword) && bool
             return bool;
@@ -149,9 +165,9 @@ class Validation {
         ): Boolean {
             var bool = true
             //NOTE: edName equ to private name
-            bool = userNameValid(etName, 2) && bool
-            bool = userNameValid(etLastName, 2) && bool
-            bool = userNameValid(etUserName, 5) && bool
+//            bool = userNameValid(etName, 2) && bool
+//            bool = userNameValid(etLastName, 2) && bool
+//            bool = userNameValid(etUserName, 5) && bool
             bool = spinnerCheck(spinner) && bool
             bool = isEmpty(etStreet) && bool
             bool = isEmpty(etStreetNumber) && bool
@@ -190,7 +206,7 @@ class Validation {
         ): Boolean {
             var bool = true
             //NOTE: edName equ to private name
-            bool = userNameValid(upName, 2) && bool
+//            bool = userNameValid(upName, 2) && bool
             //userNameValid(upLastName,2);
             //userNameValid(upUserName,5);
             bool = spinnerCheck(upSpinner) && bool
