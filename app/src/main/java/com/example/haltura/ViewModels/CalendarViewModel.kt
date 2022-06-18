@@ -6,15 +6,11 @@ import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.WorkAPI
 import com.example.haltura.Sql.Items.UserResponse
 import com.example.haltura.Sql.Items.WorkSerializable
-import com.example.haltura.Sql.Items.WorksByDateMap
-import com.example.haltura.Sql.Items.WorksList
 import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.notifyAllObservers
 import com.google.gson.Gson
 import okhttp3.ResponseBody
-import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,7 +28,7 @@ class CalendarViewModel : ViewModel() {
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }
 
-    val mutableWorksByDateList: MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>> by lazy {
+    val mutableWorksByDateMap: MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>> by lazy {
         MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>>(mutableMapOf())
     }
 
@@ -59,7 +55,7 @@ class CalendarViewModel : ViewModel() {
     }
 
     fun UserWorkListByDate() {
-        mutableWorksByDateList.value!!.clear()
+        mutableWorksByDateMap.value!!.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
         val call = retroService.getAllWorksThatUserIdPublishedByDate("Bearer " +
@@ -74,8 +70,9 @@ class CalendarViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val jObject = JSONObject(response.body()!!.string())
                     val map = jsonToMap(jObject)
-                    mutableWorksByDateList.postValue(map)
-                    mutableWorksByDateList.notifyAllObservers()
+                    //todo check here!
+                    mutableWorksByDateMap.value!!.putAll(map)
+                    mutableWorksByDateMap.notifyAllObservers()
                     var x = 1
                 }
                 else
