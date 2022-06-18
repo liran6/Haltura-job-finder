@@ -40,8 +40,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
 
     private val _viewModel: HomeViewModel by activityViewModels()
     private lateinit var _fragmentView: View
-    private lateinit var _workRecycle: RecyclerView
-    private lateinit var _worksAdapter: WorkAdapter
+    private lateinit var _allWorksRecycle: RecyclerView
+    private lateinit var _allWorksAdapter: WorkAdapter
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
@@ -68,14 +68,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
     }
 
     private fun initViews() {
-        _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
-//        _workRecycle.layoutManager = LinearLayoutManager(activity,
+        _allWorksRecycle = binding.allWorksRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
+//        _allWorksRecycle.layoutManager = LinearLayoutManager(activity,
 //            LinearLayoutManager.HORIZONTAL, false)
-//        _workRecycle.setHasFixedSize(true);
+//        _allWorksRecycle.setHasFixedSize(true);
 //        val layoutManager = LinearLayoutManager(getContext(),
 //            LinearLayoutManager.HORIZONTAL,false)
-//        _workRecycle.layoutManager = layoutManager
-        //_workRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
+//        _allWorksRecycle.layoutManager = layoutManager
+        //_allWorksRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
     }
 
     private fun initViewModelData() {
@@ -94,23 +94,23 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
     }
 
     private fun updateRecyclersAndAdapters() {
-        _worksAdapter.setData(_viewModel.mutableWorkList.value!!)
-        _worksAdapter.notifyDataSetChanged()
+        _allWorksAdapter.setData(_viewModel.mutableWorkList.value!!)
+        _allWorksAdapter.notifyDataSetChanged()
     }
 
     private fun initRecyclersAndAdapters() {
-        _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
+        _allWorksRecycle = binding.allWorksRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
         val workList = _viewModel.mutableWorkList.value!!
-        //_workRecycle.layoutManager = LinearLayoutManager(context)
-        //_workRecycle.setHasFixedSize(true);
+        //_allWorksRecycle.layoutManager = LinearLayoutManager(context)
+        //_allWorksRecycle.setHasFixedSize(true);
         val layoutManager = LinearLayoutManager(getContext(),
             LinearLayoutManager.HORIZONTAL,false)
-        _workRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
-        _workRecycle.layoutManager = layoutManager
-        _worksAdapter = WorkAdapter(
+        _allWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _allWorksRecycle.layoutManager = layoutManager
+        _allWorksAdapter = WorkAdapter(
             workList,
             _clickOnItemListener = { showWorkDetails(it) })
-        _workRecycle.adapter = _worksAdapter
+        _allWorksRecycle.adapter = _allWorksAdapter
     }
 
     private fun showWorkDetails(work: WorkSerializable) {
