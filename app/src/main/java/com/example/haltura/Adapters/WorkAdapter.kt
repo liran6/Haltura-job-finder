@@ -1,5 +1,6 @@
 package com.example.haltura.Adapters
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
@@ -38,7 +39,7 @@ class WorkAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.work_item_list, viewGroup, false)
+            .inflate(R.layout.work_item_list2, viewGroup, false)
 
         return ViewHolder(view)
     }
@@ -53,13 +54,15 @@ class WorkAdapter(
         viewHolder.dateAndTime.text = DateTime.getDate(currentItem.startTime) + " From " +
                 DateTime.getTime(currentItem.startTime) + " To " +
                 DateTime.getTime(currentItem.endTime)
-        viewHolder.location.text = currentItem.address.street + " " + currentItem.address.streetNum +
+        viewHolder.location.text = "\uD83D\uDCCD" + currentItem.address.street + " " + currentItem.address.streetNum +
                 ", " + currentItem.address.city
 
         var bm = Base64.decode(currentItem.image, Base64.DEFAULT)
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-        var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
+        //var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)
+        var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(Bitmap.createScaledBitmap(data, 200, 200, false),10)
         viewHolder.image.setImageBitmap(dataRoundedCorner)
+        //viewHolder.image.setImageBitmap(Bitmap.createScaledBitmap(dataRoundedCorner, 200, 200, false))
 
         viewHolder.itemView.setOnClickListener {
             _clickOnItemListener(_dataSet[position])//todo: check if it is your work
