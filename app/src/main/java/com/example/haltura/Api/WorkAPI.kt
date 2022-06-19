@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface WorkAPI {
     //Work
 
-    //TODO check if works(not yet)
+
     @POST("works/create/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun createWork(
@@ -64,6 +64,14 @@ interface WorkAPI {
     @GET("works/publish/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun getAllWorksThatUserIdPublished(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: String,
+    ): Call<ResponseBody>
+
+    //get all works of userId (AS EMPLOYER)
+    @GET("works/close/{userId}")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun getCloseWorksOfUserId(
         @Header("Authorization") token: String,
         @Path("userId") userId: String,
     ): Call<ResponseBody>

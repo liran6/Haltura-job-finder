@@ -34,14 +34,18 @@ import com.example.haltura.databinding.FragmentHomeBinding
 class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
 
     override val titleRes: String = "Welcome back "+UserData.currentUser?.email
-    private val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mjk2NDg1ZDQ0NzBhZGE1YzBmYWJlOGYiLCJpYXQiOjE2NTQ3MTc3MjksImV4cCI6MTY1NTMyMjUyOX0.kINx9at8G7aZkJUWfghCojlYk3DHKqgpt2gZJTHd5s4"
-    private val userId: String = "6296485d4470ada5c0fabe8f"
-
 
     private val _viewModel: HomeViewModel by activityViewModels()
     private lateinit var _fragmentView: View
+    //All
     private lateinit var _allWorksRecycle: RecyclerView
     private lateinit var _allWorksAdapter: WorkAdapter
+    //Close
+    private lateinit var _closeWorksRecycle: RecyclerView
+    private lateinit var _closeWorksAdapter: WorkAdapter
+    //Recommended
+    private lateinit var _recommendedWorksRecycle: RecyclerView
+    private lateinit var _recommendedWorksAdapter: WorkAdapter
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
@@ -68,41 +72,97 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
     }
 
     private fun initViews() {
-        _allWorksRecycle = binding.allWorksRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
-//        _allWorksRecycle.layoutManager = LinearLayoutManager(activity,
-//            LinearLayoutManager.HORIZONTAL, false)
-//        _allWorksRecycle.setHasFixedSize(true);
-//        val layoutManager = LinearLayoutManager(getContext(),
-//            LinearLayoutManager.HORIZONTAL,false)
-//        _allWorksRecycle.layoutManager = layoutManager
-        //_allWorksRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
+        //_allWorksRecycle = binding.allWorksRecyclerView
     }
 
     private fun initViewModelData() {
         _viewModel.getAllWorks()
+        _viewModel.getCloseWorks()
     }
 
     private fun initObservers() {
+        // All Works
         _viewModel.mutableWorkList.observe(
             viewLifecycleOwner,
             Observer { workList ->
                 workList?.let {
-                    updateRecyclersAndAdapters()
+                    updateAllWorksRecyclersAndAdapters()
+                }
+            }
+        )
+        // Close Works
+        _viewModel.mutableCloseWorksList.observe(
+            viewLifecycleOwner,
+            Observer { workList ->
+                workList?.let {
+                    updateCloseWorksRecyclersAndAdapters()
+                }
+            }
+        )
+        // Recommended Works
+        _viewModel.mutableRecommendedWorksList.observe(
+            viewLifecycleOwner,
+            Observer { workList ->
+                workList?.let {
+                    updateRecommendedWorksRecyclersAndAdapters()
                 }
             }
         )
     }
 
-    private fun updateRecyclersAndAdapters() {
+    private fun updateAllWorksRecyclersAndAdapters() {
         _allWorksAdapter.setData(_viewModel.mutableWorkList.value!!)
         _allWorksAdapter.notifyDataSetChanged()
     }
 
+    private fun updateCloseWorksRecyclersAndAdapters() {
+        _closeWorksAdapter.setData(_viewModel.mutableCloseWorksList.value!!)
+        _closeWorksAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateRecommendedWorksRecyclersAndAdapters() {
+        _closeWorksAdapter.setData(_viewModel.mutableRecommendedWorksList.value!!)
+        _closeWorksAdapter.notifyDataSetChanged()
+    }
+
     private fun initRecyclersAndAdapters() {
-        _allWorksRecycle = binding.allWorksRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
+        initCloseWorks()
+        initRecommendedWorks()
+        initAllWorks()
+    }
+
+    private fun initCloseWorks() {
+        // Close Works
+        _closeWorksRecycle = binding.closeWorksRecyclerView
+        val workList = _viewModel.mutableCloseWorksList.value!!
+        val layoutManager = LinearLayoutManager(getContext(),
+            LinearLayoutManager.HORIZONTAL,false)
+        _closeWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _closeWorksRecycle.layoutManager = layoutManager
+        _closeWorksAdapter = WorkAdapter(
+            workList,
+            _clickOnItemListener = { showWorkDetails(it) })
+        _closeWorksRecycle.adapter = _closeWorksAdapter
+    }
+
+    private fun initRecommendedWorks() {
+        // Recommended Works
+        _recommendedWorksRecycle = binding.recommendedWorksRecyclerView
+        val workList = _viewModel.mutableRecommendedWorksList.value!!
+        val layoutManager = LinearLayoutManager(getContext(),
+            LinearLayoutManager.HORIZONTAL,false)
+        _recommendedWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _recommendedWorksRecycle.layoutManager = layoutManager
+        _recommendedWorksAdapter = WorkAdapter(
+            workList,
+            _clickOnItemListener = { showWorkDetails(it) })
+        _recommendedWorksRecycle.adapter = _recommendedWorksAdapter
+    }
+
+    private fun initAllWorks() {
+        // All Works
+        _allWorksRecycle = binding.allWorksRecyclerView
         val workList = _viewModel.mutableWorkList.value!!
-        //_allWorksRecycle.layoutManager = LinearLayoutManager(context)
-        //_allWorksRecycle.setHasFixedSize(true);
         val layoutManager = LinearLayoutManager(getContext(),
             LinearLayoutManager.HORIZONTAL,false)
         _allWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
@@ -118,12 +178,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
         activity?.supportFragmentManager?.let {
             dialog.show(it, "WatchWorkDialog")
         }
-        //dialog.show(supportFragmentManager,"WatchWorkDialog")
-        //showWorkDetailsPopup(supervisorEmail)
-        // todo: in here or view model?
-        //todo: do it from the beginning
-        //var dialog = WatchWorkDialog(work,this)
-        //dialog.show(supportFragmentManager,"WatchWorkDialog")
     }
     override fun onStart() {
         super.onStart()

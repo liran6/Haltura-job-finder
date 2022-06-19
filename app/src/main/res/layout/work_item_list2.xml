@@ -38,7 +38,7 @@
                 android:textSize="30dp"
                 android:id="@+id/itemTask"
                 android:text="item Task"
-                android:layout_marginTop="-43dp"
+                android:layout_marginTop="-40dp"
                 android:layout_below="@+id/Image" />
 
         <TextView
