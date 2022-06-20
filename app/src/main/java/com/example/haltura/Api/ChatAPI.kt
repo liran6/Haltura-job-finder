@@ -22,4 +22,11 @@ interface ChatAPI {
         @Header("Authorization") token: String,
         @Path("chatId") userId: String,
     ): Call<ResponseBody>
+
+    @GET("chats/{chatId}")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun getChatInfo(
+        @Header("Authorization") token: String,
+        @Path("chatId") userId: String,
+    ): Call<ResponseBody>
 }

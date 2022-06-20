@@ -46,22 +46,21 @@
                 android:src="@drawable/ic_arrow_back_24"
                 android:id="@+id/back_button" />
 
-<!--        <ImageView-->
-<!--                android:id="@+id/image_chat"-->
-<!--                android:layout_width="70dp"-->
-<!--                android:layout_height="70dp"-->
-<!--                tools:srcCompat="@tools:sample/avatars"-->
-<!--                android:background="@drawable/img" />-->
-        <de.hdodenhof.circleimageview.CircleImageView
+        <!--        <ImageView-->
+        <!--                android:id="@+id/image_chat"-->
+        <!--                android:layout_width="70dp"-->
+        <!--                android:layout_height="70dp"-->
+        <!--                tools:srcCompat="@tools:sample/avatars"-->
+        <!--                android:background="@drawable/img" />-->
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/image_chat"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:src="@drawable/haltura_icon2"
                 app:civ_border_width="0dp"
-                app:civ_border_color="@color/black"/>
+                app:civ_border_color="@color/black" />
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -85,18 +84,18 @@
             </TextView>
 
 
-                <TextView
-                        android:layout_marginStart="8dp"
-                        android:id="@+id/members"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="left"
-                        android:layout_marginRight="8dp"
-                        android:textSize="15dp"
-                        android:textColor="@color/black"
-                        android:layout_height="wrap_content"
-                        android:text="members">
+            <TextView
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/members"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="8dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:text="members">
 
-                </TextView>
+            </TextView>
 
         </LinearLayout>
 

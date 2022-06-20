@@ -11,6 +11,7 @@ import android.util.Base64
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +26,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.Adapters.ChatAdapter2
 import com.example.haltura.Adapters.ChatsAdapter
+import com.example.haltura.Fragments.ChatFragments.ShowChatInfoDialog
+import com.example.haltura.Fragments.HomeFragments.WatchWorkDialog
+import com.example.haltura.Models.InfoChatSerializable
 import com.example.haltura.Sql.Items.MessageSerializable
+import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
@@ -52,7 +57,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var _sendButton: ImageView
     private lateinit var _cameraButton: ImageView
     private lateinit var _galleryButton: ImageView
-    //private lateinit var _chatImage: ImageView
+    private lateinit var _topBar: LinearLayout
     private lateinit var _chatImage: de.hdodenhof.circleimageview.CircleImageView
     private lateinit var _backButton: ImageView
     private lateinit var _chatName: TextView
@@ -74,7 +79,22 @@ class ChatActivity : AppCompatActivity() {
         initButtons()
         initTextListener()
         initRecyclersAndAdapters()
+        initTopBar()
         startLive()
+    }
+
+    private fun initTopBar() {
+        _topBar.setOnClickListener {
+            //showChatInfo(_chat.id!!)
+            _viewModel.getChatInfo(_chat.id!!)
+        }
+    }
+
+    private fun showChatInfo(chatInfo: InfoChatSerializable) {
+        var dialog = ShowChatInfoDialog(chatInfo)
+        this.supportFragmentManager?.let {
+            dialog.show(it, "ShowChatInfoDialog")
+        }
     }
 
     private fun initTextListener() {
@@ -104,15 +124,16 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun setValues() {
+        //todo: check if not group set just name in the middle
         if(_chat?.chatName == null)
         {
             if (_chat.members[0] == UserData.currentUser!!.userId)
             {
-                _chatName.setText(_chat?.mapUsernames[_chat.members[1]])
+                _chatName.setText(_chat!!.mapUsernames[_chat.members[1]])
             }
             else
             {
-                _chatName.setText(_chat?.mapUsernames[_chat.members[0]])
+                _chatName.setText(_chat!!.mapUsernames[_chat.members[0]])
             }
         }
         else
@@ -188,6 +209,16 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         )
+        _viewModel.mutableChatInfo.observe(
+            this,
+            Observer { ChatInfo ->
+                ChatInfo?.let {
+                    if (it != null) {
+                        showChatInfo(it)
+                    }
+                }
+            }
+        )
     }
 
     private fun updateRecyclersAndAdapters() {
@@ -207,6 +238,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        _topBar = findViewById(R.id.topBar)
         _chatImage = findViewById(R.id.image_chat)
         _backButton = findViewById(R.id.back_button)
         _chatName = findViewById(R.id.name_chat)
