@@ -20,9 +20,9 @@ import com.example.haltura.Adapters.ProfileAdapter
 import com.example.haltura.Models.InfoChatSerializable
 import com.example.haltura.Sql.Items.WorkSerializable
 
-class ShowChatInfoDialog : DialogFragment {
+class ShowChatInfoDialog : Fragment {
 
-    private lateinit var _chatInfo: InfoChatSerializable
+    private lateinit var _chatId: String
 
     private val _viewModel: ShowChatInfoDialogViewModel by activityViewModels()
     private lateinit var _fragmentView: View
@@ -38,14 +38,14 @@ class ShowChatInfoDialog : DialogFragment {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
 //    constructor(chatId: InfoChatSerializable):super()
 //    {
 //        this._chatId = chatId
 //    }
-    constructor(chatId: InfoChatSerializable):super()
+
+    constructor(chatId: String):super()
     {
-        this._chatInfo = chatId
+        this._chatId = chatId
     }
 
     override fun onCreateView(
@@ -58,15 +58,15 @@ class ShowChatInfoDialog : DialogFragment {
         initBinding()
         initViews()
         setViews()
-        //initViewModelData()
-        //initObservers()
+        initViewModelData()
+        initObservers()
         initRecyclersAndAdapters()
 
         return _fragmentView
     }
 
     private fun setViews() {
-        _nameOfChat.setText(_chatInfo.chatName)
+        //_nameOfChat.setText(_chatInfo.chatName)
     }
 
     private fun initBinding() {
@@ -78,33 +78,33 @@ class ShowChatInfoDialog : DialogFragment {
         _nameOfChat = binding.chatName
     }
 
-//    private fun initViewModelData() {
-//        _viewModel.getChatInfo(_chatId)
-//    }
+    private fun initViewModelData() {
+        _viewModel.getChatInfo(_chatId)
+    }
 
-//    private fun initObservers() {
-//        // members
-//        _viewModel.mutableMembersList.observe(
-//            viewLifecycleOwner,
-//            Observer { membersList ->
-//                membersList?.let {
-//                    updateRecyclersAndAdapters()
-//                }
-//            }
-//        )
-//    }
+    private fun initObservers() {
+        // members
+        _viewModel.mutableMembersList.observe(
+            viewLifecycleOwner,
+            Observer { membersList ->
+                membersList?.let {
+                    updateRecyclersAndAdapters()
+                }
+            }
+        )
+    }
 
-//    private fun updateRecyclersAndAdapters() {
-//        _membersAdapter.setData(_viewModel.mutableMembersList.value!!)
-//        _membersAdapter.notifyDataSetChanged()
-//    }
+    private fun updateRecyclersAndAdapters() {
+        _membersAdapter.setData(_viewModel.mutableMembersList.value!!)
+        _membersAdapter.notifyDataSetChanged()
+    }
 
     private fun initRecyclersAndAdapters() {
         _membersRecycle = binding.membersRecyclerview
-        //val workList = _viewModel.mutableMembersList.value!!
+        val workList = _viewModel.mutableMembersList.value!!
         _membersRecycle.layoutManager = LinearLayoutManager(context)
         _membersAdapter = ProfileAdapter(
-            _chatInfo.profileList!!,
+            workList,
             _clickOnItemListener = { showProfile(it) }
         )
         _membersRecycle.adapter = _membersAdapter
