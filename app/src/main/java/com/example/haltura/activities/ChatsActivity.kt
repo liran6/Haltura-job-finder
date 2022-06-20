@@ -1,4 +1,4 @@
-//package com.example.haltura.activities
+package com.example.haltura.activities
 //
 //import android.app.Activity
 //import androidx.appcompat.app.AppCompatActivity

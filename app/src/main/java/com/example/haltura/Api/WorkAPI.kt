@@ -33,10 +33,10 @@ interface WorkAPI {
         @Header("Authorization") token: String
     ): Call<ResponseBody>
 
-    //TODO what this call do?
+    //Register to work
     @PUT("works/add/{workId}/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
-    fun addToWorkWorkIdUser(
+    fun putRegisterToWork(
         @Header("Authorization") token: String,
         @Path("workId") workId: String,
         @Path("userId") userId: String,
@@ -68,6 +68,7 @@ interface WorkAPI {
         @Path("userId") userId: String,
     ): Call<ResponseBody>
 
+    //get all works of userId (AS EMPLOYER)- by date!!
     @GET("works/calendar/publish/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun getAllWorksThatUserIdPublishedByDate(
@@ -75,6 +76,7 @@ interface WorkAPI {
         @Path("userId") userId: String,
     ): Call<ResponseBody>
 
+    //get all works of userId (AS EMPLOYEE)- by date!!
     @GET("works/calendar/employee/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun getAllWorksThatUserIdRegisterdByDate(

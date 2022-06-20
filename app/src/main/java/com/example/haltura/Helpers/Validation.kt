@@ -5,7 +5,7 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import com.example.haltura.Sql.UserOpenHelper
+//import com.example.haltura.Sql.UserOpenHelper
 
 
 class Validation {

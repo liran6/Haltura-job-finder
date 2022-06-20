@@ -3,11 +3,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.haltura.Sql.UserOpenHelper
+//import com.example.haltura.Sql.UserOpenHelper
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
-    private lateinit var helper: UserOpenHelper
+//    private lateinit var helper: UserOpenHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

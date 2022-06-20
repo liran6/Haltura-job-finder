@@ -17,21 +17,12 @@
             tools:replace="android:supportsRtl"
             android:theme="@style/Theme.Haltura"
             android:usesCleartextTraffic="true">
-        <!--            tools:replace="android:supportsRTL"-->
-<!--        support-->
-        <activity
-                android:name=".activities.MainActivity2"
-                android:exported="false"
-                android:label="@string/title_activity_main2" />
-        <activity
-                android:name=".activities.LoginActivity"
-                android:exported="false"
-                android:noHistory="true"
-                android:label="@string/title_activity_login2" />
-
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyCmEr_uFB3Mb_ew1byfNte1jSuF__IlSB8" />
+                android:value="@string/Maps_API" />
+
+        <!--            tools:replace="android:supportsRTL"-->
+<!--        support-->
 
         <activity
                 android:name=".activities.SplashActivity"
@@ -43,63 +34,80 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-                android:name=".activities.MapsActivity"
-                android:exported="true">
 
-            <!-- android:label="test"> -->
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity
-                android:name=".activities.GoogleSignInActivity"
-                android:exported="false" />
+                android:name=".activities.LoginActivity"
+                android:exported="false"
+                android:noHistory="true"
+                android:label="@string/title_activity_login" />
+
         <activity
-                android:name=".activities.BusinessAccountActivity"
-                android:exported="false" />
+                android:name=".activities.MainActivity2"
+                android:exported="false"
+                android:label="@string/title_activity_main2" />
+
         <activity
                 android:name=".activities.ChatActivity"
                 android:exported="false" />
-<!--        <activity-->
-<!--                android:name=".activities.ChatsActivity"-->
-<!--                android:exported="false" />-->
-        <activity
-                android:name=".activities.SignUpActivity"
-                android:exported="false" />
-        <activity
-                android:name=".activities.UpdateInformationActivity"
-                android:exported="false" />
-        <activity
-                android:name=".activities.ResetPasswordActivity"
-                android:exported="false" />
+
         <activity
                 android:name=".activities.AddWorkActivity"
                 android:exported="false" />
-        <activity
-                android:name=".activities.ForgotYourPasswordActivity"
-                android:exported="false" />
-        <activity
-                android:name=".activities.LoginActivityOld"
-                android:exported="false" />
-        <activity
-                android:name=".activities.MainActivity"
-                android:exported="true"
-                android:label="@string/app_name"
-                android:theme="@style/Theme.Haltura.NoActionBar" />
+
+
+<!--        <activity-->
+<!--                android:name=".activities.MapsActivity"-->
+<!--                android:exported="true">-->
+
+<!--            &lt;!&ndash; android:label="test"> &ndash;&gt;-->
+<!--            &lt;!&ndash; <intent-filter> &ndash;&gt;-->
+<!--            &lt;!&ndash; <action android:name="android.intent.action.MAIN" /> &ndash;&gt;-->
+
+
+<!--            &lt;!&ndash; <category android:name="android.intent.category.LAUNCHER" /> &ndash;&gt;-->
+<!--            &lt;!&ndash; </intent-filter> &ndash;&gt;-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--                android:name=".activities.GoogleSignInActivity"-->
+<!--                android:exported="false" />-->
+<!--        <activity-->
+<!--                android:name=".activities.BusinessAccountActivity"-->
+<!--                android:exported="false" />-->
+
+<!--        <activity-->
+<!--                android:name=".activities.ChatsActivity"-->
+<!--                android:exported="false" />-->
+<!--        <activity-->
+<!--                android:name=".activities.SignUpActivity"-->
+<!--                android:exported="false" />-->
+<!--        <activity-->
+<!--                android:name=".activities.UpdateInformationActivity"-->
+<!--                android:exported="false" />-->
+<!--        <activity-->
+<!--                android:name=".activities.ResetPasswordActivity"-->
+<!--                android:exported="false" />-->
+
+<!--        <activity-->
+<!--                android:name=".activities.ForgotYourPasswordActivity"-->
+<!--                android:exported="false" />-->
+<!--        <activity-->
+<!--                android:name=".activities.LoginActivityOld"-->
+<!--                android:exported="false" />-->
+<!--        <activity-->
+<!--                android:name=".activities.MainActivity"-->
+<!--                android:exported="true"-->
+<!--                android:label="@string/app_name"-->
+<!--                android:theme="@style/Theme.Haltura.NoActionBar" />-->
 <!--        <activity-->
 <!--                android:name=".activities.MainActivity2"-->
 <!--                android:exported="true"-->
 <!--                android:label="@string/app_name"-->
 <!--                android:theme="@style/Theme.Haltura.NoActionBar" />-->
-        <activity
-                android:name=".activities.RegisterActivity"
-                android:exported="false"
-                android:label="@string/title_activity_register"
-                android:theme="@style/Theme.Haltura.NoActionBar" />
+<!--        <activity-->
+<!--                android:name=".activities.RegisterActivity"-->
+<!--                android:exported="false"-->
+<!--                android:label="@string/title_activity_register"-->
+<!--                android:theme="@style/Theme.Haltura.NoActionBar" />-->
     </application>
 
 </manifest>

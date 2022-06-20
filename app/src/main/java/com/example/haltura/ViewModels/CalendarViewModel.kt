@@ -28,7 +28,11 @@ class CalendarViewModel : ViewModel() {
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }
 
-    val mutableWorksByDateMap: MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>> by lazy {
+    val mutableCreatedWorksByDateMap: MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>> by lazy {
+        MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>>(mutableMapOf())
+    }
+
+    val mutableRegisteredWorksByDateMap: MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>> by lazy {
         MutableLiveData<MutableMap<LocalDate, MutableList<WorkSerializable>>>(mutableMapOf())
     }
 
@@ -60,7 +64,7 @@ class CalendarViewModel : ViewModel() {
     }
 
     fun UserCreatedWorksByDate() {
-        mutableWorksByDateMap.value!!.clear()
+        mutableCreatedWorksByDateMap.value!!.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
         val call = retroService.getAllWorksThatUserIdPublishedByDate("Bearer " +
@@ -76,8 +80,8 @@ class CalendarViewModel : ViewModel() {
                     val jObject = JSONObject(response.body()!!.string())
                     val map = jsonToMap(jObject)
                     //todo check here!
-                    mutableWorksByDateMap.value!!.putAll(map)
-                    mutableWorksByDateMap.notifyAllObservers()
+                    mutableCreatedWorksByDateMap.value!!.putAll(map)
+                    mutableCreatedWorksByDateMap.notifyAllObservers()
                     var x = 1
                 }
                 else
@@ -87,11 +91,13 @@ class CalendarViewModel : ViewModel() {
             }
         })
     }
+
+
     fun UserRegisterdWorksByDate() {
-        mutableWorksByDateMap.value!!.clear()
+        mutableRegisteredWorksByDateMap.value!!.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
-        val call = retroService.getAllWorksThatUserIdPublishedByDate("Bearer " +
+        val call = retroService.getAllWorksThatUserIdRegisterdByDate("Bearer " +
                 UserData.currentUser?.token!!, UserData.currentUser?.userId!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -104,8 +110,8 @@ class CalendarViewModel : ViewModel() {
                     val jObject = JSONObject(response.body()!!.string())
                     val map = jsonToMap(jObject)
                     //todo check here!
-                    mutableWorksByDateMap.value!!.putAll(map)
-                    mutableWorksByDateMap.notifyAllObservers()
+                    mutableRegisteredWorksByDateMap.value!!.putAll(map)
+                    mutableRegisteredWorksByDateMap.notifyAllObservers()
                     var x = 1
                 }
                 else

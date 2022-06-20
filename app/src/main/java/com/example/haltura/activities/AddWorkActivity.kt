@@ -1,5 +1,6 @@
 package com.example.haltura.activities
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -25,7 +26,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.AppNotifications
 import com.example.haltura.R
-import com.example.haltura.Sql.BusinessOpenHelper
+//import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.AddresSerializable
 import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
@@ -34,24 +35,32 @@ import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.WorkData
 import com.example.haltura.ViewModels.AddWorkViewModel
+import com.example.haltura.activities.ChatActivity.Companion.TAG
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import kotlinx.android.synthetic.main.activity_add_work.*
 import kotlinx.android.synthetic.main.manage_work_item.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 //iv_addItem,Imageed_Company,ed_Task,dp_Date,tp_StartTime,tp_EndTime,et_Salary,et_NumberOfWorkers,et_Address,btn_ShowLocation,map,et_Info
 class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var _viewModel: AddWorkViewModel
     private lateinit var mMap: GoogleMap
-    private lateinit var autocompleteSupportFragment : AutocompleteSupportFragment
+    private lateinit var autocompleteFragment : AutocompleteSupportFragment
     private lateinit var edAddress: EditText
     //private lateinit var calendar: Calendar
     private lateinit var ivAddItemImage: ImageView
@@ -76,7 +85,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var cities: Array<String>
     private lateinit var spinnerCity: Spinner
     private lateinit var etApartment: EditText
-    private lateinit var etStreetName: EditText
+    private lateinit var etStreetName: TextView
     private lateinit var etStreetNumber: EditText
     private lateinit var etFloor: EditText
     //
@@ -93,19 +102,33 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private var _work :WorkSerializable? = null
     private var isUpdate :Boolean = false
 
-    var helper = BusinessOpenHelper(this)
+    //var helper = BusinessOpenHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_work)
 
+        initMap()
+        initAutoComplete()
         initViewModel()
         initViews()
         setWork()
         initTimePickers()
-        initMap()
         initObservers()
     }
+    private fun initAutoComplete(){
+        if (!Places.isInitialized()) {
+            Places.initialize(this.applicationContext, getString(R.string.Maps_API), Locale.US);
+        }
+        autocompleteFragment =
+            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                    as AutocompleteSupportFragment
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ADDRESS, Place.Field.LAT_LNG))
+
+
+    }
+
+
     private fun initObservers() {
         _viewModel.mutableMessageToasting.observe(
             this
@@ -186,6 +209,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun initViews(){
         //edAddress = findViewById<View>(R.id.et_Address) as EditText
+
         tvTitle = findViewById<View>(R.id.tv_title) as TextView
         tvDate = findViewById<View>(R.id.tv_date) as TextView
         tvStartTime = findViewById<View>(R.id.tv_StartTime) as TextView
@@ -197,7 +221,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         etSalary = findViewById<View>(R.id.et_Salary) as EditText
         etNumberOfWorkers = findViewById<View>(R.id.et_NumberOfWorkers) as EditText
         etInfo = findViewById<View>(R.id.et_Info) as EditText
-        btnShowLocation = findViewById<View>(R.id.btn_ShowLocation) as Button
+        //btnShowLocation = findViewById<View>(R.id.btn_ShowLocation) as Button
         btnAddWork = findViewById<View>(R.id.btn_AddWork) as Button
         btnPreview = findViewById<View>(R.id.btn_Preview) as Button
 
@@ -205,23 +229,52 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         ///
 
 
-        cities = resources.getStringArray(R.array.cities)
-        etStreetName = findViewById<View>(R.id.et_StreetName) as EditText
-        etStreetNumber = findViewById<View>(R.id.et_StreetNumber) as EditText
-        etFloor = findViewById<View>(R.id.et_Floor) as EditText
-        etApartment = findViewById<View>(R.id.et_Apartment) as EditText
-        spinnerCity = findViewById<View>(R.id.spinner_City) as Spinner
-        spinnerCity!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                city = cities[position]
-            }
+        //cities = resources.getStringArray(R.array.cities)
+        etStreetName = findViewById<View>(R.id.et_StreetName) as TextView
+//        etStreetNumber = findViewById<View>(R.id.et_StreetNumber) as EditText
+//        etFloor = findViewById<View>(R.id.et_Floor) as EditText
+//        etApartment = findViewById<View>(R.id.et_Apartment) as EditText
+//        spinnerCity = findViewById<View>(R.id.spinner_City) as Spinner
+//        spinnerCity!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View,
+//                position: Int,
+//                id: Long
+//            ) {
+//                city = cities[position]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {}
+//        }
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // TODO: Get info about the selected place.
+                Log.i(TAG, "Place: ${place.address}, ${place.latLng}")
+                place.latLng?.let { place.address?.let { it1 -> showAdderssOnMap2(it, it1) } }
+                et_StreetName.text = place.address
+                            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onError(status: Status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: $status")
+            }
+        })
+
+    }
+
+
+    fun showAdderssOnMap2(point : LatLng, addr: String)
+    {
+        //var addr = etStreetName.text.toString() + " " + etStreetNumber.text.toString() + " ," + city //edAddress.text.toString()
+        //todo remove markers
+        //var point  = getLocationFromAddress(addr)
+        if (point != null)
+        {
+            mMap.addMarker(MarkerOptions().position(point).title(addr))
+            //mMap.get
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15.0f))
+
         }
     }
 
@@ -251,6 +304,13 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+//        this. ?: return // Fragment has been detached--don't do anything.
+//        mMap = googleMap
+//        mMap.addMarker(
+//            MarkerOptions().position(LatLng(0.0, 0.0)).title("Test")
+//        )
+
 
 //        var p1 = getLocationFromAddress("ben tzvi 50 givatayim")
 //
@@ -580,6 +640,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CAMERA && resultCode == RESULT_OK) {
@@ -598,11 +659,25 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             //todo: toast err
         }
+//        if (requestCode == PLACE_PICKER_REQUEST) {
+//            if (resultCode == RESULT_OK) {
+//                val place = autocompleteFragment. getPlaceFromIntent(data);
+//
+//                lat = place.latLng?.latitude
+//                lng = place.latLng?.longitude
+//            }
+//            else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+//                // TODO: Handle the error.
+//                var status = AutocompleteSupportFragment.getStatusFromIntent(data)
+//                Log.i("address", status.getStatusMessage());
+//            }
+//        }
     }
 
     companion object
     {
         private val REQ_CAMERA = 1
         private  val PICK_IMAGE = 2
+        private  val PLACE_PICKER_REQUEST = 3
     }
 }

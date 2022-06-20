@@ -1,6 +1,5 @@
 package com.example.haltura.ViewModels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ServiceBuilder
@@ -9,8 +8,6 @@ import com.example.haltura.Sql.Items.UserResponse
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.UserData
 import okhttp3.ResponseBody
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +23,7 @@ class WatchWorkViewModel : ViewModel() {
     fun registerToWork(work: WorkSerializable) {
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
-        val call = retroService.addToWorkWorkIdUser("Bearer "+ UserData.currentUser?.userId!!,
+        val call = retroService.putRegisterToWork("Bearer "+ UserData.currentUser?.token!!,
             work.id!!,UserData.currentUser?.userId!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

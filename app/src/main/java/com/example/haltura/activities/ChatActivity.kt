@@ -29,10 +29,10 @@ import com.example.haltura.Sql.Items.MessageSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
-import com.example.haltura.ViewModels.AddWorkViewModel
-import com.firebase.ui.auth.viewmodel.email.EmailLinkSendEmailHandler
-import com.google.gson.Gson
-import io.socket.client.IO
+//import com.example.haltura.ViewModels.AddWorkViewModel
+//import com.firebase.ui.auth.viewmodel.email.EmailLinkSendEmailHandler
+//import com.google.gson.Gson
+//import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.android.synthetic.main.activity_chat.view.*
 import java.io.ByteArrayOutputStream
@@ -108,11 +108,13 @@ class ChatActivity : AppCompatActivity() {
         {
             if (_chat.members[0] == UserData.currentUser!!.userId)
             {
-                _chatName.setText(_chat?.mapUsernames[_chat.members[1]])
+                //TODO liran added if null than ""
+                _chatName.setText(_chat?.mapUsernames?.get(_chat.members[1]) ?: "")
             }
             else
             {
-                _chatName.setText(_chat?.mapUsernames[_chat.members[0]])
+                //TODO liran added if null than ""
+                _chatName.setText(_chat?.mapUsernames?.get(_chat.members[0]) ?: "")
             }
         }
         else
@@ -281,6 +283,7 @@ class ChatActivity : AppCompatActivity() {
         startActivityForResult(intent, REQ_CAMERA)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CAMERA && resultCode == RESULT_OK) {

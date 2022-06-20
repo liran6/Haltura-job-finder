@@ -19,14 +19,14 @@ import com.example.haltura.Utils.Preferences.set
 import com.example.haltura.Utils.UserData
 import com.example.haltura.ViewModels.LoginViewModel
 import com.google.gson.Gson
-
-import io.reactivex.disposables.CompositeDisposable
+//TODO : CHECK DISPOSABLE (in on stop to)
+//import io.reactivex.disposables.CompositeDisposable
 
 
 class LoginActivity : AppCompatActivity() {
     lateinit var loadingScreen: RelativeLayout
     private lateinit var preferences:SharedPreferences
-    private var compositeDisposable = CompositeDisposable()
+    //private var compositeDisposable = CompositeDisposable()
     private lateinit var userObject:UserObject
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -135,7 +135,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        compositeDisposable.clear()
+        //compositeDisposable.clear()
         super.onStop()
     }
 
