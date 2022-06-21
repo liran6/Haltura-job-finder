@@ -44,6 +44,7 @@ class MainActivity2 : AppCompatActivity() {
 //            loadingScreen.visibility = View.GONE
             AppNotifications.toastBar(this, message)
         }
+        //todo: check if admin and change nav
         //todo implement logout here!!!!
         val logOutObserver = Observer<Boolean> { value ->
 //            loadingScreen.visibility = View.GONE

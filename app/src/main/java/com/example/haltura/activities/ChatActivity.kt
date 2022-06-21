@@ -11,6 +11,7 @@ import android.util.Base64
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,16 +26,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.Adapters.ChatAdapter2
 import com.example.haltura.Adapters.ChatsAdapter
+import com.example.haltura.Fragments.ChatFragments.ChatFragment
+import com.example.haltura.Fragments.ChatFragments.ShowChatInfoDialog
+import com.example.haltura.Fragments.HomeFragments.WatchWorkDialog
+import com.example.haltura.Fragments.SignInFragments.LoginFragment
+import com.example.haltura.Models.InfoChatSerializable
 import com.example.haltura.Sql.Items.MessageSerializable
+import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
-//import com.example.haltura.ViewModels.AddWorkViewModel
-//import com.firebase.ui.auth.viewmodel.email.EmailLinkSendEmailHandler
-//import com.google.gson.Gson
-//import io.socket.client.IO
+import com.example.haltura.ViewModels.AddWorkViewModel
+import com.firebase.ui.auth.viewmodel.email.EmailLinkSendEmailHandler
+import com.google.gson.Gson
+import io.socket.client.IO
 import io.socket.client.Socket
-//import kotlinx.android.synthetic.main.activity_chat.view.*//todo : removed this import. if needed , enable kotlin-extention plugin in gradle
+import kotlinx.android.synthetic.main.activity_chat.view.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -52,7 +59,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var _sendButton: ImageView
     private lateinit var _cameraButton: ImageView
     private lateinit var _galleryButton: ImageView
-    //private lateinit var _chatImage: ImageView
+    private lateinit var _topBar: LinearLayout
     private lateinit var _chatImage: de.hdodenhof.circleimageview.CircleImageView
     private lateinit var _backButton: ImageView
     private lateinit var _chatName: TextView
@@ -65,250 +72,334 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-        initViewModel()
-        setChat()
-        initViews()
-        setValues()
-        initViewModelData()
-        initObservers()
-        initButtons()
-        initTextListener()
-        initRecyclersAndAdapters()
-        startLive()
-    }
-
-    private fun initTextListener() {
-        _textMessage.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.toString().trim { it <= ' ' }.length == 0) {
-                    _sendButton.setEnabled(false)
-                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_gray_24))
-                } else {
-                    _sendButton.setEnabled(true)
-                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_24));
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // TODO Auto-generated method stub
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                // TODO Auto-generated method stub
-            }
-        })
-    }
-
-    private fun startLive() {
-        _viewModel.startLive(_chat.id!!,this)
-    }
-
-    private fun setValues() {
-        if(_chat?.chatName == null)
-        {
-            if (_chat.members[0] == UserData.currentUser!!.userId)
-            {
-                //TODO liran added if null than ""
-                _chatName.setText(_chat?.mapUsernames?.get(_chat.members[1]) ?: "")
-            }
-            else
-            {
-                //TODO liran added if null than ""
-                _chatName.setText(_chat?.mapUsernames?.get(_chat.members[0]) ?: "")
-            }
+        if (savedInstanceState == null) {
+            //val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.chat_fragment, ChatFragment(), "ChatFragment")
+                .addToBackStack("ChatFragment")
+                .setReorderingAllowed(true)
+                .commit()
         }
-        else
-        {
-            _chatName.setText(_chat?.chatName)
-        }
-        var members = ""
-        _chat.members.sorted().forEach{
-            members += _chat.mapUsernames[it] + ", "
-        }
-        if (members.length > 2) {
-            members = members.substring(0, members.length - 2)
-        }
-        if (members.length > 30)
-        {
-            members = members.substring(0,30) + "..."
-        }
-        _members.setText(members)
-
-        if (_chat?.chatImage != null)
-        {
-            var bm = Base64.decode(_chat?.chatImage, Base64.DEFAULT)
-            var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-            _chatImage.setImageBitmap(data)
-        }
-        else
-        {
-            //todo: add profile picture
-        }
+//        initViewModel()
+//        setChat()
+//        initViews()
+//        setValues()
+//        initViewModelData()
+//        initObservers()
+//        initButtons()
+//        initTextListener()
+//        initRecyclersAndAdapters()
+//        initTopBar()
+//        startLive()
     }
 
-    private fun initViewModel() {
-        _viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
-    }
-
-    private fun initButtons() {
-        _cameraButton.setOnClickListener {
-            takeCameraImage()
-        }
-
-        _galleryButton.setOnClickListener {
-            uploadImage()
-        }
-
-        _sendButton.setOnClickListener {
-            sendMessage()
-        }
-        _sendButton.setEnabled(false)
-    }
-
-    private fun initRecyclersAndAdapters() {
-        val chatsList = _viewModel.mutableMessagesList.value!!
-        //_messageRecycle.layoutManager = LinearLayoutManager(context)
-        _chatAdapter = ChatAdapter2(
-            chatsList,
-            _clickOnItemListener = { moveToChat(it) },
-            _chat.mapUsernames
-        )
-        _messageRecycle.adapter = _chatAdapter
-    }
-
-    private fun moveToChat(it: MessageSerializable) {
-        //todo?
-    }
-
-    private fun initObservers() {
-        //todo: check if "viewLifecycleOwner" -> "this"
-        _viewModel.mutableMessagesList.observe(
-            this,
-            Observer { messagesList ->
-                messagesList?.let {
-                    updateRecyclersAndAdapters()
-                }
-            }
-        )
-    }
-
-    private fun updateRecyclersAndAdapters() {
-        _chatAdapter.setData(_viewModel.mutableMessagesList.value!!)
-        _chatAdapter.notifyDataSetChanged()
-        //recyclerView.scrollToPosition(items.size());
-        _messageRecycle.smoothScrollToPosition(_chatAdapter.getItemCount());
-    }
-
-    private fun initViewModelData() {
-        _viewModel.getAllMessages(_chat.id!!) //todo: check if _chat.id!! null
-    }
-
-    private fun setChat() {
-        _chat = ChatData.currentChat!!
-        ChatData.currentChat = null
-    }
-
-    private fun initViews() {
-        _chatImage = findViewById(R.id.image_chat)
-        _backButton = findViewById(R.id.back_button)
-        _chatName = findViewById(R.id.name_chat)
-        _members = findViewById(R.id.members)
-        _cameraButton = findViewById(R.id.camera)
-        _galleryButton = findViewById(R.id.gallery)
-        _sendButton = findViewById(R.id.sendButton)
-        _textMessage = findViewById(R.id.messageEditText)
-        _messageRecycle = findViewById(R.id.messageRecyclerView)
-        _manager = LinearLayoutManager(this)
-        _manager.stackFromEnd = true
-        _messageRecycle.layoutManager = _manager
-        _messageRecycle.addItemDecoration(VerticalSpaceItemDecoration(10))
-    }
-
-    fun sendMessage(image: Bitmap? = null)//view: View)
-    {
-        var imageString : String? = null
-        if(image != null)
-        {
-            imageString = convertImageToString(image)
-        }
-        var txt = _textMessage.text.toString()
-
-        if (txt.trim { it <= ' ' }.length == 0)
-        {
-            txt == null
-        }
-
-        if(txt != null || image != null)
-        {
-            _viewModel.SendMessage(MessageSerializable(UserData.currentUser?.userId!!,_textMessage.text.toString(), imageString))
-        }
-
-        _textMessage.setText("")
-    }
-
-    private fun convertImageToString(image: Bitmap): String {
-        val baos = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
-        val data = baos.toByteArray()
-        return  Base64.encodeToString(data, Base64.DEFAULT)
-    }
-
-
-    private fun onClickMessage(message: Message) {
-
-    }
-
-    fun getUserid(): String {
-        //todo: take userid from user (not google login)
-        return null!!
-    }
-
-    fun getUserName(): String {
-        return "ANONYMOUS"
-        //todo: take name from user (not google login)
-    }
-
-    fun uploadImage()
-    {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
-    }
-
-    fun takeCameraImage()
-    {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        //intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-        startActivityForResult(intent, REQ_CAMERA)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_CAMERA && resultCode == RESULT_OK) {
-            if (data != null) {
-                sendMessage(data.extras!!["data"] as Bitmap)
-            }
-            //todo: toast err
-        }
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            //todo:check if it is work
-            if (data != null) {
-                val uri = data.getData();
-                val imageBitMap =MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri)
-                sendMessage(imageBitMap)
-            }
-            //todo: toast err
-        }
-    }
-
-    companion object {
-        const val TAG = "ChatActivity"
-        private val REQ_CAMERA = 1
-        private  val PICK_IMAGE = 2
-    }
+//    private fun initTopBar() {
+//        _topBar.setOnClickListener {
+//            //showChatInfo(_chat.id!!)
+//            _viewModel.getChatInfo(_chat.id!!)
+//        }
+//    }
+//
+//    private fun showChatInfo(chatInfo: InfoChatSerializable) {
+//        var dialog = ShowChatInfoDialog(chatInfo)
+//        this.supportFragmentManager?.let {
+//            dialog.show(it, "ShowChatInfoDialog")
+//        }
+//    }
+//
+//    private fun initTextListener() {
+//        _textMessage.addTextChangedListener(object : TextWatcher {
+//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+//                if (s.toString().trim { it <= ' ' }.length == 0) {
+//                    _sendButton.setEnabled(false)
+//                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_gray_24))
+//                } else {
+//                    _sendButton.setEnabled(true)
+//                    _sendButton.setImageDrawable(getResources().getDrawable(R.drawable.outline_send_24));
+//                }
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+//                // TODO Auto-generated method stub
+//            }
+//
+//            override fun afterTextChanged(s: Editable) {
+//                // TODO Auto-generated method stub
+//            }
+//        })
+//    }
+//
+//    private fun startLive() {
+//        _viewModel.startLive(_chat.id!!,this)
+//    }
+//
+//    private fun setValues() {
+//        //todo: check if not group set just name in the middle
+//        if(_chat?.chatName == null)
+//        {
+//            if (_chat.members[0] == UserData.currentUser!!.userId)
+//            {
+//                _chatName.setText(_chat!!.mapUsernames[_chat.members[1]])
+//            }
+//            else
+//            {
+//                _chatName.setText(_chat!!.mapUsernames[_chat.members[0]])
+//            }
+//        }
+//        else
+//        {
+//            _chatName.setText(_chat?.chatName)
+//        }
+//        var members = ""
+//        _chat.members.sorted().forEach{
+//            members += _chat.mapUsernames[it] + ", "
+//        }
+//        if (members.length > 2) {
+//            members = members.substring(0, members.length - 2)
+//        }
+//        if (members.length > 30)
+//        {
+//            members = members.substring(0,30) + "..."
+//        }
+//        _members.setText(members)
+//
+//        if (_chat?.chatImage != null)
+//        {
+//            var bm = Base64.decode(_chat?.chatImage, Base64.DEFAULT)
+//            var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+//            _chatImage.setImageBitmap(data)
+//        }
+//        else
+//        {
+//            //todo: add profile picture
+//        }
+//    }
+//
+//    private fun initViewModel() {
+//        _viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
+//    }
+//
+//    private fun initButtons() {
+//        _cameraButton.setOnClickListener {
+//            takeCameraImage()
+//        }
+//
+//        _galleryButton.setOnClickListener {
+//            uploadImage()
+//        }
+//
+//        _sendButton.setOnClickListener {
+//            sendMessage()
+//        }
+//        _sendButton.setEnabled(false)
+//    }
+//
+//    private fun initRecyclersAndAdapters() {
+//        val chatsList = _viewModel.mutableMessagesList.value!!
+//        //_messageRecycle.layoutManager = LinearLayoutManager(context)
+//        _chatAdapter = ChatAdapter2(
+//            chatsList,
+//            _clickOnItemListener = { moveToChat(it) },
+//            _chat.mapUsernames
+//        )
+//        _messageRecycle.adapter = _chatAdapter
+//    }
+//
+//    private fun moveToChat(it: MessageSerializable) {
+//        //todo?
+//    }
+//
+//    private fun initObservers() {
+//        //todo: check if "viewLifecycleOwner" -> "this"
+//        _viewModel.mutableMessagesList.observe(
+//            this,
+//            Observer { messagesList ->
+//                messagesList?.let {
+//                    updateRecyclersAndAdapters()
+//                }
+//            }
+//        )
+//        _viewModel.mutableChatInfo.observe(
+//            this,
+//            Observer { ChatInfo ->
+//                ChatInfo?.let {
+//                    if (it != null) {
+//                        showChatInfo(it)
+//                    }
+//                }
+//            }
+//        )
+//    }
+//
+//    private fun updateRecyclersAndAdapters() {
+//        _chatAdapter.setData(_viewModel.mutableMessagesList.value!!)
+//        _chatAdapter.notifyDataSetChanged()
+//        //recyclerView.scrollToPosition(items.size());
+//        _messageRecycle.smoothScrollToPosition(_chatAdapter.getItemCount());
+//    }
+//
+//    private fun initViewModelData() {
+//        _viewModel.getAllMessages(_chat.id!!) //todo: check if _chat.id!! null
+//    }
+//
+//    private fun setChat() {
+//        _chat = ChatData.currentChat!!
+//        ChatData.currentChat = null
+//    }
+//
+//    private fun initViews() {
+//        _topBar = findViewById(R.id.topBar)
+//        _chatImage = findViewById(R.id.image_chat)
+//        _backButton = findViewById(R.id.back_button)
+//        _chatName = findViewById(R.id.name_chat)
+//        _members = findViewById(R.id.members)
+//        _cameraButton = findViewById(R.id.camera)
+//        _galleryButton = findViewById(R.id.gallery)
+//        _sendButton = findViewById(R.id.sendButton)
+//        _textMessage = findViewById(R.id.messageEditText)
+//        _messageRecycle = findViewById(R.id.messageRecyclerView)
+//        _manager = LinearLayoutManager(this)
+//        _manager.stackFromEnd = true
+//        _messageRecycle.layoutManager = _manager
+//        _messageRecycle.addItemDecoration(VerticalSpaceItemDecoration(10))
+//    }
+//
+//    fun sendMessage(image: Bitmap? = null)//view: View)
+//    {
+//        var imageString : String? = null
+//        if(image != null)
+//        {
+//            imageString = convertImageToString(image)
+//        }
+//        var txt = _textMessage.text.toString()
+//
+//        if (txt.trim { it <= ' ' }.length == 0)
+//        {
+//            txt == null
+//        }
+//
+//        if(txt != null || image != null)
+//        {
+//            _viewModel.SendMessage(MessageSerializable(UserData.currentUser?.userId!!,_textMessage.text.toString(), imageString))
+//        }
+//
+//        _textMessage.setText("")
+//    }
+//
+//    private fun convertImageToString(image: Bitmap): String {
+//        val baos = ByteArrayOutputStream()
+//        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+//        val data = baos.toByteArray()
+//        return  Base64.encodeToString(data, Base64.DEFAULT)
+//    }
+//
+//
+//    private fun onClickMessage(message: Message) {
+//
+//    }
+//
+//    fun getUserid(): String {
+//        //todo: take userid from user (not google login)
+//        return null!!
+//    }
+//
+//    fun getUserName(): String {
+//        return "ANONYMOUS"
+//        //todo: take name from user (not google login)
+//    }
+//
+//    fun uploadImage()
+//    {
+//        val intent = Intent()
+//        intent.type = "image/*"
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
+//    }
+//
+//    fun takeCameraImage()
+//    {
+//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        //intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+//        startActivityForResult(intent, REQ_CAMERA)
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == REQ_CAMERA && resultCode == RESULT_OK) {
+//            if (data != null) {
+//                sendMessage(data.extras!!["data"] as Bitmap)
+//            }
+//            //todo: toast err
+//        }
+//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+//            //todo:check if it is work
+//            if (data != null) {
+//                val uri = data.getData();
+//                val imageBitMap =MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri)
+//                sendMessage(imageBitMap)
+//            }
+//            //todo: toast err
+//        }
+//    }
+//
+//    companion object {
+//        const val TAG = "ChatActivity"
+//        private val REQ_CAMERA = 1
+//        private  val PICK_IMAGE = 2
+//    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

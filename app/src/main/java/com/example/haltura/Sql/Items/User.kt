@@ -7,23 +7,23 @@ import kotlinx.serialization.descriptors.StructureKind
 
 
 
-@Parcelize
-data class ExtendedChatSerializable(
-    @SerializedName("id") var id: String? = null,
-    @SerializedName("adminID") var adminID: String,
-    @SerializedName("chatName") var chatName: String?,
-    @SerializedName("chatImage") var chatImage: String?,
-    @SerializedName("members") var members: List<String>,
-    @SerializedName("messages") var messages: String,
-    @SerializedName("mapUsernames") var mapUsernames: Map<String,String>,
-    @SerializedName("lastMessage") var lastMessage: MessageSerializable,
-) : Parcelable
+//@Parcelize
+//data class ExtendedChatSerializable(
+//    @SerializedName("id") var id: String? = null,
+//    @SerializedName("adminID") var adminID: String,
+//    @SerializedName("chatName") var chatName: String?,
+//    @SerializedName("chatImage") var chatImage: String?,
+//    @SerializedName("members") var members: List<String>,
+//    @SerializedName("messages") var messages: String,
+//    @SerializedName("mapUsernames") var mapUsernames: Map<String,String>,
+//    @SerializedName("lastMessage") var lastMessage: MessageSerializable,
+//) : Parcelable
 
 
-@Parcelize
-data class MapSerializable(
-    @SerializedName("map") var map: Map<String,List<WorkSerializable>>,
-) : Parcelable
+//@Parcelize
+//data class MapSerializable(
+//    @SerializedName("map") var map: Map<String,List<WorkSerializable>>,
+//) : Parcelable
 
 
 @Parcelize
@@ -130,6 +130,7 @@ data class WorksList(
     @SerializedName("work_list")
     val work_list: List<WorkSerializable>
 ) : Parcelable
+
 @Parcelize
 data class WorksByDateMap(
     @SerializedName ("works_list") val works_list: Map<String,WorksList>

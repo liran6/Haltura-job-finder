@@ -1,75 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/round_edges_zero_margin"
         xmlns:tools="http://schemas.android.com/tools">
-
-
-    <RelativeLayout
-            android:id="@+id/cardView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_alignParentLeft="true"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/colorLightGray"
-            android:layout_marginLeft="13dp">
-
-        <!--                    <TextView-->
-        <!--                            android:layout_width="wrap_content"-->
-        <!--                            android:id="@+id/text"-->
-        <!--                            android:layout_height="wrap_content"-->
-        <!--                            android:layout_marginStart="10dp"-->
-        <!--                            android:layout_marginEnd="10dp"-->
-        <!--                            android:text="hello"></TextView>-->
-
-        <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:padding="10dp"
-                android:adjustViewBounds="true"
-                android:maxHeight="200dp"
-                android:maxWidth="300dp"
-                android:scaleType="fitCenter"
-                tools:srcCompat="@android:drawable/ic_menu_gallery" />
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:orientation="horizontal"
-                android:padding="2dp">
-
-        </LinearLayout>
-
-        <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"
-                android:text="03:50 am"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#5089fa"
-                android:textSize="10sp"
-                android:layout_marginEnd="139dp"
-                android:layout_alignEnd="@+id/image"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="21dp" />
-
-
-    </RelativeLayout>
-</RelativeLayout>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:theme="@style/Theme.Haltura"-->
-<!--        android:background="@drawable/round_edges">-->
 <!--    <ImageView-->
 <!--            android:layout_width="160dp"-->
 <!--            android:layout_height="160dp"-->
@@ -77,55 +12,247 @@
 <!--            android:src="@drawable/haltura_icon2"-->
 <!--            android:layout_margin="10dp"/>-->
 
-<!--    <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="vertical">-->
-<!--        <TextView-->
+
+        <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/Image"
+                android:src="@drawable/round_edges_with_black_border"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorLightGray"
+                android:textAlignment="center"
+                android:textStyle="bold|italic"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:id="@+id/itemTask"
+                android:text="item Task"
+                android:layout_marginTop="-40dp"
+                android:layout_below="@+id/Image" />
+
+        <TextView
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
+                android:gravity="start"
+                android:textSize="10dp"
+                android:id="@+id/itemSalary"
+                android:text="item Salary"
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/itemTask"
+                android:layout_toEndOf="@+id/imageView"
+                android:layout_marginStart="3dp" />
+
+        <TextView
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
+                android:gravity="start"
+                android:textSize="10dp"
+                android:id="@+id/itemDateAndTime"
+                android:text="Date and Time"
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/itemSalary"
+                android:layout_toEndOf="@+id/imageView2"
+                android:layout_marginStart="3dp" />
+
+        <TextView
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:gravity="start"
+                android:textSize="10dp"
+                android:id="@+id/itemLocation"
+                android:text="Location"
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/itemDateAndTime"
+                android:layout_toEndOf="@+id/imageView3"
+                android:layout_marginStart="3dp" />
+
+        <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                app:srcCompat="@drawable/ic_calendar_today_24"
+                android:id="@+id/imageView2"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/itemSalary" />
+
+        <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                app:srcCompat="@drawable/ic_location_on_24"
+                android:id="@+id/imageView3"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/itemDateAndTime" />
+
+        <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                app:srcCompat="@drawable/ic_money_24"
+                android:id="@+id/imageView"
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/itemTask"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="3dp" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        xmlns:tools="http://schemas.android.com/tools">-->
+
+
+<!--    <RelativeLayout-->
+<!--            android:id="@+id/cardView"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            app:cardCornerRadius="8dp"-->
+<!--            app:cardElevation="0dp"-->
+<!--            app:cardBackgroundColor="@color/colorLightGray"-->
+<!--            android:layout_marginLeft="13dp">-->
+
+<!--        &lt;!&ndash;                    <TextView&ndash;&gt;-->
+<!--        &lt;!&ndash;                            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;                            android:id="@+id/text"&ndash;&gt;-->
+<!--        &lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;                            android:layout_marginStart="10dp"&ndash;&gt;-->
+<!--        &lt;!&ndash;                            android:layout_marginEnd="10dp"&ndash;&gt;-->
+<!--        &lt;!&ndash;                            android:text="hello"></TextView>&ndash;&gt;-->
+
+<!--        <ImageView-->
+<!--                android:id="@+id/image"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:padding="10dp"-->
+<!--                android:adjustViewBounds="true"-->
+<!--                android:maxHeight="200dp"-->
+<!--                android:maxWidth="300dp"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                tools:srcCompat="@android:drawable/ic_menu_gallery" />-->
+
+<!--        <LinearLayout-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textStyle="bold|italic"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="30dp"-->
-<!--                android:id="@+id/itemTask"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="item Task" />-->
+<!--                android:layout_gravity="end"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:padding="2dp">-->
+
+<!--        </LinearLayout>-->
+
 <!--        <TextView-->
-<!--                android:layout_width="match_parent"-->
+<!--                android:id="@+id/time"-->
+<!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textAlignment="textStart"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="22dp"-->
-<!--                android:id="@+id/itemSalary"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="item Salary" />-->
-<!--        <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textAlignment="textStart"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="10dp"-->
-<!--                android:id="@+id/itemDateAndTime"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="item Date and Time" />-->
-<!--        <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textAlignment="center"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="10dp"-->
-<!--                android:id="@+id/itemLocation"-->
-<!--                android:text="Location"-->
-<!--                android:singleLine="true"/>-->
-<!--    </LinearLayout>-->
-<!--    &lt;!&ndash;    <ImageView&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_width="160dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_height="160dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:id="@+id/Image"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_margin="10dp"/>&ndash;&gt;-->
-<!--</LinearLayout>-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_marginRight="8dp"-->
+<!--                android:text="03:50 am"-->
+<!--                android:textAppearance="?android:attr/textAppearanceSmall"-->
+<!--                android:textColor="#5089fa"-->
+<!--                android:textSize="10sp"-->
+<!--                android:layout_marginEnd="139dp"-->
+<!--                android:layout_alignEnd="@+id/image"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginBottom="21dp" />-->
+
+
+<!--    </RelativeLayout>-->
+<!--</RelativeLayout>-->
+<!--&lt;!&ndash;<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:orientation="horizontal"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:theme="@style/Theme.Haltura"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:background="@drawable/round_edges">&ndash;&gt;-->
+<!--&lt;!&ndash;    <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="160dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="160dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/Image"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/haltura_icon2"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_margin="10dp"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:orientation="vertical">&ndash;&gt;-->
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textStyle="bold|italic"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/itemTask"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:singleLine="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="item Task" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="textStart"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="22dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/itemSalary"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:singleLine="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="item Salary" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="textStart"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="10dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/itemDateAndTime"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:singleLine="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="item Date and Time" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="10dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/itemLocation"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="Location"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:singleLine="true"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </LinearLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;    <ImageView&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;            android:layout_width="160dp"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;            android:layout_height="160dp"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;            android:id="@+id/Image"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;            android:layout_margin="10dp"/>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->

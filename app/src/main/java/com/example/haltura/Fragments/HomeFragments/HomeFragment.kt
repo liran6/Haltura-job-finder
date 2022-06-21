@@ -1,37 +1,52 @@
 package com.example.haltura.Fragments.HomeFragments
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.R
 import com.example.haltura.ViewModels.HomeViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haltura.Adapters.WorkAdapter
-import com.example.haltura.Fragments.BaseFragment
-import com.example.haltura.Fragments.BackButton
-import com.example.haltura.Fragments.getColorCompat
-import com.example.haltura.Fragments.makeVisible
+import com.example.haltura.Fragments.CalendarFragments.BaseFragment
+import com.example.haltura.Fragments.CalendarFragments.HasBackButton
+import com.example.haltura.Fragments.CalendarFragments.getColorCompat
+import com.example.haltura.Fragments.CalendarFragments.makeVisible
 //import com.example.haltura.Dialogs.WatchWorkDialog
+import com.example.haltura.Fragments.FragmentWithUserObject
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.UserData
+import com.example.haltura.Utils.VerticalSpaceItemDecoration
+import com.example.haltura.activities.MainActivity2
 import com.example.haltura.databinding.FragmentHomeBinding
 
 
-class HomeFragment : BaseFragment(R.layout.fragment_home), BackButton {
+class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
 
-    override val titleRes: String = "Welcome back "+UserData.currentUser?.username
-    private val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mjk2NDg1ZDQ0NzBhZGE1YzBmYWJlOGYiLCJpYXQiOjE2NTQ3MTc3MjksImV4cCI6MTY1NTMyMjUyOX0.kINx9at8G7aZkJUWfghCojlYk3DHKqgpt2gZJTHd5s4"
-    private val userId: String = "6296485d4470ada5c0fabe8f"
-
+    override val titleRes: String = "Welcome back "+UserData.currentUser?.email
 
     private val _viewModel: HomeViewModel by activityViewModels()
     private lateinit var _fragmentView: View
-    private lateinit var _workRecycle: RecyclerView
-    private lateinit var _worksAdapter: WorkAdapter
-    private var _binding: FragmentHomeBinding? = null //todo why ?
+    //All
+    private lateinit var _allWorksRecycle: RecyclerView
+    private lateinit var _allWorksAdapter: WorkAdapter
+    //Close
+    private lateinit var _closeWorksRecycle: RecyclerView
+    private lateinit var _closeWorksAdapter: WorkAdapter
+    //Recommended
+    private lateinit var _recommendedWorksRecycle: RecyclerView
+    private lateinit var _recommendedWorksAdapter: WorkAdapter
+    private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -42,69 +57,120 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), BackButton {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        var user = UserData
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         initBinding()
         initViews()
         initViewModelData()
         initObservers()
         initRecyclersAndAdapters()
-        //setHasOptionsMenu(true)
 
         return _fragmentView
     }
-    //create the options of the appbar
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.app_bar_menu, menu)}
 
     private fun initBinding() {
         _fragmentView = binding.root
     }
 
     private fun initViews() {
-        _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
-//        _workRecycle.layoutManager = LinearLayoutManager(activity,
-//            LinearLayoutManager.HORIZONTAL, false)
-//        _workRecycle.setHasFixedSize(true);
-//        val layoutManager = LinearLayoutManager(getContext(),
-//            LinearLayoutManager.HORIZONTAL,false)
-//        _workRecycle.layoutManager = layoutManager
-        //_workRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
+        //_allWorksRecycle = binding.allWorksRecyclerView
     }
 
     private fun initViewModelData() {
         _viewModel.getAllWorks()
+        _viewModel.getCloseWorks()
     }
 
     private fun initObservers() {
+        // All Works
         _viewModel.mutableWorkList.observe(
             viewLifecycleOwner,
             Observer { workList ->
                 workList?.let {
-                    updateRecyclersAndAdapters()
+                    updateAllWorksRecyclersAndAdapters()
+                }
+            }
+        )
+        // Close Works
+        _viewModel.mutableCloseWorksList.observe(
+            viewLifecycleOwner,
+            Observer { workList ->
+                workList?.let {
+                    updateCloseWorksRecyclersAndAdapters()
+                }
+            }
+        )
+        // Recommended Works
+        _viewModel.mutableRecommendedWorksList.observe(
+            viewLifecycleOwner,
+            Observer { workList ->
+                workList?.let {
+                    updateRecommendedWorksRecyclersAndAdapters()
                 }
             }
         )
     }
 
-    private fun updateRecyclersAndAdapters() {
-        _worksAdapter.setData(_viewModel.mutableWorkList.value!!)
-        _worksAdapter.notifyDataSetChanged()
+    private fun updateAllWorksRecyclersAndAdapters() {
+        _allWorksAdapter.setData(_viewModel.mutableWorkList.value!!)
+        _allWorksAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateCloseWorksRecyclersAndAdapters() {
+        _closeWorksAdapter.setData(_viewModel.mutableCloseWorksList.value!!)
+        _closeWorksAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateRecommendedWorksRecyclersAndAdapters() {
+        _closeWorksAdapter.setData(_viewModel.mutableRecommendedWorksList.value!!)
+        _closeWorksAdapter.notifyDataSetChanged()
     }
 
     private fun initRecyclersAndAdapters() {
-        _workRecycle = binding.workRecyclerView //_fragmentView.findViewById(R.id.workRecyclerView)
-        val workList = _viewModel.mutableWorkList.value!!
-        //_workRecycle.layoutManager = LinearLayoutManager(context)
-        //_workRecycle.setHasFixedSize(true);
+        initCloseWorks()
+        initRecommendedWorks()
+        initAllWorks()
+    }
+
+    private fun initCloseWorks() {
+        // Close Works
+        _closeWorksRecycle = binding.closeWorksRecyclerView
+        val workList = _viewModel.mutableCloseWorksList.value!!
         val layoutManager = LinearLayoutManager(getContext(),
             LinearLayoutManager.HORIZONTAL,false)
-        _workRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
-        _workRecycle.layoutManager = layoutManager
-        _worksAdapter = WorkAdapter(
+        _closeWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _closeWorksRecycle.layoutManager = layoutManager
+        _closeWorksAdapter = WorkAdapter(
             workList,
             _clickOnItemListener = { showWorkDetails(it) })
-        _workRecycle.adapter = _worksAdapter
+        _closeWorksRecycle.adapter = _closeWorksAdapter
+    }
+
+    private fun initRecommendedWorks() {
+        // Recommended Works
+        _recommendedWorksRecycle = binding.recommendedWorksRecyclerView
+        val workList = _viewModel.mutableRecommendedWorksList.value!!
+        val layoutManager = LinearLayoutManager(getContext(),
+            LinearLayoutManager.HORIZONTAL,false)
+        _recommendedWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _recommendedWorksRecycle.layoutManager = layoutManager
+        _recommendedWorksAdapter = WorkAdapter(
+            workList,
+            _clickOnItemListener = { showWorkDetails(it) })
+        _recommendedWorksRecycle.adapter = _recommendedWorksAdapter
+    }
+
+    private fun initAllWorks() {
+        // All Works
+        _allWorksRecycle = binding.allWorksRecyclerView
+        val workList = _viewModel.mutableWorkList.value!!
+        val layoutManager = LinearLayoutManager(getContext(),
+            LinearLayoutManager.HORIZONTAL,false)
+        _allWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _allWorksRecycle.layoutManager = layoutManager
+        _allWorksAdapter = WorkAdapter(
+            workList,
+            _clickOnItemListener = { showWorkDetails(it) })
+        _allWorksRecycle.adapter = _allWorksAdapter
     }
 
     private fun showWorkDetails(work: WorkSerializable) {
@@ -112,12 +178,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), BackButton {
         activity?.supportFragmentManager?.let {
             dialog.show(it, "WatchWorkDialog")
         }
-        //dialog.show(supportFragmentManager,"WatchWorkDialog")
-        //showWorkDetailsPopup(supervisorEmail)
-        // todo: in here or view model?
-        //todo: do it from the beginning
-        //var dialog = WatchWorkDialog(work,this)
-        //dialog.show(supportFragmentManager,"WatchWorkDialog")
     }
     override fun onStart() {
         super.onStart()

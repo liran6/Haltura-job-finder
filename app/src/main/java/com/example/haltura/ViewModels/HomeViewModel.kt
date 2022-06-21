@@ -20,11 +20,15 @@ class HomeViewModel : ViewModel() {
     val mutableMessageToasting: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////  All Works  //////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }
+    val mutableAllChatsList: MutableList<ChatSerializable> =mutableListOf() // TODO: in the future do like chats (filter)
 
-    lateinit var WorkApiLiveData: MutableLiveData<UserResponse?>
     private var json = Gson()
 
 
@@ -35,7 +39,7 @@ class HomeViewModel : ViewModel() {
         val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //WorkApiLiveData.postValue(null)//todo:init
+                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -48,55 +52,82 @@ class HomeViewModel : ViewModel() {
                         mutableWorkList.value!!.add(work)
                     }
                     mutableWorkList.notifyAllObservers()
-                    //mutableWorkList.notifyObserver()
-//                    var res = response.body()?.string()
-//                    //val listType = object : TypeToken<List<String>>(){ }.type
-//                    var work_list = json.fromJson(res, WorksList::class.java)
-                    var x = 1
                 } else {
-                    var x = 1
+                    //TODO: toast
                 }
             }
         })
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////  Close Works  ////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    val mutableCloseWorksList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
+        MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
+    }
+
+    fun getCloseWorks() {
+        mutableCloseWorksList.value!!.clear()
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.getCloseWorksOfUserId("Bearer " + UserData.currentUser?.token!!,
+        UserData.currentUser!!.userId)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                //TODO: toast
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val jObject = JSONObject(response.body()!!.string())
+                    val works = jObject.get("work_list") as JSONArray
+                    for (i in 0 until works.length())
+                    {
+                        val work = json.fromJson(works.getJSONObject(i).toString(), WorkSerializable::class.java)
+                        mutableCloseWorksList.value!!.add(work)
+                    }
+                    mutableCloseWorksList.notifyAllObservers()
+                } else {
+                    //TODO: toast
+                }
+            }
+        })
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////  Recommended Works  //////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    val mutableRecommendedWorksList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
+        MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
+    }
+
+    fun getRecommendedWorks() {
+        mutableRecommendedWorksList.value!!.clear()
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                //TODO: toast
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val jObject = JSONObject(response.body()!!.string())
+                    val works = jObject.get("work_list") as JSONArray
+                    for (i in 0 until works.length())
+                    {
+                        val work = json.fromJson(works.getJSONObject(i).toString(), WorkSerializable::class.java)
+                        mutableRecommendedWorksList.value!!.add(work)
+                    }
+                    mutableRecommendedWorksList.notifyAllObservers()
+                } else {
+                    //TODO: toast
+                }
+            }
+        })
+    }
+
+
+
 }
-
-
-//class HomeViewModel : ViewModel() {
-//    val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
-//        MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
-//    }
-//
-//    lateinit var WorkApiLiveData: MutableLiveData<UserResponse?>
-//    private var json = Gson()
-//
-//    //todo: make all of the things private with public link?
-////    private val _text = MutableLiveData<String>().apply {
-////        value = "This is home Fragment"
-////    }
-////    val text: LiveData<String> = _text
-//
-//
-//    fun getAllWorks(token: String) {
-//        val retroService =
-//            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
-//        val call = retroService.getAllWorks("Bearer $token")
-//        call.enqueue(object : Callback<ResponseBody> {
-//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                WorkApiLiveData.postValue(null)
-//            }
-//
-//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                if (response.isSuccessful) {
-//                    var res = response.body()?.string()
-//                    //val listType = object : TypeToken<List<String>>(){ }.type
-//                    var work_list = json.fromJson(res, WorksList::class.java)
-//                    var x = 1
-//                } else {
-//                    var x = 1
-//                }
-//            }
-//        })
-//    }
-//}
