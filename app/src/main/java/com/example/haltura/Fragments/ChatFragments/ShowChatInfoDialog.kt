@@ -1,7 +1,9 @@
 package com.example.haltura.Fragments.ChatFragments
 
+import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,8 @@ import androidx.lifecycle.Observer
 import com.example.haltura.Adapters.ProfileAdapter
 import com.example.haltura.Models.InfoChatSerializable
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.HorizontalSpaceItemDecoration
+import com.example.haltura.Utils.VerticalSpaceItemDecoration
 
 class ShowChatInfoDialog : Fragment {
 
@@ -26,7 +30,7 @@ class ShowChatInfoDialog : Fragment {
 
     private val _viewModel: ShowChatInfoDialogViewModel by activityViewModels()
     private lateinit var _fragmentView: View
-    private lateinit var _image: ImageView
+    private lateinit var _image: de.hdodenhof.circleimageview.CircleImageView
     private lateinit var _nameOfChat: TextView
     //RecyclerView and Adapter
     private lateinit var _membersRecycle: RecyclerView
@@ -92,6 +96,27 @@ class ShowChatInfoDialog : Fragment {
                 }
             }
         )
+            _viewModel.mutableChatInfo.observe(
+                viewLifecycleOwner,
+            Observer { ChatInfo ->
+                ChatInfo?.let {
+                    if (it != null) {
+                        putValues(it)
+                    }
+                }
+            }
+        )
+    }
+
+    private fun putValues(chatInfo: InfoChatSerializable) {
+        _nameOfChat.setText(chatInfo.chatName)
+        if (chatInfo.chatImage != null)
+        {
+            //image
+            var bm = Base64.decode(chatInfo.chatImage, Base64.DEFAULT)
+            var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+            _image.setImageBitmap(data)
+        }
     }
 
     private fun updateRecyclersAndAdapters() {
@@ -102,7 +127,10 @@ class ShowChatInfoDialog : Fragment {
     private fun initRecyclersAndAdapters() {
         _membersRecycle = binding.membersRecyclerview
         val workList = _viewModel.mutableMembersList.value!!
-        _membersRecycle.layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(getContext(),
+            LinearLayoutManager.VERTICAL,false)
+        _membersRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
+        _membersRecycle.layoutManager = layoutManager
         _membersAdapter = ProfileAdapter(
             workList,
             _clickOnItemListener = { showProfile(it) }
