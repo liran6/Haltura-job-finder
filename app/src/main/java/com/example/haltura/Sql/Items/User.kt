@@ -7,23 +7,23 @@ import kotlinx.serialization.descriptors.StructureKind
 
 
 
-//@Parcelize
-//data class ExtendedChatSerializable(
-//    @SerializedName("id") var id: String? = null,
-//    @SerializedName("adminID") var adminID: String,
-//    @SerializedName("chatName") var chatName: String?,
-//    @SerializedName("chatImage") var chatImage: String?,
-//    @SerializedName("members") var members: List<String>,
-//    @SerializedName("messages") var messages: String,
-//    @SerializedName("mapUsernames") var mapUsernames: Map<String,String>,
-//    @SerializedName("lastMessage") var lastMessage: MessageSerializable,
-//) : Parcelable
+@Parcelize
+data class ExtendedChatSerializable(
+    @SerializedName("id") var id: String? = null,
+    @SerializedName("adminID") var adminID: String,
+    @SerializedName("chatName") var chatName: String?,
+    @SerializedName("chatImage") var chatImage: String?,
+    @SerializedName("members") var members: List<String>,
+    @SerializedName("messages") var messages: String,
+    @SerializedName("mapUsernames") var mapUsernames: Map<String,String>,
+    @SerializedName("lastMessage") var lastMessage: MessageSerializable,
+) : Parcelable
 
 
-//@Parcelize
-//data class MapSerializable(
-//    @SerializedName("map") var map: Map<String,List<WorkSerializable>>,
-//) : Parcelable
+@Parcelize
+data class MapSerializable(
+    @SerializedName("map") var map: Map<String,List<WorkSerializable>>,
+) : Parcelable
 
 
 @Parcelize
@@ -112,11 +112,14 @@ data class WorkSerializable(
 
 @Parcelize
 data class AddresSerializable(
-    @SerializedName("city") var city: String,
-    @SerializedName("street") var street: String,
-    @SerializedName("streetNum") var streetNum: Int,
-    @SerializedName("floor") var floor: Int,
-    @SerializedName("appartment") var appartment: String,
+//    @SerializedName("city") var city: String,
+//    @SerializedName("street") var street: String,
+//    @SerializedName("streetNum") var streetNum: Int,
+//    @SerializedName("floor") var floor: Int,
+//    @SerializedName("appartment") var appartment: String,
+    @SerializedName("address") var address: String,
+    @SerializedName("latitude") var latitude: Double,
+    @SerializedName("longitude") var longitude: Double
 ) : Parcelable
 
 @Parcelize

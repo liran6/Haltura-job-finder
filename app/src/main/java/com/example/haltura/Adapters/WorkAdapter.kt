@@ -54,9 +54,9 @@ class WorkAdapter(
         viewHolder.dateAndTime.text = DateTime.getDate(currentItem.startTime) + " From " +
                 DateTime.getTime(currentItem.startTime) + " To " +
                 DateTime.getTime(currentItem.endTime)
-        viewHolder.location.text = currentItem.address.street + " " + currentItem.address.streetNum +
-                ", " + currentItem.address.city
-
+//        viewHolder.location.text = currentItem.address.street + " " + currentItem.address.streetNum +
+//                ", " + currentItem.address.city
+        viewHolder.location.text = currentItem.address.address
         var bm = Base64.decode(currentItem.image, Base64.DEFAULT)
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
         //var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data,10)

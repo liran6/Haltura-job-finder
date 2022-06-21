@@ -37,9 +37,9 @@ class ChatViewModel : ViewModel() {
         MutableLiveData<MutableList<MessageSerializable>>(mutableListOf())
     }
 
-    val mutableChatInfo: MutableLiveData<InfoChatSerializable> by lazy { //by lazy
-        MutableLiveData<InfoChatSerializable>(null)
-    }
+//    val mutableChatInfo: MutableLiveData<InfoChatSerializable> by lazy { //by lazy
+//        MutableLiveData<InfoChatSerializable>(null)
+//    }
 
 //    object AddressList: MutableLiveData<List<Address>>()
 //    fun getAddressesLiveData(): LiveData<List<Address>> {
@@ -148,32 +148,32 @@ class ChatViewModel : ViewModel() {
     }
 
 
-    fun getChatInfo(chatId :String) {
-        //mutableMembersList.value!!.clear()
-        val retroService =
-            ServiceBuilder.getRetroInstance().create(ChatAPI::class.java)
-        val call = retroService.getChatInfo("Bearer " +
-                UserData.currentUser?.token!!, chatId)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //mutableMessageToasting.postValue(Const.Connecting_Error)
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    val res = response.body()!!.string()
-                    //val jObject = JSONObject(response.body()!!.string())
-                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
-                    //val profiles = jObject.get("profile_list") as JSONArray
-                    mutableChatInfo.value = json.fromJson(res, InfoChatSerializable::class.java)
-                    //mutableChatInfo.notifyAllObservers()
-                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
-                    //chatInfo.profileList?.let { mutableMembersList.value!!.addAll(it) }
-                    //mutableMembersList.notifyAllObservers()
-                } else {
-                    //mutableMessageToasting.postValue(Const.Token_Error)
-                }
-            }
-        })
-    }
+//    fun getChatInfo(chatId :String) {
+//        //mutableMembersList.value!!.clear()
+//        val retroService =
+//            ServiceBuilder.getRetroInstance().create(ChatAPI::class.java)
+//        val call = retroService.getChatInfo("Bearer " +
+//                UserData.currentUser?.token!!, chatId)
+//        call.enqueue(object : Callback<ResponseBody> {
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                //mutableMessageToasting.postValue(Const.Connecting_Error)
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                if (response.isSuccessful) {
+//                    val res = response.body()!!.string()
+//                    //val jObject = JSONObject(response.body()!!.string())
+//                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
+//                    //val profiles = jObject.get("profile_list") as JSONArray
+//                    mutableChatInfo.value = json.fromJson(res, InfoChatSerializable::class.java)
+//                    //mutableChatInfo.notifyAllObservers()
+//                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
+//                    //chatInfo.profileList?.let { mutableMembersList.value!!.addAll(it) }
+//                    //mutableMembersList.notifyAllObservers()
+//                } else {
+//                    //mutableMessageToasting.postValue(Const.Token_Error)
+//                }
+//            }
+//        })
+//    }
 }

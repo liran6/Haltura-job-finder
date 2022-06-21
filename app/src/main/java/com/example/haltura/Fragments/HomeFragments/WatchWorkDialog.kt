@@ -31,22 +31,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
 
-class WatchWorkDialog : DialogFragment{// , OnMapReadyCallback {
+class WatchWorkDialog : DialogFragment {
 
     private lateinit var _work: WorkSerializable
-    //
     private lateinit var _mMap: GoogleMap
-    //private lateinit var calendar: Calendar
     private lateinit var _image: ImageView
     private lateinit var _taskAndCompany : TextView
     private lateinit var _salary: TextView
-    //private lateinit var etNumberOfWorkers: EditText
     private lateinit var _location: TextView
     private lateinit var _info: TextView
     private lateinit var _dateAndTime: TextView
     private lateinit var _registerToWork: Button
-    private lateinit var rootView: View
-    //
     private val _viewModel: WatchWorkViewModel by activityViewModels()
     private var _binding: WatchWorkDialogBinding? = null
 
@@ -55,7 +50,6 @@ class WatchWorkDialog : DialogFragment{// , OnMapReadyCallback {
     private val binding get() = _binding!!
     private lateinit var _fragmentView: View
 
-    ///
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -68,16 +62,12 @@ class WatchWorkDialog : DialogFragment{// , OnMapReadyCallback {
          */
         _mMap = googleMap
         initMap()
-        //val sydney = LatLng(-34.0, 151.0)
-        //googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
-    ///
 
     constructor(work: WorkSerializable):super()
     {
@@ -89,29 +79,17 @@ class WatchWorkDialog : DialogFragment{// , OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_edges)
-        //rootView = inflater.inflate(R.layout.watch_work_dialog, container, false)
         _binding = WatchWorkDialogBinding.inflate(inflater, container, false)
-        //val root: View = binding.root
         _fragmentView = binding.root
-
         initViews()
-        //initMap()
         initButtons()
-
-        //return rootView
         return _fragmentView
     }
 
     private fun initMap() {
-        var addr = getAddress()
-        //todo remove markers
-        var point  = getLocationFromAddress(addr)
-        if (point != null)
-        {
-            _mMap.addMarker(MarkerOptions().position(point).title(addr))
-            //mMap.get
-            _mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15.0f))
-        }
+        var p = LatLng(_work!!.address.latitude, _work!!.address.longitude)
+        _mMap.addMarker(MarkerOptions().position(p).title(_work!!.address.address))
+        _mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p,15.0f))
     }
 
     private fun initButtons() {
@@ -120,24 +98,6 @@ class WatchWorkDialog : DialogFragment{// , OnMapReadyCallback {
             _viewModel.registerToWork(_work)
         }
     }
-
-//    private fun initMap() {
-//        try
-//        {
-//            var fm = getActivity()?.getSupportFragmentManager();/// getChildFragmentManager();
-//            var supportMapFragment = fm?.findFragmentById(R.id.map) as SupportMapFragment
-//            if (supportMapFragment == null) {
-//                supportMapFragment = SupportMapFragment.newInstance()
-//                if (fm != null) {
-//                    fm.beginTransaction().replace(R.id.map, supportMapFragment).commit()
-//                }
-//            }
-//            supportMapFragment.getMapAsync(this);
-//        }catch (e:java.lang.Exception)
-//        {
-//
-//        }
-//    }
 
     private fun initViews() {
         _image = binding.itemImage
@@ -152,100 +112,13 @@ class WatchWorkDialog : DialogFragment{// , OnMapReadyCallback {
         if (_work.company != null) {taskAndCompany += "(" + _work.company+ ")"}
         _taskAndCompany.text = taskAndCompany
         _salary.text = "Salary: " + _work.salary + "₪ per hour"
-        _location.text = getAddress()
+        _location.text = _work.address.address
         _info.text = _work.info
         _dateAndTime.text = DateTime.getDate(_work.startTime) + " From " +
                 DateTime.getTime(_work.startTime) + " To " +
-                DateTime.getTime(_work.endTime)//= "FROM: " +_work.startTime + " TO " + _work.startTime
+                DateTime.getTime(_work.endTime)
         var bm = Base64.decode(_work.image, Base64.DEFAULT)
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
         _image.setImageBitmap(data)
-//        Image = rootView.findViewById<View>(R.id.itemImage) as ImageView
-//        TaskAndCompany = rootView.findViewById<View>(R.id.itemTaskAndCompany) as TextView
-//        Salary = rootView.findViewById<View>(R.id.itemSalary) as TextView
-//        Location = rootView.findViewById<View>(R.id.itemLocation) as TextView
-//        Info = rootView.findViewById<View>(R.id.itemInfo) as TextView
-//        DateAndTime = rootView.findViewById<View>(R.id.itemDateAndTime) as TextView
-//        registerToWork = rootView.findViewById<View>(R.id.RegisterToWork) as Button
-//        //todo on click
-//        //
-//        var taskAndCompany = work.task
-//        if (work.company != null) {taskAndCompany += "(" + work.company+ ")"}
-//        TaskAndCompany.text = taskAndCompany
-//        Salary.text = "Salary: " + work.salary
-//        Location.text = getAddress()
-//        Info.text = work.info
-//        DateAndTime.text = "FROM: " +work.startTime + " TO " + work.startTime
-//        var bm = Base64.decode(work.image, Base64.DEFAULT)
-//        var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-//        Image.setImageBitmap(data)
-
-//        var mMapFragment = object : SupportMapFragment() {
-//            override fun onActivityCreated(savedInstanceState: Bundle?) {
-//                super.onActivityCreated(savedInstanceState)
-//                mMap = mMapFragment.getMap()
-//                if (mMap != null) {
-//                    setupMap()
-//                }
-//            }
-//        }
-    }
-
-
-//    override fun onMapReady(googleMap: GoogleMap) {
-//        _mMap = googleMap
-//
-////        var p1 = getLocationFromAddress("ben tzvi 40 givatayim")
-////
-////        if (ActivityCompat.checkSelfPermission(
-////                this,
-////                Manifest.permission.ACCESS_FINE_LOCATION
-////            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-////                this,
-////                Manifest.permission.ACCESS_COARSE_LOCATION
-////            ) != PackageManager.PERMISSION_GRANTED
-////        ) {
-////            // TODO: Consider calling
-////            //    ActivityCompat#requestPermissions
-////            // here to request the missing permissions, and then overriding
-////            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-////            //                                          int[] grantResults)
-////            // to handle the case where the user grants the permission. See the documentation
-////            // for ActivityCompat#requestPermissions for more details.
-////            return
-////        }
-////        mMap.setMyLocationEnabled(true)
-//        //val p = getLocationFromAddress()
-//        //todo set your location
-//        var addr = getAddress()
-//        var p  = getLocationFromAddress(addr)
-//        if (p != null) {
-//            _mMap.addMarker(MarkerOptions().position(p).title(addr))
-//            _mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p, 15.0f))
-//        }
-//    }
-
-    private fun getAddress(): String? {
-        return _work.address.street + " " + _work.address.streetNum + ", " + _work.address.city
-    }
-
-    fun getLocationFromAddress(strAddress: String?): LatLng? {
-        val coder = Geocoder(context)
-        val address: List<Address>?
-        try {
-            address = coder.getFromLocationName(strAddress, 5)
-            if (address == null) {
-                return null
-            }
-            val location: Address = address[0]
-            return LatLng(location.getLatitude(), location.getLongitude())
-            //return GeoPoint(location.getLatitude(), location.getLongitude())
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } catch (e : Exception)
-        {
-            e.printStackTrace()
-        }
-        return null
     }
 }
