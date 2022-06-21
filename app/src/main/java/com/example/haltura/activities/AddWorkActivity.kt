@@ -46,9 +46,12 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
 
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 //import kotlinx.android.synthetic.main.activity_add_work.*//todo
 //import kotlinx.android.synthetic.main.manage_work_item.*
 import java.io.ByteArrayOutputStream
@@ -107,38 +110,33 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(view)
         initMap()
         initViews()
-        initAutoComplete()
-        initPlaceSelected()
+        initAutoPlaces()
         initViewModel()
+        initOnClick()
         setWork()
         initTimePickers()
         initObservers()
     }
 
-    private fun initPlaceSelected() {
-        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            override fun onPlaceSelected(place: Place) {
-                // TODO: Get info about the selected place.
-                place.latLng?.let { place.address?.let { it1 -> showAdderssOnMap2(it, it1) } }
-                etStreetName.text = place.address
-                latitude = place.latLng.latitude
-                longitude = place.latLng.longitude
-            }
-
-            override fun onError(status: Status) {
-                // TODO: Handle the error.
-            }
-        })
+    private fun initOnClick() {
+        etStreetName.setOnClickListener {
+            searchAddress()
+        }
     }
 
-    private fun initAutoComplete(){
+    fun searchAddress() {
+        val fields = listOf(Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+            .build(this)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+
+    }
+
+
+    private fun initAutoPlaces(){
         if (!Places.isInitialized()) {
             Places.initialize(this.applicationContext, getString(R.string.Maps_API), Locale.US);
         }
-        autocompleteFragment =
-            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
-                    as AutocompleteSupportFragment
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ADDRESS, Place.Field.LAT_LNG))
     }
 
 
@@ -146,14 +144,14 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         _viewModel.mutableMessageToasting.observe(
             this
         ) { message ->
-            message.let {
-                if (message == Const.AddWorkSuccess) {
-                    AppNotifications.toastBar(this, message)
-                    this.onBackPressed()
-                } else {
-                    AppNotifications.toastBar(this, message)
+                message.let {
+                    if (message == Const.AddWorkSuccess) {
+                        AppNotifications.toastBar(this, message)
+                        this.onBackPressed()
+                    } else {
+                        AppNotifications.toastBar(this, message)
+                    }
                 }
-            }
             }
         }
     private fun initViewModel() {
@@ -309,7 +307,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         {
             //todo set your location
             var p = LatLng(32.0589923, 34.8241127)
-            mMap.addMarker(MarkerOptions().position(p).title(_work!!.address.address))
+            mMap.addMarker(MarkerOptions().position(p).title("your location"))
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p,15.0f))
         }
     }
@@ -550,12 +548,35 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             //todo: toast err
         }
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        place.latLng?.let { place.address?.let { it1 -> showAdderssOnMap2(it, it1) } }
+                        etStreetName.text = place.address
+                        latitude = place.latLng.latitude
+                        longitude = place.latLng.longitude
+                    }
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    data?.let {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                    }
+                }
+                Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
+            }
+            return
+        }
     }
 
     companion object
     {
         private val REQ_CAMERA = 1
         private  val PICK_IMAGE = 2
-        //private  val PLACE_PICKER_REQUEST = 3
+        private  val AUTOCOMPLETE_REQUEST_CODE = 3
     }
 }
