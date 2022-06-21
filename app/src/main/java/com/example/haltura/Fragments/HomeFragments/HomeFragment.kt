@@ -16,12 +16,8 @@ import com.example.haltura.ViewModels.HomeViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haltura.Adapters.WorkAdapter
-import com.example.haltura.Fragments.CalendarFragments.BaseFragment
-import com.example.haltura.Fragments.CalendarFragments.HasBackButton
-import com.example.haltura.Fragments.CalendarFragments.getColorCompat
-import com.example.haltura.Fragments.CalendarFragments.makeVisible
+import com.example.haltura.Fragments.*
 //import com.example.haltura.Dialogs.WatchWorkDialog
-import com.example.haltura.Fragments.FragmentWithUserObject
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
@@ -31,9 +27,9 @@ import com.example.haltura.activities.MainActivity2
 import com.example.haltura.databinding.FragmentHomeBinding
 
 
-class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
+class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton {
 
-    override val titleRes: String = "Welcome back "+UserData.currentUser?.email
+    override val titleRes: String = "Welcome back "+UserData.currentUser?.username
 
     private val _viewModel: HomeViewModel by activityViewModels()
     private lateinit var _fragmentView: View

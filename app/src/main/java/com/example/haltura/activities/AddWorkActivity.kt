@@ -35,7 +35,7 @@ import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.WorkData
 import com.example.haltura.ViewModels.AddWorkViewModel
-import com.example.haltura.activities.ChatActivity.Companion.TAG
+//import com.example.haltura.activities.ChatActivity.Companion.TAG
 import com.example.haltura.databinding.ActivityAddWorkBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -258,14 +258,14 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: ${place.address}, ${place.latLng}")
+                //Log.i(TAG, "Place: ${place.address}, ${place.latLng}")
                 place.latLng?.let { place.address?.let { it1 -> showAdderssOnMap2(it, it1) } }
                 binding.etStreetName.text = place.address
                             }
 
             override fun onError(status: Status) {
                 // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: $status")
+                //Log.i(TAG, "An error occurred: $status")
             }
         })
 

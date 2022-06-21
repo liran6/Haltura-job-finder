@@ -27,23 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.Adapters.ChatAdapter2
 import com.example.haltura.Adapters.ChatsAdapter
 import com.example.haltura.Fragments.ChatFragments.ChatFragment
-import com.example.haltura.Fragments.ChatFragments.ShowChatInfoDialog
-import com.example.haltura.Fragments.HomeFragments.WatchWorkDialog
-import com.example.haltura.Fragments.SignInFragments.LoginFragment
-import com.example.haltura.Models.InfoChatSerializable
-import com.example.haltura.Sql.Items.MessageSerializable
-import com.example.haltura.Sql.Items.WorkSerializable
-import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.UserData
-import com.example.haltura.Utils.VerticalSpaceItemDecoration
-import com.example.haltura.ViewModels.AddWorkViewModel
-import com.firebase.ui.auth.viewmodel.email.EmailLinkSendEmailHandler
-import com.google.gson.Gson
-import io.socket.client.IO
-import io.socket.client.Socket
-import kotlinx.android.synthetic.main.activity_chat.view.*
-import java.io.ByteArrayOutputStream
-import java.util.*
+
 
 //todo:
 // Scroll down when a new message arrives
