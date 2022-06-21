@@ -75,7 +75,6 @@ class LoginViewModel : ViewModel() {
         val call = retroService.userAuth(user)
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                val b = 1
                 mutableMessageToasting.postValue(Const.Connecting_Error)
                 mutableLogout.postValue(true)
             }

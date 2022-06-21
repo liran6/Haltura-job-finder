@@ -80,12 +80,12 @@ class ChatFragment : Fragment() {
 
     private fun initTopBar() {
         _topBar.setOnClickListener {
-            //showChatInfo(_chat.id!!)
-            _viewModel.getChatInfo(_chat.id!!)
+            showChatInfo()
+            //_viewModel.getChatInfo(_chat.id!!)
         }
     }
 
-    private fun showChatInfo(chatInfo: InfoChatSerializable) {
+    private fun showChatInfo() {
 //        var dialog = ShowChatInfoDialog(chatInfo)
 //        activity!!.supportFragmentManager?.let {
 //            dialog.show(it, "ShowChatInfoDialog")
@@ -214,16 +214,16 @@ class ChatFragment : Fragment() {
                 }
             }
         )
-        _viewModel.mutableChatInfo.observe(
-            viewLifecycleOwner,
-            Observer { ChatInfo ->
-                ChatInfo?.let {
-                    if (it != null) {
-                        showChatInfo(it)
-                    }
-                }
-            }
-        )
+//        _viewModel.mutableChatInfo.observe(
+//            viewLifecycleOwner,
+//            Observer { ChatInfo ->
+//                ChatInfo?.let {
+//                    if (it != null) {
+//                        showChatInfo(it)
+//                    }
+//                }
+//            }
+//        )
     }
 
     private fun updateRecyclersAndAdapters() {

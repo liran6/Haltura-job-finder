@@ -9,6 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UserObject(
     @SerializedName("id") var userId: String,
+    @SerializedName("username") var username: String,
     @SerializedName("email") var email: String,
     @SerializedName("token") var token: String,
     @SerializedName("profile") var profile: ProfileSerializable?,
