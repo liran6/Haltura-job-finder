@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.WorkAPI
+import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Sql.Items.UserResponse
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Sql.Items.WorksList
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.notifyAllObservers
@@ -90,4 +92,54 @@ class WorkViewModel : ViewModel() {
         })
     }
 
+
+
+
+
+
+
+
+
+
+//    val mutableWorksList: MutableLiveData<Array<WorkSerializable>> by lazy { //by lazy
+//        MutableLiveData<Array<WorkSerializable>>()
+//    }
+//
+//
+//    fun getAllOfYourWorks1() {
+//        mutableWorksList.value = null
+//        val retroService =
+//            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+//        val call = retroService.getAllWorksThatUserIdPublished("Bearer " +
+//                UserData.currentUser?.token!!, UserData.currentUser?.userId!!)
+//        call.enqueue(object : Callback<ResponseBody> {
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                //WorkApiLiveData.postValue(null)
+//                mutableMessageToasting.postValue(Const.Connecting_Error)
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                if (response.isSuccessful) {
+//                    var res = response.body()?.string()
+//                    var worksInfo = json.fromJson(res, Array<WorkSerializable>::class.java)
+//                    var y= 1
+//                    mutableWorksList.postValue(worksInfo)
+////                    val jObject = JSONObject(response.body()!!.string())
+////                    val works = jObject.get("work_list") as JSONArray
+////                    for (i in 0 until works.length())
+////                    {
+////                        val work = json.fromJson(works.getJSONObject(i).toString(), WorkSerializable::class.java)
+////                        mutableWorkList.value!!.add(work)
+////                    }
+//                    mutableWorkList.notifyAllObservers()
+////                    var res = response.body()?.string()
+////                    //val listType = object : TypeToken<List<String>>(){ }.type
+////                    var work_list = json.fromJson(res, WorksList::class.java)
+//                    var x = 1
+//                } else {
+//                    mutableMessageToasting.postValue(Const.Token_Error)
+//                }
+//            }
+//        })
+//    }
 }

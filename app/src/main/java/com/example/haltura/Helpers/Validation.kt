@@ -7,13 +7,17 @@ import android.widget.Spinner
 import android.widget.TextView
 //import com.example.haltura.Sql.UserOpenHelper
 
-
 class Validation {
     companion object {
         private val NAME_ERROR = "you must to insert %s or more characters!"
-        private val USER_NAME_ERROR = "username must contain only lowercase letters! [a-z]\n" +
-                "username must start with a letter!\n" +
-                "username length must be between 4-16 characters!"
+        private val USER_NAME_ERROR = "Username must length must be between 4-16 characters!\n" +
+                " start with a lower case letter and contain only\n" +
+                " lower case letters a-z, digits 0-9, and hyphens \'-\' "
+
+
+//        private val USER_NAME_ERROR = "username must contain only lowercase letters! [a-z]\n" +
+//                "username must start with a letter!\n" +
+//                "username length must be between 4-16 characters!"
         private val PHONE_ERROR = "you must to insert a valid phone!"
         private val PASSWORD_ERROR = "you must to insert 5 or more characters!"
         private val CONF_PASSWORD_ERROR = "those passwords didn't match. try again!"
