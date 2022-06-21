@@ -229,20 +229,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+                        android:textSize="18sp"
+                        android:gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:hint="Search your address here:"
                         android:textAlignment="center"
-                        android:textSize="18sp"
                         android:singleLine="true"
                         android:textStyle="bold|italic"
                         android:layout_gravity="center"/>
 
-                <fragment android:id="@+id/autocomplete_fragment"
+                <Button
+                        android:id="@+id/btn_search_address"
                         android:layout_width="match_parent"
+                        android:layout_gravity="center"
                         android:layout_height="wrap_content"
-                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                        />
+                        android:layout_marginTop="20dp"
+                        android:onClick="searchAddress"
+                        android:text="click to Search your Address" />
+
+
+<!--                <fragment-->
+<!--                        android:id="@+id/autocomplete_fragment"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+<!--                        />-->
 
 <!--                <EditText-->
 <!--                        android:id="@+id/et_StreetNumber"-->
