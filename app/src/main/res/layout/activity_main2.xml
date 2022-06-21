@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:theme="@style/Theme.Haltura.AppBarOverlay"
+            android:theme="@style/Theme.Haltura"
             android:id="@+id/appBarLayout">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -24,7 +24,6 @@
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:menu="@menu/app_bar_menu"
                 app:navigationIcon="@drawable/arrow_back_press"
-
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:popupTheme="@style/Theme.Haltura.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>

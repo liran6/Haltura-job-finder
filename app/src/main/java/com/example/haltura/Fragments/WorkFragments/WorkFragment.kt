@@ -7,7 +7,6 @@ import com.example.haltura.Fragments.*
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -26,9 +25,9 @@ import com.example.haltura.ViewModels.WorkViewModel
 import com.example.haltura.activities.AddWorkActivity
 import com.example.haltura.databinding.FragmentWorkBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.work_remove_popup.view.*
+//import kotlinx.android.synthetic.main.work_remove_popup.view.*//todo : removed this import. if needed , enable kotlin-extention plugin in gradle
 
-class WorkFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
+class WorkFragment : BaseFragment(R.layout.fragment_work), BackButton,ProfileSettingsButton {
     override val titleRes: String = "Works Created BY You : " //R.string.title_work
     private val _viewModel: WorkViewModel by activityViewModels()
     private lateinit var _fragmentView: View
@@ -62,6 +61,10 @@ class WorkFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
 
         return _fragmentView
     }
+    //create the options of the appbar
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.app_bar_menu, menu)}
+
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        if (item.getItemId() == android.R.id.home) {
 //            if (activity != null) {

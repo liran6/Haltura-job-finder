@@ -3,14 +3,13 @@ package com.example.haltura.activities
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.haltura.AppNotifications
@@ -35,6 +34,11 @@ class MainActivity2 : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        binding = ActivityMain2Binding.inflate(layoutInflater)
+//        setContentView(binding.root)
+
+
+
         preferences = Preferences.customPrefs(this, Const.loginPreferences)
         val toastObserver = Observer<String> { message ->
 //            loadingScreen.visibility = View.GONE
@@ -51,14 +55,19 @@ class MainActivity2 : AppCompatActivity() {
             }
 
         }
+
+
+
         observersInit(toastObserver, logOutObserver)
         loginViewModel.getCurrentUser()
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar= findViewById(R.id.toolbar)
-        actionBarObservers()
 
+        setSupportActionBar(binding.toolbar)
+
+        supportActionBar = findViewById(R.id.toolbar)
+
+        //actionBarObservers()
 
 
         //supportActionBar.setDisplayShowTitleEnabled(true)
@@ -96,21 +105,38 @@ class MainActivity2 : AppCompatActivity() {
         navView.setupWithNavController(navController)
         //todo: add menu of logout and profile
         //todo: change stay login to just token - func of getCurrent and check if token still valid
-    }
-    private fun actionBarObservers(){
-        supportActionBar.title = "Welcome back " + UserData.currentUser?.email
 
+
+        //preventing double click on nav menu item
+        navView.setOnItemSelectedListener {item->
+            if (navController.currentDestination?.id == item.itemId ){
+                false
+            } else {
+                onNavDestinationSelected(
+                    item,
+                    navController
+                )
+            }
+        }
+    }
+
+
+    private fun actionBarObservers() {
         supportActionBar.setNavigationOnClickListener {
             this.onBackPressed()
         }
 
+        supportActionBar.title = "Welcome" + UserData.currentUser?.email
+
+
+
         supportActionBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
 
-                R.id.profile_settings -> {
-                    //TOdo hendle profile intent
-                    true
-                }
+//                R.id.profile_settings -> {
+//                    //TOdo hendle profile intent
+//                    true
+//                }
 //                R.id.more -> {
 //                    // Handle more item (inside overflow menu) press
 //                    true

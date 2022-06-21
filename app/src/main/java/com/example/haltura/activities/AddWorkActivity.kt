@@ -36,6 +36,7 @@ import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.WorkData
 import com.example.haltura.ViewModels.AddWorkViewModel
 import com.example.haltura.activities.ChatActivity.Companion.TAG
+import com.example.haltura.databinding.ActivityAddWorkBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -48,8 +49,8 @@ import com.google.android.libraries.places.api.model.Place
 
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import kotlinx.android.synthetic.main.activity_add_work.*
-import kotlinx.android.synthetic.main.manage_work_item.*
+//import kotlinx.android.synthetic.main.activity_add_work.*//todo
+//import kotlinx.android.synthetic.main.manage_work_item.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -78,6 +79,8 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var btnAddWork: Button
     private lateinit var btnPreview: Button
     //private lateinit var binding: ActivityMapsBinding
+    private lateinit var binding: ActivityAddWorkBinding
+
 
 
     //
@@ -106,7 +109,12 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_work)
+
+        //setContentView(R.layout.activity_add_work)//todo :changed to : binding = ActivityAddWorkBinding.inflate(layoutInflater)
+        binding = ActivityAddWorkBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
 
         initMap()
         initAutoComplete()
@@ -252,7 +260,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
                 // TODO: Get info about the selected place.
                 Log.i(TAG, "Place: ${place.address}, ${place.latLng}")
                 place.latLng?.let { place.address?.let { it1 -> showAdderssOnMap2(it, it1) } }
-                et_StreetName.text = place.address
+                binding.etStreetName.text = place.address
                             }
 
             override fun onError(status: Status) {

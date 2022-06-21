@@ -6,7 +6,7 @@ import android.media.Image
 import android.util.Base64.DEFAULT
 import android.util.Base64.encodeToString
 import android.widget.*
-import io.realm.annotations.PrimaryKey
+//import io.realm.annotations.PrimaryKey//todo: removed realm from gradle . if needed this import, return realm back
 import java.io.ByteArrayOutputStream
 import java.util.*
 

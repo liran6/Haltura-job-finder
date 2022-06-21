@@ -17,7 +17,7 @@ import com.example.haltura.Sql.Items.MessageSerializable
 import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
-import kotlinx.android.synthetic.main.message_item2.view.*
+//import kotlinx.android.synthetic.main.message_item2.view.* //todo : removed this import. if needed , enable kotlin-extention plugin in gradle
 
 class ChatAdapter2(
     private var _dataSet: List<MessageSerializable>,

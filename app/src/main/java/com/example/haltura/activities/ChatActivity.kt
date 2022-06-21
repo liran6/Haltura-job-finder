@@ -34,7 +34,7 @@ import com.example.haltura.Utils.VerticalSpaceItemDecoration
 //import com.google.gson.Gson
 //import io.socket.client.IO
 import io.socket.client.Socket
-import kotlinx.android.synthetic.main.activity_chat.view.*
+//import kotlinx.android.synthetic.main.activity_chat.view.*//todo : removed this import. if needed , enable kotlin-extention plugin in gradle
 import java.io.ByteArrayOutputStream
 import java.util.*
 

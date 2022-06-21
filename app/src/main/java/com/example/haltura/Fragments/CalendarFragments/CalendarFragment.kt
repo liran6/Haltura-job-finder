@@ -38,7 +38,7 @@ class MonthViewContainer(view: View) : ViewContainer(view) {
     val legendLayout = CalendarHeaderBinding.bind(view).legendLayout.root
 }
 
-class CalendarFragment : BaseFragment(R.layout.fragment_calendar), HasBackButton {
+class CalendarFragment : BaseFragment(R.layout.fragment_calendar), BackButton {
 
     private val _viewModel: CalendarViewModel by activityViewModels()
     private lateinit var _fragmentView: View

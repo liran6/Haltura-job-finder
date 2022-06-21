@@ -7,6 +7,11 @@
             android:icon="@drawable/splash_screen_background"
             android:title="@string/profile_settings"
             app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/editButon"
+            android:icon="@drawable/ic_edit_24"
+            android:title="@string/edit_button"
+            app:showAsAction="ifRoom|withText"/>
 
 <!--    <item-->
 <!--            android:id="@+id/search"-->

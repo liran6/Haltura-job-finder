@@ -1,14 +1,7 @@
 package com.example.haltura.Fragments.HomeFragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import com.example.haltura.Fragments.*
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
+import android.view.*
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.R
@@ -17,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haltura.Adapters.WorkAdapter
 import com.example.haltura.Fragments.BaseFragment
-import com.example.haltura.Fragments.HasBackButton
+import com.example.haltura.Fragments.BackButton
 import com.example.haltura.Fragments.getColorCompat
 import com.example.haltura.Fragments.makeVisible
 //import com.example.haltura.Dialogs.WatchWorkDialog
@@ -25,10 +18,9 @@ import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.UserData
 import com.example.haltura.databinding.FragmentHomeBinding
-import com.kizitonwose.calendarview.model.DayOwner
 
 
-class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
+class HomeFragment : BaseFragment(R.layout.fragment_home), BackButton {
 
     override val titleRes: String = "Welcome back "+UserData.currentUser?.username
     private val token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mjk2NDg1ZDQ0NzBhZGE1YzBmYWJlOGYiLCJpYXQiOjE2NTQ3MTc3MjksImV4cCI6MTY1NTMyMjUyOX0.kINx9at8G7aZkJUWfghCojlYk3DHKqgpt2gZJTHd5s4"
@@ -39,7 +31,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
     private lateinit var _fragmentView: View
     private lateinit var _workRecycle: RecyclerView
     private lateinit var _worksAdapter: WorkAdapter
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentHomeBinding? = null //todo why ?
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -57,10 +49,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), HasBackButton {
         initViewModelData()
         initObservers()
         initRecyclersAndAdapters()
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
 
         return _fragmentView
     }
+    //create the options of the appbar
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.app_bar_menu, menu)}
 
     private fun initBinding() {
         _fragmentView = binding.root

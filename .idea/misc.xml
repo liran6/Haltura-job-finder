@@ -31,6 +31,7 @@
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/drawable/ic_calendar_24.xml" value="0.186" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/drawable/ic_chat_24.xml" value="0.1325" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.186" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/drawable/ic_edit_24.xml" value="0.2185" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/drawable/ic_more.xml" value="0.1325" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/drawable/ic_search_24.xml" value="0.1325" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/drawable/ic_tick.xml" value="0.1325" />
@@ -51,7 +52,7 @@
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login_2.xml" value="0.1" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_login_old.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_main.xml" value="0.17760416666666667" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_main2.xml" value="0.33" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_main2.xml" value="0.1" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_maps.xml" value="0.1" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_register.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_reset_password.xml" value="0.37317784256559766" />
@@ -92,7 +93,7 @@
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/work_item_list2.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/work_remove_popup.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/xxx.xml" value="0.1" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/menu/app_bar_menu.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/menu/app_bar_menu.xml" value="0.22" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/menu/bottom_nav_menu.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/menu/menu_main.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/menu/menu_profile.xml" value="0.27291666666666664" />
