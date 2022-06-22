@@ -49,5 +49,11 @@ object Const{
     //calendar
     const val Calendar = "Calendar"
 
+    //chats
+    const val chat_fragment = "chat_fragment"
+    const val profile_info = "profile_info"
+    const val group_info = "group_info"
+
+
 
 }

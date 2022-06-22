@@ -51,7 +51,8 @@ class LoginFragment : Fragment() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         if (transaction != null) {
             transaction.replace(R.id.login_fragment, fragment, fragmentId)
-            transaction.addToBackStack(fragmentId)
+            transaction.addToBackStack(null)//fragmentId
+            transaction.setReorderingAllowed(true)
             transaction.commit()
         }
     }

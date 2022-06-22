@@ -13,6 +13,7 @@ import com.example.haltura.Sql.Items.ChatSerializable
 import com.example.haltura.ViewModels.ChatViewModel
 import com.example.haltura.Adapters.ChatAdapter2
 import com.example.haltura.Fragments.ChatFragments.ChatFragment
+import com.example.haltura.Utils.Const
 
 
 //todo:
@@ -45,8 +46,8 @@ class ChatActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             //val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             supportFragmentManager.beginTransaction()
-                .add(R.id.chat_fragment, ChatFragment(), "ChatFragment")
-                .addToBackStack("ChatFragment")
+                .add(R.id.chat_fragment, ChatFragment(), Const.chat_fragment)
+                .addToBackStack(Const.chat_fragment)
                 .setReorderingAllowed(true)
                 .commit()
         }

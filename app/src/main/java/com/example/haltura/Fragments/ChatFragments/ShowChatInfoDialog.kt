@@ -22,6 +22,7 @@ import com.example.haltura.Adapters.ProfileAdapter
 import com.example.haltura.Models.InfoChatSerializable
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.ShowProfileInfoViewModel
@@ -137,15 +138,15 @@ class ShowChatInfoDialog : Fragment {
     }
 
     private fun showProfile(profile: ProfileSerializable) {
-        switchFragment(ShowProfileInfo(profile))
+        switchFragment(ShowProfileInfo(profile),Const.profile_info)
     }
 
 
-    private fun switchFragment(fragment: Fragment) {
+    private fun switchFragment(fragment: Fragment,fragmentId: String) {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         if (transaction != null) {
-            transaction.replace(R.id.chat_fragment, fragment, "showChatInfo")
-            transaction.addToBackStack("showChatInfo")
+            transaction.replace(R.id.chat_info_dialog_fragment, fragment, Const.profile_info)
+            transaction.addToBackStack(null)
             transaction.commit()
         }
     }

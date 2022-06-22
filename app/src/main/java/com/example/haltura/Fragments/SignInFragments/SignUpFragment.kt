@@ -54,6 +54,7 @@ class SignUpFragment : Fragment() {
         val registrationSuccess = Observer<Boolean>{value ->
             if(value){
                 switchFragment(LoginFragment(),Const.login_fragment)
+                viewModel.mutableSignUpSucess.value = false
             }
         }
         //oneTapClient = Identity.getSignInClient(this)
@@ -68,7 +69,8 @@ class SignUpFragment : Fragment() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         if (transaction != null) {
             transaction.replace(R.id.login_fragment, fragment, fragmentId)
-            transaction.addToBackStack(fragmentId)
+            transaction.addToBackStack(null)//fragmentId
+            transaction.setReorderingAllowed(true)
             transaction.commit()
         }
     }
