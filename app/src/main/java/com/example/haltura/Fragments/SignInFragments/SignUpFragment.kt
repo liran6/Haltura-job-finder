@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.example.haltura.Helpers.Validation
+import com.example.haltura.Utils.Validation
 import com.example.haltura.R
 import com.example.haltura.Utils.Const
 import com.example.haltura.ViewModels.LoginViewModel

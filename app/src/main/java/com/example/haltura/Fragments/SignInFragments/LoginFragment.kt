@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.haltura.R
 import com.example.haltura.ViewModels.LoginViewModel
 
-import com.example.haltura.Helpers.Validation
+import com.example.haltura.Utils.Validation
 import com.example.haltura.Sql.Items.UserLoginSerializable
 
 import com.example.haltura.Utils.Const

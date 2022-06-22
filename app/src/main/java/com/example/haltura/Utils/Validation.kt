@@ -1,6 +1,5 @@
-package com.example.haltura.Helpers
+package com.example.haltura.Utils
 
-import android.content.Context
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.Spinner

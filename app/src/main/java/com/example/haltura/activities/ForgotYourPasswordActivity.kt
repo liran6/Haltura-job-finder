@@ -5,7 +5,7 @@ package com.example.haltura.activities
 //import android.view.View
 //import android.widget.Button
 //import android.widget.EditText
-//import com.example.haltura.Helpers.Validation.Companion.resetPasswordValid
+//import com.example.haltura.Utils.Validation.Companion.resetPasswordValid
 //import com.example.haltura.R
 //import com.example.haltura.Sql.UserOpenHelper
 //

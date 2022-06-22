@@ -3,7 +3,6 @@ package com.example.haltura.Fragments.ChatFragments
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -20,10 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.Observer
 import com.example.haltura.Adapters.ChatAdapter2
-import com.example.haltura.Models.InfoChatSerializable
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.ChatSerializable
-import com.example.haltura.Sql.Items.Message
 import com.example.haltura.Sql.Items.MessageSerializable
 import com.example.haltura.Utils.ChatData
 import com.example.haltura.Utils.UserData
@@ -298,9 +295,9 @@ class ChatFragment : Fragment() {
     }
 
 
-    private fun onClickMessage(message: Message) {
-
-    }
+//    private fun onClickMessage(message: Message) {
+//
+//    }
 
     fun uploadImage()
     {

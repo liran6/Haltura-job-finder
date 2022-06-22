@@ -9,8 +9,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -28,16 +26,13 @@ import com.example.haltura.AppNotifications
 import com.example.haltura.R
 //import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.AddresSerializable
-import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.WorkData
 import com.example.haltura.ViewModels.AddWorkViewModel
 //import com.example.haltura.activities.ChatActivity.Companion.TAG
 import com.example.haltura.databinding.ActivityAddWorkBinding
-import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -50,12 +45,10 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 //import kotlinx.android.synthetic.main.activity_add_work.*//todo
 //import kotlinx.android.synthetic.main.manage_work_item.*
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 

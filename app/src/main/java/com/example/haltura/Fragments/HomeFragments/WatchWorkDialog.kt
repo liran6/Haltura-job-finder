@@ -1,9 +1,6 @@
 package com.example.haltura.Fragments.HomeFragments
 
-import android.app.Activity
 import android.graphics.BitmapFactory
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
@@ -14,14 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.findFragment
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.DateTime
-import com.example.haltura.ViewModels.HomeViewModel
 import com.example.haltura.ViewModels.WatchWorkViewModel
-import com.example.haltura.databinding.FragmentHomeBinding
 import com.example.haltura.databinding.WatchWorkDialogBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -29,7 +22,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import java.io.IOException
 
 class WatchWorkDialog : DialogFragment {
 

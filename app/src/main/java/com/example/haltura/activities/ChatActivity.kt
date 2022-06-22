@@ -1,14 +1,6 @@
 package com.example.haltura.activities
 
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Base64
-import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -16,16 +8,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.haltura.Adapters.ChatAdapter
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.ChatSerializable
-import com.example.haltura.Sql.Items.Message
-import com.example.haltura.Utils.ChatData
 import com.example.haltura.ViewModels.ChatViewModel
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.Adapters.ChatAdapter2
-import com.example.haltura.Adapters.ChatsAdapter
 import com.example.haltura.Fragments.ChatFragments.ChatFragment
 
 

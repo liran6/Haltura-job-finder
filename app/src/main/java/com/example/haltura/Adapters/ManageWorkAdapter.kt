@@ -9,9 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.Chat
-import com.example.haltura.Sql.Items.Message
-import com.example.haltura.Sql.Items.Work
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.ImageHelper
