@@ -30,12 +30,6 @@ class ShowChatInfoDialogViewModel : ViewModel() {
         MutableLiveData<InfoChatSerializable>(null)
     }
 
-//    val mutableChatImage: MutableLiveData<Bitmap> by lazy { //by lazy
-//        val d: Drawable = ImagesArrayList.get(0)
-//        val bitmap = (d as BitmapDrawable).bitmap
-//        MutableLiveData<Bitmap>(bitmap)
-//    }
-
     val mutableMessageToasting: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }//todo: connect it to activity /frag ?
@@ -57,12 +51,8 @@ class ShowChatInfoDialogViewModel : ViewModel() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val res = response.body()!!.string()
-                    //val jObject = JSONObject(response.body()!!.string())
-                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
-                    //val profiles = jObject.get("profile_list") as JSONArray
                     val chatInfo = json.fromJson(res, InfoChatSerializable::class.java)
                     mutableChatInfo.value = chatInfo
-                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
                     chatInfo.profileList?.let { mutableMembersList.value!!.addAll(it) }
                     mutableMembersList.notifyAllObservers()
                 } else {

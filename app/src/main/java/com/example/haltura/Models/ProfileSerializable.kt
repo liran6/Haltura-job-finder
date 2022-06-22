@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ProfileSerializable(
     @SerializedName("userId") var userId: String?,
+    @SerializedName("profilePicture") var profilePicture: String?,
     @SerializedName("firstName") var firstName: String?,
     @SerializedName("lastName") var lastName: String?,
     @SerializedName("phone") var phone: String?,

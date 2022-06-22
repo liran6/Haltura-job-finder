@@ -230,6 +230,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+<!--                todo: change to edit text with android:enabled="false"-->
                 <TextView
                         android:layout_marginTop="20dp"
                         android:id="@+id/et_StreetName"
@@ -372,6 +373,8 @@
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_gravity="center" />
             <!--            https://stackoverflow.com/questions/22704451/open-google-maps-through-intent-for-specific-location-in-android-->
 
