@@ -20,9 +20,11 @@ import com.example.haltura.databinding.ShowChatInfoDialogBinding
 import androidx.lifecycle.Observer
 import com.example.haltura.Adapters.ProfileAdapter
 import com.example.haltura.Models.InfoChatSerializable
+import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
+import com.example.haltura.ViewModels.ShowProfileInfoViewModel
 
 class ShowChatInfoDialog : Fragment {
 
@@ -42,10 +44,6 @@ class ShowChatInfoDialog : Fragment {
     // onDestroyView.
     private val binding get() = _binding!!
 
-//    constructor(chatId: InfoChatSerializable):super()
-//    {
-//        this._chatId = chatId
-//    }
 
     constructor(chatId: String):super()
     {
@@ -139,7 +137,17 @@ class ShowChatInfoDialog : Fragment {
     }
 
     private fun showProfile(profile: ProfileSerializable) {
+        switchFragment(ShowProfileInfo(profile))
+    }
 
+
+    private fun switchFragment(fragment: Fragment) {
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        if (transaction != null) {
+            transaction.replace(R.id.chat_fragment, fragment, "showChatInfo")
+            transaction.addToBackStack("showChatInfo")
+            transaction.commit()
+        }
     }
 
 //    override fun onStart() {

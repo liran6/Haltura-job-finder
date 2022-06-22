@@ -86,11 +86,19 @@ class ChatFragment : Fragment() {
     }
 
     private fun showChatInfo() {
-//        var dialog = ShowChatInfoDialog(chatInfo)
-//        activity!!.supportFragmentManager?.let {
-//            dialog.show(it, "ShowChatInfoDialog")
-//        }
-        switchFragment(ShowChatInfoDialog(_chat.id!!))
+        if(_chat.adminID != null)
+        {
+            switchFragment(ShowChatInfoDialog(_chat.id!!))
+        }
+        else
+        {
+            var userId = _chat.members[0]
+            if (userId == UserData.currentUser!!.userId)
+            {
+                userId = _chat.members[1]
+            }
+            switchFragment(ShowProfileInfo(userId))
+        }
     }
 
     private fun switchFragment(fragment: Fragment) {
