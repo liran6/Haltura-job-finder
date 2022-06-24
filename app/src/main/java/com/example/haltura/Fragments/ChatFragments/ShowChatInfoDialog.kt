@@ -345,7 +345,6 @@ class ShowChatInfoDialog : Fragment {
         }
     }
 
-
     companion object
     {
         private val REQ_CAMERA = 1

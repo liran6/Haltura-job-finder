@@ -35,6 +35,12 @@
         </activity>
 
         <activity
+                android:name=".activities.WorkHistoryActivity"
+                android:exported="false"
+                android:noHistory="true"
+                android:label="@string/title_activity_work_history" />
+
+        <activity
                 android:name=".activities.LoginActivity"
                 android:exported="false"
                 android:noHistory="true"

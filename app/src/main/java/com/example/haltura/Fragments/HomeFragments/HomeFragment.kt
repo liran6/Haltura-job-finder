@@ -1,5 +1,6 @@
 package com.example.haltura.Fragments.HomeFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -23,7 +24,9 @@ import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
+import com.example.haltura.activities.LoginActivity
 import com.example.haltura.activities.MainActivity2
+import com.example.haltura.activities.WorkHistoryActivity
 import com.example.haltura.databinding.FragmentHomeBinding
 
 
@@ -69,6 +72,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton {
 
     private fun initViews() {
         //_allWorksRecycle = binding.allWorksRecyclerView
+
+        //todo: delete:
+        _binding!!.button.setOnClickListener{
+            startActivity(Intent(activity, WorkHistoryActivity::class.java))
+        }
     }
 
     private fun initViewModelData() {

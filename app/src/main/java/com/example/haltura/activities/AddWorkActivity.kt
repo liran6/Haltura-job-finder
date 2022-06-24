@@ -147,6 +147,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+
     private fun initViewModel() {
         _viewModel = ViewModelProvider(this).get(AddWorkViewModel::class.java)
     }

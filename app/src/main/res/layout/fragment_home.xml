@@ -45,7 +45,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
+    <Button
+            android:text="History"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="28dp" />
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--            android:layout_width="386dp"-->
 <!--            android:layout_height="189dp"-->
 <!--            android:orientation="horizontal"-->
