@@ -19,6 +19,7 @@ import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +41,7 @@ import com.example.haltura.ViewModels.ShowProfileInfoViewModel
 import com.example.haltura.activities.AddWorkActivity
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
+import java.io.ByteArrayOutputStream
 
 class ShowChatInfoDialog : Fragment {
 
@@ -77,12 +79,22 @@ class ShowChatInfoDialog : Fragment {
         //get chat id
         initBinding()
         initViews()
+        initButtons()
         setViews()
         initViewModelData()
         initObservers()
         initRecyclersAndAdapters()
 
         return _fragmentView
+    }
+
+    private fun initButtons() {
+        binding.updateChat.setOnClickListener {
+            _viewModel.updateChat(_chatId,_nameOfChat.text.toString(),
+                convertImageToString(_image.drawable.toBitmap()))
+            //todo: return to chat
+        }
+        binding.updateChat.isEnabled = false
     }
 
     private fun setViews() {
@@ -203,10 +215,20 @@ class ShowChatInfoDialog : Fragment {
 //        if(!nameChanged && !imageChanged) //todo: should check if the original name / image is now one of them (name was x -> y -> x)
 //        {
             binding.updateChat.setTextColor(Color.BLUE)
-            binding.updateChat.setOnClickListener {
-                // _viewModel.updateChat(_chatId,name,image)
-            }
+            binding.updateChat.isEnabled = true
+//            binding.updateChat.setOnClickListener {
+//                _viewModel.updateChat(_chatId,_nameOfChat.text.toString(),
+//                    convertImageToString(_image.drawable.toBitmap()))
+//                //todo: return to chat
+//            }
 //        }
+    }
+
+    private fun convertImageToString(image: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val data = baos.toByteArray()
+        return  Base64.encodeToString(data, Base64.DEFAULT)
     }
 
     private fun editChatImage() {

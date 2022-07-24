@@ -27,7 +27,7 @@ class HomeViewModel : ViewModel() {
     val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }
-    val mutableAllChatsList: MutableList<ChatSerializable> =mutableListOf() // TODO: in the future do like chats (filter)
+    val mutableAllWorkList: MutableList<WorkSerializable> =mutableListOf() // TODO: in the future do like chats (filter)
 
     private var json = Gson()
 
@@ -49,8 +49,11 @@ class HomeViewModel : ViewModel() {
                     for (i in 0 until works.length())
                     {
                         val work = json.fromJson(works.getJSONObject(i).toString(), WorkSerializable::class.java)
-                        mutableWorkList.value!!.add(work)
+                        mutableAllWorkList!!.add(work)
+                        //mutableAllWorkList.value!!.add(work)
                     }
+                    //mutableWorkList.notifyAllObservers()
+                    mutableWorkList.value!!.addAll(mutableAllWorkList)
                     mutableWorkList.notifyAllObservers()
                 } else {
                     //TODO: toast
@@ -128,6 +131,26 @@ class HomeViewModel : ViewModel() {
         })
     }
 
+    fun filter(textToFilter: String) {
+        if (textToFilter.toString().trim { it <= ' ' }.length == 0) // not empty
+        {
+            mutableWorkList.value!!.clear()
+            mutableWorkList.value!!.addAll(mutableAllWorkList)
+        }
+        else
+        {
+            mutableWorkList.value!!.clear()
+            mutableAllWorkList.forEach{
 
-
+                if (it.task != null)
+                {
+                    if (it.task!!.toLowerCase().contains(textToFilter))
+                    {
+                        mutableWorkList.value!!.add(it)
+                    }
+                }
+            }
+        }
+        mutableWorkList.notifyAllObservers()
+    }
 }

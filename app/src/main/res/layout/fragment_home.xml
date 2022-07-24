@@ -8,6 +8,55 @@
         tools:context=".Fragments.HomeFragments.HomeFragment"
         android:background="@color/backGround">
 
+    <EditText
+            android:id="@+id/search_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:autofillHints="Search"
+            android:background="@drawable/round_edges"
+            android:hint="Search"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:textColor="@color/gray"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/search_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:minHeight="48dp"
+            android:textColorHint="#78909C" />
+
+    <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="25dp"
+            android:background="@null"
+            android:clickable="false"
+            android:contentDescription="Search"
+            android:src="@drawable/ic_search_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/search_text"
+            app:layout_constraintBottom_toBottomOf="@+id/search_text" />
+
+    <ImageButton
+            android:id="@+id/location_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@null"
+            android:clickable="false"
+            android:contentDescription="Search"
+            android:src="@drawable/ic_location_on_24"
+            app:layout_constraintTop_toBottomOf="@+id/search_text"
+            app:layout_constraintStart_toStartOf="@+id/search_text"
+            android:layout_marginStart="12dp" />
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/closeWorksRecyclerView"
             android:layout_width="match_parent"
@@ -15,6 +64,7 @@
             android:background="@android:color/transparent"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
+            android:layout_marginTop="100dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

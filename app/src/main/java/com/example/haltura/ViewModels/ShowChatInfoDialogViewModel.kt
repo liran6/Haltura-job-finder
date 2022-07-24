@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.haltura.Api.ChatAPI
 import com.example.haltura.Api.ServiceBuilder
+import com.example.haltura.Models.ChatInfoSerializable
 import com.example.haltura.Models.InfoChatSerializable
 import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.Utils.Const
@@ -55,6 +56,27 @@ class ShowChatInfoDialogViewModel : ViewModel() {
                     mutableChatInfo.value = chatInfo
                     chatInfo.profileList?.let { mutableMembersList.value!!.addAll(it) }
                     mutableMembersList.notifyAllObservers()
+                } else {
+                    mutableMessageToasting.postValue(Const.Token_Error)
+                }
+            }
+        })
+    }
+
+    fun updateChat(chatId :String ,chatName: String, chatImage:String) {
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(ChatAPI::class.java)
+        val call = retroService.updateChatInfo("Bearer " +
+                UserData.currentUser?.token!!, chatId,
+                ChatInfoSerializable(chatName,chatImage))
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    mutableMessageToasting.postValue("The chat was updated") //todo:put in const
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)
                 }

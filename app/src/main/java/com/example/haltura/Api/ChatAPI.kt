@@ -1,11 +1,10 @@
 package com.example.haltura.Api
 
+import com.example.haltura.Models.ChatInfoSerializable
+import com.example.haltura.Sql.Items.UserSerializable
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ChatAPI {
 
@@ -28,5 +27,13 @@ interface ChatAPI {
     fun getChatInfo(
         @Header("Authorization") token: String,
         @Path("chatId") userId: String,
+    ): Call<ResponseBody>
+
+    @PUT("chats/changeName/{chatId}")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun updateChatInfo(
+        @Header("Authorization") token: String,
+        @Path("chatId") userId: String,
+        @Body chatInfo: ChatInfoSerializable
     ): Call<ResponseBody>
 }

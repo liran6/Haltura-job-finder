@@ -2,10 +2,14 @@ package com.example.haltura.Fragments.HomeFragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -28,6 +32,10 @@ import com.example.haltura.activities.LoginActivity
 import com.example.haltura.activities.MainActivity2
 import com.example.haltura.activities.WorkHistoryActivity
 import com.example.haltura.databinding.FragmentHomeBinding
+import com.google.android.material.datepicker.MaterialDatePicker
+import androidx.appcompat.app.AppCompatActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton {
@@ -46,6 +54,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton {
     private lateinit var _recommendedWorksRecycle: RecyclerView
     private lateinit var _recommendedWorksAdapter: WorkAdapter
     private var _binding: FragmentHomeBinding? = null
+    //EditText
+    private lateinit var _searchText : EditText
+    //Button
+    private lateinit var _searchButton : ImageButton
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -59,11 +72,39 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         initBinding()
         initViews()
+        initButtons()
+        initTextListener()
         initViewModelData()
         initObservers()
         initRecyclersAndAdapters()
 
         return _fragmentView
+    }
+
+    private fun initButtons() {
+        _searchButton.setOnClickListener {
+            filter() //todo: make the search btn to open search text instead
+        }
+    }
+
+    private fun initTextListener() {
+        _searchText.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                filter()
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // TODO Auto-generated method stub
+            }
+        })
+    }
+
+    private fun filter() {
+        _viewModel.filter(_searchText.text.toString())//
     }
 
     private fun initBinding() {
@@ -72,10 +113,15 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton {
 
     private fun initViews() {
         //_allWorksRecycle = binding.allWorksRecyclerView
+        _searchText = binding.searchText
+        _searchButton = binding.searchButton
 
         //todo: delete:
         _binding!!.button.setOnClickListener{
             startActivity(Intent(activity, WorkHistoryActivity::class.java))
+        }
+        _binding!!.locationButton.setOnClickListener{
+            showDataRangePicker()
         }
     }
 
@@ -190,6 +236,55 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton {
         requireActivity().window.statusBarColor =
             requireContext().getColorCompat(R.color.calendar_statusbar_color)
     }
+
+    //
+
+    private fun showDataRangePicker() {
+
+        val dateRangePicker =
+            MaterialDatePicker
+                .Builder.dateRangePicker()
+                .setTitleText("Select Date")
+                .build()
+
+
+        //TODO SET PREV DATE LIKE CREATE WORK TIME AND DATE
+
+        dateRangePicker.show(
+            activity!!.supportFragmentManager,
+            "date_range_picker"
+        )
+
+        dateRangePicker.addOnPositiveButtonClickListener { dateSelected ->
+            val startDateLong = dateSelected.first
+            val endDateLong = dateSelected.second
+            val startDateString = convertLongToTime(startDateLong)
+            val endDateString = convertLongToTime(endDateLong)
+
+//            if (startDate != null && endDate != null) {
+//                binding.tvRangeDate.text =
+//                    "Reserved\nStartDate: ${convertLongToTime(startDate)}\n" +
+//                            "EndDate: ${convertLongToTime(endDate)}"
+//            }
+        }
+        //todo: notify change
+
+    }
+
+
+    private fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat(
+            "dd.MM.yyyy",
+            Locale.getDefault())
+        return format.format(date)
+    }
+
+    fun convertDateToLong(date: String): Long {
+        val df = SimpleDateFormat("dd.MM.yyyy")
+        return df.parse(date).time
+    }
+
 
     override fun onStop() {
         super.onStop()

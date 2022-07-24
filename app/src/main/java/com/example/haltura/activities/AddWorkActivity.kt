@@ -27,9 +27,7 @@ import com.example.haltura.R
 //import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.AddresSerializable
 import com.example.haltura.Sql.Items.WorkSerializable
-import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.UserData
-import com.example.haltura.Utils.WorkData
+import com.example.haltura.Utils.*
 import com.example.haltura.ViewModels.AddWorkViewModel
 //import com.example.haltura.activities.ChatActivity.Companion.TAG
 import com.example.haltura.databinding.ActivityAddWorkBinding
@@ -466,8 +464,54 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 //        //todo: check validation...
 //        //todo: this is exactly like addWork - at the end instead of helper.AddWork(work) we show it
         var work = getWorkFromForm()
-        //todo: show work as work_item_list
+        //
+        val WorkView: View = layoutInflater.inflate(R.layout.work_item_preview, null)
+        val popup = PopupWindow(
+            WorkView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        popup.elevation = 3.0f
+
+        val ok = WorkView.findViewById(R.id.itemOk) as TextView
+        val task = WorkView.findViewById(R.id.itemTask) as TextView
+        val salary = WorkView.findViewById(R.id.itemSalary) as TextView
+        val dateAndTime = WorkView.findViewById(R.id.itemDateAndTime) as TextView
+        val location = WorkView.findViewById(R.id.itemLocation) as TextView
+        val image = WorkView.findViewById(R.id.Image) as ImageView
+
+        // set values
+        task.text = work.task
+        salary.text = work.salary.toString()
+        dateAndTime.text = DateTime.getDate(work.startTime) + " From " +
+                DateTime.getTime(work.startTime) + " To " +
+                DateTime.getTime(work.endTime)
+        location.text = work.address.address
+        // image
+        var bm = Base64.decode(work.image, Base64.DEFAULT)
+        var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+        var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(Bitmap.createScaledBitmap(data, 200, 200, false),10)
+        image.setImageBitmap(dataRoundedCorner)
+
+        ok.setOnClickListener {
+            popup.dismiss()
+            removeBackground(true)
+        }
+
+        removeBackground(false)
+        popup.showAtLocation(_layout, Gravity.CENTER, 0, 0)
+
     }
+
+//    private fun removeBackground(show: Boolean) {
+//        if (show) {
+//            _layout.visibility = View.VISIBLE
+//
+//        } else {
+//            _layout.visibility = View.GONE
+//        }
+//    }
 
     fun SetImage(view: View)
     {
