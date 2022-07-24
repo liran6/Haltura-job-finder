@@ -305,9 +305,12 @@ class ShowChatInfoDialog : Fragment {
             LinearLayoutManager.VERTICAL,false)
         _membersRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
         _membersRecycle.layoutManager = layoutManager
+        //var enable = (_chatInfo.adminID == UserData.currentUser!!.userId)
         _membersAdapter = ProfileAdapter(
             workList,
-            _clickOnItemListener = { showProfile(it) }
+            _clickOnItemListener = { showProfile(it) },
+            _clickOnLongItemListener = { removeUser(it) },
+            true//todo: check why this is not working: _chatInfo.adminID == UserData.currentUser!!.userId
         )
         _membersRecycle.adapter = _membersAdapter
     }
@@ -316,6 +319,37 @@ class ShowChatInfoDialog : Fragment {
         switchFragment(ShowProfileInfo(profile),Const.profile_info)
     }
 
+    private fun removeUser(profile: ProfileSerializable) {
+        if (profile.userId == UserData.currentUser!!.userId){return}
+        val removeUserView: View = layoutInflater.inflate(R.layout.remove_from_chat_popup, null)
+        val popup = PopupWindow(
+            removeUserView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        popup.elevation = 3.0f
+
+        val cancel = removeUserView.findViewById(R.id.cancel) as TextView
+        val remove =
+            removeUserView.findViewById(R.id.remove) as TextView
+        val workInfo = removeUserView.findViewById(R.id.user_info)as TextView
+        workInfo.text = "Are you sure you want to remove "+ profile.username +"?" //todo take just the date
+
+        cancel.setOnClickListener {
+            popup.dismiss()
+            removeBackground(true)
+        }
+
+        remove.setOnClickListener {
+            _viewModel.removeUser(_chatId, profile.userId!!)
+            popup.dismiss()
+            removeBackground(true)
+        }
+        removeBackground(false)
+        popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
+
+    }
 
     private fun switchFragment(fragment: Fragment,fragmentId: String) {
         val transaction = activity?.supportFragmentManager?.beginTransaction()

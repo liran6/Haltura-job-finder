@@ -16,7 +16,9 @@ import com.example.haltura.R
 
 class ProfileAdapter(
     private var _dataSet: List<ProfileSerializable>,
-    private val _clickOnItemListener: (ProfileSerializable) -> Unit
+    private val _clickOnItemListener: (ProfileSerializable) -> Unit,
+    private val _clickOnLongItemListener: (ProfileSerializable) -> Unit,
+    private val _enableOnClick: Boolean
 ) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -51,6 +53,13 @@ class ProfileAdapter(
         //set On Click
         viewHolder.itemView.setOnClickListener{
             _clickOnItemListener(_dataSet[position])
+        }
+        if (_enableOnClick)
+        {
+            viewHolder.itemView.setOnLongClickListener{
+                _clickOnLongItemListener(_dataSet[position])
+                true
+            }
         }
     }
 

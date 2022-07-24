@@ -76,12 +76,33 @@ class ShowChatInfoDialogViewModel : ViewModel() {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    mutableMessageToasting.postValue("The chat was updated") //todo:put in const
+                    mutableMessageToasting.postValue("The chat was updated successfully") //todo:put in const
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)
                 }
             }
         })
+    }
+
+    fun removeUser(chatId :String ,userId: String){
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(ChatAPI::class.java)
+        val call = retroService.removeUserFromChat("Bearer " +
+                UserData.currentUser?.token!!, chatId, userId)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    mutableMessageToasting.postValue("The user was removed successfully") //todo:put in const
+                } else {
+                    mutableMessageToasting.postValue(Const.Token_Error)
+                }
+            }
+        })
+
     }
 
 }

@@ -36,4 +36,12 @@ interface ChatAPI {
         @Path("chatId") userId: String,
         @Body chatInfo: ChatInfoSerializable
     ): Call<ResponseBody>
+
+    @PUT("chats/remove/{chatId}/{userId}") //'/remove/:chatId/:userId'
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun removeUserFromChat(
+        @Header("Authorization") token: String,
+        @Path("chatId") chatId: String,
+        @Path("userId") userId: String,
+    ): Call<ResponseBody>
 }
