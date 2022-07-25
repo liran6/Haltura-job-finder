@@ -235,24 +235,29 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun initTimePickers(){
         mDateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-            var month = month
-            month = month + 1
+//            var month = month
+//            month = month + 1
+            var year = if (year >= 10 ) year.toString() else "0$year"
+            var month = if (month+1 >= 10 ) (month+1).toString() else "0"+(month+1).toString()
+            var day = if (day >= 10 ) day.toString() else "0$day"
             Log.d("AddWorkActivity", "onDateSet: mm/dd/yyy: $month/$day/$year")
             val date = "Date: $day/$month/$year"
             tvDate!!.text = date
         }
 
         mTimeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+            var hourOfDay = if (hourOfDay >= 10 ) hourOfDay.toString() else "0$hourOfDay"
+            var minute = if (minute >= 10 ) minute.toString() else "0$minute"
             Log.d("AddWorkActivity", "onTimeSet: hh:mm: $hourOfDay:$minute")
             val time = "Time: $hourOfDay:$minute"
             //todo: if the time is 18:05 it will be 18:5 (need to add zero)
             if (isStartTime)
             {
-                tvStartTime!!.text = "Starting " + time
+                tvStartTime!!.text = "Starting $time"
             }
             else
             {
-                tvEndTime!!.text = "Ending " +time
+                tvEndTime!!.text = "Ending $time"
             }
         }
     }
