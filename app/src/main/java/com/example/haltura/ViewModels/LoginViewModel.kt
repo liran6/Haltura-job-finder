@@ -35,6 +35,9 @@ class LoginViewModel : ViewModel() {
         MutableLiveData<Boolean>()
     }
 
+    fun logOut(){
+        mutableLogout.postValue(true)
+    }
 
     fun createUser(email: String, username:String, password: String) {
         //todo: log this to server now

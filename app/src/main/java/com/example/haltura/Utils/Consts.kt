@@ -24,7 +24,7 @@ object Const{
     const val showNotifications = "showNotifications"
 
     // server Omer adress = "http://192.168.1.239:4000/"
-    const val SERVER_URL = "http://192.168.1.239:4000/"
+    const val SERVER_URL = "http://10.0.0.30:4000/"
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"
@@ -36,6 +36,8 @@ object Const{
     const val Email_Password_incorrect = "Your Email or Password is incorrect"
     const val login_fragment = "login_fragment"
     const val signup_fragment = "signup_fragment"
+    const val settings_fragment = "settings_fragment"
+    const val profile_fragment = "profile_fragment"
     //action bar titles
     const val home_title = "snackBar"
 
@@ -54,6 +56,10 @@ object Const{
     const val profile_info = "profile_info"
     const val group_info = "group_info"
 
+    //change user data
+    const val CONF_PASSWORD_ERROR = "the passwords didn't match. please try again."
+    const val password_changed = "Your Password was changed successfully!"
+    const val email_changed = "Your Email address was changed successfully!"
 
 
 }

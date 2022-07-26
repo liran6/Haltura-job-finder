@@ -4,6 +4,7 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+
 //import com.example.haltura.Sql.UserOpenHelper
 
 class Validation {
@@ -14,7 +15,7 @@ class Validation {
                 " lower case letters a-z, digits 0-9, and hyphens \'-\' "
 
 
-//        private val USER_NAME_ERROR = "username must contain only lowercase letters! [a-z]\n" +
+        //        private val USER_NAME_ERROR = "username must contain only lowercase letters! [a-z]\n" +
 //                "username must start with a letter!\n" +
 //                "username length must be between 4-16 characters!"
         private val PHONE_ERROR = "you must to insert a valid phone!"
@@ -24,7 +25,7 @@ class Validation {
         private val SPINNER_EXISTS_ERROR = "choose city"
         private val EMAIL_ERROR = "Please enter Valid Email!"
 
-//        private fun userNameValid(etName: EditText, limit: Int): Boolean {
+        //        private fun userNameValid(etName: EditText, limit: Int): Boolean {
 //            val text = etName.text.toString()
 //            if (text.length < limit) {
 //                etName.error = String.format(NAME_ERROR, "" + limit)
@@ -33,7 +34,7 @@ class Validation {
 //            return true
 //        }
         //  ^[a-z]([._-](?![._-])|[a-z0-9]){3,16}$
-        private fun userNameValid(etUsername:EditText):Boolean{
+        private fun userNameValid(etUsername: EditText): Boolean {
             val text = etUsername.text.toString()
             val regex = "^[a-z]([._-](?![._-])|[a-z0-9]){3,16}\$".toRegex()
             if (text == "" || !text.matches(regex)) {
@@ -151,6 +152,20 @@ class Validation {
             bool = confirmPasswordValid(etPassword, etConfPassword) && bool
             return bool;
         }
+
+        fun changePasswordValid( //TODO: check old password
+            oldPassword: EditText,
+            newPassword: EditText,
+            ConfNewPassword: EditText
+        ): Boolean {
+            var bool = true
+            bool = userPasswordValid(newPassword) && bool
+            bool = confirmPasswordValid(newPassword, ConfNewPassword) && bool
+            return bool;
+
+        }
+
+
         fun signUpValid(
             etName: EditText,
             etLastName: EditText,

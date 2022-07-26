@@ -1,22 +1,23 @@
 package com.example.haltura.Fragments.SignInFragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RelativeLayout
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.haltura.R
-import com.example.haltura.ViewModels.LoginViewModel
-
-import com.example.haltura.Utils.Validation
 import com.example.haltura.Sql.Items.UserLoginSerializable
-
 import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.Validation
+import com.example.haltura.ViewModels.LoginViewModel
 import com.example.haltura.activities.LoginActivity
+import com.kizitonwose.calendarview.model.DayOwner
+import kotlin.system.exitProcess
 
 
 class LoginFragment : Fragment() {
@@ -44,6 +45,7 @@ class LoginFragment : Fragment() {
         etPassword = fragmentView.findViewById<View>(R.id.et_Password) as EditText
         //oneTapClient = Identity.getSignInClient(this)
         setClickListeners()
+        initBackPressed()
         return fragmentView
     }
         //todo: try to change it - bug: cant go to signup twice.
@@ -84,7 +86,17 @@ class LoginFragment : Fragment() {
         }
 
     }
-
+    private fun initBackPressed() {
+        //todo manage back press
+        activity?.onBackPressedDispatcher?.addCallback(
+            this.viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    activity?.finish()
+                    exitProcess(0)
+                }
+            })
+    }
 
 //    fun signUp(view: View) {
 //        //startActivity(Intent(this, AddWorkActivity::class.java))

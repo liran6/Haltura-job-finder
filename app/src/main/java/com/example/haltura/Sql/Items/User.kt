@@ -57,9 +57,9 @@ data class UserSerializable(
 
 @Parcelize
 data class UserLoginSerializable(
-    @SerializedName("email") var email: String,
+    @SerializedName("email") var email: String?,
     @SerializedName("username") var username: String?,
-    @SerializedName("password") var password: String
+    @SerializedName("password") var password: String?
 ) : Parcelable
 
 @Parcelize

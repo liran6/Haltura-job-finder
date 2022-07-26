@@ -31,11 +31,11 @@ interface UsersAPI {
 
     @PUT("users/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
-    fun updateUserInfo(
+    fun updateUserPasswordInfo(
         @Path("userId") userId: String,
         //@Header("token") token: String,
         @Header("Authorization") token: String,
-        @Body user: UserSerializable
+        @Body password: UserLoginSerializable
     ): Call<ResponseBody>
 }
     //TODO retrive all users

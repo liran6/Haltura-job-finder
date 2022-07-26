@@ -1,5 +1,6 @@
 package com.example.haltura.Fragments
 
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -7,8 +8,13 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.example.haltura.Fragments.ProfileFragments.SettingsFragment
 import com.example.haltura.R
+import com.example.haltura.Utils.UserData
+import com.example.haltura.Utils.WorkData
+import com.example.haltura.activities.AddWorkActivity
 import com.example.haltura.activities.MainActivity2
+import com.example.haltura.activities.SettingsActivity
 import com.google.android.material.appbar.MaterialToolbar
 
 interface HasToolbar {
@@ -92,7 +98,9 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
         return when (item.itemId) {
             R.id.profile_settings -> {
                 // navigate to settings screen
-                true
+                val intent = Intent(activity, SettingsActivity::class.java)
+                startActivity(intent)
+                return true
             }
 //            R.id.editButon -> {
 //                // save profile changes
