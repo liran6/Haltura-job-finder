@@ -22,11 +22,13 @@
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_sign_in.xml" value="0.18" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_sign_up.xml" value="0.1431159420289855" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/activity_update_information.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/camera_or_gallery_popup.xml" value="0.23822463768115942" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_chat.xml" value="0.23822463768115942" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_chats.xml" value="0.1" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_home.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_login.xml" value="0.1" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_settings.xml" value="0.22" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_settings.xml" value="0.18" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/Haltura/app/src/main/res/layout/fragment_work.xml" value="0.27898550724637683" />

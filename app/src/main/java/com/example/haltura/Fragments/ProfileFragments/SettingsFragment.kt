@@ -4,8 +4,10 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.InputType
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -88,7 +90,9 @@ class SettingsFragment : Fragment() {
         _profileUserName.text = UserData.currentUser!!.username
         var userImage = ProfileData.currentProfile?.profilePicture
         if (userImage != null) {
-            //_profileImage.setImageBitmap(userImage) //TODO set image profile to bit64
+            var bm = Base64.decode(userImage, Base64.DEFAULT)
+            var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
+            _profileImage.setImageBitmap(data) //TODO set image profile to bit64
         }
     }
 
