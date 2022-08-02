@@ -9,26 +9,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.haltura.AppNotifications
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.Preferences
-import com.example.haltura.Utils.Preferences.get
 import com.example.haltura.Utils.Preferences.set
 import com.example.haltura.Utils.UserData
 import com.example.haltura.ViewModels.LoginViewModel
-import com.example.haltura.databinding.ActivityMain2Binding
+import com.example.haltura.databinding.ActivityManageBinding
 import com.google.android.material.appbar.MaterialToolbar
-import com.kizitonwose.calendarview.model.DayOwner
 
+class ManageActivity : AppCompatActivity() {
 
-class MainActivity2 : AppCompatActivity() {
-
-    internal lateinit var binding: ActivityMain2Binding
+    internal lateinit var binding: ActivityManageBinding
     private lateinit var preferences: SharedPreferences
     //private lateinit var user: UserSerializable
     private lateinit var supportActionBar: MaterialToolbar
@@ -55,7 +51,7 @@ class MainActivity2 : AppCompatActivity() {
 
         observersInit(toastObserver, logOutObserver)
         loginViewModel.getCurrentUser()
-        binding = ActivityMain2Binding.inflate(layoutInflater)
+        binding = ActivityManageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
@@ -65,15 +61,14 @@ class MainActivity2 : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main2)
+        val navController = findNavController(R.id.nav_host_fragment_activity_manage)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home,
-                R.id.navigation_work,
-                R.id.navigation_calendar,
-                R.id.navigation_chats//R.id.navigation_home,
+                R.id.navigation_manage_profiles,
+                R.id.navigation_manage_works,
+                R.id.navigation_reports,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -84,7 +79,7 @@ class MainActivity2 : AppCompatActivity() {
             if (navController.currentDestination?.id == item.itemId ){
                 false
             } else {
-                onNavDestinationSelected(
+                NavigationUI.onNavDestinationSelected(
                     item,
                     navController
                 )
@@ -116,3 +111,27 @@ class MainActivity2 : AppCompatActivity() {
         loginViewModel.mutableLogout.observe(this, logOutObserver)
     }
 }
+//    : AppCompatActivity() {
+//
+//    private lateinit var binding: ActivityManageBinding
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        binding = ActivityManageBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//
+//        val navView: BottomNavigationView = binding.navView
+//
+//        val navController = findNavController(R.id.nav_host_fragment_activity_manage)
+//        // Passing each menu ID as a set of Ids because each
+//        // menu should be considered as top level destinations.
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.navigation_manage_profiles, R.id.navigation_manage_works, R.id.navigation_reports
+//            )
+//        )
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+//        navView.setupWithNavController(navController)
+//    }
+//}

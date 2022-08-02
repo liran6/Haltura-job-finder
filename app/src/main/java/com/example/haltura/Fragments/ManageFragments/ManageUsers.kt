@@ -42,9 +42,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ManageUsers : BaseFragment(R.layout.fragment_work), BackButton {
+class ManageUsers : Fragment() {
 
-    override val titleRes: String = "Manage Users"
 
     private val _viewModel: ManageUsersViewModel by activityViewModels()
     private lateinit var _fragmentView: View
@@ -70,12 +69,12 @@ class ManageUsers : BaseFragment(R.layout.fragment_work), BackButton {
     ): View {
         _binding = FragmentManageUsersBinding.inflate(inflater, container, false)
         initBinding()
-        initViews()
-        initButtons()
-        initTextListener()
-        initViewModelData()
-        initObservers()
-        initRecyclersAndAdapters()
+//        initViews()
+//        initButtons()
+//        initTextListener()
+//        initViewModelData()
+//        initObservers()
+//        initRecyclersAndAdapters()
 
         return _fragmentView
     }
@@ -158,19 +157,23 @@ class ManageUsers : BaseFragment(R.layout.fragment_work), BackButton {
 //            dialog.show(it, "WatchWorkDialog")
 //        }
     }
-    override fun onStart() {
-        super.onStart()
-        homeActivityToolbar.makeVisible()
-        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
-        requireActivity().window.statusBarColor =
-            requireContext().getColorCompat(R.color.calendar_statusbar_color)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
-        requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.colorPrimaryDark)
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        homeActivityToolbar.makeVisible()
+//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
+//        requireActivity().window.statusBarColor =
+//            requireContext().getColorCompat(R.color.calendar_statusbar_color)
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
+//        requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.colorPrimaryDark)
+//    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -129,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
 //        {
 //            val intent = Intent(this, MainActivity2::class.java)
 //        }
-        val intent = Intent(this, MainActivity2::class.java)
+        val intent = Intent(this, ManageActivity::class.java)//val intent = Intent(this, MainActivity2::class.java)
         //val userBundle = Bundle()
         // intent.putExtra(Const.Logged_User, user)
         UserData.currentUser = user// add in node server profile info

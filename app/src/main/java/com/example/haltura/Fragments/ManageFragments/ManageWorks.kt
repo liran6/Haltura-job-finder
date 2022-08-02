@@ -28,9 +28,9 @@ import com.example.haltura.ViewModels.ManageWorksViewModel
 import com.example.haltura.databinding.FragmentManageUsersBinding
 import com.example.haltura.databinding.FragmentManageWorksBinding
 
-class ManageWorks : BaseFragment(R.layout.fragment_work), BackButton {
+class ManageWorks : Fragment() {
 
-    override val titleRes: String = "Manage Works"
+    //override val titleRes: String = "Manage Works"
 
     private val _viewModel: ManageWorksViewModel by activityViewModels()
     private lateinit var _fragmentView: View
@@ -147,23 +147,27 @@ class ManageWorks : BaseFragment(R.layout.fragment_work), BackButton {
 //        }
     }
 
-    override fun onStart() {
-        super.onStart()
-        homeActivityToolbar.makeVisible()
-        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
-        requireActivity().window.statusBarColor =
-            requireContext().getColorCompat(R.color.calendar_statusbar_color)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
-        requireActivity().window.statusBarColor =
-            requireContext().getColorCompat(R.color.colorPrimaryDark)
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        homeActivityToolbar.makeVisible()
+//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
+//        requireActivity().window.statusBarColor =
+//            requireContext().getColorCompat(R.color.calendar_statusbar_color)
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
+//        requireActivity().window.statusBarColor =
+//            requireContext().getColorCompat(R.color.colorPrimaryDark)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 }
