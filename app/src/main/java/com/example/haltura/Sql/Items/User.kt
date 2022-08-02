@@ -1,6 +1,7 @@
 package com.example.haltura.Sql.Items
 
 import android.os.Parcelable
+import com.example.haltura.Models.ProfileSerializable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.descriptors.StructureKind
@@ -57,9 +58,9 @@ data class UserSerializable(
 
 @Parcelize
 data class UserLoginSerializable(
-    @SerializedName("email") var email: String,
+    @SerializedName("email") var email: String?,
     @SerializedName("username") var username: String?,
-    @SerializedName("password") var password: String
+    @SerializedName("password") var password: String?
 ) : Parcelable
 
 @Parcelize
@@ -73,18 +74,18 @@ data class UserObject(
     @SerializedName("admin") var isAdmin: Boolean = false
 ) : Parcelable
 
-@Parcelize
-data class ProfileSerializable(
-    @SerializedName("userId") var userId: String,
-    @SerializedName("firstName") var firstName: String,
-    @SerializedName("lastName") var lastName: String,
-    @SerializedName("phone") var phone: String,
-    @SerializedName("address") var address: String,
-    @SerializedName("chatList") var chatList: List<String>,
-    @SerializedName("workList") var workList: List<String>,
-    @SerializedName("businessList") var businessList: List<String>,
-    @SerializedName("id") var id: String,
-) : Parcelable
+//@Parcelize
+//data class ProfileSerializable(
+//    @SerializedName("userId") var userId: String,
+//    @SerializedName("firstName") var firstName: String,
+//    @SerializedName("lastName") var lastName: String,
+//    @SerializedName("phone") var phone: String,
+//    @SerializedName("address") var address: String,
+//    @SerializedName("chatList") var chatList: List<String>,
+//    @SerializedName("workList") var workList: List<String>,
+//    @SerializedName("businessList") var businessList: List<String>,
+//    @SerializedName("id") var id: String,
+//) : Parcelable
 
 @Parcelize
 data class BusinessSerializable(

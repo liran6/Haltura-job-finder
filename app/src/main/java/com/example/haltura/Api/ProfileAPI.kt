@@ -1,4 +1,5 @@
 package com.example.haltura.Api
+import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.Sql.Items.*
 import okhttp3.ResponseBody
 

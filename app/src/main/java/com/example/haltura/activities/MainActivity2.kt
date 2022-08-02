@@ -17,6 +17,7 @@ import com.example.haltura.R
 import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.Preferences
+import com.example.haltura.Utils.Preferences.get
 import com.example.haltura.Utils.Preferences.set
 import com.example.haltura.Utils.UserData
 import com.example.haltura.ViewModels.LoginViewModel
@@ -48,8 +49,9 @@ class MainActivity2 : AppCompatActivity() {
         //todo implement logout here!!!!
         val logOutObserver = Observer<Boolean> { value ->
 //            loadingScreen.visibility = View.GONE
-            if (value) {
+            if (value || !(preferences.getBoolean(Const.IsLoggedIn,false))) {
                 preferences.set(Const.IsLoggedIn, false)
+                //this.onBackPressed()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 this.finish()
