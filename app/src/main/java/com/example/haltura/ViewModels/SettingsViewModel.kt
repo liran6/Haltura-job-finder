@@ -1,4 +1,4 @@
-package com.example.haltura.Fragments.ProfileFragments
+package com.example.haltura.ViewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,9 +7,7 @@ import com.example.haltura.Api.ServiceBuilder
 import com.example.haltura.Api.UsersAPI
 import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.Sql.Items.UserLoginSerializable
-import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.ProfileData
 import com.example.haltura.Utils.UserData
 import com.google.gson.Gson
 import okhttp3.ResponseBody
@@ -55,10 +53,40 @@ class SettingsViewModel : ViewModel() {
             }
         })
     }
+
+    fun updateUserEmail(email: String) {
+        val newEmail = UserLoginSerializable(email,null,null)
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
+        val call = retroService.updateUserPasswordInfo(UserData.currentUser!!.userId, "Bearer " + (UserData.currentUser?.token),newEmail)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+
+                //todo logout
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    mutableMessageToasting.postValue(Const.email_changed)
+//                    Toast.makeText(
+//                        activity, "User updated successfully ! ",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    //var res = response.body()?.string()
+                    //var updatedUser = json.fromJson(res, UserSerializable::class.java)
+                    var x = 1
+                } else {
+                    mutableMessageToasting.postValue(Const.INVALID_TOKEN)
+                }
+            }
+        })
+    }
+
     fun getCurrentProfile(){
         val retroService =
             ServiceBuilder.getRetroInstance().create(ProfileAPI::class.java)
-        val call = retroService.getProfile( "Bearer " + (UserData.currentUser?.token), UserData.currentUser!!.userId)
+        val call = retroService.getExtendedProfile( "Bearer " + (UserData.currentUser?.token), UserData.currentUser!!.userId)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 mutableMessageToasting.postValue(Const.Connecting_Error)

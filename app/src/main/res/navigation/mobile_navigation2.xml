@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mobile_navigation2"
+        app:startDestination="@+id/navigation_manage_profiles">
+
+    <fragment
+            android:id="@+id/navigation_manage_profiles"
+            android:name="com.example.haltura.Fragments.ManageFragments.ManageUsers"
+            android:label="@string/title_profile"
+            tools:layout="@layout/fragment_manage_users" />
+
+    <fragment
+            android:id="@+id/navigation_manage_works"
+            android:name="com.example.haltura.Fragments.ManageFragments.ManageWorks"
+            android:label="@string/title_work"
+            tools:layout="@layout/fragment_manage_works" />
+
+    <fragment
+            android:id="@+id/navigation_reports"
+            android:name="com.example.haltura.Fragments.ManageFragments.ManageReports"
+            android:label="@string/title_report"
+            tools:layout="@layout/fragment_manage_reports" />
+</navigation>

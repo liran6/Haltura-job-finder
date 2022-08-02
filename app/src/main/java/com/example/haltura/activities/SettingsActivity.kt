@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.haltura.AppNotifications
 import com.example.haltura.Fragments.ProfileFragments.SettingsFragment
-import com.example.haltura.Fragments.ProfileFragments.SettingsViewModel
+import com.example.haltura.ViewModels.SettingsViewModel
 import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.R
 import com.example.haltura.Utils.Const

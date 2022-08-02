@@ -260,10 +260,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
         _searchText = binding.searchText
         _searchButton = binding.searchButton
 
-        //todo: delete:
-        _binding!!.button.setOnClickListener{
-            startActivity(Intent(activity, WorkHistoryActivity::class.java))
-        }
+//        //todo: delete:
+//        _binding!!.button.setOnClickListener{
+//            startActivity(Intent(activity, WorkHistoryActivity::class.java))
+//        }
         _binding!!.locationButton.setOnClickListener{
             showDataRangePicker()
         }

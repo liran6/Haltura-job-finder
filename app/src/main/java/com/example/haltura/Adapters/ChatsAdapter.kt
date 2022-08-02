@@ -158,7 +158,7 @@ class ChatsAdapter(
                 txt += "🖼️"
                 flag = true
             }
-            if (message?.text != null)
+            if (message?.text != null && message?.text != "")
             {
                 if (flag){txt += "-"}
                 //todo cut 20 chars with 3 dots (...)

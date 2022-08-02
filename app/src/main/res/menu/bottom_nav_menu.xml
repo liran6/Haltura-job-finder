@@ -21,4 +21,5 @@
             android:icon="@drawable/ic_chat_24"
             android:title="@string/title_chats" />
 
+
 </menu>

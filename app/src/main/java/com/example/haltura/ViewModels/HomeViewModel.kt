@@ -34,6 +34,7 @@ class HomeViewModel : ViewModel() {
 
     fun getAllWorks() {
         mutableWorkList.value!!.clear()
+        mutableAllWorkList.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
         val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)

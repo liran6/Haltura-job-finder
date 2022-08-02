@@ -18,6 +18,10 @@
             android:usesCleartextTraffic="true"
             tools:replace="android:supportsRtl">
 
+        <activity
+                android:name=".activities.ManageActivity"
+                android:exported="false"
+                android:label="@string/title_activity_manage" />
 
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
@@ -56,9 +60,8 @@
         <activity
                 android:name=".activities.SettingsActivity"
                 android:exported="false"
-                android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-                android:label="@string/title_activity_settings" />
-
+                android:label="@string/title_activity_settings"
+                android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
     </application>
 
 </manifest>
