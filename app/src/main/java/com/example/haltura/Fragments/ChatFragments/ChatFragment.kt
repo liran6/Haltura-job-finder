@@ -346,6 +346,11 @@ class ChatFragment : Fragment() {
         private val PICK_IMAGE = 2
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        initViewModelData()
+//    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
