@@ -24,7 +24,7 @@ object Const{
     const val showNotifications = "showNotifications"
 
     // server Omer adress = "http://192.168.1.239:4000/"
-    const val SERVER_URL = "http://10.0.0.6:4000/"
+    const val SERVER_URL = "http://10.0.0.20:4000/"
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"
@@ -60,6 +60,7 @@ object Const{
     const val CONF_PASSWORD_ERROR = "the passwords didn't match. please try again."
     const val password_changed = "Your Password was changed successfully!"
     const val email_changed = "Your Email address was changed successfully!"
+    const val data_changed = "Your Data has saved successfully!"
 
 
 }

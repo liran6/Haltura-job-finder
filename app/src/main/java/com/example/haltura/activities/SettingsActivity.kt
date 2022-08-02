@@ -1,38 +1,27 @@
 package com.example.haltura.activities
 
-import android.app.Activity
-import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.Bitmap
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
-import android.provider.MediaStore
-import android.view.Gravity
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.PopupWindow
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import com.example.haltura.AppNotifications
 import com.example.haltura.Fragments.ProfileFragments.SettingsFragment
 import com.example.haltura.Fragments.ProfileFragments.SettingsViewModel
+import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.UserObject
 import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.Preferences
-import com.example.haltura.ViewModels.LoginViewModel
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.example.haltura.Utils.ProfileData
 
 
 class SettingsActivity : AppCompatActivity() {
-    private val _ViewModel: SettingsViewModel by viewModels()
+    private val _viewModel: SettingsViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
@@ -46,12 +35,17 @@ class SettingsActivity : AppCompatActivity() {
         val toastObserver = Observer<String> { message ->
             AppNotifications.toastBar(this, message)
         }
-        observersInit(toastObserver)
+        val profileObserver = Observer<ProfileSerializable>{ data->
+            ProfileData.currentProfile = data
+        }
+        observersInit(toastObserver,profileObserver)
         val actionBar = getSupportActionBar()
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
-    private fun observersInit(toastObserver: Observer<String>) {
-        _ViewModel.mutableMessageToasting.observe(this, toastObserver)
+    private fun observersInit(toastObserver: Observer<String>,profileObserver:Observer<ProfileSerializable>) {
+        _viewModel.mutableMessageToasting.observe(this, toastObserver)
+        _viewModel.mutableProfileHolder.observe(this, profileObserver)
+
     }
     // this event will enable the back
     // function to the button on press
@@ -84,5 +78,23 @@ class SettingsActivity : AppCompatActivity() {
         var x = 1
     }
     //TODO ---------------------------------------------------------------------------
+
+    //remove focus from edit texts
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm: InputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
+    }
 
 }

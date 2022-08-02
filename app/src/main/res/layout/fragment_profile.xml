@@ -76,6 +76,7 @@
                     android:text="First Name : " />
 
             <EditText
+                    android:maxLines="1"
                     android:layout_gravity="fill"
                     android:gravity="left"
                     style="@style/settingsText"
@@ -102,6 +103,7 @@
                     android:text="Last Name : " />
 
             <EditText
+                    android:maxLines="1"
                     android:layout_gravity="fill"
                     android:gravity="left"
                     style="@style/settingsText"
@@ -128,6 +130,7 @@
                     android:text="Phone number : " />
 
             <EditText
+                    android:maxLines="1"
                     android:layout_gravity="fill"
                     android:gravity="left"
                     style="@style/settingsText"
@@ -146,7 +149,6 @@
                 android:orientation="horizontal">
 
             <TextView
-
                     android:layout_gravity="fill"
                     style="@style/settingsText"
                     android:id="@+id/address"
@@ -155,13 +157,13 @@
                     android:text="Address : " />
 
             <EditText
+                    android:maxLines="1"
                     android:layout_gravity="fill"
                     android:gravity="left"
                     style="@style/settingsText"
                     android:layout_weight="0.5"
                     android:layout_height="match_parent"
                     android:id="@+id/profileAddress"
-                    android:inputType="number"
                     android:hint="Enter address" />
 
         </LinearLayout>

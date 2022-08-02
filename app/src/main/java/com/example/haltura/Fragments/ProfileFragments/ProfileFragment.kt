@@ -26,10 +26,10 @@ class ProfileFragment : Fragment() {
 
 
 
-    private val _viewModel: ProfileViewModel by activityViewModels()
+    private val _viewModel: SettingsViewModel by activityViewModels()
     private lateinit var _fragmentView: View
     private lateinit var _profileImage: CircleImageView
-    private lateinit var _profileUserName: TextView
+    private lateinit var _userName: TextView
     private lateinit var _email: TextView
     private lateinit var _firstName: EditText
     private lateinit var _lastName: EditText
@@ -54,14 +54,14 @@ class ProfileFragment : Fragment() {
         initListeners()
         initProfileData()
         //initButtons()
-
+        //val xp = ProfileData.currentProfile
 
         return _fragmentView
     }
 
     private fun initViews() {
         _profileImage = _fragmentView.findViewById<View>(R.id.profileCircleImageView) as CircleImageView
-        _profileUserName = _fragmentView.findViewById<View>(R.id.usernameTextView) as TextView
+        _userName = _fragmentView.findViewById<View>(R.id.usernameTextView) as TextView
         _email = _fragmentView.findViewById<View>(R.id.userEmail) as TextView
         _firstName = _fragmentView.findViewById<View>(R.id.profileFirstName) as EditText
         _lastName = _fragmentView.findViewById<View>(R.id.profileLasstName) as EditText
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
     }
     private fun initProfileData() {
         //from user info
-        _profileUserName.text = UserData.currentUser?.username
+        _userName.text = UserData.currentUser?.username
         _email.text = UserData.currentUser!!.email
         var userImage = ProfileData.currentProfile?.profilePicture
         if (userImage != null) {
@@ -105,12 +105,14 @@ class ProfileFragment : Fragment() {
 
         _textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                _saveButton.visibility = View.VISIBLE
+            }
             override fun afterTextChanged(s: Editable) {
-                if(!(s.equals(""))){
-                    _saveButton.visibility = View.VISIBLE
-                }
+                if((s.equals(""))) {
+                    _saveButton.visibility = View.GONE
 
+                }
             }
         }
 
@@ -118,19 +120,26 @@ class ProfileFragment : Fragment() {
 
         _saveButton.setOnClickListener {
             if (_saveButton.visibility == View.VISIBLE){
-                if (!(_firstName.equals(""))){
-                    ProfileData.currentProfile?.firstName = _firstName.toString()
-            }
-                if (_lastName.text.toString() != ""){
-                    ProfileData.currentProfile?.lastName = _lastName.toString()
+                if (_firstName.toString() != ("")){
+                    ProfileData.currentProfile!!.firstName=_firstName.text.toString()
+                    //_saveButton.visibility = View.GONE
                 }
-                if (_phone.text.toString() != ""){
-                    ProfileData.currentProfile?.phone = _phone.toString()
+                if (_lastName.text.toString() != ("")){
+                    ProfileData.currentProfile!!.lastName = _lastName.text.toString()
+                   // _saveButton.visibility = View.GONE
                 }
-                if (_address.text.toString() != ""){
-                    ProfileData.currentProfile?.address = _address.toString()
+                if (_phone.text.toString() != ("")){
+                    ProfileData.currentProfile!!.phone = _phone.text.toString()
+                    //_saveButton.visibility = View.GONE
                 }
+                if ((_address.text.toString() != (""))){
+                    ProfileData.currentProfile!!.address = _address.text.toString()
+                    //_saveButton.visibility = View.GONE
+                }
+                _saveButton.visibility = View.GONE
                 //todo here: update DB via viewModel
+                _viewModel.updateProfileData(ProfileData.currentProfile!!)
+
         }
 //        _firstName.addTextChangedListener(object : TextWatcher{
 //            override fun afterTextChanged(s: Editable) {

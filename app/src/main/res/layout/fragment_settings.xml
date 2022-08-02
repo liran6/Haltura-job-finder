@@ -55,7 +55,8 @@
                     android:text="Profile"/>
             <TextView
                     style="@style/viewParent.headerText.settingsTextIcon"
-                    android:drawableLeft="@drawable/ic_edit_profile"
+                    android:drawableLeft="@android:drawable/ic_dialog_email"
+                    android:drawableTint="@color/black"
                     android:id="@+id/change_email_button"
                     android:text="Change Email Address" />
 

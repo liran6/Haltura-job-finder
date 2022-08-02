@@ -58,6 +58,7 @@ class SettingsFragment : Fragment() {
         _fragmentView = inflater.inflate(R.layout.fragment_settings, container, false)
         // _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         // _fragmentView = binding.root
+        _viewModel.getCurrentProfile()
         initViews()
         initUserData()
         initButtons()
@@ -68,7 +69,6 @@ class SettingsFragment : Fragment() {
 
         return _fragmentView
     }
-
     private fun initViews() {
         _editProfile = _fragmentView.findViewById<View>(R.id.profilePicruteLayout) as RelativeLayout
         _profileImage =

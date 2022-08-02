@@ -45,7 +45,7 @@ class ProfileAdapter(
         // contents of the view with that element
         val currentItem = _dataSet[position]
         //username
-        viewHolder.username.text = currentItem.username
+        //viewHolder.username.text = currentItem.username
         //image
 //        var bm = Base64.decode(currentItem.image, Base64.DEFAULT)
 //        var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)

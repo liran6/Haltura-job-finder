@@ -2,7 +2,6 @@ package com.example.haltura.Models
 
 import android.os.Parcelable
 import com.example.haltura.Sql.Items.BusinessSerializable
-import com.example.haltura.Sql.Items.ProfileSerializable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
