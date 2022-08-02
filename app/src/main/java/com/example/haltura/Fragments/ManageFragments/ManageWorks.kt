@@ -23,6 +23,7 @@ import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.UserData
+import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.HomeViewModel
 import com.example.haltura.ViewModels.ManageWorksViewModel
 import com.example.haltura.databinding.FragmentManageUsersBinding
@@ -130,9 +131,9 @@ class ManageWorks : Fragment() {
         val workList = _viewModel.mutableWorkList.value!!
         val layoutManager = LinearLayoutManager(
             getContext(),
-            LinearLayoutManager.HORIZONTAL, false
+            LinearLayoutManager.VERTICAL, false
         )
-        _allWorksRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+        _allWorksRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
         _allWorksRecycle.layoutManager = layoutManager
         _allWorksAdapter = WorkAdapter(
             workList,

@@ -34,6 +34,7 @@ class ManageUsersViewModel : ViewModel() {
 
     fun getUsers() {
         mutableUserList.value!!.clear()
+        mutableAllUserList.clear()
         val retroService =
             ServiceBuilder.getRetroInstance().create(ProfileAPI::class.java)
         val call = retroService.getAllExtendedProfiles("Bearer " + UserData.currentUser?.token!!)
@@ -46,7 +47,7 @@ class ManageUsersViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val jObject = JSONObject(response.body()!!.string())
                     //todo: check if i can do it without the for loop
-                    val users = jObject.get("work_list") as JSONArray
+                    val users = jObject.get("profile_list") as JSONArray
                     for (i in 0 until users.length())
                     {
                         val user = json.fromJson(users.getJSONObject(i).toString(), ProfileSerializable::class.java)

@@ -69,12 +69,12 @@ class ManageUsers : Fragment() {
     ): View {
         _binding = FragmentManageUsersBinding.inflate(inflater, container, false)
         initBinding()
-//        initViews()
-//        initButtons()
-//        initTextListener()
-//        initViewModelData()
-//        initObservers()
-//        initRecyclersAndAdapters()
+        initViews()
+        initButtons()
+        initTextListener()
+        initViewModelData()
+        initObservers()
+        initRecyclersAndAdapters()
 
         return _fragmentView
     }
@@ -139,8 +139,8 @@ class ManageUsers : Fragment() {
         _usersRecycle = binding.usersList
         val userList = _viewModel.mutableUserList.value!!
         val layoutManager = LinearLayoutManager(getContext(),
-            LinearLayoutManager.HORIZONTAL,false)
-        _usersRecycle.addItemDecoration(HorizontalSpaceItemDecoration(20))
+            LinearLayoutManager.VERTICAL,false)
+        _usersRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
         _usersRecycle.layoutManager = layoutManager
         _usersAdapter = ProfileAdapter(
             userList,
