@@ -126,6 +126,11 @@ class ChatsFragment : Fragment() {
         startActivity(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        initViewModelData()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

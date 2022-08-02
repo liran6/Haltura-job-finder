@@ -8,18 +8,20 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.InputType
 import android.util.Base64
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.haltura.Adapters.SettingAdapter
 import com.example.haltura.AppNotifications
+import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.R
 import com.example.haltura.Utils.*
+import com.example.haltura.ViewModels.SettingsViewModel
 import com.example.haltura.activities.LoginActivity
+import com.example.haltura.activities.WorkHistoryActivity
 import com.example.haltura.databinding.FragmentSettingsBinding
+import com.example.haltura.databinding.ShowChatInfoDialogBinding
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -37,6 +39,7 @@ class SettingsFragment : Fragment() {
     private lateinit var _logOut: TextView
     private lateinit var _changePassword: TextView
     private lateinit var _changeEmail: TextView
+    private lateinit var _history: TextView
     private lateinit var _currentPassword: EditText
     private lateinit var _newPassword: EditText
     private lateinit var _ConfNewPassword: EditText
@@ -55,7 +58,9 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _fragmentView = inflater.inflate(R.layout.fragment_settings, container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        _fragmentView = _binding!!.root
+        //_fragmentView = inflater.inflate(R.layout.fragment_settings, container, false)
         // _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         // _fragmentView = binding.root
         _viewModel.getCurrentProfile()
@@ -106,6 +111,9 @@ class SettingsFragment : Fragment() {
         _logOut.setOnClickListener { logOut() }
         _changePassword.setOnClickListener { changePasswordDialog() }
         _changeEmail.setOnClickListener { changeEmail() }
+        _binding!!.historyButton.setOnClickListener{
+            startActivity(Intent(activity, WorkHistoryActivity::class.java))
+        }
     }
 
     private fun changePassword() {
@@ -123,7 +131,45 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun changeEmail() {}
+    private fun changeEmail() {//private fun removeUser(profile: ProfileSerializable) {
+        //if (profile.userId == UserData.currentUser!!.userId){return}
+
+        val changeEmailView: View = layoutInflater.inflate(R.layout.change_email_popup, null)
+        val popup = PopupWindow(
+            changeEmailView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        popup.elevation = 3.0f
+
+        val cancel = changeEmailView.findViewById(R.id.cancel) as TextView
+        val update = changeEmailView.findViewById(R.id.update) as TextView
+        val email = changeEmailView.findViewById(R.id.email) as EditText
+
+        email.setText(ProfileData.currentProfile!!.email)
+
+        cancel.setOnClickListener {
+            popup.dismiss()
+            removeBackground(true)
+        }
+
+        update.setOnClickListener {
+            //_viewModel.removeUser(_chatId, profile.userId!!)
+            //todo: api call
+            _viewModel.updateUserEmail(email.text.toString())
+            popup.dismiss()
+            removeBackground(true)
+        }
+
+        removeBackground(false)
+        popup.isFocusable = true
+        popup.update()
+        popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
+    }
+
+
+
     private fun logOut() {
         preferences = Preferences.customPrefs(activity!!, Const.loginPreferences)
         //val settings = context!!.getSharedPreferences("PreferencesName", Context.MODE_PRIVATE)
@@ -140,39 +186,89 @@ class SettingsFragment : Fragment() {
         activity!!.finish()
     }
 
-    fun changePasswordDialog() { //TODO: check old password validation + input password as ***
-        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(context)
-        builder.setTitle("Enter your old & new passwords here:")
-        val layout = LinearLayout(context)
-        layout.orientation = LinearLayout.VERTICAL
-// Set up the input
-        _currentPassword = EditText(context)
-        _currentPassword.setHint("Enter yor current password")
-        layout.addView(_currentPassword)
+//    fun changePasswordDialog() { //TODO: check old password validation + input password as ***
+//        //todo: make popup with xml
+//        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(context)
+//        builder.setTitle("Enter your old & new passwords here:")
+//        val layout = LinearLayout(context)
+//        layout.orientation = LinearLayout.VERTICAL
+//// Set up the input
+//        _currentPassword = EditText(context)
+//        _currentPassword.setHint("Enter yor current password")
+//        layout.addView(_currentPassword)
+//
+//        _newPassword = EditText(context)
+//        _newPassword.setHint("Enter yor new password")
+//        layout.addView(_newPassword)
+//
+//        _ConfNewPassword = EditText(context)
+//        _ConfNewPassword.setHint("Confirm yor new password")
+//        layout.addView(_ConfNewPassword)
+//
+//        _currentPassword.inputType = InputType.TYPE_CLASS_TEXT
+//        _newPassword.inputType = InputType.TYPE_CLASS_TEXT
+//        _ConfNewPassword.inputType = InputType.TYPE_CLASS_TEXT
+//        builder.setView(layout)
+//
+//        // Set up the buttons
+//        builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+//            changePassword()
+//        })
+//        builder.setNegativeButton(
+//            "Cancel",
+//            DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+//
+//        builder.show()
+//    }
 
-        _newPassword = EditText(context)
-        _newPassword.setHint("Enter yor new password")
-        layout.addView(_newPassword)
+    private fun changePasswordDialog(){//private fun removeUser(profile: ProfileSerializable) {
+        //if (profile.userId == UserData.currentUser!!.userId){return}
 
-        _ConfNewPassword = EditText(context)
-        _ConfNewPassword.setHint("Confirm yor new password")
-        layout.addView(_ConfNewPassword)
+        val changePasswordView: View = layoutInflater.inflate(R.layout.change_password_popup, null)
+        val popup = PopupWindow(
+            changePasswordView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
-        _currentPassword.inputType = InputType.TYPE_CLASS_TEXT
-        _newPassword.inputType = InputType.TYPE_CLASS_TEXT
-        _ConfNewPassword.inputType = InputType.TYPE_CLASS_TEXT
-        builder.setView(layout)
+        popup.elevation = 3.0f
 
-// Set up the buttons
-        builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+        val cancel = changePasswordView.findViewById(R.id.cancel) as TextView
+        val update = changePasswordView.findViewById(R.id.update) as TextView
+        val currentPassword = changePasswordView.findViewById(R.id.current_password) as EditText
+        val newPassword = changePasswordView.findViewById(R.id.new_password) as EditText
+        val confirmNewPassword = changePasswordView.findViewById(R.id.confirm_password) as EditText
+
+        cancel.setOnClickListener {
+            popup.dismiss()
+            removeBackground(true)
+        }
+
+        update.setOnClickListener {
+            //_viewModel.removeUser(_chatId, profile.userId!!)
+            _currentPassword = currentPassword
+            _newPassword = newPassword
+            _ConfNewPassword = confirmNewPassword
             changePassword()
-        })
-        builder.setNegativeButton(
-            "Cancel",
-            DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+            popup.dismiss()
+            removeBackground(true)
+        }
 
-        builder.show()
+        removeBackground(false)
+        popup.isFocusable = true
+        popup.update()
+        popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
     }
+
+    private fun removeBackground(show: Boolean) {
+        if (show) {
+            binding.settingsFragment.visibility = View.VISIBLE
+
+        } else {
+            binding.settingsFragment.visibility = View.GONE
+        }
+    }
+
 
     //    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 //        setPreferencesFromResource(R.xml.root_preferences, rootKey)

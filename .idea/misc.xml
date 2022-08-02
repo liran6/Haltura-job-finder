@@ -143,6 +143,7 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/drawable-v24/rounded_message_blue.xml" value="0.399" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/drawable-v24/rounded_message_gray.xml" value="0.399" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/drawable/circle.xml" value="0.2665" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/drawable/ic_history.xml" value="0.245" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/drawable/img.xml" value="0.2665" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/drawable/round_button.xml" value="0.213" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/drawable/round_edges.xml" value="0.2675" />
@@ -175,6 +176,8 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/camera_or_gallery_popup.xml" value="0.9" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/change_chat_image_popup.xml" value="0.33016304347826086" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/change_chat_name_popup.xml" value="0.33016304347826086" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/change_email_popup.xml" value="0.3509963768115942" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/change_password_popup.xml" value="0.3509963768115942" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/chat_member_item.xml" value="0.5" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_calendar.xml" value="0.2828125" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_chat.xml" value="0.31354166666666666" />
@@ -185,6 +188,7 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_manage_users.xml" value="0.33016304347826086" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_manage_works.xml" value="0.33016304347826086" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_profile.xml" value="0.4121376811594203" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_settings.xml" value="0.3509963768115942" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_show_chat_info_dialog.xml" value="0.3671875" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_show_profile_info.xml" value="0.4121376811594203" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/fragment_work.xml" value="0.4296875" />
@@ -198,6 +202,7 @@
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/report_dialog.xml" value="0.33016304347826086" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/show_chat_info_dialog.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/sms_dialog.xml" value="0.3269927536231884" />
+        <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/update_delete_dialog.xml" value="0.3509963768115942" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/user_chat_item.xml" value="0.2625" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/watch_work_dialog.xml" value="0.3161231884057971" />
         <entry key="..\:/Users/omer/StudioProjects/Haltura3/app/src/main/res/layout/watch_work_dialog2.xml" value="0.3161231884057971" />

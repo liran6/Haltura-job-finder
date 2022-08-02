@@ -22,6 +22,13 @@ interface ProfileAPI {
         @Path("userId") userId: String
     ): Call<ResponseBody>
 
+    @GET("profiles/extended/{userId}")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun getExtendedProfile(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: String
+    ): Call<ResponseBody>
+
     //ToDo check if works after finish.
     @PUT("profiles/update/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
