@@ -69,7 +69,8 @@ data class UserObject(
     @SerializedName("email") var email: String,
     @SerializedName("token") var token: String,
     @SerializedName("profile") var profile: ProfileSerializable?,
-    @SerializedName("business") var business: BusinessSerializable?
+    @SerializedName("business") var business: BusinessSerializable?,
+    @SerializedName("admin") var isAdmin: Boolean = false
 ) : Parcelable
 
 @Parcelize

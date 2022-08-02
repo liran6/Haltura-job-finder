@@ -121,6 +121,14 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun loggingIn(user: UserObject) {
+//        if (user.isAdmin)
+//        {
+//            val intent = Intent(this, MainActivity2::class.java)
+//        }
+//        else
+//        {
+//            val intent = Intent(this, MainActivity2::class.java)
+//        }
         val intent = Intent(this, MainActivity2::class.java)
         //val userBundle = Bundle()
         // intent.putExtra(Const.Logged_User, user)

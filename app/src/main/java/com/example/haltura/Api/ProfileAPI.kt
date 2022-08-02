@@ -7,6 +7,13 @@ import retrofit2.Call
 import retrofit2.http.*
 interface ProfileAPI {
 
+
+    @GET("profiles/profiles/all")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun getAllExtendedProfiles(
+        @Header("Authorization") token: String
+    ): Call<ResponseBody>
+
     @GET("profiles/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun getProfile(
