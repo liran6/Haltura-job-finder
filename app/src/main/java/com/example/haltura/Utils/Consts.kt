@@ -24,7 +24,7 @@ object Const{
     const val showNotifications = "showNotifications"
 
     // server Omer adress = "http://192.168.1.239:4000/"
-    const val SERVER_URL = "http://10.0.0.20:4000/"
+    const val SERVER_URL = "http://192.168.1.239:4000/"
     //Login - Register
     const val Connecting_Error = "Server connection failed, please try again"
     const val Registration_Success = "User registered successfully!"
