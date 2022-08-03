@@ -70,6 +70,29 @@ class WatchWorkViewModel : ViewModel() {
         })
     }
 
+
+    //quitWork
+    fun quitWork(workId: String, userId :String) {
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(WorkAPI::class.java)
+        val call = retroService.removeFromWorkUserId("Bearer " +
+                UserData.currentUser?.token!!, workId, userId)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    mutableMessageToasting.postValue("quit") //todo:put in const
+                } else {
+                    mutableMessageToasting.postValue(Const.Token_Error)
+                }
+            }
+        })
+    }
+
+
     fun createChat(work: WorkSerializable) {
         //todo: add chat per work and when someone joins to the work add him to the chat
 //        val retroService =

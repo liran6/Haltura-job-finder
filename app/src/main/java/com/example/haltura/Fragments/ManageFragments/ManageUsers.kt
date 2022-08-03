@@ -1,6 +1,8 @@
 package com.example.haltura.Fragments.ManageFragments
 
 //import com.example.haltura.Dialogs.WatchWorkDialog
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,16 +22,18 @@ import com.example.haltura.Fragments.ChatFragments.ShowProfileInfo
 import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.R
 import com.example.haltura.Utils.Const
+import com.example.haltura.Utils.Preferences
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.ManageUsersViewModel
+import com.example.haltura.activities.LoginActivity
 import com.example.haltura.databinding.FragmentManageUsersBinding
 import java.util.*
 
 
 class ManageUsers : Fragment() {
 
-
+    private lateinit var preferences: SharedPreferences
     private val _viewModel: ManageUsersViewModel by activityViewModels()
     private lateinit var _fragmentView: View
     //All
@@ -68,6 +72,26 @@ class ManageUsers : Fragment() {
         _searchButton.setOnClickListener {
             filter() //todo: make the search btn to open search text instead
         }
+
+        _binding!!.logout.setOnClickListener {
+            logOut()
+        }
+    }
+
+    private fun logOut() {
+        preferences = Preferences.customPrefs(activity!!, Const.loginPreferences)
+        //val settings = context!!.getSharedPreferences("PreferencesName", Context.MODE_PRIVATE)
+        preferences.edit().clear().commit()
+        //preferences.set(Const.IsLoggedIn, false)
+        //val intent = Intent(activity!!, LoginActivity::class.java)
+        val intent = Intent(activity!!, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra("EXIT", true)
+        startActivity(intent)
+        //viewModel.logOut()
+        activity!!.finish()
     }
 
     private fun initTextListener() {

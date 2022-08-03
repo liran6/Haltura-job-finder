@@ -1,4 +1,4 @@
-package com.example.haltura.Fragments.HomeFragments
+package com.example.haltura.Dialogs
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -11,12 +11,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.example.haltura.Api.DirectionsAPI
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.UserData
 import com.example.haltura.ViewModels.WatchWorkViewModel
 import com.example.haltura.databinding.WatchWorkDialogBinding
+import com.example.haltura.databinding.WatchWorkDialogQuitBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,7 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class WatchWorkDialog : DialogFragment {
+class WatchWorkCalendarDialog : DialogFragment {
 
     private lateinit var _work: WorkSerializable
     private lateinit var _mMap: GoogleMap
@@ -35,8 +37,9 @@ class WatchWorkDialog : DialogFragment {
     private lateinit var _info: TextView
     private lateinit var _dateAndTime: TextView
     private lateinit var _registerToWork: Button
+    private lateinit var _quitWork: ImageView
     private val _viewModel: WatchWorkViewModel by activityViewModels()
-    private var _binding: WatchWorkDialogBinding? = null
+    private var _binding: WatchWorkDialogQuitBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -72,7 +75,7 @@ class WatchWorkDialog : DialogFragment {
         savedInstanceState: Bundle?
     ): View? {
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_edges)
-        _binding = WatchWorkDialogBinding.inflate(inflater, container, false)
+        _binding = WatchWorkDialogQuitBinding.inflate(inflater, container, false)
         _fragmentView = binding.root
         initViews()
         initButtons()
@@ -86,14 +89,14 @@ class WatchWorkDialog : DialogFragment {
     }
 
     private fun initButtons() {
+        _registerToWork.setText("navigate to work")
         _registerToWork.setOnClickListener()
         {
-            _viewModel.registerToWork(_work)
+            DirectionsAPI.openGoogleMapsNavigationToB(activity!!,_work.address.latitude,
+                _work.address.longitude)
         }
-        if (_work.publisher == UserData.currentUser!!.userId )
-        {
-            _registerToWork.visibility = View.GONE
-            _registerToWork.isEnabled = false
+        _quitWork.setOnClickListener {
+            _viewModel.quitWork(_work.id!!, UserData.currentUser!!.userId)
         }
     }
 
@@ -105,6 +108,7 @@ class WatchWorkDialog : DialogFragment {
         _info = binding.itemInfo
         _dateAndTime = binding.itemDateAndTime
         _registerToWork = binding.RegisterToWork
+        _quitWork = binding.quit
         // BUTTON?
         var taskAndCompany = _work.task
         if (_work.company != null) {taskAndCompany += "(" + _work.company+ ")"}

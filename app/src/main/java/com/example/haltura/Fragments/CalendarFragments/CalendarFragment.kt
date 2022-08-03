@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.MyCalendarAdapter
 import com.example.haltura.AppNotifications
+import com.example.haltura.Dialogs.WatchWorkCalendarDialog
 import com.example.haltura.Fragments.*
 import com.example.haltura.Fragments.HomeFragments.WatchCloseWorkDialog
 import com.example.haltura.Fragments.getColorCompat
@@ -216,7 +217,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), BackButton {
         _worksCreatedRecycler.layoutManager = LinearLayoutManager(context)
         _createdWorkCalendarAdapter = MyCalendarAdapter(//todo:switch adapter
             //events, //todo change--------------------------------------------------------------------------------------------------------------------------------------------------------------
-            _clickOnItemListener = { openWorkEditMode(it) }
+            _clickOnItemListener = { openWorkCreated(it) }
         )
         _worksCreatedRecycler.adapter = _createdWorkCalendarAdapter
 
@@ -227,11 +228,10 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), BackButton {
         _worksRegisteredRecycler.layoutManager = LinearLayoutManager(context)
         _registeredWorkCalendarAdapter = MyCalendarAdapter(//todo:switch adapter
             //events,//todo change----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            _clickOnItemListener = { openWorkEditMode(it)}//TODO- Unsign from activity function(open dialog)
+            _clickOnItemListener = { openWorkReg(it)}//TODO- Unsign from activity function(open dialog)
         )
         _worksRegisteredRecycler.adapter = _registeredWorkCalendarAdapter
     }
-
     private fun initViews() {
 //        _worksCreatedRecycler = binding.worksCreatedRecyclerView
 //        _worksCreatedRecycler.addItemDecoration(VerticalSpaceItemDecoration(10))
@@ -296,8 +296,15 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), BackButton {
     }
 
     //TODO: place work preview in here!!!
-    private fun openWorkEditMode(work: WorkSerializable) {
+    private fun openWorkCreated(work: WorkSerializable) {
         var dialog = WatchCloseWorkDialog(work)
+        activity?.supportFragmentManager?.let {
+            dialog.show(it, "WatchWorkDialog")
+        }
+    }
+
+    private fun openWorkReg(work: WorkSerializable) {
+        var dialog = WatchWorkCalendarDialog(work)
         activity?.supportFragmentManager?.let {
             dialog.show(it, "WatchWorkDialog")
         }
