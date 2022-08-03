@@ -37,14 +37,14 @@
             android:orientation="horizontal"
             android:id="@+id/topBar">
 
-        <ImageView
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_back_24"
-                android:id="@+id/back_button" />
+<!--        <ImageView-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_arrow_back_24"-->
+<!--                android:id="@+id/back_button" />-->
 
         <!--        <ImageView-->
         <!--                android:id="@+id/image_chat"-->

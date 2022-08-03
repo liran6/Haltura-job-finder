@@ -30,6 +30,7 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_work_history">WorkHistoryActivity</string>
+    <string name="title_activity_chat">Current Chat :</string>
     <string name="email">Email</string>
     <string name="userName">User Name</string>
     <string name="password">Password</string>

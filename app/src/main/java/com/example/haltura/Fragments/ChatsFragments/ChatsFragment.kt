@@ -17,15 +17,20 @@ import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.ChatsViewModel
 import androidx.lifecycle.Observer
 import com.example.haltura.Adapters.ChatsAdapter
+import com.example.haltura.Fragments.BackButton
+import com.example.haltura.Fragments.BaseFragment
+import com.example.haltura.Fragments.ProfileSettingsButton
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.ChatSerializable
 import com.example.haltura.Utils.ChatData
+import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.WorkData
 import com.example.haltura.activities.AddWorkActivity
 import com.example.haltura.activities.ChatActivity
 import com.example.haltura.databinding.FragmentChatsBinding
 
-class ChatsFragment : Fragment() {
+class ChatsFragment : BaseFragment(R.layout.fragment_chats), BackButton, ProfileSettingsButton {
+    override val titleRes: String = "Chats :"//+ UserData.currentUser?.username
 
     private val _viewModel: ChatsViewModel by activityViewModels()
     private lateinit var _fragmentView: View

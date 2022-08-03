@@ -58,6 +58,8 @@
                 android:label="@string/title_activity_main2" />
         <activity
                 android:name=".activities.ChatActivity"
+                android:theme="@style/Theme.AppCompat.DayNight"
+                android:label="@string/title_activity_chat"
                 android:exported="false" />
         <activity
                 android:name=".activities.AddWorkActivity"

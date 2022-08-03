@@ -24,10 +24,12 @@ interface HasToolbar {
 
 interface BackButton
 interface ProfileSettingsButton
+interface AdvanceSearchButton
 
 abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
     val hasBackButton = this is BackButton
     val hasProfileSettingsButton = this is ProfileSettingsButton
+    val hasAdvanceSearchButton = this is AdvanceSearchButton
     val homeActivityToolbar: MaterialToolbar
         get() = (requireActivity() as MainActivity2).binding.toolbar
 
@@ -85,8 +87,10 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        val item = menu.findItem(R.id.profile_settings)
-        item.isVisible = hasProfileSettingsButton
+        val profileItem = menu.findItem(R.id.profile_settings)
+        profileItem.isVisible = hasProfileSettingsButton
+        val searchItem = menu.findItem(R.id.advanceSearchButton)
+        searchItem.isVisible = hasAdvanceSearchButton
     }
 
     //create the options of the appbar

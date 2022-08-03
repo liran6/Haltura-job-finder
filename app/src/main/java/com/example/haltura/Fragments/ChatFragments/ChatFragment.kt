@@ -255,7 +255,7 @@ class ChatFragment : Fragment() {
     private fun initViews() {
         _topBar = _binding!!.topBar// findViewById(R.id.topBar)
         _chatImage = _binding!!.imageChat
-        _backButton = _binding!!.backButton
+        //_backButton = _binding!!.backButton
         _chatName = _binding!!.nameChat
         _members = _binding!!.members
         _cameraButton = _binding!!.camera
