@@ -13,6 +13,7 @@ import com.example.haltura.R
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.WorkData
 import com.example.haltura.activities.AddWorkActivity
+import com.example.haltura.activities.AdvanceSearchActivity
 import com.example.haltura.activities.MainActivity2
 import com.example.haltura.activities.SettingsActivity
 import com.google.android.material.appbar.MaterialToolbar
@@ -102,10 +103,11 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
                 startActivity(intent)
                 return true
             }
-//            R.id.editButon -> {
-//                // save profile changes
-//                true
-//            }
+            R.id.advanceSearchButton -> {
+                val intent = Intent(activity, AdvanceSearchActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

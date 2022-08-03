@@ -66,6 +66,7 @@
     <string name="date">Date</string>
     <string name="profile_settings">Profile_settings</string>
     <string name="edit_button">edit_button</string>
+    <string name="search_button">search_button</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preference Titles -->

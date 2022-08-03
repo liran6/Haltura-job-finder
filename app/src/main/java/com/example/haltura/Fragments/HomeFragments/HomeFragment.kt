@@ -227,7 +227,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
 
     private fun initButtons() {
         _searchButton.setOnClickListener {
-            filter() //todo: make the search btn to open search text instead
+            //filter() //todo: make the search btn to open search text instead
+
         }
     }
 
@@ -243,6 +244,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
 
             override fun afterTextChanged(s: Editable) {
                 // TODO Auto-generated method stub
+
             }
         })
     }
