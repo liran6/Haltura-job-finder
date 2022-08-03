@@ -45,12 +45,13 @@
         <activity
                 android:name=".activities.WorkHistoryActivity"
                 android:exported="false"
-                android:label="@string/title_activity_work_history"
+                android:theme="@style/Theme.AppCompat.DayNight"
+                android:label=""
                 android:noHistory="true" />
         <activity
                 android:name=".activities.LoginActivity"
                 android:exported="false"
-                android:label="@string/title_activity_login"
+                android:label=""
                 android:noHistory="true" />
         <activity
                 android:name=".activities.MainActivity2"

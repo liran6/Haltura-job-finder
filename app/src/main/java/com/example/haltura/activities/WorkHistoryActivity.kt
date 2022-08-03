@@ -1,6 +1,7 @@
 package com.example.haltura.activities
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -41,6 +42,20 @@ class WorkHistoryActivity : AppCompatActivity() {
         initViews()
         initObservers()
         initRecyclersAndAdapters()
+        val actionBar = getSupportActionBar()
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+    // this event will enable the back
+    // function to the button on press
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                //finish()
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initViewModel() {
