@@ -131,7 +131,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun changeEmail() {//private fun removeUser(profile: ProfileSerializable) {
+    private fun changeEmail() {
         //if (profile.userId == UserData.currentUser!!.userId){return}
 
         val changeEmailView: View = layoutInflater.inflate(R.layout.change_email_popup, null)

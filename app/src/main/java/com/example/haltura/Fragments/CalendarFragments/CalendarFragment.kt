@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.MyCalendarAdapter
 import com.example.haltura.AppNotifications
 import com.example.haltura.Fragments.*
+import com.example.haltura.Fragments.HomeFragments.WatchCloseWorkDialog
 import com.example.haltura.Fragments.getColorCompat
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
@@ -215,7 +216,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), BackButton {
         _worksCreatedRecycler.layoutManager = LinearLayoutManager(context)
         _createdWorkCalendarAdapter = MyCalendarAdapter(//todo:switch adapter
             //events, //todo change--------------------------------------------------------------------------------------------------------------------------------------------------------------
-            _clickOnItemListener = { openWorkEditMode(it, null) }
+            _clickOnItemListener = { openWorkEditMode(it) }
         )
         _worksCreatedRecycler.adapter = _createdWorkCalendarAdapter
 
@@ -226,7 +227,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), BackButton {
         _worksRegisteredRecycler.layoutManager = LinearLayoutManager(context)
         _registeredWorkCalendarAdapter = MyCalendarAdapter(//todo:switch adapter
             //events,//todo change----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            _clickOnItemListener = { openWorkEditMode(it, null)}//TODO- Unsign from activity function(open dialog)
+            _clickOnItemListener = { openWorkEditMode(it)}//TODO- Unsign from activity function(open dialog)
         )
         _worksRegisteredRecycler.adapter = _registeredWorkCalendarAdapter
     }
@@ -295,12 +296,17 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar), BackButton {
     }
 
     //TODO: place work preview in here!!!
-    private fun openWorkEditMode(work: WorkSerializable, date: LocalDate?) {
-        val intent = Intent(activity, AddWorkActivity::class.java)
-        WorkData.currentWork = work
-        startActivity(intent)
-        updateRecycleAndAdapterForDate(date!!)
+    private fun openWorkEditMode(work: WorkSerializable) {
+        var dialog = WatchCloseWorkDialog(work)
+        activity?.supportFragmentManager?.let {
+            dialog.show(it, "WatchWorkDialog")
+        }
     }
+//        val intent = Intent(activity, AddWorkActivity::class.java)
+//        WorkData.currentWork = work
+//        startActivity(intent)
+//        updateRecycleAndAdapterForDate(date!!)
+    //}
 
     //todo need to put away from here
 //    private fun deleteWork(work: WorkSerializable,date: LocalDate?) {

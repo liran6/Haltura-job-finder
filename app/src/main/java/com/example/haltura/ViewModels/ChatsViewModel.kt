@@ -53,6 +53,7 @@ class ChatsViewModel : ViewModel() {
                         mutableAllChatsList!!.add(chat)
                         //mutableChatsList.value!!.add(chat)
                     }
+                    mutableChatsList.value!!.clear()
                     mutableChatsList.value!!.addAll(mutableAllChatsList)
                     mutableChatsList.notifyAllObservers()
                 } else {

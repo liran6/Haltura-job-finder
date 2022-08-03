@@ -45,7 +45,7 @@ import java.util.*
 
 class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSettingsButton {
 
-    override val titleRes: String = "Welcome back "+UserData.currentUser?.username
+    override val titleRes: String = "Welcome Back "+UserData.currentUser?.username
 
     private val _viewModel: HomeViewModel by activityViewModels()
     private lateinit var _fragmentView: View
@@ -266,9 +266,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
 //        _binding!!.button.setOnClickListener{
 //            startActivity(Intent(activity, WorkHistoryActivity::class.java))
 //        }
-        _binding!!.locationButton.setOnClickListener{
-            showDataRangePicker()
-        }
+//        _binding!!.locationButton.setOnClickListener{
+//            showDataRangePicker()
+//        }
     }
 
     private fun initViewModelData() {
@@ -337,8 +337,15 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
         _closeWorksRecycle.layoutManager = layoutManager
         _closeWorksAdapter = WorkAdapter(
             workList,
-            _clickOnItemListener = { showWorkDetails(it) })
+            _clickOnItemListener = { showCloseWorkDetails(it) })
         _closeWorksRecycle.adapter = _closeWorksAdapter
+    }
+
+    private fun showCloseWorkDetails(work: WorkSerializable) {
+        var dialog = WatchCloseWorkDialog(work)
+        activity?.supportFragmentManager?.let {
+            dialog.show(it, "WatchWorkDialog")
+        }
     }
 
     private fun initRecommendedWorks() {

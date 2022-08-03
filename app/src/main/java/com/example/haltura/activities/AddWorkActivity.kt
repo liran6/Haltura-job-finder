@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.AppNotifications
+import com.example.haltura.Fragments.HomeFragments.HomeFragment
 import com.example.haltura.R
 //import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.AddresSerializable
@@ -32,6 +33,7 @@ import com.example.haltura.Utils.*
 import com.example.haltura.ViewModels.AddWorkViewModel
 //import com.example.haltura.activities.ChatActivity.Companion.TAG
 import com.example.haltura.databinding.ActivityAddWorkBinding
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -312,11 +314,24 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         {
             //mMap.clear()
             var p = LatLng(_work!!.address.latitude, _work!!.address.longitude)
+            latitude = _work!!.address.latitude
+            longitude = _work!!.address.longitude
             mMap.addMarker(MarkerOptions().position(p).title(_work!!.address.address))
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p,15.0f))
         }
         else
         {
+//            var fusedLocationClient = LocationServices.getFusedLocationProviderClient(this!!.applicationContext)
+//            fusedLocationClient?.lastLocation!!.addOnCompleteListener() { task ->
+//                if (task.isSuccessful && task.result != null) {
+//                    var lastLocation = task.result
+//                    latitudeLabel = (lastLocation)!!.latitude
+//                    longitudeLabel = (lastLocation)!!.longitude
+//                }
+//                else {
+//
+//                }
+//            }
             //todo set your location
             var p = LatLng(32.0589923, 34.8241127)
             mMap.addMarker(MarkerOptions().position(p).title("your location"))
