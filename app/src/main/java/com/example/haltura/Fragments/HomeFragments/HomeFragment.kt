@@ -43,7 +43,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSettingsButton {
+class HomeFragment : BaseFragment(R.layout.fragment_home), BackButton ,ProfileSettingsButton,AdvanceSearchButton {
 
     override val titleRes: String = "Welcome Back "+UserData.currentUser?.username
 
