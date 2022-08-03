@@ -3,26 +3,27 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_edges">
 
-    <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            app:srcCompat="@drawable/ic_image"
-            android:id="@+id/image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp"
-            app:layout_constraintHorizontal_bias="0.495" />
+<!--    <ImageView-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp"-->
+<!--            app:srcCompat="@drawable/ic_image"-->
+<!--            android:id="@+id/report_image"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_marginTop="40dp"-->
+<!--            app:layout_constraintHorizontal_bias="0.495" />-->
 
-    <TextView
-            android:text="TextView"
+    <EditText
+            android:hint="Write you report here"
             android:layout_width="300dp"
             android:layout_height="70dp"
-            android:id="@+id/textView2"
-            app:layout_constraintStart_toStartOf="@+id/image"
-            app:layout_constraintTop_toBottomOf="@+id/image"
+            android:id="@+id/report_text"
+            app:layout_constraintStart_toStartOf="@+id/report_image"
+            app:layout_constraintTop_toBottomOf="@+id/report_image"
             android:layout_marginTop="20dp"
             android:layout_marginStart="0dp" />
 
@@ -31,9 +32,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/submit_report"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/report_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="28dp"
             app:layout_constraintHorizontal_bias="0.498" />
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/arrow_back_press"
+            android:id="@+id/back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
