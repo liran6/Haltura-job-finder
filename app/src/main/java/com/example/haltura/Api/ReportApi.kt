@@ -21,7 +21,7 @@ interface ReportApi {
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun submitReport(
         @Header("Authorization") token: String,
-        @Body report: ReportSerializable.ReportSerializable
+        @Body report: ReportSerializable
     ): Call<ResponseBody>
 
     @GET("report/all")

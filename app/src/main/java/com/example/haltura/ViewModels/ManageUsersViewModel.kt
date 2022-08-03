@@ -2,10 +2,9 @@ package com.example.haltura.ViewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.haltura.Api.ProfileAPI
-import com.example.haltura.Api.ServiceBuilder
-import com.example.haltura.Api.WorkAPI
+import com.example.haltura.Api.*
 import com.example.haltura.Models.ProfileSerializable
+import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.notifyAllObservers
 import com.google.gson.Gson
@@ -60,6 +59,29 @@ class ManageUsersViewModel : ViewModel() {
                 }
             }
         })
+    }
+
+    //deleteUser
+    fun deleteUser(user : ProfileSerializable){
+        val retroService =
+            ServiceBuilder.getRetroInstance().create(UsersAPI::class.java)
+        val call = retroService.deleteUser("Bearer " +
+                UserData.currentUser?.token!!, user.userId)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                mutableMessageToasting.postValue(Const.Connecting_Error)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    //remove from
+                    mutableMessageToasting.postValue("The user was removed successfully") //todo:put in const
+                } else {
+                    mutableMessageToasting.postValue(Const.Token_Error)
+                }
+            }
+        })
+
     }
 
     fun filter(textToFilter: String) {

@@ -28,6 +28,12 @@ interface UsersAPI {
         @Header("Authorization") token: String,
     ): Call<ResponseBody>
 
+    @DELETE("users/{id}")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun deleteUser(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): Call<ResponseBody>
 
     @PUT("users/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")

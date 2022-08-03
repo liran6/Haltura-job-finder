@@ -53,7 +53,7 @@ class WatchWorkViewModel : ViewModel() {
             ServiceBuilder.getRetroInstance().create(ReportApi::class.java)
         val call = retroService.submitReport("Bearer " +
                 UserData.currentUser?.token!!,
-            ReportSerializable.ReportSerializable(UserData.currentUser!!.userId,workId,text,null)
+            ReportSerializable(null,UserData.currentUser!!.userId,workId,text,null)
         )
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

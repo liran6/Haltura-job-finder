@@ -1,44 +1,29 @@
 package com.example.haltura.Fragments.ManageFragments
 
-import android.content.Intent
+//import com.example.haltura.Dialogs.WatchWorkDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.example.haltura.R
-import com.example.haltura.ViewModels.HomeViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.haltura.Adapters.WorkAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.haltura.Adapters.ProfileAdapter
 import com.example.haltura.Fragments.*
-//import com.example.haltura.Dialogs.WatchWorkDialog
-import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Fragments.ChatFragments.ShowProfileInfo
+import com.example.haltura.Models.ProfileSerializable
+import com.example.haltura.R
 import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.UserData
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
-import com.example.haltura.activities.LoginActivity
-import com.example.haltura.activities.MainActivity2
-import com.example.haltura.activities.WorkHistoryActivity
-import com.example.haltura.databinding.FragmentHomeBinding
-import com.google.android.material.datepicker.MaterialDatePicker
-import androidx.appcompat.app.AppCompatActivity
-import com.example.haltura.Adapters.ProfileAdapter
-import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.ViewModels.ManageUsersViewModel
 import com.example.haltura.databinding.FragmentManageUsersBinding
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -144,36 +129,67 @@ class ManageUsers : Fragment() {
         _usersRecycle.layoutManager = layoutManager
         _usersAdapter = ProfileAdapter(
             userList,
-            _clickOnItemListener = { showWorkDetails(it) },
-            _clickOnLongItemListener = { showWorkDetails(it) },
+            _clickOnItemListener = { showProfile(it) },
+            _clickOnLongItemListener = { removeUser(it) },
             _enableOnClick = true
         )
         _usersRecycle.adapter = _usersAdapter
     }
 
-    private fun showWorkDetails(profile: ProfileSerializable) {
-//        var dialog = WatchWorkDialog(work)
-//        activity?.supportFragmentManager?.let {
-//            dialog.show(it, "WatchWorkDialog")
-//        }
+    private fun showProfile(profile: ProfileSerializable) {
+        switchFragment(ShowProfileInfo(profile),Const.profile_info)
     }
-//    override fun onStart() {
-//        super.onStart()
-//        homeActivityToolbar.makeVisible()
-//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
-//        requireActivity().window.statusBarColor =
-//            requireContext().getColorCompat(R.color.calendar_statusbar_color)
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
-//        requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.colorPrimaryDark)
-//    }
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+
+    private fun switchFragment(fragment: Fragment,fragmentId: String) {
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        if (transaction != null) {
+            transaction.replace(R.id.fragment_manage_users_view, fragment, Const.profile_info)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+    }
+
+    private fun removeUser(profile: ProfileSerializable) {
+        if (profile.userId == UserData.currentUser!!.userId){return}
+        val removeUserView: View = layoutInflater.inflate(R.layout.remove_from_chat_popup, null)
+        val popup = PopupWindow(
+            removeUserView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        popup.elevation = 3.0f
+
+        val cancel = removeUserView.findViewById(R.id.cancel) as TextView
+        val remove =
+            removeUserView.findViewById(R.id.remove) as TextView
+        val workInfo = removeUserView.findViewById(R.id.user_info)as TextView
+        workInfo.text = "Are you sure you want to remove "+ profile.username +"?" //todo take just the date
+
+        cancel.setOnClickListener {
+            popup.dismiss()
+            removeBackground(true)
+        }
+
+        remove.setOnClickListener {
+            _viewModel.deleteUser(profile)
+            popup.dismiss()
+            removeBackground(true)
+        }
+        removeBackground(false)
+        popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
+
+    }
+
+    private fun removeBackground(show: Boolean) {
+        if (show) {
+            binding.fragmentManageUsersView.visibility = View.VISIBLE
+
+        } else {
+            binding.fragmentManageUsersView.visibility = View.GONE
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

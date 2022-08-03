@@ -5,7 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:theme="@style/Theme.Haltura"
-        android:background="@color/backGround">
+        android:background="@color/backGround"
+        android:id="@+id/fragment_manage_users_view">
 
     <EditText
             android:id="@+id/search_text"

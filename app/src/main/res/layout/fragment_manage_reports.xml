@@ -3,11 +3,12 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Fragments.ManageFragments.ManageReports">
+        tools:context=".Fragments.ManageFragments.ManageReports"
+        android:id="@+id/fragment_manage_report_view">
 
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/report_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello" />
-
+            android:layout_height="match_parent" />
 </FrameLayout>
