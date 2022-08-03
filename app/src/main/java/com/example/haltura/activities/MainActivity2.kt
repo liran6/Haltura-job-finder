@@ -19,16 +19,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.haltura.AppNotifications
 import com.example.haltura.R
-import com.example.haltura.Sql.Items.UserSerializable
 import com.example.haltura.Utils.Const
 import com.example.haltura.Utils.Preferences
-import com.example.haltura.Utils.Preferences.get
 import com.example.haltura.Utils.Preferences.set
 import com.example.haltura.Utils.UserData
 import com.example.haltura.ViewModels.LoginViewModel
 import com.example.haltura.databinding.ActivityMain2Binding
 import com.google.android.material.appbar.MaterialToolbar
-import com.kizitonwose.calendarview.model.DayOwner
 
 
 class MainActivity2 : AppCompatActivity() {
