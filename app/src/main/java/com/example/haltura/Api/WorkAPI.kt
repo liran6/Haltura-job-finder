@@ -1,4 +1,5 @@
 package com.example.haltura.Api
+import com.example.haltura.Models.PromptSerializable
 import com.example.haltura.Sql.Items.*
 import okhttp3.ResponseBody
 
@@ -82,6 +83,14 @@ interface WorkAPI {
     fun getWorkHistoryOfUserId(
         @Header("Authorization") token: String,
         @Path("userId") userId: String,
+    ): Call<ResponseBody>
+
+    //get works with NLP prompt
+    @POST("works/nlp")
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    fun getNlpWorks(
+        @Header("Authorization") token: String,
+        @Body prompt: PromptSerializable
     ): Call<ResponseBody>
 
     //get all works of userId (AS EMPLOYER)- by date!!
