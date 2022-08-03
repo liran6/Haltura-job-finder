@@ -1,64 +1,49 @@
 package com.example.haltura.Fragments.HomeFragments
 
+//import com.example.haltura.Dialogs.WatchWorkDialog
+//location
+
+
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.example.haltura.R
-import com.example.haltura.ViewModels.HomeViewModel
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.haltura.Adapters.WorkAdapter
-import com.example.haltura.Fragments.*
-//import com.example.haltura.Dialogs.WatchWorkDialog
-import com.example.haltura.Sql.Items.WorkSerializable
-import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.HorizontalSpaceItemDecoration
-import com.example.haltura.Utils.UserData
-import com.example.haltura.Utils.VerticalSpaceItemDecoration
-import com.example.haltura.activities.LoginActivity
-import com.example.haltura.activities.MainActivity2
-import com.example.haltura.activities.WorkHistoryActivity
-import com.example.haltura.databinding.FragmentHomeBinding
-import com.google.android.material.datepicker.MaterialDatePicker
-import androidx.appcompat.app.AppCompatActivity
-import java.text.SimpleDateFormat
-import java.util.*
-//location
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.haltura.Adapters.WorkAdapter
+import com.example.haltura.Fragments.*
+import com.example.haltura.R
+import com.example.haltura.Sql.Items.WorkSerializable
+import com.example.haltura.Utils.HorizontalSpaceItemDecoration
+import com.example.haltura.Utils.UserData
+import com.example.haltura.ViewModels.HomeViewModel
+import com.example.haltura.activities.WorkHistoryActivity
+import com.example.haltura.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-import android.content.Context
-import android.location.LocationListener
-import android.widget.Button
-import androidx.core.content.ContextCompat
-
-
-class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSettingsButton{
+class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSettingsButton {
 
     override val titleRes: String = "Welcome back "+UserData.currentUser?.username
 
@@ -103,132 +88,147 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
         initViewModelData()
         initObservers()
         initRecyclersAndAdapters()
-//        initLocation()
-  //      getLocation()
+        initLocation()
+        //requestPermissions()
+        //getLocationInfo()
+        //getLastLocation()
         return _fragmentView
+
     }
-//GPS LOCATION
-//    private fun getLocation() {
-//        locationManager = Context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-//        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-//            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-//        }
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
-//    }
+
+        private fun showSnackbar(
+        mainTextStringId: String, actionStringId: String,
+        listener: View.OnClickListener
+    ) {
+        Toast.makeText(activity!!, mainTextStringId, Toast.LENGTH_LONG).show()
+    }
+    private fun initLocation(){
+        //latitudeLabel = resources.getString(R.string.latitudeBabel)
+        //longitudeLabel = resources.getString(R.string.longitudeBabel)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!.applicationContext)
+
+    }
+    private fun checkPermissions(): Boolean {
+        val permissionState = ActivityCompat.checkSelfPermission(
+            activity!!.applicationContext,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        return permissionState == PackageManager.PERMISSION_GRANTED
+    }
+    private fun getLastLocation() {
+        fusedLocationClient?.lastLocation!!.addOnCompleteListener(activity!!) { task ->
+            if (task.isSuccessful && task.result != null) {
+                lastLocation = task.result
+                latitudeLabel = (lastLocation)!!.latitude
+                longitudeLabel = (lastLocation)!!.longitude
+                var x = 1
+            }
+            else {
+                Log.w(TAG, "getLastLocation:exception", task.exception)
+                //showMessage("No location detected. Make sure location is enabled on the device.")
+            }
+        }
+    }
+    private fun startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(
+            activity!!,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            REQUEST_PERMISSIONS_REQUEST_CODE
+        )
+    }
+    private fun requestPermissions() {
+        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+            activity!!,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (shouldProvideRationale) {
+            Log.i(TAG, "Displaying permission rationale to provide additional context.")
+            showSnackbar("Location permission is needed for core functionality", "Okay",
+                View.OnClickListener {
+                    startLocationPermissionRequest()
+                })
+        }
+        else {
+            Log.i(TAG, "Requesting permission")
+            startLocationPermissionRequest()
+        }
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        Log.i(TAG, "onRequestPermissionResult")
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            when {
+                grantResults.isEmpty() -> {
+                    // If user interaction was interrupted, the permission request is cancelled and you
+                    // receive empty arrays.
+                    Log.i(TAG, "User interaction was cancelled.")
+                }
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
+                    // Permission granted.
+                    getLastLocation()
+                }
+                else -> {
+                    showSnackbar("Permission was denied", "Settings",
+                        View.OnClickListener {
+                            // Build intent that displays the App settings screen.
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts(
+                                "package",
+                                Build.DISPLAY, null
+                            )
+                            intent.data = uri
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+
+
 //    override fun onLocationChanged(location: Location) {
-//        tvGpsLocation = findViewById(R.id.textView)
-//        tvGpsLocation.text = "Latitude: " + location.latitude + " , Longitude: " + location.longitude
+//        longitudeLabel = location.longitude
+//        latitudeLabel = location.latitude
+//        var x = 1
 //    }
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-//        if (requestCode == locationPermissionCode) {
-//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-//            }
-//            else {
-//                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-
-
-
-//    private fun showSnackbar(
-//        mainTextStringId: String, actionStringId: String,
-//        listener: View.OnClickListener
-//    ) {
-//        Toast.makeText(activity!!, mainTextStringId, Toast.LENGTH_LONG).show()
-//    }
-//    private fun initLocation(){
-//        //latitudeLabel = resources.getString(R.string.latitudeBabel)
-//        //longitudeLabel = resources.getString(R.string.longitudeBabel)
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!.applicationContext)
+//    private fun getLocationInfo() {
+//        locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+////        if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
+////            != PackageManager.PERMISSION_GRANTED
+////            && ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)
+////            != PackageManager.PERMISSION_GRANTED) {}
 //
+//            if ((ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+//            //ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+//                longitudeLabel = null
+//                latitudeLabel = null
+//        }
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f,this)
+//        longitudeLabel = LocationData.currentLocation!!.longitude
+//        latitudeLabel = LocationData.currentLocation!!.latitude
+//        var x = 1
 //    }
-//    private fun checkPermissions(): Boolean {
-//        val permissionState = ActivityCompat.checkSelfPermission(
-//            activity!!.applicationContext,
-//            Manifest.permission.ACCESS_COARSE_LOCATION
-//        )
-//        return permissionState == PackageManager.PERMISSION_GRANTED
-//    }
-//    private fun getLastLocation() {
-//        fusedLocationClient?.lastLocation!!.addOnCompleteListener(activity!!) { task ->
-//            if (task.isSuccessful && task.result != null) {
-//                lastLocation = task.result
-//                var lat = (lastLocation)!!.latitude
-//                var lon = (lastLocation)!!.longitude
+
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+//        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                Toast.makeText(activity!!, "Permission Granted", Toast.LENGTH_SHORT).show()
 //            }
 //            else {
-//                Log.w(TAG, "getLastLocation:exception", task.exception)
-//                //showMessage("No location detected. Make sure location is enabled on the device.")
+//                Toast.makeText(activity!!, "Permission Denied", Toast.LENGTH_SHORT).show()
 //            }
 //        }
 //    }
-//    private fun startLocationPermissionRequest() {
-//        ActivityCompat.requestPermissions(
-//            activity!!,
-//            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-//            REQUEST_PERMISSIONS_REQUEST_CODE
-//        )
-//    }
-//    private fun requestPermissions() {
-//        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(
-//            activity!!,
-//            Manifest.permission.ACCESS_COARSE_LOCATION
-//        )
-//        if (shouldProvideRationale) {
-//            Log.i(TAG, "Displaying permission rationale to provide additional context.")
-//            showSnackbar("Location permission is needed for core functionality", "Okay",
-//                View.OnClickListener {
-//                    startLocationPermissionRequest()
-//                })
-//        }
-//        else {
-//            Log.i(TAG, "Requesting permission")
-//            startLocationPermissionRequest()
-//        }
-//    }
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int, permissions: Array<String>,
-//        grantResults: IntArray
-//    ) {
-//        Log.i(TAG, "onRequestPermissionResult")
-//        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-//            when {
-//                grantResults.isEmpty() -> {
-//                    // If user interaction was interrupted, the permission request is cancelled and you
-//                    // receive empty arrays.
-//                    Log.i(TAG, "User interaction was cancelled.")
-//                }
-//                grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
-//                    // Permission granted.
-//                    getLastLocation()
-//                }
-//                else -> {
-//                    showSnackbar("Permission was denied", "Settings",
-//                        View.OnClickListener {
-//                            // Build intent that displays the App settings screen.
-//                            val intent = Intent()
-//                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-//                            val uri = Uri.fromParts(
-//                                "package",
-//                                Build.DISPLAY, null
-//                            )
-//                            intent.data = uri
-//                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                            startActivity(intent)
-//                        }
-//                    )
-//                }
-//            }
-//        }
-//    }
-
-
 
     private fun initButtons() {
         _searchButton.setOnClickListener {
-            filter() //todo: make the search btn to open search text instead
+            //filter() //todo: make the search btn to open search text instead
+
         }
     }
 
@@ -244,6 +244,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
 
             override fun afterTextChanged(s: Editable) {
                 // TODO Auto-generated method stub
+
             }
         })
     }
@@ -374,24 +375,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
             dialog.show(it, "WatchWorkDialog")
         }
     }
-    override fun onStart() {
-        super.onStart()
-//        location permission
 
-//        if (!checkPermissions()) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                requestPermissions()
-//            }
-//        }
-//        else {
-//            getLastLocation()
-//        }
-
-        homeActivityToolbar.makeVisible()
-        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
-        requireActivity().window.statusBarColor =
-            requireContext().getColorCompat(R.color.calendar_statusbar_color)
-    }
 
     //
 
@@ -440,7 +424,22 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
         val df = SimpleDateFormat("dd.MM.yyyy")
         return df.parse(date).time
     }
+    override fun onStart() {
+        super.onStart()
+        if (!checkPermissions()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions()
+            }
+        }
+        else {
+            getLastLocation()
+        }
 
+        homeActivityToolbar.makeVisible()
+        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
+        requireActivity().window.statusBarColor =
+            requireContext().getColorCompat(R.color.calendar_statusbar_color)
+    }
 
     override fun onStop() {
         super.onStop()
@@ -454,5 +453,118 @@ class HomeFragment : BaseFragment(R.layout.fragment_work), BackButton ,ProfileSe
     companion object {
         private val TAG = "LocationProvider"
         private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
+        private val locationPermissionCode = 2
     }
+
 }
+
+//GPS LOCATION
+//    private fun getLocation() {
+//        locationManager = Context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        if ((ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+//            ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
+//        }
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, activity!!)
+//    }
+//    override fun onLocationChanged(location: Location) {
+//        tvGpsLocation = findViewById(R.id.textView)
+//        tvGpsLocation.text = "Latitude: " + location.latitude + " , Longitude: " + location.longitude
+//    }
+
+//
+//
+//
+//    private fun showSnackbar(
+//        mainTextStringId: String, actionStringId: String,
+//        listener: View.OnClickListener
+//    ) {
+//        Toast.makeText(activity!!, mainTextStringId, Toast.LENGTH_LONG).show()
+//    }
+//    private fun initLocation(){
+//        //latitudeLabel = resources.getString(R.string.latitudeBabel)
+//        //longitudeLabel = resources.getString(R.string.longitudeBabel)
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!.applicationContext)
+//
+//    }
+//    private fun checkPermissions(): Boolean {
+//        val permissionState = ActivityCompat.checkSelfPermission(
+//            activity!!.applicationContext,
+//            Manifest.permission.ACCESS_COARSE_LOCATION
+//        )
+//        return permissionState == PackageManager.PERMISSION_GRANTED
+//    }
+//    private fun getLastLocation() {
+//        fusedLocationClient?.lastLocation!!.addOnCompleteListener(activity!!) { task ->
+//            if (task.isSuccessful && task.result != null) {
+//                lastLocation = task.result
+//                latitudeLabel = (lastLocation)!!.latitude
+//                longitudeLabel = (lastLocation)!!.longitude
+//                var x = 1
+//            }
+//            else {
+//                Log.w(TAG, "getLastLocation:exception", task.exception)
+//                //showMessage("No location detected. Make sure location is enabled on the device.")
+//            }
+//        }
+//    }
+//    private fun startLocationPermissionRequest() {
+//        ActivityCompat.requestPermissions(
+//            activity!!,
+//            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//            REQUEST_PERMISSIONS_REQUEST_CODE
+//        )
+//    }
+//    private fun requestPermissions() {
+//        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+//            activity!!,
+//            Manifest.permission.ACCESS_COARSE_LOCATION
+//        )
+//        if (shouldProvideRationale) {
+//            Log.i(TAG, "Displaying permission rationale to provide additional context.")
+//            showSnackbar("Location permission is needed for core functionality", "Okay",
+//                View.OnClickListener {
+//                    startLocationPermissionRequest()
+//                })
+//        }
+//        else {
+//            Log.i(TAG, "Requesting permission")
+//            startLocationPermissionRequest()
+//        }
+//    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int, permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        Log.i(TAG, "onRequestPermissionResult")
+//        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+//            when {
+//                grantResults.isEmpty() -> {
+//                    // If user interaction was interrupted, the permission request is cancelled and you
+//                    // receive empty arrays.
+//                    Log.i(TAG, "User interaction was cancelled.")
+//                }
+//                grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
+//                    // Permission granted.
+//                    getLastLocation()
+//                }
+//                else -> {
+//                    showSnackbar("Permission was denied", "Settings",
+//                        View.OnClickListener {
+//                            // Build intent that displays the App settings screen.
+//                            val intent = Intent()
+//                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+//                            val uri = Uri.fromParts(
+//                                "package",
+//                                Build.DISPLAY, null
+//                            )
+//                            intent.data = uri
+//                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                            startActivity(intent)
+//                        }
+//                    )
+//                }
+//            }
+//        }
+//    }
+
+

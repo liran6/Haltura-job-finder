@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -107,6 +108,20 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         setWork()
         initTimePickers()
         initObservers()
+        val actionBar = getSupportActionBar()
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+    // this event will enable the back
+    // function to the button on press
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                //finish()
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initOnClick() {

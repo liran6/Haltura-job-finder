@@ -28,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 //import kotlinx.android.synthetic.main.work_remove_popup.view.*//todo : removed this import. if needed , enable kotlin-extention plugin in gradle
 
 class WorkFragment : BaseFragment(R.layout.fragment_work), BackButton,ProfileSettingsButton {
-    override val titleRes: String = "Works Created BY You : " //R.string.title_work
+    override val titleRes: String = "Your Job Posts : " //R.string.title_work
     private val _viewModel: WorkViewModel by activityViewModels()
     private lateinit var _fragmentView: View
     private lateinit var _manageWorkRecycle: RecyclerView

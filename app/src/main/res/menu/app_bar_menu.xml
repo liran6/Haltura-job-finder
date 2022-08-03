@@ -8,9 +8,9 @@
             android:title="@string/profile_settings"
             app:showAsAction="ifRoom" />
     <item
-            android:id="@+id/editButon"
-            android:icon="@drawable/ic_edit_24"
-            android:title="@string/edit_button"
+            android:id="@+id/advanceSearchButton"
+            android:icon="@drawable/ic_search_24"
+            android:title="@string/search_button"
             app:showAsAction="ifRoom|withText"/>
 
 <!--    <item-->

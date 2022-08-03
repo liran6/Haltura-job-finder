@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,11 +17,6 @@
             android:theme="@style/Theme.Haltura"
             android:usesCleartextTraffic="true"
             tools:replace="android:supportsRtl">
-
-        <activity
-                android:name=".activities.ManageActivity"
-                android:exported="false"
-                android:label="@string/title_activity_manage" />
 
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
@@ -36,6 +32,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+                android:name=".activities.AdvanceSearchActivity"
+                android:theme="@style/Theme.AppCompat.DayNight"
+                android:label="Search for jobs"
+                android:exported="false" />
+        <activity
+                android:name=".activities.ManageActivity"
+                android:exported="false"
+                android:label="@string/title_activity_manage" />
         <activity
                 android:name=".activities.WorkHistoryActivity"
                 android:exported="false"
@@ -55,6 +61,8 @@
                 android:exported="false" />
         <activity
                 android:name=".activities.AddWorkActivity"
+                android:theme="@style/Theme.AppCompat.DayNight"
+                android:label=""
                 android:exported="false" />
         <activity
                 android:name=".activities.SettingsActivity"

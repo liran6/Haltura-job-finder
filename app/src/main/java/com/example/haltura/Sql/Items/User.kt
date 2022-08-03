@@ -26,6 +26,13 @@ data class MapSerializable(
     @SerializedName("map") var map: Map<String,List<WorkSerializable>>,
 ) : Parcelable
 
+@Parcelize
+data class LocationSerializable(
+    @SerializedName("longitude") var longitude: Double?,
+    @SerializedName("latitude") var latitude: Double?,
+
+    ) : Parcelable
+
 
 @Parcelize
 data class MessageSerializable(
