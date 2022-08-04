@@ -24,7 +24,7 @@ class ShowProfileInfoViewModel : ViewModel() {
 
     val mutableMessageToasting: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
-    }//todo: connect it to activity /frag ?
+    }
 
     private var json = Gson()
 

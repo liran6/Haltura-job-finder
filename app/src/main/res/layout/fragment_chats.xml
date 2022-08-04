@@ -7,8 +7,6 @@
         tools:context=".Fragments.ChatsFragments.ChatsFragment"
         android:background="@color/backGround">
 
-<!--todo: set darker gray color around search-->
-
     <EditText
             android:id="@+id/search_text"
             android:layout_width="0dp"

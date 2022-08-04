@@ -19,7 +19,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
     private var json = Gson()
 
     val mutableMessageToasting: MutableLiveData<String> by lazy {
@@ -40,7 +39,6 @@ class LoginViewModel : ViewModel() {
     }
 
     fun createUser(email: String, username:String, password: String) {
-        //todo: log this to server now
         val user = UserLoginSerializable(
             email,
             username,
@@ -57,7 +55,6 @@ class LoginViewModel : ViewModel() {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    //todo save user and password for fast login
                     mutableMessageToasting.postValue(Const.Registration_Success)
                     mutableSignUpSucess.postValue(true)
                 } else {
@@ -118,24 +115,15 @@ class LoginViewModel : ViewModel() {
                 mutableMessageToasting.postValue(Const.Connecting_Error)
                 mutableLogout.postValue(true)
 
-                //todo logout
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     mutableLogout.postValue(false)
-
-//                    Toast.makeText(
-//                        activity, "User updated successfully ! ",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                    //var res = response.body()?.string()
-                    //var updatedUser = json.fromJson(res, UserSerializable::class.java)
                     var x = 1
                 } else {
                     mutableMessageToasting.postValue(Const.INVALID_TOKEN)
                     mutableLogout.postValue(true)
-                    //todo logout
                 }
             }
         })

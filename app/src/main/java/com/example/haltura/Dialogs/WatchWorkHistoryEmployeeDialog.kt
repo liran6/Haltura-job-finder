@@ -1,25 +1,20 @@
 package com.example.haltura.Fragments.HomeFragments
 
-import android.content.Intent
-import android.graphics.Bitmap
+
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Base64
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.example.haltura.Fragments.ProfileFragments.ProfileFragment
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.DateTime
 import com.example.haltura.ViewModels.WatchWorkViewModel
-import com.example.haltura.databinding.WatchWorkDialogBinding
 import com.example.haltura.databinding.WatchWorkHistoryEmployeeDialogBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -93,8 +88,8 @@ class WatchWorkHistoryEmployeeDialog : DialogFragment {
     private fun initButtons() {
         _report.setOnClickListener()
         {
-            openReportForm()//work?userid? (when you send it toast and exit dialog)
-            //_viewModel. //.registerToWork(_work)
+            openReportForm()
+
         }
     }
 
@@ -114,18 +109,11 @@ class WatchWorkHistoryEmployeeDialog : DialogFragment {
         val cancel = reportView.findViewById(R.id.back_button) as ImageView
         val submit = reportView.findViewById(R.id.submit_report) as Button
         val reportText = reportView.findViewById(R.id.report_text) as EditText
-        //val reportImage = reportView.findViewById(R.id.report_image) as ImageView
 
         cancel.setOnClickListener {
             popup.dismiss()
             removeBackground(true)
         }
-
-//        reportImage.setOnClickListener {
-//            setImage()
-////            popup.dismiss()
-////            removeBackground(true)
-//        }
 
         submit.setOnClickListener {
             var workId = _work.id
@@ -152,53 +140,6 @@ class WatchWorkHistoryEmployeeDialog : DialogFragment {
         }
     }
 
-//    private fun setImage() {
-//        val imagePopup: View = layoutInflater.inflate(R.layout.camera_or_gallery_popup, null)
-//
-//        val popup = PopupWindow(
-//            imagePopup,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//
-//        popup.elevation = 3.0f
-//
-//        val camera = imagePopup.findViewById(R.id.camera) as ImageView
-//        val gallery = imagePopup.findViewById(R.id.gallery) as ImageView
-//
-//
-//        camera.setOnClickListener {
-//            setCameraImage()
-//            popup.dismiss()
-//            //removeBackground(true)
-//        }
-//
-//        gallery.setOnClickListener {
-//            setGalleryImage()
-//            popup.dismiss()
-//            //removeBackground(true)
-//        }
-//        //removeBackground(false)
-//        popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0) //popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
-//    }
-
-//    private fun setCameraImage()
-//    {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        startActivityForResult(intent, REQ_CAMERA)
-//    }
-//
-//    private fun setGalleryImage()
-//    {
-//        val intent = Intent()
-//        intent.type = "image/*"
-//        intent.action = Intent.ACTION_GET_CONTENT
-//        startActivityForResult(
-//            Intent.createChooser(intent, "Select Picture"),
-//            PICK_IMAGE
-//        )
-//    }
-
     private fun initViews() {
         _image = binding.itemImage
         _taskAndCompany = binding.itemTaskAndCompany
@@ -221,29 +162,6 @@ class WatchWorkHistoryEmployeeDialog : DialogFragment {
         var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
         _image.setImageBitmap(data)
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == REQ_CAMERA && resultCode == AppCompatActivity.RESULT_OK) {
-//            if (data != null) {
-//                var bm = data.extras!!["data"] as Bitmap?
-//                bm.toString()
-//                var image = _reportView.findViewById(R.id.report_image) as ImageView
-//                image.setImageBitmap(bm)
-//            }
-//        }
-//        if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
-//            //todo:check if it is work
-//            if (data != null) {
-//                val uri = data.getData();
-//                val bm = MediaStore.Images.Media.getBitmap(activity!!.getContentResolver(), uri)
-//                //_image.setImageBitmap(bm)//sendImageMessage(imageBitMap)
-//                var image = _reportView.findViewById(R.id.report_image) as ImageView
-//                image.setImageBitmap(bm)
-//            }
-//            //todo: toast err
-//        }
-//    }
 
     companion object
     {

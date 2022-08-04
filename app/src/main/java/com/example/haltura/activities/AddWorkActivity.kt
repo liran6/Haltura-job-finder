@@ -24,16 +24,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import com.example.haltura.AppNotifications
-import com.example.haltura.Fragments.HomeFragments.HomeFragment
 import com.example.haltura.R
-//import com.example.haltura.Sql.BusinessOpenHelper
 import com.example.haltura.Sql.Items.AddresSerializable
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.*
 import com.example.haltura.ViewModels.AddWorkViewModel
-//import com.example.haltura.activities.ChatActivity.Companion.TAG
 import com.example.haltura.databinding.ActivityAddWorkBinding
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -47,8 +43,6 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-//import kotlinx.android.synthetic.main.activity_add_work.*//todo
-//import kotlinx.android.synthetic.main.manage_work_item.*
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,8 +51,6 @@ import java.util.*
 class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var _viewModel: AddWorkViewModel
     private lateinit var mMap: GoogleMap
-    private lateinit var autocompleteFragment : AutocompleteSupportFragment
-    private lateinit var edAddress: EditText
     private lateinit var ivAddItemImage: ImageView
     private lateinit var etCompany: EditText
     private lateinit var etTask: EditText
@@ -67,21 +59,11 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     private var latitude : Double = 0.0
     private var longitude : Double = 0.0
     private lateinit var etInfo: EditText
-    private lateinit var dpDate: DatePicker
-    private lateinit var tpStartTime: TimePicker
-    private lateinit var tpEndTime: TimePicker
-    private lateinit var btnShowLocation: Button
     private lateinit var btnAddWork: Button
     private lateinit var btnPreview: Button
     private lateinit var binding: ActivityAddWorkBinding
     //
-    private lateinit var city: String
-    private lateinit var cities: Array<String>
-    private lateinit var spinnerCity: Spinner
-    private lateinit var etApartment: EditText
     private lateinit var etStreetName: TextView
-    private lateinit var etStreetNumber: EditText
-    private lateinit var etFloor: EditText
     //
     private lateinit var tvTitle :TextView
     private lateinit var tvDate :TextView
@@ -98,7 +80,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //setContentView(R.layout.activity_add_work)//todo :changed to : binding = ActivityAddWorkBinding.inflate(layoutInflater)
         binding = ActivityAddWorkBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -285,7 +266,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             var minute = if (minute >= 10 ) minute.toString() else "0$minute"
             Log.d("AddWorkActivity", "onTimeSet: hh:mm: $hourOfDay:$minute")
             val time = "Time: $hourOfDay:$minute"
-            //todo: if the time is 18:05 it will be 18:5 (need to add zero)
             if (isStartTime)
             {
                 tvStartTime!!.text = "Starting $time"
@@ -300,34 +280,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-//        this. ?: return // Fragment has been detached--don't do anything.
-//        mMap = googleMap
-//        mMap.addMarker(
-//            MarkerOptions().position(LatLng(0.0, 0.0)).title("Test")
-//        )
-
-
-//        var p1 = getLocationFromAddress("ben tzvi 50 givatayim")
-//
-//        if (ActivityCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return
-//        }
-//        mMap.setMyLocationEnabled(true)
-        //val p = getLocationFromAddress()
         if(isUpdate)
         {
             //mMap.clear()
@@ -339,49 +291,16 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         else
         {
-//            var fusedLocationClient = LocationServices.getFusedLocationProviderClient(this!!.applicationContext)
-//            fusedLocationClient?.lastLocation!!.addOnCompleteListener() { task ->
-//                if (task.isSuccessful && task.result != null) {
-//                    var lastLocation = task.result
-//                    latitudeLabel = (lastLocation)!!.latitude
-//                    longitudeLabel = (lastLocation)!!.longitude
-//                }
-//                else {
-//
-//                }
-//            }
-            //todo set your location
+
             var p = LatLng(32.0589923, 34.8241127)
             mMap.addMarker(MarkerOptions().position(p).title("your location"))
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(p,15.0f))
         }
     }
 
-//    fun getLocationFromAddress(strAddress: String?): LatLng? {
-//        val coder = Geocoder(this)
-//        val address: List<Address>?
-//        try {
-//            address = coder.getFromLocationName(strAddress, 5)
-//            if (address == null) {
-//                return null
-//            }
-//            val location: Address = address[0]
-//            return LatLng(location.getLatitude(), location.getLongitude())
-//            //return GeoPoint(location.getLatitude(), location.getLongitude())
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        } catch (e : Exception)
-//        {
-//            e.printStackTrace()
-//        }
-//        return null
-//    }
-
     @RequiresApi(Build.VERSION_CODES.N)
     fun PickDate(view: View)
     {
-        //todo: set current time or what we put before (the string)
-        // check if == date else split '/' and pass args
         var cal: Calendar = Calendar.getInstance()
         var year: Int = cal.get(Calendar.YEAR)
         var month: Int = cal.get(Calendar.MONTH)
@@ -437,7 +356,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
     @RequiresApi(Build.VERSION_CODES.N)
     fun addWork(view: View)
     {
-        //todo: check validation...
         var work = getWorkFromForm()
         if(!isUpdate)
         {
@@ -469,7 +387,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             etTask.text.toString(),
             Integer.parseInt(etSalary.text.toString()),
             Integer.parseInt(etNumberOfWorkers.text.toString()),
-            address,//todo:change
+            address,
             etInfo.text.toString(),
             getTime(date,staringTime,endingTime,true),
             getTime(date,staringTime,endingTime,false),
@@ -514,8 +432,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun preview(view: View)
     {
-//        //todo: check validation...
-//        //todo: this is exactly like addWork - at the end instead of helper.AddWork(work) we show it
+
         var work = getWorkFromForm()
         //
         val WorkView: View = layoutInflater.inflate(R.layout.work_item_preview, null)
@@ -556,15 +473,6 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
         popup.showAtLocation(_layout, Gravity.CENTER, 0, 0)
 
     }
-
-//    private fun removeBackground(show: Boolean) {
-//        if (show) {
-//            _layout.visibility = View.VISIBLE
-//
-//        } else {
-//            _layout.visibility = View.GONE
-//        }
-//    }
 
     fun SetImage(view: View)
     {
@@ -631,13 +539,13 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
             ivAddItemImage.setImageBitmap(bm)
         }
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            //todo:check if it is work
+
             if (data != null) {
                 val uri = data.getData();
                 val bm =MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri)
                 ivAddItemImage.setImageBitmap(bm)//sendImageMessage(imageBitMap)
             }
-            //todo: toast err
+
         }
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {
@@ -651,7 +559,7 @@ class AddWorkActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
-                    // TODO: Handle the error.
+
                     data?.let {
                         val status = Autocomplete.getStatusFromIntent(data)
                     }

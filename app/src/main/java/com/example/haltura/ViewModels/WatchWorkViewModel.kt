@@ -39,9 +39,7 @@ class WatchWorkViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     //crea
                     createChat(work)
-                    //todo: add toast of register successfully
                 } else {
-                    //todo: print message in toast
                     var x = 1
                 }
             }
@@ -62,7 +60,7 @@ class WatchWorkViewModel : ViewModel() {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    mutableMessageToasting.postValue("The report was received") //todo:put in const
+                    mutableMessageToasting.postValue("The report was received")
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)
                 }
@@ -84,7 +82,7 @@ class WatchWorkViewModel : ViewModel() {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    mutableMessageToasting.postValue("quit") //todo:put in const
+                    mutableMessageToasting.postValue("quit")
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)
                 }
@@ -94,7 +92,6 @@ class WatchWorkViewModel : ViewModel() {
 
 
     fun createChat(work: WorkSerializable) {
-        //todo: add chat per work and when someone joins to the work add him to the chat
 //        val retroService =
 //            ServiceBuilder.getRetroInstance().create(ChatAPI::class.java)
 //        val call = retroService.addToWorkWorkIdUser("Bearer "+ UserData.currentUser?.userId!!,
@@ -108,7 +105,6 @@ class WatchWorkViewModel : ViewModel() {
 //                if (response.isSuccessful) {
 //                    //crea
 //                } else {
-//                    //todo: print message in toast
 //                    var x = 1
 //                }
 //            }

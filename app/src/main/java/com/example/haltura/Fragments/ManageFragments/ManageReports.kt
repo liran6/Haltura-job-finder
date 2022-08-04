@@ -151,44 +151,6 @@ class ManageReports : Fragment() {
         }
     }
 
-//    private fun deleteWork(work: WorkSerializable) {
-//        val removeWorkView: View = layoutInflater.inflate(R.layout.work_remove_popup, null)
-//        val popup = PopupWindow(
-//            removeWorkView,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//
-//        popup.elevation = 3.0f
-//
-//        val cancel = removeWorkView.findViewById(R.id.cancel) as TextView
-//        val delete =
-//            removeWorkView.findViewById(R.id.delete) as TextView
-//        val workInfo = removeWorkView.findViewById(R.id.work_info)as TextView
-//        workInfo.text = work.task + " " + work.startTime //todo take just the date
-//
-//        cancel.setOnClickListener {
-//            popup.dismiss()
-//            removeBackground(true)
-//        }
-//
-//        delete.setOnClickListener {
-//            _viewModel.deleteWork(work)
-//            popup.dismiss()
-//            removeBackground(true)
-//        }
-//        removeBackground(false)
-//        popup.showAtLocation(_fragmentView, Gravity.CENTER, 0, 0)
-//    }
-//    private fun removeBackground(show: Boolean) {
-//        if (show) {
-//            _fragmentView.visibility = View.VISIBLE
-//
-//        } else {
-//            _fragmentView.visibility = View.GONE
-//        }
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

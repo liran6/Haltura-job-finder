@@ -65,19 +65,11 @@ class SettingsActivity : AppCompatActivity() {
             val index =
                 supportFragmentManager.backStackEntryCount - 2
             val backEntry = supportFragmentManager.getBackStackEntryAt(index)
-//            backEntry.name?.let { updateNavBarIcons(it) }
         } else {
             finish()
             super.onBackPressed()
         }
     }
-
-    //TODO: move functions to other seperated model
-
-    fun SetProfileImage(view: View){
-        var x = 1
-    }
-    //TODO ---------------------------------------------------------------------------
 
     //remove focus from edit texts
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {

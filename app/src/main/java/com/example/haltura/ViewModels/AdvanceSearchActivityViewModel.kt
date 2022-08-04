@@ -32,7 +32,6 @@ class AdvanceSearchActivityViewModel : ViewModel() {
             PromptSerializable(prompt))
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -46,7 +45,6 @@ class AdvanceSearchActivityViewModel : ViewModel() {
                     }
                     mutableNlpWorkList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })

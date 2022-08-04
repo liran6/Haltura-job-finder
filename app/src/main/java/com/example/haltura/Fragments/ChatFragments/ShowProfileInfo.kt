@@ -108,7 +108,6 @@ class ShowProfileInfo : Fragment {
         }
         else
         {
-            //todo: set Default
         }
     }
 }

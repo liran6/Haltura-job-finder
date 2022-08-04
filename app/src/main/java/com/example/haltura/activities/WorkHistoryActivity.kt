@@ -8,17 +8,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.haltura.Adapters.ChatsAdapter
 import com.example.haltura.Adapters.WorkAdapter
-import com.example.haltura.AppNotifications
-import com.example.haltura.Fragments.HomeFragments.WatchWorkDialog
 import com.example.haltura.Fragments.HomeFragments.WatchWorkHistoryEmployeeDialog
 import com.example.haltura.Sql.Items.WorkSerializable
-
-import com.example.haltura.Utils.Const
-import com.example.haltura.Utils.HorizontalSpaceItemDecoration
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
-import com.example.haltura.ViewModels.AddWorkViewModel
 import com.example.haltura.ViewModels.WorkHistoryViewModel
 import com.example.haltura.databinding.ActivityWorkHistoryBinding
 
@@ -73,7 +66,6 @@ class WorkHistoryActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,false)
         _workHistoryRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
         _workHistoryRecycle.layoutManager = layoutManager
-        //_workHistoryRecycle.layoutManager = LinearLayoutManager(this)
         _workHistoryAdapter = WorkAdapter(
             workList,
             _clickOnItemListener = { showWorkInfo(it) })

@@ -27,7 +27,6 @@ interface WorkAPI {
     ): Call<ResponseBody>
 
 
-    //TODO what this call do?
     @GET("works/all")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun getAllWorks(
@@ -43,7 +42,6 @@ interface WorkAPI {
         @Path("userId") userId: String,
     ): Call<ResponseBody>
 
-    //TODO what this call do?
     @PUT("works/remove/{workId}/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun removeFromWorkUserId(

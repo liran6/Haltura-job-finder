@@ -40,7 +40,6 @@ class ManageWorksViewModel : ViewModel() {
         val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -55,7 +54,6 @@ class ManageWorksViewModel : ViewModel() {
                     mutableWorkList.value!!.addAll(mutableAllWorkList)
                     mutableWorkList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })
@@ -108,7 +106,6 @@ class ManageWorksViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     mutableWorkList.value!!.remove(work) //to delete from the list
                     mutableWorkList.notifyAllObservers()
-                    //todo: toast delete was successfully
                     var x = 1
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)

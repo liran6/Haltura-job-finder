@@ -59,16 +59,6 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
             }
 
             setHasOptionsMenu(true)
-
-
-
-
-//        if (this is HasBackButton) {
-////            val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-//            actionBar?.title = if (titleRes != null) titleRes!! else ""
-//            actionBar?. setDisplayHomeAsUpEnabled(true)
-//
-//        }
     }
 
     override fun onStop() {

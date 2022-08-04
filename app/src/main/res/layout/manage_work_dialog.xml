@@ -112,24 +112,6 @@
 
                 </LinearLayout>
 
-
-                <!--            <TimePicker-->
-                <!--                    android:id="@+id/tp_StartTime"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:timePickerMode="spinner" />-->
-
-                <!--            todo: set edit text that open this when you click-->
-
-
-                <!--            <TimePicker-->
-                <!--                    android:id="@+id/tp_EndTime"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:timePickerMode="spinner"/>-->
-
-
-
             </LinearLayout>
 
 

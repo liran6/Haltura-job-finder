@@ -32,7 +32,6 @@ class MainActivity2 : AppCompatActivity() {
 
     internal lateinit var binding: ActivityMain2Binding
     private lateinit var preferences: SharedPreferences
-    //private lateinit var user: UserSerializable
     private lateinit var supportActionBar: MaterialToolbar
     private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,12 +41,10 @@ class MainActivity2 : AppCompatActivity() {
         val toastObserver = Observer<String> { message ->
             AppNotifications.toastBar(this, message)
         }
-        //todo: check if admin and change nav
-        //todo implement logout here!!!!
+
         val logOutObserver = Observer<Boolean> { value ->
             if (value || !(preferences.getBoolean(Const.IsLoggedIn,false))) {
                 preferences.set(Const.IsLoggedIn, false)
-                //this.onBackPressed()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 this.finish()

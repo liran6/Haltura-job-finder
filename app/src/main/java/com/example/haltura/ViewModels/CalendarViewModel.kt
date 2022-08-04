@@ -79,7 +79,6 @@ class CalendarViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val jObject = JSONObject(response.body()!!.string())
                     val map = jsonToMap(jObject)
-                    //todo check here!
                     mutableCreatedWorksByDateMap.value!!.putAll(map)
                     mutableCreatedWorksByDateMap.notifyAllObservers()
                     var x = 1
@@ -109,7 +108,6 @@ class CalendarViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val jObject = JSONObject(response.body()!!.string())
                     val map = jsonToMap(jObject)
-                    //todo check here!
                     mutableRegisteredWorksByDateMap.value!!.putAll(map)
                     mutableRegisteredWorksByDateMap.notifyAllObservers()
                     var x = 1

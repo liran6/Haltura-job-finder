@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.ManageWorkAdapter
 import com.example.haltura.AppNotifications
-//import com.example.haltura.Fragments.BaseFragment
-//import com.example.haltura.Fragments.HasBackButton
 import com.example.haltura.Fragments.getColorCompat
 import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
@@ -25,7 +23,6 @@ import com.example.haltura.ViewModels.WorkViewModel
 import com.example.haltura.activities.AddWorkActivity
 import com.example.haltura.databinding.FragmentWorkBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-//import kotlinx.android.synthetic.main.work_remove_popup.view.*//todo : removed this import. if needed , enable kotlin-extention plugin in gradle
 
 class WorkFragment : BaseFragment(R.layout.fragment_work), BackButton,ProfileSettingsButton {
     override val titleRes: String = "Your Job Posts : " //R.string.title_work
@@ -61,19 +58,6 @@ class WorkFragment : BaseFragment(R.layout.fragment_work), BackButton,ProfileSet
 
         return _fragmentView
     }
-    //create the options of the appbar
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.app_bar_menu, menu)}
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.getItemId() == android.R.id.home) {
-//            if (activity != null) {
-//                activity?.onBackPressed()
-//            }
-//            return true
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     private fun initButtons() {
         _addWorkFloatingButton.setOnClickListener{
@@ -156,7 +140,7 @@ class WorkFragment : BaseFragment(R.layout.fragment_work), BackButton,ProfileSet
         val delete =
             removeWorkView.findViewById(R.id.delete) as TextView
         val workInfo = removeWorkView.findViewById(R.id.work_info)as TextView
-        workInfo.text = work.task + " " + work.startTime //todo take just the date
+        workInfo.text = work.task + " " + work.startTime
 
         cancel.setOnClickListener {
             popup.dismiss()

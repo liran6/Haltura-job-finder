@@ -1,6 +1,5 @@
 package com.example.haltura.Fragments.ManageFragments
 
-//import com.example.haltura.Dialogs.WatchWorkDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -70,7 +69,7 @@ class ManageUsers : Fragment() {
 
     private fun initButtons() {
         _searchButton.setOnClickListener {
-            filter() //todo: make the search btn to open search text instead
+            filter()
         }
 
         _binding!!.logout.setOnClickListener {
@@ -80,17 +79,13 @@ class ManageUsers : Fragment() {
 
     private fun logOut() {
         preferences = Preferences.customPrefs(activity!!, Const.loginPreferences)
-        //val settings = context!!.getSharedPreferences("PreferencesName", Context.MODE_PRIVATE)
         preferences.edit().clear().commit()
-        //preferences.set(Const.IsLoggedIn, false)
-        //val intent = Intent(activity!!, LoginActivity::class.java)
         val intent = Intent(activity!!, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra("EXIT", true)
         startActivity(intent)
-        //viewModel.logOut()
         activity!!.finish()
     }
 
@@ -101,11 +96,9 @@ class ManageUsers : Fragment() {
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // TODO Auto-generated method stub
             }
 
             override fun afterTextChanged(s: Editable) {
-                // TODO Auto-generated method stub
             }
         })
     }
@@ -188,7 +181,7 @@ class ManageUsers : Fragment() {
         val remove =
             removeUserView.findViewById(R.id.remove) as TextView
         val workInfo = removeUserView.findViewById(R.id.user_info)as TextView
-        workInfo.text = "Are you sure you want to remove "+ profile.username +"?" //todo take just the date
+        workInfo.text = "Are you sure you want to remove "+ profile.username +"?"
 
         cancel.setOnClickListener {
             popup.dismiss()

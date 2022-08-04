@@ -1,7 +1,6 @@
 package com.example.haltura.Api
 
 import com.example.haltura.Models.ChatInfoSerializable
-import com.example.haltura.Sql.Items.UserSerializable
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*

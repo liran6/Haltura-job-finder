@@ -67,40 +67,4 @@ object AppNotifications {
             .success()
             .show()
     }
-//
-//    fun showSnackBar(activity: Activity, message: String) {
-//        Snacky.builder()
-//            .setActivity(activity)
-//            .setText(message)
-//            .setDuration(Snacky.LENGTH_SHORT)
-//            .build()
-//            .show()
-//    }
-//
-//    fun showSnackBar(activity: Activity, message: String) {
-//        Snacky.builder()
-//            .setActivity(activity)
-//            .setText(message)
-//            .setDuration(Snacky.LENGTH_SHORT)
-//            .build()
-//            .show()
-//    }
-//
-//    fun showSnackBar(activity: Activity, message: String) {
-//        Snacky.builder()
-//            .setActivity(activity)
-//            .setText(message)
-//            .setDuration(Snacky.LENGTH_SHORT)
-//            .build()
-//            .show()
-//    }
-//
-//    fun showSnackBar(activity: Activity, message: String) {
-//        Snacky.builder()
-//            .setActivity(activity)
-//            .setText(message)
-//            .setDuration(Snacky.LENGTH_SHORT)
-//            .build()
-//            .show()
-//    }
 }

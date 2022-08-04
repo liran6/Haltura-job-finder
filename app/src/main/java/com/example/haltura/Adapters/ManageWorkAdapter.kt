@@ -61,7 +61,7 @@ class ManageWorkAdapter(
         }
 
         viewHolder.itemView.setOnClickListener {
-            _clickOnItemListener(_dataSet[position])//todo: check if it is your work
+            _clickOnItemListener(_dataSet[position])
         }
     }
 

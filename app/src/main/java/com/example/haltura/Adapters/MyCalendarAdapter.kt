@@ -25,7 +25,6 @@ class MyCalendarAdapter(
         val task: TextView = view.findViewById(R.id.task)
         val date: TextView = view.findViewById(R.id.date)
         val image: ImageView = view.findViewById(R.id.image)
-        //val trash : ImageView = view.findViewById(R.id.trash)
     }
 
     fun updateDataSet(newData: MutableMap<LocalDate, MutableList<WorkSerializable>>) {
@@ -62,13 +61,8 @@ class MyCalendarAdapter(
             var dataRoundedCorner = ImageHelper.getRoundedCornerBitmap(data, 10)
             viewHolder.image.setImageBitmap(dataRoundedCorner)
 
-//        viewHolder.trash.setOnClickListener()
-//        {
-//            _clickDeleteItemListener(_dataSet[position])
-//        }
-
             viewHolder.itemView.setOnClickListener {
-                _clickOnItemListener(_dataView!![position])//todo: check if it is your work
+                _clickOnItemListener(_dataView!![position])
             }
         }
     }

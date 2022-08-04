@@ -29,7 +29,6 @@ interface ProfileAPI {
         @Path("userId") userId: String
     ): Call<ResponseBody>
 
-    //ToDo check if works after finish.
     @PUT("profiles/update/{userId}")
     @Headers("Accept:application/json", "Content-Type:application/json")
     fun updateProfileInfo(

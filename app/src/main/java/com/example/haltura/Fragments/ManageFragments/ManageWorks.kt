@@ -79,7 +79,7 @@ class ManageWorks : Fragment() {
 
     private fun initButtons() {
         _searchButton.setOnClickListener {
-            filter() //todo: make the search btn to open search text instead
+            filter()
         }
     }
 
@@ -90,11 +90,9 @@ class ManageWorks : Fragment() {
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // TODO Auto-generated method stub
             }
 
             override fun afterTextChanged(s: Editable) {
-                // TODO Auto-generated method stub
             }
         })
     }
@@ -142,9 +140,6 @@ class ManageWorks : Fragment() {
         )
         _allWorksRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
         _allWorksRecycle.layoutManager = layoutManager
-//        _allWorksAdapter = WorkAdapter(
-//            workList,
-//            _clickOnItemListener = { showWorkDetails(it) })
         _allWorksAdapter = ManageWorkAdapter(
             workList,
             _clickOnItemListener = { openWorkEditMode(it) },
@@ -173,7 +168,7 @@ class ManageWorks : Fragment() {
         val delete =
             removeWorkView.findViewById(R.id.delete) as TextView
         val workInfo = removeWorkView.findViewById(R.id.work_info)as TextView
-        workInfo.text = work.task + " " + work.startTime //todo take just the date
+        workInfo.text = work.task + " " + work.startTime
 
         cancel.setOnClickListener {
             popup.dismiss()
@@ -197,34 +192,8 @@ class ManageWorks : Fragment() {
         }
     }
 
-//    private fun showWorkDetails(work: WorkSerializable) {
-////        var dialog = WatchWorkDialog(work)
-////        activity?.supportFragmentManager?.let {
-////            dialog.show(it, "WatchWorkDialog")
-////        }
-//    }
-
-//    override fun onStart() {
-//        super.onStart()
-//        homeActivityToolbar.makeVisible()
-//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
-//        requireActivity().window.statusBarColor =
-//            requireContext().getColorCompat(R.color.calendar_statusbar_color)
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
-//        requireActivity().window.statusBarColor =
-//            requireContext().getColorCompat(R.color.colorPrimaryDark)
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
 }

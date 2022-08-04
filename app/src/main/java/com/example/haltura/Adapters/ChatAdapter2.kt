@@ -1,6 +1,5 @@
 package com.example.haltura.Adapters
 
-import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Base64
@@ -17,7 +16,6 @@ import com.example.haltura.Sql.Items.MessageSerializable
 import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.ImageHelper
 import com.example.haltura.Utils.UserData
-//import kotlinx.android.synthetic.main.message_item2.view.* //todo : removed this import. if needed , enable kotlin-extention plugin in gradle
 
 class ChatAdapter2(
     private var _dataSet: List<MessageSerializable>,
@@ -60,14 +58,8 @@ class ChatAdapter2(
         val name = _mapUsernames[currentItem.userId]
         if (UserData.currentUser?.userId == currentItem.userId)
         {
-            //-0x352701
-            viewHolder.body.setBackgroundResource(R.drawable.rounded_message_gray)
-            //(viewHolder.messageLayout.getLayoutParams() as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            //viewHolder.messageLayout.layout //layout_alignParentRight
 
-//            val params = viewHolder.messageLayout.getLayoutParams() as RelativeLayout.LayoutParams
-//            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-//            viewHolder.messageLayout.setLayoutParams(params) //causes layout update
+            viewHolder.body.setBackgroundResource(R.drawable.rounded_message_gray)
 
 
             (viewHolder.messageLayout.getLayoutParams() as RelativeLayout.LayoutParams).addRule(
@@ -83,7 +75,6 @@ class ChatAdapter2(
                 RelativeLayout.ALIGN_PARENT_RIGHT)
 
             viewHolder.name.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-            //(viewHolder.body.getLayoutParams()as ViewGroup.MarginLayoutParams).setMargins(15, 0, 0, 0)
 
         }
         val image = currentItem.image

@@ -64,7 +64,7 @@ class Validation {
             return true
         }
 
-        private fun isEmpty(check: EditText): Boolean { //todo:לא עובד?
+        private fun isEmpty(check: EditText): Boolean {
             if (check.text.toString() == "") {
                 check.error = "you need to insert a value"
                 return false
@@ -100,30 +100,6 @@ class Validation {
             return true
         }
 
-
-        //todo: add username and or email check
-
-        //    fun userNameExists(edName: EditText, context: Context?): Boolean {
-        //        val helper = UserOpenHelper(context)
-        //        helper.open()
-        //        val text = edName.text.toString()
-        //        if (helper.checkUserName(text)) {
-        //            edName.error = NAME_EXISTS_ERROR
-        //            return false
-        //        }
-        //        if (text.length < 5) {
-        //            edName.error = NAME_ERROR
-        //        }
-        //        return true
-        //    }
-
-
-//        fun resetPasswordValid(etPassword: EditText, etConfPassword: EditText): Boolean {
-//            userPasswordValid(etPassword)
-//            confirmPasswordValid(etPassword, etConfPassword)
-//            return userPasswordValid(etPassword) && confirmPasswordValid(etPassword, etConfPassword)
-//        }
-
         fun resetPasswordValid(edEmail: EditText): Boolean {
             return userEmailValid(edEmail)
         }
@@ -153,7 +129,7 @@ class Validation {
             return bool;
         }
 
-        fun changePasswordValid( //TODO: check old password
+        fun changePasswordValid(
             oldPassword: EditText,
             newPassword: EditText,
             ConfNewPassword: EditText
@@ -236,15 +212,7 @@ class Validation {
             bool = userPasswordValid(upPassword) && bool
             bool = confirmPasswordValid(upPassword, upConfPassword) && bool
             return bool
-//            return userNameValid(upName, 2) &&
-//                    spinnerCheck(upSpinner) &&
-//                    isEmpty(upStreet) &&
-//                    isEmpty(upStreetNumber) &&
-//                    isEmpty(upFloor) &&
-//                    isEmpty(upApartment) &&
-//                    userPhoneValid(upPhone) &&
-//                    userPasswordValid(upPassword) &&
-//                    confirmPasswordValid(upPassword, upConfPassword)
+
         }
     }
 }

@@ -19,21 +19,6 @@ class DirectionsAPI
             context.startActivity(intent)
         }
 
-//        fun openHereWeGoNavigationToB(context: Context,
-//                                      latitude : Double,
-//                                      longitude : Double)
-//        {
-//            val hereWeGoUrl = "here.directions://v1.0/mylocation/$latitude,$longitude?m=w"
-//            val uri = Uri.parse(hereWeGoUrl)
-//
-//            val hereWeGoPackage = "com.here.app.maps"
-//            val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-//                setPackage(hereWeGoPackage)
-//            }
-//
-//            context.startActivity(intent)
-//        }
-
         fun openGoogleMapsNavigationToB(context: Context,
                                         latitude : Double,
                                         longitude : Double)

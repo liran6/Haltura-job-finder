@@ -27,7 +27,7 @@ class HomeViewModel : ViewModel() {
     val mutableWorkList: MutableLiveData<MutableList<WorkSerializable>> by lazy {
         MutableLiveData<MutableList<WorkSerializable>>(mutableListOf())
     }
-    val mutableAllWorkList: MutableList<WorkSerializable> =mutableListOf() // TODO: in the future do like chats (filter)
+    val mutableAllWorkList: MutableList<WorkSerializable> =mutableListOf()
 
     private var json = Gson()
 
@@ -40,7 +40,6 @@ class HomeViewModel : ViewModel() {
         val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -57,7 +56,6 @@ class HomeViewModel : ViewModel() {
                     mutableWorkList.value!!.addAll(mutableAllWorkList)
                     mutableWorkList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })
@@ -78,7 +76,6 @@ class HomeViewModel : ViewModel() {
         UserData.currentUser!!.userId)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -92,7 +89,6 @@ class HomeViewModel : ViewModel() {
                     }
                     mutableCloseWorksList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })
@@ -112,7 +108,6 @@ class HomeViewModel : ViewModel() {
         val call = retroService.getAllWorks("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -126,7 +121,6 @@ class HomeViewModel : ViewModel() {
                     }
                     mutableRecommendedWorksList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })

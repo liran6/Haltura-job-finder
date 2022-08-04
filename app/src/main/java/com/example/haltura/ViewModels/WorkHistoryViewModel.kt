@@ -31,7 +31,6 @@ class WorkHistoryViewModel : ViewModel() {
             UserData.currentUser!!.userId)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -45,7 +44,6 @@ class WorkHistoryViewModel : ViewModel() {
                     }
                     mutableWorkHistoryList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })

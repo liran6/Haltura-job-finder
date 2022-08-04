@@ -49,7 +49,6 @@ class LoginFragment : Fragment() {
         initBackPressed()
         return fragmentView
     }
-        //todo: try to change it - bug: cant go to signup twice.
     private fun switchFragment(fragment: Fragment, fragmentId: String) {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         if (transaction != null) {
@@ -74,14 +73,10 @@ class LoginFragment : Fragment() {
             switchFragment(SignUpFragment(), Const.signup_fragment)
 
         }
-//        _fragmentView.findViewById<TextView>(R.id.login_reset_password).setOnClickListener {
-//            forgotPassword()
-//        }
     }
 
     private fun resetEmail()
     {
-        //if (profile.userId == UserData.currentUser!!.userId){return}
 
         val resetEmailView: View = layoutInflater.inflate(R.layout.reset_password_popup, null)
         val popup = PopupWindow(
@@ -130,13 +125,11 @@ class LoginFragment : Fragment() {
             val user = UserLoginSerializable(
                 etEmail.text.toString(),
                 null, etPassword.text.toString())// ,"0","0","0")
-            //DeviceNotifications.notifyDefault(this,"Test","testing")
             viewModel.userSignIn(user)
         }
 
     }
     private fun initBackPressed() {
-        //todo manage back press
         activity?.onBackPressedDispatcher?.addCallback(
             this.viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -146,21 +139,5 @@ class LoginFragment : Fragment() {
                 }
             })
     }
-
-//    fun signUp(view: View) {
-//        //startActivity(Intent(this, AddWorkActivity::class.java))
-////        startActivity(Intent(this, SignUpActivity::class.java))
-//        startActivity(Intent(this, RegisterActivity::class.java))
-////        //todo: do this with user open helper - It is not the responsibility of the class
-//    }
-
-
-
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-//        // TODO: Use the ViewModel
-//    }
 
 }

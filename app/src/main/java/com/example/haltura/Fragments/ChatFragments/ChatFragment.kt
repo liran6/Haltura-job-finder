@@ -42,7 +42,6 @@ class ChatFragment : Fragment() {
     private lateinit var _galleryButton: ImageView
     private lateinit var _topBar: LinearLayout
     private lateinit var _chatImage: de.hdodenhof.circleimageview.CircleImageView
-    private lateinit var _backButton: ImageView
     private lateinit var _chatName: TextView
     private lateinit var _members: TextView
     private lateinit var _textMessage: EditText
@@ -80,7 +79,6 @@ class ChatFragment : Fragment() {
     }
 
     private fun initBackPressed() {
-        //todo manage back press
         activity?.onBackPressedDispatcher?.addCallback(
             this.viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -93,11 +91,9 @@ class ChatFragment : Fragment() {
     private fun initTopBar() {
         _topBar.setOnClickListener {
             showChatInfo()
-            //_viewModel.getChatInfo(_chat.id!!)
         }
     }
 
-    //TODO: separate between group and individual chat,if group show chat info, if its a 2 members chat show the profile of each other.
     private fun showChatInfo() {
         if (_chat.adminID != null) {
             switchFragment(ShowChatInfoDialog(_chat.id!!), Const.group_info)
@@ -133,11 +129,8 @@ class ChatFragment : Fragment() {
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // TODO Auto-generated method stub
             }
-
             override fun afterTextChanged(s: Editable) {
-                // TODO Auto-generated method stub
             }
         })
     }
@@ -147,7 +140,6 @@ class ChatFragment : Fragment() {
     }
 
     private fun setValues() {
-        //todo: check if not group set just name in the middle
         if (_chat?.chatName == null) {
             if (_chat.members[0] == UserData.currentUser!!.userId) {
                 _chatName.setText(_chat!!.mapUsernames[_chat.members[1]])
@@ -174,13 +166,8 @@ class ChatFragment : Fragment() {
             var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
             _chatImage.setImageBitmap(data)
         } else {
-            //todo: add profile picture
         }
     }
-
-//    private fun initViewModel() {
-//        _viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
-//    }
 
     private fun initButtons() {
         _cameraButton.setOnClickListener {
@@ -199,7 +186,6 @@ class ChatFragment : Fragment() {
 
     private fun initRecyclersAndAdapters() {
         val chatsList = _viewModel.mutableMessagesList.value!!
-        //_messageRecycle.layoutManager = LinearLayoutManager(context)
         _chatAdapter = ChatAdapter2(
             chatsList,
             _clickOnItemListener = { moveToChat(it) },
@@ -209,11 +195,9 @@ class ChatFragment : Fragment() {
     }
 
     private fun moveToChat(it: MessageSerializable) {
-        //todo?
     }
 
     private fun initObservers() {
-        //todo: check if "viewLifecycleOwner" -> "this"
         _viewModel.mutableMessagesList.observe(
             viewLifecycleOwner,
             Observer { messagesList ->
@@ -222,27 +206,16 @@ class ChatFragment : Fragment() {
                 }
             }
         )
-//        _viewModel.mutableChatInfo.observe(
-//            viewLifecycleOwner,
-//            Observer { ChatInfo ->
-//                ChatInfo?.let {
-//                    if (it != null) {
-//                        showChatInfo(it)
-//                    }
-//                }
-//            }
-//        )
     }
 
     private fun updateRecyclersAndAdapters() {
         _chatAdapter.setData(_viewModel.mutableMessagesList.value!!)
         _chatAdapter.notifyDataSetChanged()
-        //recyclerView.scrollToPosition(items.size());
         _messageRecycle.smoothScrollToPosition(_chatAdapter.getItemCount());
     }
 
     private fun initViewModelData() {
-        _viewModel.getAllMessages(_chat.id!!) //todo: check if _chat.id!! null
+        _viewModel.getAllMessages(_chat.id!!)
     }
 
     private fun setChat() {
@@ -255,7 +228,6 @@ class ChatFragment : Fragment() {
     private fun initViews() {
         _topBar = _binding!!.topBar// findViewById(R.id.topBar)
         _chatImage = _binding!!.imageChat
-        //_backButton = _binding!!.backButton
         _chatName = _binding!!.nameChat
         _members = _binding!!.members
         _cameraButton = _binding!!.camera
@@ -263,7 +235,6 @@ class ChatFragment : Fragment() {
         _sendButton = _binding!!.sendButton
         _textMessage = _binding!!.messageEditText
         _messageRecycle = _binding!!.messageRecyclerView
-        //TODO MOVE TO INIT Recycle
         _manager = LinearLayoutManager(context)
         _manager.stackFromEnd = true
         _messageRecycle.layoutManager = _manager
@@ -302,11 +273,6 @@ class ChatFragment : Fragment() {
         return Base64.encodeToString(data, Base64.DEFAULT)
     }
 
-
-//    private fun onClickMessage(message: Message) {
-//
-//    }
-
     fun uploadImage() {
         val intent = Intent()
         intent.type = "image/*"
@@ -316,7 +282,6 @@ class ChatFragment : Fragment() {
 
     fun takeCameraImage() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        //intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         startActivityForResult(intent, REQ_CAMERA)
     }
 
@@ -326,17 +291,14 @@ class ChatFragment : Fragment() {
             if (data != null) {
                 sendMessage(data.extras!!["data"] as Bitmap)
             }
-            //todo: toast err
         }
         if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
-            //todo:check if it is work
             if (data != null) {
                 val uri = data.getData();
                 val imageBitMap =
                     MediaStore.Images.Media.getBitmap(activity!!.getContentResolver(), uri)
                 sendMessage(imageBitMap)
             }
-            //todo: toast err
         }
     }
 
@@ -345,11 +307,6 @@ class ChatFragment : Fragment() {
         private val REQ_CAMERA = 1
         private val PICK_IMAGE = 2
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        initViewModelData()
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

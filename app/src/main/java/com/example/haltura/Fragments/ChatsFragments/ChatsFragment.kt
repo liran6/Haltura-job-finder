@@ -69,18 +69,16 @@ class ChatsFragment : BaseFragment(R.layout.fragment_chats), BackButton, Profile
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // TODO Auto-generated method stub
             }
 
             override fun afterTextChanged(s: Editable) {
-                // TODO Auto-generated method stub
             }
         })
     }
 
     private fun initButtons() {
         _searchButton.setOnClickListener {
-            filter() //todo: make the search btn to open search text instead
+            filter()
         }
     }
 
@@ -89,7 +87,7 @@ class ChatsFragment : BaseFragment(R.layout.fragment_chats), BackButton, Profile
     }
 
     private fun initViews() {
-        _chatsRecycle = binding.chatsRecyclerView //todo remove? (move to initadapterand re)
+        _chatsRecycle = binding.chatsRecyclerView
         _chatsRecycle.addItemDecoration(VerticalSpaceItemDecoration(10))
         _searchText = binding.searchText
         _searchButton = binding.searchButton

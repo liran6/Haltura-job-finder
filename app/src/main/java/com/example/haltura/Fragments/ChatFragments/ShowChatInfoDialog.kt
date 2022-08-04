@@ -51,7 +51,6 @@ class ShowChatInfoDialog : Fragment {
     private lateinit var _fragmentView: View
     private lateinit var _image: de.hdodenhof.circleimageview.CircleImageView
     private lateinit var _nameOfChat: TextView
-    //RecyclerView and Adapter
     private lateinit var _membersRecycle: RecyclerView
     private lateinit var _membersAdapter: ProfileAdapter
 
@@ -92,13 +91,11 @@ class ShowChatInfoDialog : Fragment {
         binding.updateChat.setOnClickListener {
             _viewModel.updateChat(_chatId,_nameOfChat.text.toString(),
                 convertImageToString(_image.drawable.toBitmap()))
-            //todo: return to chat
         }
         binding.updateChat.isEnabled = false
     }
 
     private fun setViews() {
-        //_nameOfChat.setText(_chatInfo.chatName)
     }
 
     private fun initBinding() {
@@ -212,16 +209,8 @@ class ShowChatInfoDialog : Fragment {
     }
 
     private fun enableChange() {
-//        if(!nameChanged && !imageChanged) //todo: should check if the original name / image is now one of them (name was x -> y -> x)
-//        {
             binding.updateChat.setTextColor(Color.BLUE)
             binding.updateChat.isEnabled = true
-//            binding.updateChat.setOnClickListener {
-//                _viewModel.updateChat(_chatId,_nameOfChat.text.toString(),
-//                    convertImageToString(_image.drawable.toBitmap()))
-//                //todo: return to chat
-//            }
-//        }
     }
 
     private fun convertImageToString(image: Bitmap): String {
@@ -305,12 +294,11 @@ class ShowChatInfoDialog : Fragment {
             LinearLayoutManager.VERTICAL,false)
         _membersRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
         _membersRecycle.layoutManager = layoutManager
-        //var enable = (_chatInfo.adminID == UserData.currentUser!!.userId)
         _membersAdapter = ProfileAdapter(
             workList,
             _clickOnItemListener = { showProfile(it) },
             _clickOnLongItemListener = { removeUser(it) },
-            true//todo: check why this is not working: _chatInfo.adminID == UserData.currentUser!!.userId
+            true
         )
         _membersRecycle.adapter = _membersAdapter
     }
@@ -334,7 +322,7 @@ class ShowChatInfoDialog : Fragment {
         val remove =
             removeUserView.findViewById(R.id.remove) as TextView
         val workInfo = removeUserView.findViewById(R.id.user_info)as TextView
-        workInfo.text = "Are you sure you want to remove "+ profile.username +"?" //todo take just the date
+        workInfo.text = "Are you sure you want to remove "+ profile.username +"?"
 
         cancel.setOnClickListener {
             popup.dismiss()
@@ -360,20 +348,6 @@ class ShowChatInfoDialog : Fragment {
         }
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        homeActivityToolbar.makeVisible()
-//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.calendar_toolbar_color))
-//        requireActivity().window.statusBarColor =
-//            requireContext().getColorCompat(R.color.calendar_statusbar_color)
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        homeActivityToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
-//        requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.colorPrimaryDark)
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -390,14 +364,12 @@ class ShowChatInfoDialog : Fragment {
             }
         }
         if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
-            //todo:check if it is work
             if (data != null) {
                 val uri = data.getData();
                 val bm = MediaStore.Images.Media.getBitmap(activity!!.getContentResolver(), uri)
-                _image.setImageBitmap(bm)//sendImageMessage(imageBitMap)
+                _image.setImageBitmap(bm)
                 enableChange()
             }
-            //todo: toast err
         }
     }
 

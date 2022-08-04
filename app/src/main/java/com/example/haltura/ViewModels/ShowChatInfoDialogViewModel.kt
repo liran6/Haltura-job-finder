@@ -33,7 +33,7 @@ class ShowChatInfoDialogViewModel : ViewModel() {
 
     val mutableMessageToasting: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
-    }//todo: connect it to activity /frag ?
+    }
 
     private var json = Gson()
 
@@ -76,7 +76,7 @@ class ShowChatInfoDialogViewModel : ViewModel() {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    mutableMessageToasting.postValue("The chat was updated successfully") //todo:put in const
+                    mutableMessageToasting.postValue("The chat was updated successfully")
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)
                 }
@@ -96,7 +96,7 @@ class ShowChatInfoDialogViewModel : ViewModel() {
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    mutableMessageToasting.postValue("The user was removed successfully") //todo:put in const
+                    mutableMessageToasting.postValue("The user was removed successfully")
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)
                 }

@@ -35,7 +35,6 @@ class ManageReportsViewModel : ViewModel() {
         val call = retroService.getAllReports("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -49,7 +48,6 @@ class ManageReportsViewModel : ViewModel() {
                     }
                     mutableReportList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })
@@ -62,7 +60,6 @@ class ManageReportsViewModel : ViewModel() {
             report.reportId!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -70,7 +67,6 @@ class ManageReportsViewModel : ViewModel() {
                     mutableReportList.value!!.remove(report)
                     mutableReportList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })

@@ -16,7 +16,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SettingsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
     private var json = Gson()
     val mutableMessageToasting: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
@@ -34,18 +33,12 @@ class SettingsViewModel : ViewModel() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 mutableMessageToasting.postValue(Const.Connecting_Error)
 
-                //todo logout
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     mutableMessageToasting.postValue(Const.password_changed)
-//                    Toast.makeText(
-//                        activity, "User updated successfully ! ",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                    //var res = response.body()?.string()
-                    //var updatedUser = json.fromJson(res, UserSerializable::class.java)
+
                     var x = 1
                 } else {
                     mutableMessageToasting.postValue(Const.INVALID_TOKEN)
@@ -63,18 +56,12 @@ class SettingsViewModel : ViewModel() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 mutableMessageToasting.postValue(Const.Connecting_Error)
 
-                //todo logout
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     mutableMessageToasting.postValue(Const.email_changed)
-//                    Toast.makeText(
-//                        activity, "User updated successfully ! ",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                    //var res = response.body()?.string()
-                    //var updatedUser = json.fromJson(res, UserSerializable::class.java)
+
                     var x = 1
                 } else {
                     mutableMessageToasting.postValue(Const.INVALID_TOKEN)
@@ -98,13 +85,6 @@ class SettingsViewModel : ViewModel() {
                     var profileInfo = json.fromJson(res, ProfileSerializable::class.java)
                     mutableProfileHolder.postValue(profileInfo)
 
-                    //mutableMessageToasting.postValue(Const.password_changed)
-//                    Toast.makeText(
-//                        activity, "User updated successfully ! ",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                    //var res = response.body()?.string()
-                    //var updatedUser = json.fromJson(res, UserSerializable::class.java)
                     var x = 1
                 } else {
                     mutableMessageToasting.postValue(Const.INVALID_TOKEN)
@@ -124,18 +104,12 @@ class SettingsViewModel : ViewModel() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 mutableMessageToasting.postValue(Const.Connecting_Error)
 
-                //todo logout
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     mutableMessageToasting.postValue(Const.data_changed)
-//                    Toast.makeText(
-//                        activity, "User updated successfully ! ",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                    //var res = response.body()?.string()
-                    //var updatedUser = json.fromJson(res, UserSerializable::class.java)
+
                     var x = 1
                 } else {
                     mutableMessageToasting.postValue(Const.INVALID_TOKEN)

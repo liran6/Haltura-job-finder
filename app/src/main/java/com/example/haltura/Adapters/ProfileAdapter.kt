@@ -1,6 +1,5 @@
 package com.example.haltura.Adapters
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Models.ProfileSerializable
 import com.example.haltura.R
-import com.example.haltura.Utils.ImageHelper
 
 
 class ProfileAdapter(

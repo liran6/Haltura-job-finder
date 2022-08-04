@@ -37,18 +37,6 @@ class ChatViewModel : ViewModel() {
         MutableLiveData<MutableList<MessageSerializable>>(mutableListOf())
     }
 
-//    val mutableChatInfo: MutableLiveData<InfoChatSerializable> by lazy { //by lazy
-//        MutableLiveData<InfoChatSerializable>(null)
-//    }
-
-//    object AddressList: MutableLiveData<List<Address>>()
-//    fun getAddressesLiveData(): LiveData<List<Address>> {
-//        GlobalScope.launch {
-//            withContext(Dispatchers.Main){ AddressList.value = getAddressList() }
-//        }
-//        return AddressList
-//    }
-
     lateinit var ChatApiLiveData: MutableLiveData<UserResponse?>
 
     private var json = Gson()
@@ -72,8 +60,6 @@ class ChatViewModel : ViewModel() {
 
                     _mutableMessagesList.value!!.add(message)
 
-                    //_mutableMessagesList.notifyAllObservers()
-                    //_mutableMessagesList.postValue(_mutableMessagesList.value)
 
                     var activityThread = _activity
                     activityThread.runOnUiThread{
@@ -87,35 +73,12 @@ class ChatViewModel : ViewModel() {
 
         _socket.emit("user-connect", _chatId, UserData.currentUser?.userId)
 
-//        _socket.on("new-message") { args ->
-//            if (args[0] != null) {
-//                var message = json.fromJson(args[0].toString(), MessageSerializable::class.java)
-//                mutableMessagesList.value!!.add(message)
-//                mutableMessagesList.notifyAllObservers()
-//            }
-//        }
     }
 
     fun SendMessage(message: MessageSerializable)
     {
         _socket.emit("send-message", _chatId, Gson().toJson(message))
-        //var _mutableMessagesList = mutableMessagesList
-//        _socket.on("new-message") { args ->
-//            if (args[0] != null) {
-//                var _mutableMessagesList = mutableMessagesList
-//                var activity = _activity
-//                var message = json.fromJson(args[0].toString(), MessageSerializable::class.java)
-////                println(_mutableMessagesList)
-////                println(mutableMessagesList)
-//                _mutableMessagesList.value!!.add(message)
-//                //_mutableMessagesList.postValue(_mutableMessagesList.value)
-//                activity.runOnUiThread{
-//                    var _mutableMessagesList = mutableMessagesList
-//                    _mutableMessagesList.notifyAllObservers()
-//                }
-//                //_mutableMessagesList.notifyAllObservers()
-//            }
-//        }
+
     }
 
 
@@ -126,7 +89,6 @@ class ChatViewModel : ViewModel() {
         val call = retroService.getAllMessages("Bearer " + UserData.currentUser?.token!!,charId)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //ChatApiLiveData.postValue(null)//todo:init
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -146,34 +108,4 @@ class ChatViewModel : ViewModel() {
             }
         })
     }
-
-
-//    fun getChatInfo(chatId :String) {
-//        //mutableMembersList.value!!.clear()
-//        val retroService =
-//            ServiceBuilder.getRetroInstance().create(ChatAPI::class.java)
-//        val call = retroService.getChatInfo("Bearer " +
-//                UserData.currentUser?.token!!, chatId)
-//        call.enqueue(object : Callback<ResponseBody> {
-//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                //mutableMessageToasting.postValue(Const.Connecting_Error)
-//            }
-//
-//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                if (response.isSuccessful) {
-//                    val res = response.body()!!.string()
-//                    //val jObject = JSONObject(response.body()!!.string())
-//                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
-//                    //val profiles = jObject.get("profile_list") as JSONArray
-//                    mutableChatInfo.value = json.fromJson(res, InfoChatSerializable::class.java)
-//                    //mutableChatInfo.notifyAllObservers()
-//                    //val chatInfo = json.fromJson(jObject, InfoChatSerializable::class.java)
-//                    //chatInfo.profileList?.let { mutableMembersList.value!!.addAll(it) }
-//                    //mutableMembersList.notifyAllObservers()
-//                } else {
-//                    //mutableMessageToasting.postValue(Const.Token_Error)
-//                }
-//            }
-//        })
-//    }
 }

@@ -1,17 +1,14 @@
 package com.example.haltura.Adapters
 
-import android.graphics.BitmapFactory
-import android.util.Base64
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Models.ReportSerializable
 import com.example.haltura.R
-import com.example.haltura.Utils.DateTime
-import com.example.haltura.Utils.ImageHelper
+
 
 class ReportAdapter(
     private var _dataSet: MutableList<ReportSerializable>,
@@ -48,7 +45,7 @@ class ReportAdapter(
         viewHolder.report.text = text
 
         viewHolder.itemView.setOnClickListener {
-            _clickOnItemListener(_dataSet[position])//todo: check if it is your work
+            _clickOnItemListener(_dataSet[position])
         }
     }
 

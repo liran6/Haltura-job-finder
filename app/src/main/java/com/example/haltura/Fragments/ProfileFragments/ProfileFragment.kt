@@ -141,13 +141,6 @@ class ProfileFragment : Fragment() {
         _address = _fragmentView.findViewById<View>(R.id.profileAddress) as EditText
         _saveButton = _fragmentView.findViewById<View>(R.id.saveButton) as Button
         _saveButton.visibility = View.INVISIBLE
-//        loadingScreen = (activity as SettingsActivity).loadingScreen
-
-        //_settingsFragment = _fragmentView.findViewById<View>(R.id.btn_SignUp) as Button
-//        _editProfile = binding.profilePicruteLayout
-//        _profileImage = binding.profileCircleImageView
-//        _profileUserName = binding.usernameTextView
-//        _settingsFragment = binding.settingsFffragment
     }
     private fun initProfileData() {
         //from user info
@@ -157,7 +150,7 @@ class ProfileFragment : Fragment() {
         if (userImage != null) {
             var bm = Base64.decode(userImage, Base64.DEFAULT)
             var data = BitmapFactory.decodeByteArray(bm, 0, bm.size)
-            _profileImage.setImageBitmap(data) //TODO set image profile to bit64
+            _profileImage.setImageBitmap(data)
         }
         //from profile info
         var profileFirstName = ProfileData.currentProfile?.firstName
@@ -223,51 +216,12 @@ class ProfileFragment : Fragment() {
                     //_saveButton.visibility = View.GONE
                 }
                 _saveButton.visibility = View.GONE
-                //todo here: update DB via viewModel
                 _viewModel.updateProfileData(ProfileData.currentProfile!!)
 
         }
-//        _firstName.addTextChangedListener(object : TextWatcher{
-//            override fun afterTextChanged(s: Editable) {
-//                if (s.toString()!= ){
-//                    _saveButton.visibility = View.VISIBLE
-//                }
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence, start: Int,
-//                                           count: Int, after: Int) {
-//            }
-//            override fun onTextChanged(s: CharSequence, start: Int,
-//                                       before: Int, count: Int) {
-//            }
-//        })
+
         }
     }
-//private class GenericTextWatcher private constructor(val view: View) :
-//    TextWatcher {
-//    override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-//    override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-//    override fun afterTextChanged(editable: Editable) {
-//        val text = editable.toString()
-//        when (view.id) {
-////                R.id.name -> model.setName(text)
-////                R.id.email -> model.setEmail(text)
-////                R.id.phone -> model.setPhone(text)
-//        }
-//    }
-//}
-
-
-
-//    companion object {
-//        fun newInstance() = ProfileFragment()
-//    }
-//    @Deprecated("Deprecated in Java")
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-//        // TODO: Use the ViewModel
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -282,7 +236,6 @@ class ProfileFragment : Fragment() {
             }
         }
         if (requestCode == PICK_IMAGE && resultCode == AppCompatActivity.RESULT_OK) {
-            //todo:check if it is work
             if (data != null) {
                 val uri = data.getData();
                 val bm = MediaStore.Images.Media.getBitmap(activity!!.getContentResolver(), uri)
@@ -291,7 +244,6 @@ class ProfileFragment : Fragment() {
                 _isImageChanged = true
                 _saveButton.visibility = View.VISIBLE
             }
-            //todo: toast err
         }
     }
 

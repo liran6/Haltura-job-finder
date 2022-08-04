@@ -39,13 +39,11 @@ class ManageUsersViewModel : ViewModel() {
         val call = retroService.getAllExtendedProfiles("Bearer " + UserData.currentUser?.token!!)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //TODO: toast
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val jObject = JSONObject(response.body()!!.string())
-                    //todo: check if i can do it without the for loop
                     val users = jObject.get("profile_list") as JSONArray
                     for (i in 0 until users.length())
                     {
@@ -55,7 +53,6 @@ class ManageUsersViewModel : ViewModel() {
                     mutableUserList.value!!.addAll(mutableAllUserList)
                     mutableUserList.notifyAllObservers()
                 } else {
-                    //TODO: toast
                 }
             }
         })
@@ -75,7 +72,7 @@ class ManageUsersViewModel : ViewModel() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     //remove from
-                    mutableMessageToasting.postValue("The user was removed successfully") //todo:put in const
+                    mutableMessageToasting.postValue("The user was removed successfully")
                 } else {
                     mutableMessageToasting.postValue(Const.Token_Error)
                 }

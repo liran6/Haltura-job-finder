@@ -94,7 +94,6 @@ class ChatsViewModel : ViewModel() {
         var members = chat.members
         if(members[0] != UserData.currentUser?.userId)
         {
-            //todo: map to user name
             if (chat.mapUsernames[members[0]]!!.toLowerCase().contains(textToFilter))
             {
                 return true

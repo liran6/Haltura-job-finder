@@ -44,5 +44,4 @@ interface UsersAPI {
         @Body password: UserLoginSerializable
     ): Call<ResponseBody>
 }
-    //TODO retrive all users
 

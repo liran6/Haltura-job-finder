@@ -17,7 +17,6 @@ import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.DateTime
 import com.example.haltura.Utils.UserData
 import com.example.haltura.ViewModels.WatchWorkViewModel
-import com.example.haltura.databinding.WatchWorkDialogBinding
 import com.example.haltura.databinding.WatchWorkDialogQuitBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

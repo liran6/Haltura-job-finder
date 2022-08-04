@@ -15,14 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.haltura.Adapters.WorkAdapter
 import com.example.haltura.Fragments.HomeFragments.WatchWorkDialog
-import com.example.haltura.Fragments.HomeFragments.WatchWorkHistoryEmployeeDialog
-import com.example.haltura.R
 import com.example.haltura.Sql.Items.WorkSerializable
 import com.example.haltura.Utils.VerticalSpaceItemDecoration
 import com.example.haltura.ViewModels.AdvanceSearchActivityViewModel
-import com.example.haltura.ViewModels.WorkHistoryViewModel
 import com.example.haltura.databinding.ActivityNlpWorksBinding
-import com.example.haltura.databinding.ActivityWorkHistoryBinding
 
 class AdvanceSearchActivity : AppCompatActivity() {
     private lateinit var _viewModel: AdvanceSearchActivityViewModel
@@ -41,7 +37,6 @@ class AdvanceSearchActivity : AppCompatActivity() {
         _view = _binding!!.root
         setContentView(_view)
         initViewModel()
-        //initViewModelData()
         initViews()
         initButtons()
         initObservers()
@@ -59,10 +54,6 @@ class AdvanceSearchActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this).get(AdvanceSearchActivityViewModel::class.java)
     }
 
-//    private fun initViewModelData() {
-//        _viewModel.getWorkHistory()
-//    }
-
     private fun initRecyclersAndAdapters() {
         _workNlpRecycle = _binding!!.workHistoryRecyclerView
         val workList = _viewModel.mutableNlpWorkList.value!!
@@ -70,7 +61,6 @@ class AdvanceSearchActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,false)
         _workNlpRecycle.addItemDecoration(VerticalSpaceItemDecoration(20))
         _workNlpRecycle.layoutManager = layoutManager
-        //_workHistoryRecycle.layoutManager = LinearLayoutManager(this)
         _workNlpAdapter = WorkAdapter(
             workList,
             _clickOnItemListener = { showWorkInfo(it) })
@@ -141,46 +131,3 @@ class AdvanceSearchActivity : AppCompatActivity() {
 
     }
 }
-//: AppCompatActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_advance_search)
-//        val actionBar = getSupportActionBar()
-//        actionBar?.setDisplayHomeAsUpEnabled(true)
-//    }
-//    // this event will enable the back
-//    // function to the button on press
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                //finish()
-//                onBackPressed()
-//                return true
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-//
-//
-//
-//
-//
-//
-//    //remove focus from edit texts
-//    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-//        if (event.action == MotionEvent.ACTION_DOWN) {
-//            val v = currentFocus
-//            if (v is EditText) {
-//                val outRect = Rect()
-//                v.getGlobalVisibleRect(outRect)
-//                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-//                    v.clearFocus()
-//                    val imm: InputMethodManager =
-//                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
-//                }
-//            }
-//        }
-//        return super.dispatchTouchEvent(event)
-//    }
-//}
