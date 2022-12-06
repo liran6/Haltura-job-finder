@@ -15,7 +15,3 @@ The app contains work calendar wich display the jobs attached to user, with buff
 Also, we created an in app messenger so both parties will be able to communicate,update each other, and close the final details.
 
 enjoy!
-
-screenshots: 
-
-![/haltura screenshots/Screenshot_2022-05-30-19-28-18-105_com.example.haltura.jpg]
