@@ -15,3 +15,5 @@ The app contains work calendar wich display the jobs attached to user, with buff
 Also, we created an in app messenger so both parties will be able to communicate,update each other, and close the final details.
 
 enjoy!
+
+![screenshots collage](https://user-images.githubusercontent.com/45068502/205919671-c713a5b3-1057-4b6d-a223-a510e3e333cc.jpg)
