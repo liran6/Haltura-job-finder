@@ -17,4 +17,5 @@ Also, we created an in app messenger so both parties will be able to communicate
 enjoy!
 
 screenshots: 
-/haltura screenshots/Screenshot_2022-05-30-19-28-18-105_com.example.haltura.jpg
+
+![/haltura screenshots/Screenshot_2022-05-30-19-28-18-105_com.example.haltura.jpg]
